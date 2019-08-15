@@ -66,8 +66,8 @@ dotnet test
 
 &nbsp;
 
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OSIsoft_OCS_Samples-CI?branchName=master&jobName=Auth_PKCE_DotNet)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4561&branchName=master)
+[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/Auth_PKCE_DotNet?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4920&branchName=master)
 
 For the general steps or switch languages see the Task  [ReadMe](../../../)<br />
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples--OCS)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

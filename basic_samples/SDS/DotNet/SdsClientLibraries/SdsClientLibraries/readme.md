@@ -413,12 +413,12 @@ await metadataService.DeleteTypeAsync(typeId);
 ```
 
 ------------
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OSIsoft_OCS_Samples-CI?branchName=master&jobName=SDSDotNet)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4334&branchName=master)
+[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDSDotNet?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4912&branchName=master)
 
 -----------
 
 Tested against DotNet 2.2.105.
 
 For the general steps or switch languages see the Task  [ReadMe](../../../)<br />
-For the main OCS page [ReadMe](../../../../../)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

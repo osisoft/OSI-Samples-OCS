@@ -56,12 +56,11 @@ ClientSecret = REPLACE_WITH_APPLICATION_SECRET
 
 
 -----------
- [![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OSIsoft_OCS_Samples-CI?branchName=master&jobName=SDS_TSPy)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4334&branchName=master)
-
+[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDS_TSPy?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4909&branchName=master)
  ----------
 
  Automated test uses Python 3.6.8 x64
 
 For the general steps or switch languages see the Task  [ReadMe](../../../)<br />
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples--OCS)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

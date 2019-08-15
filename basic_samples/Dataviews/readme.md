@@ -14,7 +14,7 @@ The steps performed in the examples are similar and follow this general flow:
 
 |Languages|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ------|------------
-  <a href="Java/dataviewjava">Java</a><br /><a href="Python3/">Python3</a> |[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OSIsoft_OCS_Samples-CI?branchName=master&jobName=DataviewJava)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4334&branchName=master)<br />[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/OSIsoft_OCS_Samples-CI?branchName=master&jobName=DataviewPy)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4334&branchName=master)
+  <a href="Java/dataviewjava">Java</a><br /><a href="Python3/">Python3</a> |[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/DataviewJava?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4911&branchName=master)<br />[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/DataviewPy?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4908&branchName=master)
 
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

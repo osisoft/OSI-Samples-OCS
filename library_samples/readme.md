@@ -7,5 +7,5 @@ The libraries are generally used in all of the other samples.  They were seperat
 ------|
   <a href="Java/ocs_sample_library_preview">Java</a><br /><a href="Python3/">Python3</a> 
 
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples--OCS)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

@@ -20,6 +20,6 @@ Tests are done by testing the sample apps that use this.
 
 Developed against Python 3.7.2.
 
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples--OCS)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
 
 [OSI Samples](https://github.com/osisoft/OSI-samples) are licensed under the Apache 2 license.

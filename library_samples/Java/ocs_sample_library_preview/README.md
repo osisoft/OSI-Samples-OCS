@@ -18,6 +18,6 @@ Tests are done by testing the sample apps that use this
 
 Developed against Maven 3.6.1 and Java 1.8.0_181.
 
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples--OCS)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
 
 [OSI Samples](https://github.com/osisoft/OSI-samples) are licensed under the Apache 2 license.
