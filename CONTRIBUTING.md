@@ -7,4 +7,3 @@ These are the ways you can currently contribute to the OSI Samples:
 
 
 Note:  We are currently not accepting Pull Requests from outside of OSIsoft Engineering.  
-
