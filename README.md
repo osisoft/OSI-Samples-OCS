@@ -18,8 +18,6 @@ Some tasks and individual language examples may have some additional labels as f
 
 The official OCS samples are divided in multiple categories depending on the scenario and problem/task, accessible through the following table:
 
-# Note
-
 
 Task|Description|Languages|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test&nbsp;Status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 ----|-----------|---------|-----------
@@ -33,7 +31,7 @@ Task|Description|Languages|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test&nbsp;S
 
 ~~ These libraries are tested by being used in other apps.
    
-   Note: Automated UI tests fail intermittently due to automatation issues 
+   __Note__: Tests with automated UI browser components (such as Hybrid Authentication, Implicit Authentication, Authorization Code Flow and Angular samples) fail intermittently due to automatation issues.  
    
 
 
