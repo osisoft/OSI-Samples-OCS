@@ -120,24 +120,25 @@ namespace HybridFlow
             using (IWebDriver driver = new ChromeDriver(Environment.ExpandEnvironmentVariables("%ChromeWebDriver%")))
             {
                 driver.Url = url;
+                int sleep = 6000;
 
-                Thread.Sleep(4000);
+                Thread.Sleep(sleep);
 
                 driver.FindElement(By.XPath("/html/body/div[3]/div/div/a[@title=\"Personal Account\"]")).Click();
 
 
-                Thread.Sleep(4000);
+                Thread.Sleep(sleep);
 
                 driver.FindElement(By.XPath("//*[@id=\"i0116\"]")).SendKeys(userName);
                 driver.FindElement(By.XPath("//*[@id=\"idSIButton9\"]")).Click();
 
 
-                Thread.Sleep(4000);
+                Thread.Sleep(sleep);
 
                 driver.FindElement(By.XPath("//*[@id=\"i0118\"]")).SendKeys(password);
                 driver.FindElement(By.XPath("//*[@id=\"idSIButton9\"]")).Click();
 
-                Thread.Sleep(4000);
+                Thread.Sleep(sleep);
 
                 driver.Close();
             }
