@@ -22,7 +22,7 @@ jobs:
       inputs:
         sourceFolder: $(Agent.TempDirectory)
         contents: prod_config.js
-        targetFolder: '$(Build.SourcesDirectory)/ocs_samples/basic_samples/SDS/JavaScript/NodeJs/'
+        targetFolder: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/NodeJs/'
         #cleanTargetFolder: false # Optional 
         overWrite: true # Optional
         #flattenFolders: false # Optional
@@ -30,7 +30,7 @@ jobs:
 
     - script: |
         mv prod_config.js config.js
-      workingDirectory: $(Build.SourcesDirectory)/ocs_samples/basic_samples/SDS/JavaScript/NodeJs/
+      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/NodeJs/
       displayName: 'rename config file'
       
 
@@ -38,10 +38,10 @@ jobs:
     - script: |
        npm install request
        npm install request-promise
-      workingDirectory: $(Build.SourcesDirectory)/ocs_samples/basic_samples/SDS/JavaScript/NodeJs/
+      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/NodeJs/
       displayName: 'Install tools'      
       
     - script: |
         node Sample.js
       displayName: 'Test that the app runs'
-      workingDirectory: $(Build.SourcesDirectory)/ocs_samples/basic_samples/SDS/JavaScript/NodeJs/
+      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/NodeJs/
