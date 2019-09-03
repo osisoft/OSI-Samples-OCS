@@ -139,3 +139,17 @@ class BaseClient(object):
 
             message = main_message + error
             raise SdsError(message)
+        
+        #this happens on a collection return that is partially successful
+        if response.status_code == 207:
+            status = response.status_code
+            error = response.json["Error"]
+            reason = response.json["Reason"]
+            errors = str(response.json["ChildErrors"])
+            url = response.url
+            opId = response.headers["Operation-Id"]
+            errorToWrite = f"  {status}:{error}:{reason}. \n\n{errors}\n\n  URL {url}  OperationId {opId}"
+            response.close()
+
+            message = main_message + errorToWrite
+            raise SdsError(message)
