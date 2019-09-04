@@ -1,0 +1,45 @@
+variables:
+- group: LocalServer
+- name: configpath
+  value: /basic_samples/SDS/JavaScript/Angular/src/app/config
+- name: credpath
+  value: /basic_samples/SDS/JavaScript/Angular/e2e/src  
+- name: projpath
+  value: /basic_samples/SDS/JavaScript/Angular  
+- name: CredFile
+  value: cred.json
+- name: CredFileSdsConfig
+  value: sdsconfig.json
+- name: CredFileOidcConfig
+  value: oidc.config.json
+- name: CredFileLibrary
+  value: prod_cred.json
+- name: CredFileSdsConfigLibrary
+  value: prod_sdsconfig.json
+- name: CredFileOidcConfigLibrary
+  value: prod_oidc.config.json
+- name: testpath
+  value: /basic_samples/OMF_API/Java/omfapijava
+- name: job
+  value: SDSangJS
+
+jobs:      
+- job: SDSangJSJava_BD
+
+  pool:
+    name: Hosted VS2017
+    demands:
+      - maven
+      - npm
+
+  steps:
+   - task: black-duck-software.detect-for-tfs.hub.detect.task.BlackDuckDetect@1
+     displayName: 'Run Black Duck Detect for $(job)'
+     inputs:
+        BlackDuckHubService: 'Black Duck'
+        DetectArguments: |
+           --detect.project.name="$(job)" 
+           --detect.project.version.name="latest" 
+           --detect.source.path="$(build.sourcesDirectory)$(projpath)"
+           --detect.code.location.name="code_location_$(job)_latest_$(job)"
+           --detect.bom.aggregate.name="bom_$(job)_latest_$(job)"
