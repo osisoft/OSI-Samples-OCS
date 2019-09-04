@@ -75,7 +75,7 @@ class DataviewQuery(object):
             
         dataviewQuery = DataviewQuery()
 
-        if len(content) == 0:
+        if not content:
             return dataviewQuery
 
         if 'Id' in content:

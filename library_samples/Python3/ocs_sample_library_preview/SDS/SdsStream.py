@@ -214,7 +214,7 @@ class SdsStream(object):
     def fromDictionary(content):
         stream = SdsStream()
 
-        if len(content) == 0:
+        if not content:
             return stream
 
         if 'Id' in content:

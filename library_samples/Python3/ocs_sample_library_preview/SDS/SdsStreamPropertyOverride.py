@@ -80,7 +80,7 @@ class SdsStreamPropertyOverride(object):
     def fromDictionary(content):
         propertyOverride = SdsStreamPropertyOverride()
 
-        if len(content) == 0:
+        if not content:
             return propertyOverride
 
         if 'SdsTypePropertyId' in content:

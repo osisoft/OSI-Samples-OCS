@@ -121,7 +121,7 @@ class DataviewIndexConfig(object):
     def fromDictionary(content):
         dataviewIndexConfig = DataviewIndexConfig()
 
-        if len(content) == 0:
+        if not content:
             return dataviewIndexConfig
 
         if 'IsDefault' in content:

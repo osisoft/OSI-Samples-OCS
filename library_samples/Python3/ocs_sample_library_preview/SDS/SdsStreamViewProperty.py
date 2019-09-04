@@ -91,8 +91,12 @@ class SdsStreamViewProperty(object):
     @staticmethod
     def fromDictionary(content):
         streamViewProperty = SdsStreamViewProperty()
+        
 
-        if len(content) == 0:
+        if not content:
+            return streamViewProperty
+
+        if not content:
             return streamViewProperty
 
         if 'SourceId' in content:

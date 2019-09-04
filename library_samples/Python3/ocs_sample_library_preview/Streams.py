@@ -902,24 +902,31 @@ class Streams(object):
 
         # if stream_view_id is not set, do not specify /transform/ route
         # and stream_view_id parameter
+        paramsToUse = {}
         if len(stream_view_id) == 0:
             _path = self.__getSummaries.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=stream_id)
+                stream_id=stream_id)   
+                         
+            paramsToUse={"startIndex": start,
+                    "endIndex": end,
+                    "count": count,
+                    "filter": filter}
         else:
             _path = self.__getSummariesT.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id)
+            
+            paramsToUse={"startIndex": start,
+                    "endIndex": end,
+                    "count": count,
+                    "filter": filter,
+                    "streamViewId": stream_view_id}
 
         response = requests.get(
-                _path,
-                params={"startIndex": start,
-                        "endIndex": end,
-                        "count": count,
-                        "filter": filter,
-                        "streamViewId": stream_view_id},
+                _path,paramsToUse,
                 headers=self.__baseClient.sdsHeaders())
 
         self.__baseClient.checkResponse(

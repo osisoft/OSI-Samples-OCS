@@ -42,7 +42,7 @@ class Datagroup(object):
     def fromDictionary(content):
         dataGroup = Datagroup()
 
-        if len(content) == 0:
+        if not content:
             return dataGroup
 
         if 'DataItems' in content:

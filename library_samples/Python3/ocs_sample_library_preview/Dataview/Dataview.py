@@ -44,8 +44,6 @@ class Dataview(object):
             self.__queries = DataviewQuery()
         if mappings:
             self.__mappings = mappings
-        else:
-            self.__mappings = DataviewMapping()
         self.__indexConfig = indexConfig
         self.__indexDataType = indexDataType
         self.__groupRules = groupRules
@@ -225,7 +223,7 @@ class Dataview(object):
     def fromDictionary(content):
         dataview = Dataview()
 
-        if len(content) == 0:
+        if not content:
             return dataview
 
         if "Id" in content:

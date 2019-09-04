@@ -200,7 +200,7 @@ class SdsTypeProperty(object):
     def fromDictionary(content):
         typeProperty = SdsTypeProperty()
 
-        if len(content) == 0:
+        if not content:
             return typeProperty
 
         if 'Id' in content:

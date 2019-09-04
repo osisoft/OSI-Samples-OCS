@@ -142,7 +142,7 @@ class SdsStreamView(object):
     def fromDictionary(content):
         streamView = SdsStreamView()
 
-        if len(content) == 0:
+        if not content:
             return streamView
 
         if 'Id' in content:
