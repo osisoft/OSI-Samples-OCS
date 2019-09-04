@@ -223,7 +223,7 @@ class Dataview(object):
     def fromDictionary(content):
         dataview = Dataview()
 
-        if len(content) == 0:
+        if not content:
             return dataview
 
         if "Id" in content:

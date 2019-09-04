@@ -48,7 +48,7 @@ class DataviewMapping(object):
     def fromDictionary(content):
         dataviewMapping = DataviewMapping()
 
-        if len(content) == 0:
+        if not content:
             return dataviewMapping
 
         if 'Columns' in content:

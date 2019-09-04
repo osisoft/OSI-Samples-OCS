@@ -88,7 +88,7 @@ class DataviewGroupRule(object):
     def fromDictionary(content):
         dataviewGroupRule = DataviewGroupRule()
 
-        if len(content) == 0:
+        if not content:
             return dataviewGroupRule
 
         if 'Id' in content:

@@ -166,7 +166,7 @@ class SdsType(object):
     def fromDictionary(content):
         type = SdsType()
 
-        if len(content) == 0:
+        if not content:
             return type
 
         if 'Id' in content:

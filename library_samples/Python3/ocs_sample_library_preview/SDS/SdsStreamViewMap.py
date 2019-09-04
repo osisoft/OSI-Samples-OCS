@@ -83,9 +83,9 @@ class SdsStreamViewMap(object):
 
     @staticmethod
     def fromDictionary(content):
-        streamViewMap = SdsStreamViewMap()
+        streamViewMap = SdsStreamViewMap() 
 
-        if len(content) == 0:
+        if not content:
             return streamViewMap
 
         if 'TargetTypeId' in content:

@@ -35,7 +35,7 @@ class SdsNamespace(object):
     def fromDictionary(content):
         namespace = SdsNamespace()
 
-        if len(content) == 0:
+        if not content:
             return namespace
 
         if "Id" in content:

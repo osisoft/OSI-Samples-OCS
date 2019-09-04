@@ -99,7 +99,7 @@ class DataviewMappingColumn(object):
     def fromDictionary(content):
         dataviewMappingColumn = DataviewMappingColumn()
 
-        if len(content) == 0:
+        if not content:
             return dataviewMappingColumn
 
         if 'Name' in content:

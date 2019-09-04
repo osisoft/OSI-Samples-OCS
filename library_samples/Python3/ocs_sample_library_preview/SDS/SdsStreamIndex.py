@@ -39,7 +39,7 @@ class SdsStreamIndex(object):
     def fromDictionary(content):
         typePropertyId = SdsStreamIndex()
 
-        if len(content) == 0:
+        if not content:
             return typePropertyId
 
         if 'SdsTypePropertyId' in content:
