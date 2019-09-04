@@ -9,7 +9,7 @@ variables:
 - name: testpath
   value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
 - name: job
-  value: Auth_CC
+  value: Auth_CC_DotNet
 
 jobs:      
 - job: Auth_CC_DotNet
@@ -56,7 +56,7 @@ jobs:
       workingDirectory: $(Build.SourcesDirectory)$(testpath)/
       displayName: 'Run Test' 
 
-- job: OMF_APIDotNet_Cov
+- job: Auth_CC_Cov
 
   pool:
     name: 00-OSIManaged-Test
@@ -80,7 +80,7 @@ jobs:
     workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
     displayName: 'upload '
 
-- job: OMF_APIDotNet_BS
+- job: Auth_CC_BS
 
   pool:
     name: Hosted VS2017
