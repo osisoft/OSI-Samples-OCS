@@ -7,7 +7,7 @@ variables:
 - name: CredFileLibrary
   value: prod_appsettings.json
 - name: testpath
-  value: $(Build.SourcesDirectory)/basic_samples/SDS/DotNet/SdsClientLibraries/SdsClientLibrariesTests
+  value: /basic_samples/SDS/DotNet/SdsClientLibraries/SdsClientLibrariesCoreTests
 - name: job
   value: SDSDotNet
 
