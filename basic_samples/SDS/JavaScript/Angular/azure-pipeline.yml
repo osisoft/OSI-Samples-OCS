@@ -1,3 +1,27 @@
+variables:
+- group: LocalServer
+- name: configpath
+  value: /basic_samples/SDS/JavaScript/Angular/src/app/config
+- name: credpath
+  value: /basic_samples/SDS/JavaScript/Angular/e2e/src  
+- name: projpath
+  value: /basic_samples/SDS/JavaScript/Angular  
+- name: CredFile
+  value: cred.json
+- name: CredFileSdsConfig
+  value: sdsconfig.json
+- name: CredFileOidcConfig
+  value: oidc.config.json
+- name: CredFileLibrary
+  value: prod_cred.json
+- name: CredFileSdsConfigLibrary
+  value: prod_sdsconfig.json
+- name: CredFileOidcConfigLibrary
+  value: prod_oidc.config.json
+- name: testpath
+  value: /basic_samples/OMF_API/Java/omfapijava
+- name: job
+  value: SDSangJS
 
 jobs:      
 - job: SDSangJS
@@ -14,19 +38,19 @@ jobs:
     # Download a secure file to a temporary location on the build or release agent
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: prod_oidc.config.json
+        secureFile: $(credfileoidcconfiglibrary)
 
     # Download Secure File
     # Download a secure file to a temporary location on the build or release agent
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: prod_sdsconfig.json
+        secureFile: $(credfilesdsconfiglibrary)
         
     # Download Secure File
     # Download a secure file to a temporary location on the build or release agent
     - task: DownloadSecureFile@1
       inputs:
-        secureFile: prod_cred.json
+        secureFile: $(credfilelibrary)
 
 
     # Copy Files  
@@ -34,8 +58,8 @@ jobs:
     - task: CopyFiles@2
       inputs:
         sourceFolder: $(Agent.TempDirectory)
-        contents: prod_oidc.config.json
-        targetFolder: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/src/app/config/' 
+        contents: $(credfileoidcconfiglibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(configpath)/' 
         #cleanTargetFolder: false # Optional 
         overWrite: true # Optional
         #flattenFolders: false # Optional
@@ -47,8 +71,8 @@ jobs:
     - task: CopyFiles@2
       inputs:
         sourceFolder: $(Agent.TempDirectory)
-        contents: prod_sdsconfig.json
-        targetFolder: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/src/app/config/' 
+        contents: $(credfilesdsconfiglibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(configpath)/' 
         #cleanTargetFolder: false # Optional 
         overWrite: true # Optional
         #flattenFolders: false # Optional
@@ -59,69 +83,69 @@ jobs:
     - task: CopyFiles@2
       inputs:
         sourceFolder: $(Agent.TempDirectory)
-        contents: prod_cred.json
-        targetFolder: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/e2e/src/' 
+        contents: $(credfilelibrary)
+        targetFolder: '$(Build.SourcesDirectory)$(credpath)/' 
         #cleanTargetFolder: false # Optional 
         overWrite: true # Optional
         #flattenFolders: false # Optional
       displayName: copy file 3
 
     - script: |
-        del oidc.config.json
-      workingDirectory:  '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/src/app/config/' 
+        del $(credfileoidcconfig)
+      workingDirectory:  '$(Build.SourcesDirectory)$(configpath)/' 
       displayName: 'rename config file1'
 
     - script: |
-        rename prod_oidc.config.json oidc.config.json
-      workingDirectory: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/src/app/config/' 
+        rename $(credfileoidcconfiglibrary) $(credfileoidcconfig)
+      workingDirectory: '$(Build.SourcesDirectory)$(configpath)/' 
       displayName: 'rename config file2'
 
     - script: |
-        del sdsconfig.json
-      workingDirectory:  '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/src/app/config/' 
+        del $(credfilesdsconfig)
+      workingDirectory:  '$(Build.SourcesDirectory)$(configpath)/' 
       displayName: 'rename config file3'
 
     - script: |
-        rename prod_sdsconfig.json sdsconfig.json
-      workingDirectory: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/src/app/config/' 
+        rename $(credfilesdsconfiglibrary) $(credfilesdsconfig)
+      workingDirectory: '$(Build.SourcesDirectory)$(configpath)/' 
       displayName: 'rename config file4'
 
     - script: |
-        del cred.json
-      workingDirectory: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/e2e/src/'
+        del $(credfile)
+      workingDirectory: '$(Build.SourcesDirectory)$(credpath)/'
       displayName: 'rename config file5'
 
     - script: |
-        rename prod_cred.json cred.json
-      workingDirectory: '$(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/e2e/src/'
+        rename $(credfilelibrary) $(credfile)
+      workingDirectory: '$(Build.SourcesDirectory)$(credpath)/'
       displayName: 'rename config file6'
       
     - script: |
        npm install -g @angular/cli
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
       displayName: 'Install tools1'      
       
       
     - script: |
        npx webdriver-manager update
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
       displayName: 'Install tools2'    
 
 
     - script: |
        npm ci 
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
       displayName: 'Install tools3'   
       
     - script: |
        npx webdriver-manager update
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
       displayName: 'Install tools5'
 
     - script: |
         ng e2e --webdriver-update=false
       displayName: 'Test that the app runs'
-      workingDirectory: $(Build.SourcesDirectory)/basic_samples/SDS/JavaScript/Angular/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
 
 
     # Publish Test Results
@@ -137,3 +161,27 @@ jobs:
         #buildPlatform: # Optional
         #buildConfiguration: # Optional
         #publishRunAttachments: true # Optional
+
+- job: SDSangJS_COV
+
+  pool:
+    name: 00-OSIManaged-Test
+    demands: USERNAME -equals $(LocalServer)
+
+  steps:
+  - script: 'mkdir $(covFolder)'
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
+    displayName: 'make dir '
+    continueOnError: true
+
+  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+    displayName: 'build '
+
+  - script: '"$(covPath)cov-analyze" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+    displayName: 'analyze '
+
+  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)
+    displayName: 'upload '
