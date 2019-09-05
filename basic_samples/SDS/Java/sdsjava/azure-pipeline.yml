@@ -76,4 +76,4 @@ jobs:
 
   - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
     workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)
-    displayName: 'upload '
+    displayName: 'upload ' 
