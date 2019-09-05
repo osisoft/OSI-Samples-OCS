@@ -46,7 +46,7 @@ jobs:
     - script: |
         dotnet restore
         dotnet msbuild -p:HIGHENTROPYVA=true
-      workingDirectory: $(Build.SourcesDirectory)/
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
       displayName: 'build app'  
       
     - script: |
