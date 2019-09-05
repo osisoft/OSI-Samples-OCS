@@ -3,9 +3,9 @@ variables:
 - name: projpath
   value: /basic_samples/SDS/JavaScript/NodeJs
 - name: CredFile
-  value: config.ini
+  value: config.js
 - name: CredFileLibrary
-  value: prod_config.ini
+  value: prod_config.js
 - name: testpath
   value: /basic_samples/SDS/JavaScript/NodeJs
 - name: job
