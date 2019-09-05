@@ -49,7 +49,7 @@ jobs:
       workingDirectory: $(Build.SourcesDirectory)$(testpath)/
       displayName: 'Run Test'
    
-- job: OMF_APIDotNet_Cov
+- job: SDS_TSDotNet_Cov
 
   pool:
     name: 00-OSIManaged-Test
@@ -73,7 +73,7 @@ jobs:
     workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
     displayName: 'upload '
 
-- job: OMF_APIDotNet_BS
+- job: SDS_TSDotNet_BS
 
   pool:
     name: Hosted VS2017
