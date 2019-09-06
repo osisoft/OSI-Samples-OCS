@@ -6,8 +6,7 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
-
-namespace Tests
+namespace ImplicitFlowTest
 {
     public class Tests
     {
@@ -45,7 +44,7 @@ namespace Tests
 
 
 
-                driver.FindElement(By.XPath("/html/body/div[3]/div/div/a[@title=\"Personal Account\"]")).Click();
+                driver.FindElement(By.XPath("descendant::a[@title=\"Personal Account\"]")).Click();
 
 
                 Thread.Sleep(sleep);
