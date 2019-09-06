@@ -6,8 +6,7 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 
-
-namespace Tests
+namespace AuthorizationCodeFlowTest
 {
     public class Tests
     {
@@ -46,17 +45,17 @@ namespace Tests
 
                 Thread.Sleep(sleep);
 
-                ///sometimes the test doesn't find the personal account so trying clicking login again
+                // sometimes the test doesn't find the personal account so trying clicking login again
                 try
                 {
-                    driver.FindElement(By.XPath("/html/body/div[3]/div/div/a[@title=\"Personal Account\"]")).Click();                    
+                    driver.FindElement(By.XPath("descendant::a[@title=\"Personal Account\"]")).Click();                    
                 }
                 catch (System.Exception)
                 {                    
                     driver.FindElement(By.XPath("//*[@id=\"login\"]")).Click();
 
                     Thread.Sleep(sleep);
-                    driver.FindElement(By.XPath("/html/body/div[3]/div/div/a[@title=\"Personal Account\"]")).Click();         
+                    driver.FindElement(By.XPath("descendant::a[@title=\"Personal Account\"]")).Click();         
                 }
 
 
