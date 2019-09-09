@@ -13,7 +13,7 @@ variables:
 - name: testpath
   value: /basic_samples/Authentication/ImplicitFlow/DotNet/ImplicitFlowTest
 - name: job
-  value: Auth_Implicit
+  value: Auth_Implicit_DotNet
 
 jobs:      
 - job: Auth_Implicit_DotNet
