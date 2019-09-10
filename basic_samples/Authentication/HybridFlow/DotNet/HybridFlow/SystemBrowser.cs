@@ -124,7 +124,7 @@ namespace HybridFlow
 
                 Thread.Sleep(sleep);
 
-                driver.FindElement(By.XPath("/html/body/div[3]/div/div/a[@title=\"Personal Account\"]")).Click();
+                driver.FindElement(By.XPath("descendant::a[@title=\"Personal Account\"]")).Click();
 
 
                 Thread.Sleep(sleep);
