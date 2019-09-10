@@ -9,7 +9,7 @@ variables:
 - name: testpath
   value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest
 - name: job
-  value: Auth_Hybrid
+  value: Auth_Hybrid_DotNet
 
 jobs:      
 - job: Auth_Hybrid_DotNet
