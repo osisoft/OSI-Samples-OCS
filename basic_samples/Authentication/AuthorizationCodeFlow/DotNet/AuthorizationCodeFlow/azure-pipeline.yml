@@ -13,7 +13,7 @@ variables:
 - name: testpath
   value: /basic_samples/Authentication/AuthorizationCodeFlow/DotNet/AuthorizationCodeFlowTest
 - name: job
-  value: Auth_PKCE
+  value: Auth_PKCE_DotNet
 
 jobs:      
 - job: Auth_PKCE_DotNet
