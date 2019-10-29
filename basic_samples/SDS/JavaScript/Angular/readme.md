@@ -2,16 +2,17 @@
 
 ## Building a client to make REST API calls to the SDS Service
 
-The sample code in this topic demonstrates how to invoke SDS REST APIs using Angular 7. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, create an SdsNamespace, SdsType, and SdsStream, and how to create, read, update, and delete values in SDS. Although this example uses Angular, other javascript frameworks should also work.
+The sample code in this topic demonstrates how to invoke SDS REST APIs using Angular. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, create an SdsNamespace, SdsType, and SdsStream, and how to create, read, update, and delete values in SDS. Although this example uses Angular, other javascript frameworks should also work.
 
 ## Prerequisites
 
 You must have the following software installed on your computer:
 
-- Angular version 7 (available on GitHub/npm)
-- Angular CLI
-- A modern browser (OSIsoft recommends Google Chrome or Mozilla Firefox)
-- This application by default will use Port 4200
+- NodeJs and NPM
+- Angular CLI (`npm install -g @angular/cli`)
+- A modern Evergreen browser (OSIsoft recommends Google Chrome or Mozilla Firefox)
+
+This application by default will use Port 4200
 
 **Note: This application is hosted on HTTP. This is not secure. You should use a certificate and HTTPS.**
 
