@@ -1,7 +1,6 @@
-**This sample is currently not working**
-===================================
+# **This sample is currently not working**
 
-# angular6sample
+# Angular SDS Sample
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.2.
 
