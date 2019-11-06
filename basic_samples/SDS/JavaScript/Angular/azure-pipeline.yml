@@ -1,187 +1,177 @@
 variables:
-- group: LocalServer
-- name: configpath
-  value: /basic_samples/SDS/JavaScript/Angular/src/app/config
-- name: credpath
-  value: /basic_samples/SDS/JavaScript/Angular/e2e/src  
-- name: projpath
-  value: /basic_samples/SDS/JavaScript/Angular  
-- name: CredFile
-  value: cred.json
-- name: CredFileSdsConfig
-  value: sdsconfig.json
-- name: CredFileOidcConfig
-  value: oidc.config.json
-- name: CredFileLibrary
-  value: prod_cred.json
-- name: CredFileSdsConfigLibrary
-  value: prod_sdsconfig.json
-- name: CredFileOidcConfigLibrary
-  value: prod_oidc.config.json
-- name: testpath
-  value: /basic_samples/OMF_API/Java/omfapijava
-- name: job
-  value: SDSangJS
+  - group: LocalServer
+  - name: configpath
+    value: /basic_samples/SDS/JavaScript/Angular/src/app/config
+  - name: credpath
+    value: /basic_samples/SDS/JavaScript/Angular/e2e/src
+  - name: projpath
+    value: /basic_samples/SDS/JavaScript/Angular
+  - name: CredFile
+    value: cred.json
+  - name: CredFileSdsConfig
+    value: sdsconfig.json
+  - name: CredFileOidcConfig
+    value: oidc.config.json
+  - name: CredFileLibrary
+    value: prod_cred.json
+  - name: CredFileSdsConfigLibrary
+    value: prod_sdsconfig.json
+  - name: CredFileOidcConfigLibrary
+    value: prod_oidc.config.json
+  - name: testpath
+    value: /basic_samples/OMF_API/Java/omfapijava
+  - name: job
+    value: SDSangJS
 
-jobs:      
-- job: SDSangJS
+jobs:
+  - job: SDSangJS
 
-  pool:
-    vmImage: 'vs2017-win2016'
-    
-  steps :
-    - task: NodeTool@0 
-      inputs:
-        versionSpec: '10.x' # replace this value with the version that you need for your project
+    pool:
+      vmImage: 'vs2017-win2016'
 
-    # Download Secure File
-    # Download a secure file to a temporary location on the build or release agent
-    - task: DownloadSecureFile@1
-      inputs:
-        secureFile: $(credfileoidcconfiglibrary)
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x' # replace this value with the version that you need for your project
 
-    # Download Secure File
-    # Download a secure file to a temporary location on the build or release agent
-    - task: DownloadSecureFile@1
-      inputs:
-        secureFile: $(credfilesdsconfiglibrary)
-        
-    # Download Secure File
-    # Download a secure file to a temporary location on the build or release agent
-    - task: DownloadSecureFile@1
-      inputs:
-        secureFile: $(credfilelibrary)
+      # Download Secure File
+      # Download a secure file to a temporary location on the build or release agent
+      - task: DownloadSecureFile@1
+        inputs:
+          secureFile: $(credfileoidcconfiglibrary)
 
+      # Download Secure File
+      # Download a secure file to a temporary location on the build or release agent
+      - task: DownloadSecureFile@1
+        inputs:
+          secureFile: $(credfilesdsconfiglibrary)
 
-    # Copy Files  
-    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-    - task: CopyFiles@2
-      inputs:
-        sourceFolder: $(Agent.TempDirectory)
-        contents: $(credfileoidcconfiglibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(configpath)/' 
-        #cleanTargetFolder: false # Optional 
-        overWrite: true # Optional
-        #flattenFolders: false # Optional
-      displayName: copy file 1
-      
+      # Download Secure File
+      # Download a secure file to a temporary location on the build or release agent
+      - task: DownloadSecureFile@1
+        inputs:
+          secureFile: $(credfilelibrary)
 
-    # Copy Files 
-    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-    - task: CopyFiles@2
-      inputs:
-        sourceFolder: $(Agent.TempDirectory)
-        contents: $(credfilesdsconfiglibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(configpath)/' 
-        #cleanTargetFolder: false # Optional 
-        overWrite: true # Optional
-        #flattenFolders: false # Optional
-      displayName: copy file 2
+      # Copy Files
+      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: $(Agent.TempDirectory)
+          contents: $(credfileoidcconfiglibrary)
+          targetFolder: '$(Build.SourcesDirectory)$(configpath)/'
+          #cleanTargetFolder: false # Optional
+          overWrite: true # Optional
+          #flattenFolders: false # Optional
+        displayName: copy file 1
 
-    # Copy Files   ocs_samples\basic_samples\SDS\JavaScript\Angular\e2e\src\config.json
-    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-    - task: CopyFiles@2
-      inputs:
-        sourceFolder: $(Agent.TempDirectory)
-        contents: $(credfilelibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(credpath)/' 
-        #cleanTargetFolder: false # Optional 
-        overWrite: true # Optional
-        #flattenFolders: false # Optional
-      displayName: copy file 3
+      # Copy Files
+      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: $(Agent.TempDirectory)
+          contents: $(credfilesdsconfiglibrary)
+          targetFolder: '$(Build.SourcesDirectory)$(configpath)/'
+          #cleanTargetFolder: false # Optional
+          overWrite: true # Optional
+          #flattenFolders: false # Optional
+        displayName: copy file 2
 
-    - script: |
-        del $(credfileoidcconfig)
-      workingDirectory:  '$(Build.SourcesDirectory)$(configpath)/' 
-      displayName: 'rename config file1'
+      # Copy Files   ocs_samples\basic_samples\SDS\JavaScript\Angular\e2e\src\config.json
+      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: $(Agent.TempDirectory)
+          contents: $(credfilelibrary)
+          targetFolder: '$(Build.SourcesDirectory)$(credpath)/'
+          #cleanTargetFolder: false # Optional
+          overWrite: true # Optional
+          #flattenFolders: false # Optional
+        displayName: copy file 3
 
-    - script: |
-        rename $(credfileoidcconfiglibrary) $(credfileoidcconfig)
-      workingDirectory: '$(Build.SourcesDirectory)$(configpath)/' 
-      displayName: 'rename config file2'
+      - script: |
+          del $(credfileoidcconfig)
+        workingDirectory: '$(Build.SourcesDirectory)$(configpath)/'
+        displayName: 'rename config file1'
 
-    - script: |
-        del $(credfilesdsconfig)
-      workingDirectory:  '$(Build.SourcesDirectory)$(configpath)/' 
-      displayName: 'rename config file3'
+      - script: |
+          rename $(credfileoidcconfiglibrary) $(credfileoidcconfig)
+        workingDirectory: '$(Build.SourcesDirectory)$(configpath)/'
+        displayName: 'rename config file2'
 
-    - script: |
-        rename $(credfilesdsconfiglibrary) $(credfilesdsconfig)
-      workingDirectory: '$(Build.SourcesDirectory)$(configpath)/' 
-      displayName: 'rename config file4'
+      - script: |
+          del $(credfilesdsconfig)
+        workingDirectory: '$(Build.SourcesDirectory)$(configpath)/'
+        displayName: 'rename config file3'
 
-    - script: |
-        del $(credfile)
-      workingDirectory: '$(Build.SourcesDirectory)$(credpath)/'
-      displayName: 'rename config file5'
+      - script: |
+          rename $(credfilesdsconfiglibrary) $(credfilesdsconfig)
+        workingDirectory: '$(Build.SourcesDirectory)$(configpath)/'
+        displayName: 'rename config file4'
 
-    - script: |
-        rename $(credfilelibrary) $(credfile)
-      workingDirectory: '$(Build.SourcesDirectory)$(credpath)/'
-      displayName: 'rename config file6'
-      
-    - script: |
-       npm install -g @angular/cli
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'Install tools1'      
-      
-      
-    - script: |
-       npx webdriver-manager update
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'Install tools2'    
+      - script: |
+          del $(credfile)
+        workingDirectory: '$(Build.SourcesDirectory)$(credpath)/'
+        displayName: 'rename config file5'
 
+      - script: |
+          rename $(credfilelibrary) $(credfile)
+        workingDirectory: '$(Build.SourcesDirectory)$(credpath)/'
+        displayName: 'rename config file6'
 
-    - script: |
-       npm ci 
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'Install tools3'   
-      
-    - script: |
-       npx webdriver-manager update
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'Install tools5'
+      - script: |
+          npm install -g @angular/cli
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: 'Install tools1'
 
-    - script: |
-        ng e2e --webdriver-update=false
-      displayName: 'Test that the app runs'
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      - script: |
+          npm ci
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: 'Install tools2'
 
+      - script: |
+          npx webdriver-manager update --versions.chrome 76.0.3809.126
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: 'Install tools3'
 
-    # Publish Test Results
-    # Publish Test Results to Azure Pipelines/TFS
-    - task: PublishTestResults@2
-      inputs:
-        #testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
-        testResultsFiles: '**/ex*.png' 
-        #searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
-        #mergeTestResults: false # Optional
-        #failTaskOnFailedTests: false # Optional
-        #testRunTitle: # Optional
-        #buildPlatform: # Optional
-        #buildConfiguration: # Optional
-        #publishRunAttachments: true # Optional
+      - script: |
+          ng e2e --webdriver-update=false
+        displayName: 'Test that the app runs'
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
 
-- job: SDSangJS_COV
+      # Publish Test Results
+      # Publish Test Results to Azure Pipelines/TFS
+      - task: PublishTestResults@2
+        inputs:
+          #testResultsFormat: 'JUnit' # Options: JUnit, NUnit, VSTest, xUnit, cTest
+          testResultsFiles: '**/ex*.png'
+          #searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
+          #mergeTestResults: false # Optional
+          #failTaskOnFailedTests: false # Optional
+          #testRunTitle: # Optional
+          #buildPlatform: # Optional
+          #buildConfiguration: # Optional
+          #publishRunAttachments: true # Optional
 
-  pool:
-    name: 00-OSIManaged-Test
-    demands: USERNAME -equals $(LocalServer)
+  - job: SDSangJS_COV
 
-  steps:
-  - script: 'if not exist $(covFolder) mkdir $(covFolder)'
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
-    displayName: 'make dir '
-    continueOnError: true
+    pool:
+      name: 00-OSIManaged-Test
+      demands: USERNAME -equals $(LocalServer)
 
-  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'build '
+    steps:
+      - script: 'if not exist $(covFolder) mkdir $(covFolder)'
+        workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
+        displayName: 'make dir '
+        continueOnError: true
 
-  - script: '"$(covPath)cov-analyze" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'analyze '
+      - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
+        workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+        displayName: 'build '
 
-  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'upload '
+      - script: '"$(covPath)cov-analyze" --dir . '
+        workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+        displayName: 'analyze '
+
+      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+        workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
+        displayName: 'upload '
