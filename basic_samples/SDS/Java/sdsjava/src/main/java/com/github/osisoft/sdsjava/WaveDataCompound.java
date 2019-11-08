@@ -5,7 +5,6 @@
 package com.github.osisoft.sdsjava;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class WaveDataCompound {
 
@@ -36,7 +35,7 @@ public class WaveDataCompound {
         this.Tanh = multiplier * Math.tanh(radians);
     }
 
-    public static WaveDataCompound next(int order,int multiplier) {
+    public static WaveDataCompound next(int order, int multiplier) {
         double radians = (order) * 2 * Math.PI;
 
         return new WaveDataCompound(multiplier, radians, order);
