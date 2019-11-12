@@ -46,6 +46,7 @@ namespace SdsClientLibraries
             string compoundTypeId = "SampleType_Compound";
 
             var uriResource = new Uri(resource);
+            
             // Step 1 
             // Get Sds Services to communicate with server
             AuthenticationHandler authenticationHandler = new AuthenticationHandler(uriResource, clientId, clientKey);
@@ -122,7 +123,7 @@ namespace SdsClientLibraries
                 Console.WriteLine();
 
                 // Step 6
-                //Step2 Getting all events in table format with headers.
+                // getting all events in table format with headers
                 var tableEvents = await tableService.GetWindowValuesAsync(stream.Id, "0", "180");
 
                 Console.WriteLine("Getting table events");
