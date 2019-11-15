@@ -1,6 +1,9 @@
 trigger:
   - master
 
+pr:
+  - master
+
 variables:
   - group: LocalServer
   - name: projpath
