@@ -1,3 +1,6 @@
+trigger:
+  - master
+
 variables:
   - group: LocalServer
   - name: projpath
