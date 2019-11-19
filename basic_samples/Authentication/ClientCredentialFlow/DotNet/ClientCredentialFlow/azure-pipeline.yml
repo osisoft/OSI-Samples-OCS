@@ -131,6 +131,23 @@ jobs:
         - npm
 
     steps:
+      - task: JavaToolInstaller@0
+        displayName: 'Use Java 1.8'
+        inputs:
+          versionSpec: 1.8
+          jdkArchitectureOption: x64
+          jdkSourceOption: AzureStorage
+          azureResourceManagerEndpoint: engineering.CyberSecurity.Java
+          azureStorageAccountName: java4osisoft
+          azureContainerName: ' jdk1-8-0-181'
+          azureCommonVirtualFile: 'server-jre-8u181-windows-x64.tar.gz'
+          jdkDestinationDirectory: 'c:\Java'
+
+      - powershell: |
+          Write-Host "JAVA_HOME\bin: ${env:JAVA_HOME}\bin"
+          Write-Host "##vso[task.setvariable variable=PATH;]${env:PATH};${env:JAVA_HOME}\bin"
+        displayName: 'Path += JAVA_HOME\bin'
+
       - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
         displayName: 'Synopsis Detect'
         inputs:
