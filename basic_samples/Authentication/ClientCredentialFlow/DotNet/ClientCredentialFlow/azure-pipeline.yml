@@ -18,7 +18,7 @@ pr:
 variables:
   - group: LocalServer
   - name: projpath
-    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
+    value: \basic_samples\Authentication\ClientCredentialFlow\DotNet\ClientCredentialFlow
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
@@ -47,8 +47,16 @@ jobs:
         inputs:
           secureFile: $(CredFileLibrary)
 
-      - bash: cp $(CredFileLibrary) $(Build.SourcesDirectory)$(projpath)/$(CredFileLibrary)
-        workingDirectory: $(Agent.TempDirectory)
+      # Copy Files
+      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: $(Agent.TempDirectory)
+          contents: $(CredFileLibrary)
+          targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
+          #cleanTargetFolder: false # Optional
+          overWrite: true # Optional
+          #flattenFolders: false # Optional
         displayName: 'Copy library config file'
 
       - bash: rm $(CredFile)
