@@ -60,7 +60,7 @@ jobs:
         displayName: 'Copy library config file'
 
       - script: |
-          del $(CredFileLibrary)
+          del $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Delete default config file'
 
