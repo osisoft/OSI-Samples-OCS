@@ -1,8 +1,19 @@
 trigger:
-  - master
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 pr:
-  - master
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 variables:
   - group: LocalServer

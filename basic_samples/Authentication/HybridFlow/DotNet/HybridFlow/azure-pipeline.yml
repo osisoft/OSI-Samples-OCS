@@ -1,84 +1,99 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - basic_samples/Authentication/HybridFlow/DotNet
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - basic_samples/Authentication/HybridFlow/DotNet
+
 variables:
-- group: LocalServer
-- name: projpath
-  value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlow
-- name: CredFile
-  value: appsettings.json
-- name: CredFileLibrary
-  value: Hybrid_prod_appsettings.json
-- name: testpath
-  value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest
-- name: job
-  value: Auth_Hybrid_DotNet
+  - group: LocalServer
+  - name: projpath
+    value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlow
+  - name: CredFile
+    value: appsettings.json
+  - name: CredFileLibrary
+    value: Hybrid_prod_appsettings.json
+  - name: testpath
+    value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest
+  - name: job
+    value: Auth_Hybrid_DotNet
 
-jobs:      
-- job: Auth_Hybrid_DotNet
+jobs:
+  - job: Auth_Hybrid_DotNet
 
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps :
+    pool:
+      vmImage: "vs2017-win2016"
+    steps:
+      # Download Secure File
+      # Download a secure file to a temporary location on the build or release agent
+      - task: DownloadSecureFile@1
+        inputs:
+          secureFile: $(CredFileLibrary)
 
-    # Download Secure File
-    # Download a secure file to a temporary location on the build or release agent
-    - task: DownloadSecureFile@1
-      inputs:
-        secureFile: $(CredFileLibrary)
+      # Copy Files
+      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: $(Agent.TempDirectory)
+          contents: $(CredFileLibrary)
+          targetFolder: "$(Build.SourcesDirectory)$(projpath)/"
+          #cleanTargetFolder: false # Optional
+          overWrite: true # Optional
+          #flattenFolders: false # Optional
+        displayName: copy file
 
+      - script: |
+          del $(CredFile)
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: "del config file"
 
-    # Copy Files
-    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-    - task: CopyFiles@2
-      inputs:
-        sourceFolder: $(Agent.TempDirectory)
-        contents: $(CredFileLibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
-        #cleanTargetFolder: false # Optional  
-        overWrite: true # Optional
-        #flattenFolders: false # Optional 
-      displayName: copy file
+      - script: |
+          mv $(CredFileLibrary) $(CredFile)
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: "rename config file"
 
-    - script: |
-        del $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'del config file'       
+      - script: |
+          dotnet restore
+          dotnet msbuild -p:HIGHENTROPYVA=true
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: "Run Test"
 
-    - script: |
-        mv $(CredFileLibrary) $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'rename config file'       
-      
-    - script: |
-        dotnet restore
-        dotnet msbuild -p:HIGHENTROPYVA=true
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'Run Test'  
-      
-    - script: |
-        dotnet restore
-        dotnet test
-      workingDirectory: $(Build.SourcesDirectory)$(testpath)/
-      displayName: 'Run Test' 
+      - script: |
+          dotnet restore
+          dotnet test
+        workingDirectory: $(Build.SourcesDirectory)$(testpath)/
+        displayName: "Run Test"
 
-- job: OMF_APIDotNet_Cov
+  - job: OMF_APIDotNet_Cov
 
-  pool:
-    name: 00-OSIManaged-Test
-    demands: USERNAME -equals $(LocalServer)
+    pool:
+      name: 00-OSIManaged-Test
+      demands: USERNAME -equals $(LocalServer)
 
-  steps:
-  - script: 'if not exist $(covFolder) mkdir $(covFolder)'
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
-    displayName: 'make dir '
-    continueOnError: true
+    steps:
+      - script: "if not exist $(covFolder) mkdir $(covFolder)"
+        workingDirectory: "$(Build.SourcesDirectory)$(projpath)"
+        displayName: "make dir "
+        continueOnError: true
 
-  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'build '
+      - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
+        workingDirectory: "$(Build.SourcesDirectory)$(projpath)/$(covFolder)"
+        displayName: "build "
 
-  - script: '"$(covPath)cov-analyze" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'analyze '
+      - script: '"$(covPath)cov-analyze" --dir . '
+        workingDirectory: "$(Build.SourcesDirectory)$(projpath)/$(covFolder)"
+        displayName: "analyze "
 
-  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'upload '
+      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+        workingDirectory: "$(Build.SourcesDirectory)$(projpath)/$(covFolder)"
+        displayName: "upload "
