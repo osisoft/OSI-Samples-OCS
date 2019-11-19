@@ -152,20 +152,3 @@ jobs:
         displayName: 'Analyze'
         inputs:
           AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
-  # - job: BlackDuck
-  #   pool:
-  #     name: Hosted VS2017
-  #     demands:
-  #       - maven
-  #       - npm
-  #   steps:
-  #     - task: black-duck-software.detect-for-tfs.hub.detect.task.BlackDuckDetect@1
-  #       displayName: 'Black Duck Detect'
-  #       inputs:
-  #         BlackDuckHubService: 'Black Duck'
-  #         DetectArguments: |
-  #           --detect.project.name="$(repo)"
-  #           --detect.project.version.name="latest"
-  #           --detect.source.path="$(build.sourcesDirectory)$(projpath)"
-  #           --detect.code.location.name="code_location_$(repo)_latest_$(repo)"
-  #           --detect.bom.aggregate.name="bom_$(repo)_latest_$(repo)"
