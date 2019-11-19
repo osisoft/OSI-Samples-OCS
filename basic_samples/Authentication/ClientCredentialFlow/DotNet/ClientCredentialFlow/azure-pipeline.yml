@@ -47,22 +47,12 @@ jobs:
         inputs:
           secureFile: $(CredFileLibrary)
 
-      # Copy Files
-      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-      - task: CopyFiles@2
-        inputs:
-          sourceFolder: $(Agent.TempDirectory)
-          contents: $(CredFileLibrary)
-          targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
-          #cleanTargetFolder: false # Optional
-          overWrite: true # Optional
-          #flattenFolders: false # Optional
+      - bash: cp $(CredFileLibrary) $(Build.SourcesDirectory)$(projpath)/
+        workingDirectory: $(Agent.TempDirectory)
         displayName: 'Copy library config file'
 
-      - task: DeleteFiles@1
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)$(projpath)/
-          contents: $(CredFile)
+      - bash: rm $(CredFile)
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Delete default config file'
 
       - bash: mv $(CredFileLibrary) $(CredFile)
