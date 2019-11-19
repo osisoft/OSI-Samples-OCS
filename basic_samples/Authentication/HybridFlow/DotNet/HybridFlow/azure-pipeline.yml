@@ -102,7 +102,7 @@ jobs:
 
   - job: BinSkim
     pool:
-      name: 00-OSIManaged-Build
+      name: Hosted VS2017
     steps:
       - script: |
           dotnet restore
