@@ -121,24 +121,22 @@ jobs:
         displayName: 'Analyze'
         inputs:
           AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
-
-  - job: Synopsis
-    pool:
-      name: Hosted VS2017
-      demands:
-        - maven
-        - npm
-
-    steps:
-      - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
-        displayName: 'Synopsis Detect'
-        inputs:
-          Products: BD
-          BlackDuckService: 'NOVA.Black Duck service connection'
-          BlackDuckHubService: 'Black Duck'
-          DetectArguments: |
-            --detect.project.name="$(repo)" 
-            --detect.project.version.name="latest" 
-            --detect.source.path="$(build.sourcesDirectory)$(projpath)"
-            --detect.code.location.name="code_location_$(repo)_latest_$(repo)"
-            --detect.bom.aggregate.name="bom_$(repo)_latest_$(repo)"
+  # - job: Synopsis
+  #   pool:
+  #     name: Hosted VS2017
+  #     demands:
+  #       - maven
+  #       - npm
+  #   steps:
+  #     - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
+  #       displayName: 'Synopsis Detect'
+  #       inputs:
+  #         Products: BD
+  #         BlackDuckService: 'NOVA.Black Duck service connection'
+  #         BlackDuckHubService: 'Black Duck'
+  #         DetectArguments: |
+  #           --detect.project.name="$(repo)"
+  #           --detect.project.version.name="latest"
+  #           --detect.source.path="$(build.sourcesDirectory)$(projpath)"
+  #           --detect.code.location.name="code_location_$(repo)_latest_$(repo)"
+  #           --detect.bom.aggregate.name="bom_$(repo)_latest_$(repo)"
