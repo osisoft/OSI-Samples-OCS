@@ -130,7 +130,7 @@ jobs:
         - npm
 
     steps:
-      - task: synopsis-detect.synopsis-detect.synopsis-detect-task.SynopsysDetectTask@2
+      - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
         displayName: 'Synopsis Detect'
         inputs:
           Products: BD
