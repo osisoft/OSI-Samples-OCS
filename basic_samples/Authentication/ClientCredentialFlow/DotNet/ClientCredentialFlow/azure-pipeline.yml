@@ -25,7 +25,7 @@ variables:
     value: product-readiness.auth_cc_dotnet.json
   - name: testpath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
-  - name: job
+  - name: repo
     value: Auth_CC_DotNet
 
 jobs:
@@ -46,6 +46,7 @@ jobs:
       - task: DownloadSecureFile@1
         inputs:
           secureFile: $(CredFileLibrary)
+        displayName: 'Download library config file'
 
       # Copy Files
       # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
@@ -59,9 +60,7 @@ jobs:
           #flattenFolders: false # Optional
         displayName: 'Copy library config file'
 
-      - bash: |
-          pwd
-          rm $(CredFile)
+      - bash: rm $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Delete default config file'
 
@@ -80,7 +79,7 @@ jobs:
           dotnet msbuild -p:HIGHENTROPYVA=true
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testpath)/
-        displayName: 'Run Test'
+        displayName: 'Run test'
 
   - job: Coverity
 
@@ -102,7 +101,7 @@ jobs:
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
         displayName: 'Analyze'
 
-      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(repo)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
         displayName: 'Upload'
 
@@ -122,3 +121,22 @@ jobs:
         displayName: 'Analyze'
         inputs:
           AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
+
+  - job: BlackDuck
+    pool:
+      name: Hosted VS2017
+      demands:
+        - maven
+        - npm
+
+    steps:
+      - task: black-duck-software.detect-for-tfs.hub.detect.task.BlackDuckDetect@1
+        displayName: 'Black Duck Detect'
+        inputs:
+          BlackDuckHubService: 'Black Duck'
+          DetectArguments: |
+            --detect.project.name="$(repo)" 
+            --detect.project.version.name="latest" 
+            --detect.source.path="$(build.sourcesDirectory)$(projpath)"
+            --detect.code.location.name="code_location_$(repo)_latest_$(repo)"
+            --detect.bom.aggregate.name="bom_$(repo)_latest_$(repo)"
