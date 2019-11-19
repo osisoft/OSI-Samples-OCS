@@ -59,13 +59,13 @@ jobs:
           #flattenFolders: false # Optional
         displayName: 'Copy library config file'
 
-      - script: |
-          del $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      - task: DeleteFiles@1
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)$(projpath)/
+          contents: $(CredFile)
         displayName: 'Delete default config file'
 
-      - script: |
-          mv $(CredFileLibrary) $(CredFile)
+      - bash: mv $(CredFileLibrary) $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Rename library config file'
 
