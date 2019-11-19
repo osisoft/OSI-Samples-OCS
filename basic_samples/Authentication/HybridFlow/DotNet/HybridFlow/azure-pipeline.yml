@@ -22,7 +22,7 @@ variables:
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
-    value: Hybrid_prod_appsettings.json
+    value: hybrid_prod_appsettings.json
   - name: testpath
     value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest
   - name: job
@@ -66,7 +66,7 @@ jobs:
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: "Run Test"
+        displayName: "build app"
 
       - script: |
           dotnet restore
