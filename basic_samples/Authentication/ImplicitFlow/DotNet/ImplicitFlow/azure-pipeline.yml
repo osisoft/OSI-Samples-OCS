@@ -30,14 +30,12 @@ variables:
 
 jobs:
   - job: Tests
-
     strategy:
       matrix:
         linux:
           imageName: 'ubuntu-16.04'
         windows:
           imageName: 'vs2017-win2016'
-
     pool:
       vmImage: $(imageName)
     steps:
@@ -82,11 +80,9 @@ jobs:
         displayName: 'Run test'
 
   - job: Coverity
-
     pool:
       name: 00-OSIManaged-Test
       demands: USERNAME -equals $(LocalServer)
-
     steps:
       - script: 'if not exist $(covFolder) mkdir $(covFolder)'
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
@@ -106,16 +102,15 @@ jobs:
         displayName: 'Upload'
 
   - job: BinSkim
-
     pool:
-      name: Hosted VS2017
-
+      name: 00-OSIManaged-Test
     steps:
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projpath)
         displayName: 'Build'
+
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'Analyze'
         inputs:

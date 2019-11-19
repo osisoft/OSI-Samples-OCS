@@ -30,14 +30,12 @@ variables:
 
 jobs:
   - job: Tests
-
     strategy:
       matrix:
         linux:
           imageName: 'ubuntu-16.04'
         windows:
           imageName: 'vs2017-win2016'
-
     pool:
       vmImage: $(imageName)
     steps:
@@ -82,11 +80,9 @@ jobs:
         displayName: 'Run test'
 
   - job: Coverity
-
     pool:
       name: 00-OSIManaged-Test
       demands: USERNAME -equals $(LocalServer)
-
     steps:
       - script: 'if not exist $(covFolder) mkdir $(covFolder)'
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
@@ -106,10 +102,8 @@ jobs:
         displayName: 'Upload'
 
   - job: BinSkim
-
     pool:
       name: 00-OSIManaged-Build
-
     steps:
       - script: |
           dotnet restore
