@@ -47,17 +47,17 @@ jobs:
         inputs:
           secureFile: $(CredFileLibrary)
 
-      - bash: cp $(CredFileLibrary) $(Build.SourcesDirectory)$(projpath)/
+      - bash: cp $(CredFileLibrary) $(Build.SourcesDirectory)$(projpath)/$(CredFile)
         workingDirectory: $(Agent.TempDirectory)
         displayName: 'Copy library config file'
 
-      - bash: rm $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Delete default config file'
+      # - bash: rm $(CredFile)
+      #   workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      #   displayName: 'Delete default config file'
 
-      - bash: mv $(CredFileLibrary) $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Rename library config file'
+      # - bash: mv $(CredFileLibrary) $(CredFile)
+      #   workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      #   displayName: 'Rename library config file'
 
       - script: |
           dotnet restore
