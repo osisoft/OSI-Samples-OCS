@@ -18,7 +18,7 @@ pr:
 variables:
   - group: LocalServer
   - name: projpath
-    value: \basic_samples\Authentication\ClientCredentialFlow\DotNet\ClientCredentialFlow
+    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
@@ -59,7 +59,9 @@ jobs:
           #flattenFolders: false # Optional
         displayName: 'Copy library config file'
 
-      - bash: rm $(CredFile)
+      - bash: |
+          pwd
+          rm $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Delete default config file'
 
