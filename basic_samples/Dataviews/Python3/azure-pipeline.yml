@@ -82,7 +82,6 @@ jobs:
         displayName: 'Install requirements'
 
       - script: python -m pytest ./program.py
-        displayName: 'Test with pytest'
         workingDirectory: $(Build.SourcesDirectory)$(testpath)/
         displayName: 'Run tests'
 
