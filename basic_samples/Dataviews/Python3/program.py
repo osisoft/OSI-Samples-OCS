@@ -1,5 +1,3 @@
-# version 0.0.3
-
 from ocs_sample_library_preview import (
     SdsTypeCode, SdsType, SdsTypeProperty, SdsStream, OCSClient, Dataview,
     DataviewQuery, DataviewGroupRule, DataviewMapping, DataviewIndexConfig)
@@ -21,7 +19,6 @@ sampleDataviewDescription_modified = "A longer sample description that "\
                                      "used for our sample and this part shows"\
                                      " a put."
 
-
 samplePressureTypeId = "Time_Pressure_SampleType"
 samplePressureStreamId = "Tank_Pressure_SampleStream"
 samplePressureStreamName = "Tank Pressure SampleStream"
@@ -29,7 +26,6 @@ samplePressureStreamName = "Tank Pressure SampleStream"
 sampleTemperatureTypeId = "Time_Temperature_SampleType"
 sampleTemperatureStreamId = "Tank_Temperature_SampleStream"
 sampleTemperatureStreamName = "Tank Temperature SampleStream"
-
 
 # In this example we will keep the SDS code in its own function.
 # The variable needData is used in the main program to decide if we need to do
@@ -42,20 +38,17 @@ sampleTemperatureStreamName = "Tank Temperature SampleStream"
 # a different time then your creation of Dataviews, but for a complete
 # example we assume a blank start.
 
-
 needData = True
 namespaceId = ''
 config = configparser.ConfigParser()
 config.read('config.ini')
 startTime = None
 
-
 def supressError(sdsCall):
     try:
         sdsCall()
     except Exception as e:
         print(("Encountered Error: {error}".format(error=e)))
-
 
 def createData(ocsClient):
     import random
@@ -133,7 +126,6 @@ def createData(ocsClient):
         sampleTemperatureStreamId,
         str(temperatureValues).replace("'", ""))
     startTime = start
-
 
 def main(test=False):
     global namespaceId
@@ -228,10 +220,8 @@ def main(test=False):
         dv = ocsClient.Dataviews.getDataview(namespaceId, sampleDataviewId)
         # assert is added to make sure we get back what we are expecting
         expectedJSON = '{"Id": "Dataview_Sample", "Queries": [{"Id": "Dataview_Sample", "Query": "name:*SampleStream*"}], "Name": "Dataview_Sample_Name", "Description": "A Sample Description that describes that this Dataview is just used for our sample.", "IndexConfig": {"StartIndex": "2019-09-03T14:10:00.0000000Z", "EndIndex": "2019-09-03T14:50:00.0000000Z", "Mode": "Interpolated", "Interval": "00:01:00"}, "IndexDataType": "DateTime", "GroupRules": []}'
-      #  assert dv.toJson().lower() == expectedJSON.lower(), 'Dataview is different: ' + dv.toJson()
 
         dv.Description = sampleDataviewDescription_modified
-      #  dv.Mappings.IsDefault = False  # for now we have to change this to post
 
         # Step 5
         print
@@ -276,7 +266,7 @@ def main(test=False):
 
         # Step 9
         print()
-        print("Getting data as a table, seperated by commas, with headers")
+        print("Getting data as a table, separated by commas, with headers")
         # Get the first 20 rows, keep token for next 20 rows
         dataviewDataTable1, token = ocsClient.Dataviews.getDataInterpolated(
             namespaceId, sampleDataviewId, form="csvh", count=20)
@@ -349,10 +339,8 @@ def main(test=False):
         if test and not success:
             raise exception
 
-
 main()
 print("done")
-
 
 # Straightforward test to make sure program is working using asserts in
 # program.  Can run it yourself with pytest program.py
