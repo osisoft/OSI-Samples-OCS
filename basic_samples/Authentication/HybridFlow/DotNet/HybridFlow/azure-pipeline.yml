@@ -32,7 +32,8 @@ jobs:
   - job: Tests
     strategy:
       matrix:
-        # Only test on Windows since Selenium is required
+        linux:
+          imageName: 'ubuntu-16.04'
         windows:
           imageName: 'vs2017-win2016'
     pool:
