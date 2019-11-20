@@ -32,7 +32,7 @@ jobs:
   - job: Tests
     strategy:
       matrix:
-        # Cannot run on Linux due to missing Selenium Chrome Driver, PBI 66419
+        # Cannot run on Linux due to missing Selenium Chrome Driver
         # linux:
         #   imageName: 'ubuntu-16.04'
         windows:
@@ -100,7 +100,7 @@ jobs:
       - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(repo)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
         displayName: 'Upload'
-  # BinSkim fails due to Selenium reference in main project, PBI 66419
+  # BinSkim fails due to Selenium reference in main project
   # - job: BinSkim
   #   pool:
   #     name: Hosted VS2017

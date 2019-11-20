@@ -36,7 +36,7 @@ jobs:
   - job: Tests
     strategy:
       matrix:
-        # Cannot run on Linux due to missing Selenium Chrome Driver, PBI 66435
+        # Cannot run on Linux due to missing Selenium Chrome Driver
         # linux:
         #   imageName: 'ubuntu-16.04'
         windows:
