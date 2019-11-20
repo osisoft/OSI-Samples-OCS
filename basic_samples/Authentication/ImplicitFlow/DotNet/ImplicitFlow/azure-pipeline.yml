@@ -100,22 +100,18 @@ jobs:
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-          start /B dotnet run
         workingDirectory: $(Build.SourcesDirectory)$(projpath)
         displayName: 'Build app'
+
+      - bash: dotnet run &
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)
+        displayName: 'Run app'
 
       - script: |
           dotnet restore
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testpath)
         displayName: 'Run test'
-        continueOnError: true
-
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: $(Build.SourcesDirectory)$(testpath)/bin/Debug/netcoreapp2.2/screenshot.png
-          artifactName: Screenshot
-        displayName: 'Publish screenshot'
 
   - job: Coverity
     pool:
