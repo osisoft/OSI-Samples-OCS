@@ -82,7 +82,7 @@ jobs:
 
       - task: PublishBuildArtifacts@1
         inputs:
-          pathToPublish: $(Build.SourcesDirectory)$(testpath)/screenshot.png
+          pathToPublish: $(Build.SourcesDirectory)$(testpath)/bin/Debug/netcoreapp2.2/screenshot.png
           artifactName: Screenshot
         displayName: 'Publish screenshot'
 
