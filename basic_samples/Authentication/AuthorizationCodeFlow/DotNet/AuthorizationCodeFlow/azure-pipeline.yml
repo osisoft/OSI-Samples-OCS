@@ -100,14 +100,9 @@ jobs:
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
+          start /B dotnet run
         workingDirectory: $(Build.SourcesDirectory)$(projpath)
         displayName: 'Build app'
-
-      - task: DotNetCoreCLI@2
-        inputs:
-          command: run
-          workingDirectory: $(Build.SourcesDirectory)$(projpath)
-        displayName: 'Run app'
 
       - script: |
           dotnet restore
