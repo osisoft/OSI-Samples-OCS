@@ -77,7 +77,7 @@ jobs:
           dotnet restore
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testpath)/
-        displayName: 'Run test'
+        displayName: 'Run tests'
 
   - job: Coverity
     pool:
