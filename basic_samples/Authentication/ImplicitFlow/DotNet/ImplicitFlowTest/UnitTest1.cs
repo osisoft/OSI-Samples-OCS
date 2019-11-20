@@ -73,6 +73,9 @@ namespace ImplicitFlowTest
                     Screenshot ss = ((ITakesScreenshot)driver).GetScreenshot();
                     string path = Directory.GetCurrentDirectory() + "screenshot.png";
                     ss.SaveAsFile(path);
+                    Console.Write("Encountered Error!");
+                    Console.Write(path);
+                    throw ex;
                 }
             }
         }

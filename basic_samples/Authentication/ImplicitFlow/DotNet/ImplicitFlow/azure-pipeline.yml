@@ -78,6 +78,7 @@ jobs:
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testpath)
         displayName: 'Run test'
+        continueOnError: true
 
       - task: PublishBuildArtifacts@1
         inputs:
