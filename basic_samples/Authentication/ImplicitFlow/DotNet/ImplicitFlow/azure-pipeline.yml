@@ -24,7 +24,7 @@ variables:
   - name: CredFile
     value: config.js
   - name: CredFileTestOnlyLibrary
-    value: product-readiness.auth_imlpicit_dotnet.json
+    value: product-readiness.auth_implicit_dotnet.json
   - name: CredFileLibrary
     value: product-readiness.auth_implicit_dotnet.js
   - name: testpath
