@@ -36,8 +36,9 @@ jobs:
   - job: Tests
     strategy:
       matrix:
-        linux:
-          imageName: 'ubuntu-16.04'
+        # Cannot run on Linux due to missing Selenium Chrome Driver, PBI 66435
+        # linux:
+        #   imageName: 'ubuntu-16.04'
         windows:
           imageName: 'vs2017-win2016'
     pool:
@@ -100,9 +101,12 @@ jobs:
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-          start /B dotnet run
         workingDirectory: $(Build.SourcesDirectory)$(projpath)
         displayName: 'Build app'
+
+      - bash: dotnet run &
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)
+        displayName: 'Run app'
 
       - script: |
           dotnet restore
