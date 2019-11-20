@@ -112,4 +112,4 @@ jobs:
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'Analyze'
         inputs:
-          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe;!$(Build.SourcesDirectory)\chromedriver.exe'
+          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'

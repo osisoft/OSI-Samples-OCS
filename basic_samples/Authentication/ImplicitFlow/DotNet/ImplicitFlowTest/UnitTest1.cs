@@ -42,16 +42,12 @@ namespace ImplicitFlowTest
 
                 Thread.Sleep(sleep);
 
-
-
                 driver.FindElement(By.XPath("descendant::a[@title=\"Personal Account\"]")).Click();
-
 
                 Thread.Sleep(sleep);
 
                 driver.FindElement(By.XPath("//*[@id=\"i0116\"]")).SendKeys(userName);
                 driver.FindElement(By.XPath("//*[@id=\"idSIButton9\"]")).Click();
-
 
                 Thread.Sleep(sleep);
 
@@ -67,7 +63,6 @@ namespace ImplicitFlowTest
 
                 if (results.Contains("not logged"))
                     throw new Exception("Logging in failed");
-
 
                 driver.Close();
             }
