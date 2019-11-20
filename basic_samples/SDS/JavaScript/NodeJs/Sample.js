@@ -227,7 +227,7 @@ var app = function (request1, response)
         // Step 4
         function (res) {
             console.log("Inserting data")
-            evt = waveDataObj.NextWave(200, 2.0, 0);
+            evt = waveDataObj.NextWave(2.0, 0);
             event.push(evt);
             if (client.tokenExpires < nowSeconds) {
                 return checkTokenExpired(client).then(
@@ -251,7 +251,7 @@ var app = function (request1, response)
 
     var buildEvents = function () {
         if (evtCount < totalEvents) {
-            evt1 = waveDataObj.NextWave(200, mutliplier, evtCount);
+            evt1 = waveDataObj.NextWave(mutliplier, evtCount);
             events.push(evt1);
             evtCount += 2;
             buildEvents();
@@ -365,7 +365,7 @@ var app = function (request1, response)
             // update the first value
             event = [];
             evt = res[0];
-            evt = waveDataObj.NextWave(200, 4.0, 0);
+            evt = waveDataObj.NextWave(4.0, 0);
             event.push(evt);
             if (client.tokenExpires < nowSeconds) {
                 return checkTokenExpired(client).then(
@@ -443,7 +443,7 @@ var app = function (request1, response)
         function (res) {
             console.log("\nReplacing events");
             var event = [];
-            var replaceEvent = waveDataObj.NextWave(200, 2.0, 0);
+            var replaceEvent = waveDataObj.NextWave(2.0, 0);
             currentEvents = res;
             event.push(replaceEvent);
 
@@ -1365,17 +1365,17 @@ var app = function (request1, response)
     var insertValue1 = createCompoundStreamFromType.then(
         function (res) {
             console.log("Inserting data")
-            evt = waveDataObj.NextWaveCompound( 1, 10);
+            evt = waveDataObj.NextWaveCompound(1, 10);
             event2.push(evt);
-            evt = waveDataObj.NextWaveCompound( 2, 2);
+            evt = waveDataObj.NextWaveCompound(2, 2);
             event2.push(evt);
-            evt = waveDataObj.NextWaveCompound( 3, 1);
+            evt = waveDataObj.NextWaveCompound(3, 1);
             event2.push(evt);
-            evt = waveDataObj.NextWaveCompound( 10, 3);
+            evt = waveDataObj.NextWaveCompound(10, 3);
             event2.push(evt);
-            evt = waveDataObj.NextWaveCompound( 10, 8);
+            evt = waveDataObj.NextWaveCompound(10, 8);
             event2.push(evt);
-            evt = waveDataObj.NextWaveCompound( 10, 10);
+            evt = waveDataObj.NextWaveCompound(10, 10);
             event2.push(evt);
             if (client.tokenExpires < nowSeconds) {
                 return checkTokenExpired(client).then(

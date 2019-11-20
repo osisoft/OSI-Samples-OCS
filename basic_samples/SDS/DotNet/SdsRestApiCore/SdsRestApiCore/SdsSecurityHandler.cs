@@ -29,7 +29,8 @@ namespace SdsRestApiCore
 
             InnerHandler = new HttpClientHandler()
             {
-                AllowAutoRedirect = false
+                AllowAutoRedirect = false,
+                AutomaticDecompression = System.Net.DecompressionMethods.GZip
             };
         }
 

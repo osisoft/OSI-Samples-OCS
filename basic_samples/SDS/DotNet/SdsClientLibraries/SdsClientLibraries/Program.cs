@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using OSIsoft.Data;
+using OSIsoft.Data.Http;
 using OSIsoft.Data.Reflection;
 using OSIsoft.Identity;
 
@@ -45,16 +46,16 @@ namespace SdsClientLibraries
             string compoundTypeId = "SampleType_Compound";
 
             var uriResource = new Uri(resource);
+            
             // Step 1 
             // Get Sds Services to communicate with server
             AuthenticationHandler authenticationHandler = new AuthenticationHandler(uriResource, clientId, clientKey);
-
-            SdsService sdsService = new SdsService(new Uri(resource), authenticationHandler);
+            
+            SdsService sdsService = new SdsService(new Uri(resource), null, HttpCompressionMethod.GZip, authenticationHandler);
             var metadataService = sdsService.GetMetadataService(tenantId, namespaceId);
             var dataService = sdsService.GetDataService(tenantId, namespaceId);
             var tableService = sdsService.GetTableService(tenantId, namespaceId);
-
-
+            
             Console.WriteLine(@"-------------------------------------------------------------");
             Console.WriteLine(@"  _________    .___           _______  ______________________");
             Console.WriteLine(@" /   _____/  __| _/______     \      \ \_   _____/\__    ___/");
@@ -93,14 +94,14 @@ namespace SdsClientLibraries
                 Console.WriteLine("Inserting data");
 
                 // insert a single event
-                var wave = GetWave(0, 200, 2);
+                var wave = GetWave(0, 2);
                 await dataService.InsertValueAsync(stream.Id, wave);
 
                 // insert a list of events
                 var waves = new List<WaveData>();
                 for (var i = 2; i <= 18; i += 2)
                 {
-                    waves.Add(GetWave(i, 200, 2));
+                    waves.Add(GetWave(i, 2));
                 }
                 await dataService.InsertValuesAsync(stream.Id, waves);
 
@@ -122,7 +123,7 @@ namespace SdsClientLibraries
                 Console.WriteLine();
 
                 // Step 6
-                //Step2 Getting all events in table format with headers.
+                // getting all events in table format with headers
                 var tableEvents = await tableService.GetWindowValuesAsync(stream.Id, "0", "180");
 
                 Console.WriteLine("Getting table events");
@@ -142,9 +143,9 @@ namespace SdsClientLibraries
 
                 // update all events, adding ten more
                 var updatedCollection = new List<WaveData>();
-                for (int i = 2; i < 40; i = i + 2)
+                for (int i = 2; i < 40; i += 2)
                 {
-                    updatedCollection.Add(GetWave(i, 400, 4));
+                    updatedCollection.Add(GetWave(i, 4));
                 }
                 await dataService.UpdateValuesAsync(stream.Id, updatedCollection);
 
@@ -564,7 +565,7 @@ namespace SdsClientLibraries
             Console.WriteLine();
         }
 
-        private static WaveData GetWave(int order, double range, double multiplier)
+        private static WaveData GetWave(int order, double multiplier)
         {
             var radians = order * (Math.PI/32);
 

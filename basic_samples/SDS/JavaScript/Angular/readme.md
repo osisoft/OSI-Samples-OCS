@@ -90,6 +90,8 @@ The sample uses the HttpClient class with an Authentication Interceptor to conne
 | PUT         | Update         | Message Body     |
 | DELETE      | Delete         | URL parameters   |
 
+Since this sample runs in the browser, most browsers will automatically add the `Accept-Encoding` header with the values that are supported. As a result, compression will generally be used, as can be seen in the Network tab of the browser by the response header `Content-Encoding`. It is not recommended to try to override the browser's `Accept-Encoding` header in this sample, as browsers generally block JavaScript from modifying that header.
+
 ## Create an SdsType
 
 To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams. SdsTypes can define simple atomic types, such as integers, floats, or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
@@ -172,7 +174,7 @@ When inserting single or multiple values, the payload has to be the list of even
 An event can be created using the following request:
 
 ```js
-insertValues(streamId: string, events: Array<any>)
+insertValues((streamId: string), (events: Array<any>));
 ```
 
 First the event is created locally by populating a new waveData event as follows:
@@ -241,7 +243,7 @@ getWindowValues(streamId: string, start, end, filter: string = ''): Observable<a
 Here is how it is called:
 
 ```js
-this.sdsService.getWindowValues(streamId, 0, 40, 'Radians%20lt%203');
+this.sdsService.getWindowValues(streamId, 0, 40, "Radians%20lt%203");
 ```
 
 ### Get Range Values
@@ -265,7 +267,7 @@ The `getRangeValues` method is called as shown :
 ```js
 this.sdsService.getRangeValues(
   streamId,
-  '1',
+  "1",
   40,
   SdsBoundaryType.ExactOrCalculated
 );
@@ -288,7 +290,7 @@ Here is how it is called:
 ```js
 this.sdsService.getRangeValuesHeaders(
   streamId,
-  '1',
+  "1",
   40,
   SdsBoundaryType.ExactOrCalculated
 );
@@ -309,7 +311,7 @@ getSampledValues(streamId: string, start, end, intervals, sampleBy, filter: stri
 Here is how it is called:
 
 ```js
-this.sdsService.getSampledValues(streamId, 0, 40, 4, 'sin');
+this.sdsService.getSampledValues(streamId, 0, 40, 4, "sin");
 ```
 
 ## Update Events and Replacing Values
@@ -321,7 +323,7 @@ Updating events is handled by the following PUT request. The request body has th
 event that will update an existing event at the same index:
 
 ```js
-updateValues(streamId: string, events: Array<any>)
+updateValues((streamId: string), (events: Array<any>));
 ```
 
 This is called as follows:
@@ -345,7 +347,7 @@ values and will not insert any new values into the stream. The sample
 program demonstrates this by replacing all twenty values.
 
 ```js
-replaceValues(streamId: string, events: Array<any>)
+replaceValues((streamId: string), (events: Array<any>));
 ```
 
 This is called as follows:
@@ -371,7 +373,7 @@ The following shows how this is done in the code:
 
 ```js
 const propertyOverride = new SdsStreamPropertyOverride();
-propertyOverride.SdsTypePropertyId = 'Radians';
+propertyOverride.SdsTypePropertyId = "Radians";
 propertyOverride.InterpolationMode = SdsStreamMode.Discrete;
 this.stream.PropertyOverrides = [propertyOverride];
 this.sdsService.updateStream(this.stream);
@@ -388,7 +390,7 @@ SDS attempts to determine how to map Properties from the source to the destinati
 ```js
 this.sdsService.getRangeValues(
   streamId,
-  '3',
+  "3",
   5,
   SdsBoundaryType.ExactOrCalculated,
   autoStreamViewId
@@ -401,19 +403,19 @@ you should define an SdsStreamViewProperty and add it to the SdsStreamView’s P
 ```js
 const manualStreamView = new SdsStreamView();
 manualStreamView.Id = manualStreamViewId;
-manualStreamView.Name = 'WaveData_AutoStreamView';
+manualStreamView.Name = "WaveData_AutoStreamView";
 manualStreamView.Description =
-  'This StreamView uses SDS Types of different shapes, mappings are made explicitly with SdsStreamViewProperties.';
+  "This StreamView uses SDS Types of different shapes, mappings are made explicitly with SdsStreamViewProperties.";
 manualStreamView.SourceTypeId = typeId;
 manualStreamView.TargetTypeId = targetIntTypeId;
 
 const streamViewProperty0 = new SdsStreamViewProperty();
-streamViewProperty0.SourceId = 'Order';
-streamViewProperty0.TargetId = 'OrderTarget';
+streamViewProperty0.SourceId = "Order";
+streamViewProperty0.TargetId = "OrderTarget";
 
 const streamViewProperty1 = new SdsStreamViewProperty();
-streamViewProperty1.SourceId = 'Sinh';
-streamViewProperty1.TargetId = 'SinhInt';
+streamViewProperty1.SourceId = "Sinh";
+streamViewProperty1.TargetId = "SinhInt";
 ```
 
 ## SdsStreamViewMap
