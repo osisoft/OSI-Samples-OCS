@@ -26,7 +26,7 @@ variables:
   - name: libpath
     value: /library_samples/Java/ocs_sample_library_preview
   - name: repo
-    value: DataViewJava
+    value: DataviewJava
 
 jobs:
   - job: Tests
