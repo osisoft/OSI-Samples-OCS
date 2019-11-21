@@ -29,7 +29,7 @@ variables:
     value: product-readiness.auth_pkce_dotnet.js
   - name: testpath
     value: /basic_samples/Authentication/AuthorizationCodeFlow/DotNet/AuthorizationCodeFlowTest
-  - name: repo
+  - name: cov
     value: Auth_PKCE_DotNet
 
 jobs:
@@ -98,19 +98,19 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/wwwroot
         displayName: 'Rename library config file'
 
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)
+      - script: dotnet restore
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: 'Restore dependencies'
+
+      - script: dotnet msbuild -p:HIGHENTROPYVA=true
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Build app'
 
       - bash: dotnet run &
         workingDirectory: $(Build.SourcesDirectory)$(projpath)
         displayName: 'Run app'
 
-      - script: |
-          dotnet restore
-          dotnet test
+      - script: dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testpath)/
         displayName: 'Run tests'
 
@@ -132,7 +132,7 @@ jobs:
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
         displayName: 'Analyze'
 
-      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(repo)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(cov)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
         displayName: 'Upload'
 

@@ -25,7 +25,7 @@ variables:
     value: product-readiness.auth_cc_dotnet.json
   - name: testpath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
-  - name: repo
+  - name: cov
     value: Auth_CC_DotNet
 
 jobs:
@@ -66,16 +66,15 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Rename library config file'
 
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
+      - script: dotnet restore
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        displayName: 'Restore dependencies'
+
+      - script: dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Build app'
 
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-          dotnet test
+      - script: dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testpath)/
         displayName: 'Run tests'
 
@@ -97,7 +96,7 @@ jobs:
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
         displayName: 'Analyze'
 
-      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(repo)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
+      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(cov)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
         workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
         displayName: 'Upload'
 
