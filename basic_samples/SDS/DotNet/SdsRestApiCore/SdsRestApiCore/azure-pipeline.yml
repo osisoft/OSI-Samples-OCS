@@ -56,7 +56,7 @@ jobs:
           #cleanTargetFolder: false # Optional
           overWrite: true # Optional
           #flattenFolders: false # Optional
-          displayName: 'Copy library config file'
+        displayName: 'Copy library config file'
 
       - bash: rm $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
@@ -66,15 +66,15 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Rename library config file'
 
-      - script: dotnet restore
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Restore dependencies'
-
-      - script: dotnet msbuild -p:HIGHENTROPYVA=true
+      - script: |
+          dotnet restore
+          dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Build app'
 
-      - script: dotnet test
+      - script: |
+          dotnet restore
+          dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testpath)/
         displayName: 'Run tests'
 

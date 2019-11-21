@@ -67,6 +67,7 @@ namespace SdsRestApiCore
                     // Step 2
                     // create a SdsType
                     Console.WriteLine("Creating a SdsType");
+                    Console.WriteLine(clientId);
                     SdsType waveType = BuildWaveDataType(TypeId);
                     HttpResponseMessage response =
                         await httpClient.PostAsync($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{waveType.Id}",
