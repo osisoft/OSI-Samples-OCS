@@ -18,7 +18,7 @@ pr:
 variables:
   - group: LocalServer
   - name: projpath
-    value: /basic_samples/DataViews/Java/DataViewjava
+    value: /basic_samples/DataViews/Java/dataviewjava
   - name: CredFile
     value: config.properties
   - name: CredFileLibrary
