@@ -39,9 +39,7 @@ namespace OmfIngressClientLibrariesTests
                     try
                     {
                         firstValueForStream = await sdsDataService.GetFirstValueAsync<DataPointType>(Program._streamId);
-                        Console.WriteLine(firstValueForStream);
-                        Console.WriteLine("TRUE");
-                        return true;
+                        return firstValueForStream != null;
                     }
                     catch
                     {
