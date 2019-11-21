@@ -1,16 +1,13 @@
-# Dataview.py
-#
-
 import json
-from .DataviewQuery import DataviewQuery
-from .DataviewMapping import DataviewMapping
-from .DataviewIndexConfig import DataviewIndexConfig
-from .DataviewGroupRule import DataviewGroupRule
+from .DataViewQuery import DataViewQuery
+from .DataViewMappings import DataViewMappings
+from .DataViewIndexConfig import DataViewIndexConfig
+from .DataViewGroupRule import DataViewGroupRule
 
 
-class Dataview(object):
+class DataView(object):
     """
-    Dataview definition
+    DataView definition
     """
 
     def __init__(
@@ -30,18 +27,18 @@ class Dataview(object):
         :param name: not required
         :param description:  not required
         :param queries: query string  required
-        :param mappings: array of Dataviewmapping   not required
-        :param indexConfig:  DataviewindexConfig   not required
+        :param mappings: array of DataViewmapping   not required
+        :param indexConfig:  DataViewindexConfig   not required
         :param indexDataType: Currently limited to "DateTime"   required
-        :param groupRules:  Array of DataviewGroupRule   not required
+        :param groupRules:  Array of DataViewGroupRule   not required
         """
         self.__id = id
         self.__name = name
         self.__description = description
-        if queries: 
+        if queries:
             self.__queries = queries
         else:
-            self.__queries = DataviewQuery()
+            self.__queries = DataViewQuery()
         if mappings:
             self.__mappings = mappings
         self.__indexConfig = indexConfig
@@ -119,7 +116,7 @@ class Dataview(object):
     @property
     def Mappings(self):
         """
-        array of Dataviewmapping   not required
+        array of DataViewmapping   not required
         :return:
         """
         return self.__mappings
@@ -127,7 +124,7 @@ class Dataview(object):
     @Mappings.setter
     def Mappings(self, mappings):
         """
-        array of Dataviewmapping   not required
+        array of DataViewmapping   not required
         :param mappings:
         :return:
         """
@@ -136,7 +133,7 @@ class Dataview(object):
     @property
     def IndexConfig(self):
         """
-        DataviewindexConfig   not required
+        DataViewindexConfig   not required
         :return:
         """
         return self.__indexConfig
@@ -144,7 +141,7 @@ class Dataview(object):
     @IndexConfig.setter
     def IndexConfig(self, indexConfig):
         """
-        DataviewindexConfig   not required
+        DataViewindexConfig   not required
         :param indexConfig:
         :return:
         """
@@ -170,7 +167,7 @@ class Dataview(object):
     @property
     def GroupRules(self):
         """
-        Array of DataviewGroupRule   not required
+        Array of DataViewGroupRule   not required
         :return:
         """
         return self.__groupRules
@@ -178,7 +175,7 @@ class Dataview(object):
     @GroupRules.setter
     def GroupRules(self, groupRules):
         """
-        Array of DataviewGroupRule   not required
+        Array of DataViewGroupRule   not required
         :param groupRules:
         :return:
         """
@@ -217,43 +214,45 @@ class Dataview(object):
 
     @staticmethod
     def fromJson(jsonObj):
-        return Dataview.fromDictionary(jsonObj)
+        return DataView.fromDictionary(jsonObj)
 
     @staticmethod
     def fromDictionary(content):
-        dataview = Dataview()
+        dataView = DataView()
 
         if not content:
-            return dataview
+            return dataView
 
         if "Id" in content:
-            dataview.Id = content["Id"]
+            dataView.Id = content["Id"]
 
         if "Name" in content:
-            dataview.Name = content["Name"]
+            dataView.Name = content["Name"]
 
         if "Description" in content:
-            dataview.Description = content["Description"]
+            dataView.Description = content["Description"]
 
         if "Queries" in content:
-            dataview.Queries = DataviewQuery.fromDictionary(content["Queries"])
+            dataView.Queries = DataViewQuery.fromDictionary(content["Queries"])
 
         if "Mappings" in content:
-            dataview.Mappings = DataviewMapping.fromDictionary(content["Mappings"])
+            dataView.Mappings = DataViewMappings.fromDictionary(
+                content["Mappings"])
 
         if "IndexConfig" in content:
-            dataview.IndexConfig = DataviewIndexConfig.fromDictionary(
+            dataView.IndexConfig = DataViewIndexConfig.fromDictionary(
                 content["IndexConfig"]
             )
 
         if "IndexDataType" in content:
-            dataview.IndexDataType = content["IndexDataType"]
+            dataView.IndexDataType = content["IndexDataType"]
 
         if "GroupRules" in content:
             groupRules = content["GroupRules"]
             if groupRules is not None and len(groupRules) > 0:
-                dataview.GroupRules = []
+                dataView.GroupRules = []
                 for value in groupRules:
-                    dataview.GroupRules.append(DataviewGroupRule.fromDictionary(value))
+                    dataView.GroupRules.append(
+                        DataViewGroupRule.fromDictionary(value))
 
-        return dataview
+        return dataView

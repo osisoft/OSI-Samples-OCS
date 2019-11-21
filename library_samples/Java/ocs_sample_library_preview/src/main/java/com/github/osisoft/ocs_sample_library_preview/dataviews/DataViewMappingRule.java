@@ -1,12 +1,12 @@
 package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
-public class DataviewMappingRule {
+public class DataViewMappingRule {
     private String[] PropertyPaths;
     private String GroupRuleId = "";
     private String GroupRuleValue = "";
 
     /** Base constructor */
-    public DataviewMappingRule() {
+    public DataViewMappingRule() {
     }
 
     /**
@@ -14,7 +14,7 @@ public class DataviewMappingRule {
      * 
      * @param propertyPaths
      */
-    public DataviewMappingRule(String[] propertyPaths) {
+    public DataViewMappingRule(String[] propertyPaths) {
         this.PropertyPaths = propertyPaths;
     }
 

@@ -19,11 +19,11 @@ public class App {
     static String ocsServerUrl = getConfiguration("ocsServerUrl");
 
     // id strings
-    static String sampleDataviewId = "Dataview_Sample";
+    static String sampleDataViewId = "DataView_Sample";
 
-    static String sampleDataviewName = "Dataview_Sample_Name";
-    static String sampleDataviewDescription = "A Sample Description that describes that this Dataview is just used for our sample.";
-    static String sampleDataviewDescription_modified = "A longer sample description that describes that this Dataview is just used for our sample and this part shows a put.";
+    static String sampleDataViewName = "DataView_Sample_Name";
+    static String sampleDataViewDescription = "A Sample Description that describes that this DataView is just used for our sample.";
+    static String sampleDataViewDescription_modified = "A longer sample description that describes that this DataView is just used for our sample and this part shows a put.";
 
     static String samplePressureTypeId = "Time_Pressure_SampleType";
     static String samplePressureStreamId = "Tank_Pressure_SampleStream";
@@ -43,7 +43,7 @@ public class App {
         Boolean success = true;
         // Create Sds client to communicate with server
         System.out.println("------------------------------------------------------------------------------------");
-        System.out.println(" ######                                                   #    #    #     #    #    ");
+        System.out.println(" ######                      #    #                       #    #    #     #    #    ");
         System.out.println(" #     #   ##   #####   ##   #    # # ###### #    #       #   # #   #     #   # #   ");
         System.out.println(" #     #  #  #    #    #  #  #    # # #      #    #       #  #   #  #     #  #   #  ");
         System.out.println(" #     # #    #   #   #    # #    # # #####  #    #       # #     # #     # #     # ");
@@ -62,10 +62,10 @@ public class App {
             }
             String sampleStreamId = "SampleStream";
             /*
-             * Dataviews
+             * DataViews
              * 
-             * We need to create the dataview. Dataview are complex objects. For our
-             * dataview we are going to combine the two streams that were created, using a
+             * We need to create the DataView. DataView are complex objects. For our
+             * DataView we are going to combine the two streams that were created, using a
              * search to find the streams, using a common part of their name. We are using
              * the default mappings. This means our columns will keep their original names.
              * Another typical use of columns is to change what stream properties get mapped
@@ -84,57 +84,57 @@ public class App {
              */
 
             // Step 3
-            DataviewQuery dataviewQuery = new DataviewQuery(sampleDataviewId, "name:" + sampleStreamId);
-            DataviewGroupRule dataviewGroupRule = new DataviewGroupRule("Stream", "Id");
-            DataviewMappings dataviewMapping = new DataviewMappings(new DataviewMappingColumn[] {
-                    new DataviewMappingColumn("Time", true, "DateTime",
-                            new DataviewMappingRule(new String[] { "time" })),
-                    new DataviewMappingColumn("Pressure", false, "Double",
-                            new DataviewMappingRule(new String[] { "pressure" })),
-                    new DataviewMappingColumn("Temperature", false, "Double",
-                            new DataviewMappingRule(new String[] { "temperature" })) });
-            Dataview dataview = new Dataview(sampleDataviewId, sampleDataviewName, sampleDataviewDescription,
-                    new DataviewQuery[] { dataviewQuery }, new DataviewGroupRule[] { dataviewGroupRule },
-                    dataviewMapping, null, "datetime");
+            DataViewQuery dataViewQuery = new DataViewQuery(sampleDataViewId, "name:" + sampleStreamId);
+            DataViewGroupRule dataViewGroupRule = new DataViewGroupRule("Stream", "Id");
+            DataViewMappings dataViewMapping = new DataViewMappings(new DataViewMappingColumn[] {
+                    new DataViewMappingColumn("Time", true, "DateTime",
+                            new DataViewMappingRule(new String[] { "time" })),
+                    new DataViewMappingColumn("Pressure", false, "Double",
+                            new DataViewMappingRule(new String[] { "pressure" })),
+                    new DataViewMappingColumn("Temperature", false, "Double",
+                            new DataViewMappingRule(new String[] { "temperature" })) });
+            DataView dataView = new DataView(sampleDataViewId, sampleDataViewName, sampleDataViewDescription,
+                    new DataViewQuery[] { dataViewQuery }, new DataViewGroupRule[] { dataViewGroupRule },
+                    dataViewMapping, null, "datetime");
 
             System.out.println();
-            System.out.println("Creating dataview");
-            System.out.println(ocsClient.mGson.toJson(dataview));
+            System.out.println("Creating DataView");
+            System.out.println(ocsClient.mGson.toJson(dataView));
 
-            ocsClient.Dataviews.postDataview(tenantId, namespaceId, dataview);
+            ocsClient.DataViews.postDataView(tenantId, namespaceId, dataView);
 
             // Step 4
-            Dataview dataviewOut = ocsClient.Dataviews.getDataview(tenantId, namespaceId, dataview.getId());
+            DataView dataViewOut = ocsClient.DataViews.getDataView(tenantId, namespaceId, dataView.getId());
 
-            if (!(Objects.equals(dataviewOut.getId(), sampleDataviewId)
-                    && Objects.equals(dataviewOut.getDescription(), sampleDataviewDescription))) {
-                throw new SdsError("Dataview doesn't match expected one");
+            if (!(Objects.equals(dataViewOut.getId(), sampleDataViewId)
+                    && Objects.equals(dataViewOut.getDescription(), sampleDataViewDescription))) {
+                throw new SdsError("DataView doesn't match expected one");
             }
 
-            dataview.setDescription(sampleDataviewDescription_modified);
+            dataView.setDescription(sampleDataViewDescription_modified);
 
             // Step 5
-            ocsClient.Dataviews.putDataview(tenantId, namespaceId, dataview);
+            ocsClient.DataViews.putDataView(tenantId, namespaceId, dataView);
 
             // Step 6
-            // Getting the complete set of dataviews to make sure it is there
+            // Getting the complete set of DataViews to make sure it is there
             System.out.println();
-            System.out.println("Getting dataviews");
-            ArrayList<Dataview> dataviews = ocsClient.Dataviews.getDataviews(tenantId, namespaceId);
-            if (dataviews == null) {
-                throw new SdsError("Dataviews return failed");
+            System.out.println("Getting DataViews");
+            ArrayList<DataView> dataViews = ocsClient.DataViews.getDataViews(tenantId, namespaceId);
+            if (dataViews == null) {
+                throw new SdsError("DataViews return failed");
             }
-            for (Dataview dv : dataviews) {
+            for (DataView dv : dataViews) {
                 System.out.println(ocsClient.mGson.toJson(dv));
             }
 
             System.out.println();
-            System.out.println("Getting datagroups");
+            System.out.println("Getting DataGroups");
 
             // Step 7
-            String dataGroups = ocsClient.Dataviews.getDatagroupsString(tenantId, namespaceId, sampleDataviewId, 0,
+            String dataGroups = ocsClient.DataViews.getDataGroupsString(tenantId, namespaceId, sampleDataViewId, 0,
                     100);
-            System.out.println("Datagroups");
+            System.out.println("DataGroups");
             System.out.println(dataGroups);
 
             /// By default the preview get interpolated values every minute over the last
@@ -145,17 +145,17 @@ public class App {
 
             // Step 8
             System.out.println();
-            System.out.println("Retrieving preview data from the Dataview");
-            Map<String, Object>[] dataviewPreviewData = ocsClient.jsonStringToMapArray(
-                    ocsClient.Dataviews.getDataviewInterpolated(tenantId, namespaceId, sampleDataviewId));
-            System.out.println(ocsClient.mGson.toJson(dataviewPreviewData[0]));
+            System.out.println("Retrieving preview data from the DataView");
+            Map<String, Object>[] dataViewPreviewData = ocsClient.jsonStringToMapArray(
+                    ocsClient.DataViews.getDataViewInterpolated(tenantId, namespaceId, sampleDataViewId));
+            System.out.println(ocsClient.mGson.toJson(dataViewPreviewData[0]));
 
             // Step 9
             System.out.println();
-            System.out.println("Retrieving preview data from the Dataview in table format with headers");
-            String dataviewSessionDataTable = ocsClient.Dataviews.getDataviewInterpolated(tenantId, namespaceId,
-                    sampleDataviewId, "", "", "", "csvh", 0);
-            System.out.println(dataviewSessionDataTable.substring(0, 193));
+            System.out.println("Retrieving preview data from the DataView in table format with headers");
+            String dataViewSessionDataTable = ocsClient.DataViews.getDataViewInterpolated(tenantId, namespaceId,
+                    sampleDataViewId, "", "", "", "csvh", 0);
+            System.out.println(dataViewSessionDataTable.substring(0, 193));
         } catch (Exception e) {
             e.printStackTrace();
             success = false;
@@ -166,7 +166,7 @@ public class App {
                 cleanUp(ocsClient);
             }
             try {
-                ocsClient.Dataviews.deleteDataview(tenantId, namespaceId, sampleDataviewId);
+                ocsClient.DataViews.deleteDataView(tenantId, namespaceId, sampleDataViewId);
             } catch (Exception e) {
                 e.printStackTrace();
                 success = false;
@@ -251,7 +251,7 @@ public class App {
 
         try (InputStream inputStream = new FileInputStream("config.properties")) {
             // if launching from git folder use this:
-            // "\\basic_samples\\Dataviews\\JAVA\\config.properties");
+            // "\\basic_samples\\DataViews\\JAVA\\config.properties");
             props.load(inputStream);
             property = props.getProperty(propertyId);
         } catch (Exception e) {

@@ -1,12 +1,9 @@
-# DataviewMappingColumn.py
-#
-
 import json
 
 
-class DataviewMappingColumn(object):
+class DataViewMappingColumn(object):
 
-    """Sds dataview definition"""
+    """Sds DataView definition"""
     @property
     def Name(self):
         """
@@ -93,27 +90,27 @@ class DataviewMappingColumn(object):
 
     @staticmethod
     def fromJson(jsonObj):
-        return DataviewMappingColumn.fromDictionary(jsonObj)
+        return DataViewMappingColumn.fromDictionary(jsonObj)
 
     @staticmethod
     def fromDictionary(content):
-        dataviewMappingColumn = DataviewMappingColumn()
+        dataViewMappingColumn = DataViewMappingColumn()
 
         if not content:
-            return dataviewMappingColumn
+            return dataViewMappingColumn
 
         if 'Name' in content:
-            dataviewMappingColumn.Name = content['Name']
+            dataViewMappingColumn.Name = content['Name']
 
         if 'IsKey' in content:
-            dataviewMappingColumn.IsKey = content['IsKey']
+            dataViewMappingColumn.IsKey = content['IsKey']
         else:
-            dataviewMappingColumn.IsKey = False
+            dataViewMappingColumn.IsKey = False
 
         if 'DataType' in content:
-            dataviewMappingColumn.DataType = content['DataType']
+            dataViewMappingColumn.DataType = content['DataType']
 
         if 'MappingRule' in content:
-            dataviewMappingColumn.MappingRule = content['MappingRule']
+            dataViewMappingColumn.MappingRule = content['MappingRule']
 
-        return dataviewMappingColumn
+        return dataViewMappingColumn

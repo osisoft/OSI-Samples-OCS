@@ -1,12 +1,9 @@
-# Datagroup.py
-#
-
 import json
 
 
-class Datagroup(object):
+class DataGroup(object):
     """
-    Datagroup definition
+    DataGroup definition
     """
 
     @property
@@ -36,11 +33,11 @@ class Datagroup(object):
 
     @staticmethod
     def fromJson(jsonObj):
-        return Datagroup.fromDictionary(jsonObj)
+        return DataGroup.fromDictionary(jsonObj)
 
     @staticmethod
     def fromDictionary(content):
-        dataGroup = Datagroup()
+        dataGroup = DataGroup()
 
         if not content:
             return dataGroup

@@ -2,7 +2,7 @@ package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
 import java.util.Map;
 
-public class Datagroup {
+public class DataGroup {
 
     private Map<String, Object> Tokens;
     private Object DataItems;

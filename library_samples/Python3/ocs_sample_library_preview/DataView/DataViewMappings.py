@@ -1,20 +1,17 @@
-# DataviewMapping.py
-#
-
 import json
-from .DataviewMappingColumn import DataviewMappingColumn
+from .DataViewMappingColumn import DataViewMappingColumn
 
 
-class DataviewMapping(object):
+class DataViewMappings(object):
 
     def __init__(self, columns=None):
 
         self.__columns = columns
-   
+
     @property
     def Columns(self):
         """
-        array of DataviewMappingColumn   required  unless IsDefault is true
+        array of DataViewMappingColumn   required  unless IsDefault is true
         :return:
         """
         return self.__columns
@@ -22,7 +19,7 @@ class DataviewMapping(object):
     @Columns.setter
     def Columns(self, columns):
         """
-        array of DataviewMappingColumn   required  unless IsDefault is true
+        array of DataViewMappingColumn   required  unless IsDefault is true
         :param columns:
         :return:
         """
@@ -42,21 +39,21 @@ class DataviewMapping(object):
 
     @staticmethod
     def fromJson(jsonObj):
-        return DataviewMapping.fromDictionary(jsonObj)
+        return DataViewMappings.fromDictionary(jsonObj)
 
     @staticmethod
     def fromDictionary(content):
-        dataviewMapping = DataviewMapping()
+        dataViewMapping = DataViewMappings()
 
         if not content:
-            return dataviewMapping
+            return dataViewMapping
 
         if 'Columns' in content:
             columns = content['Columns']
             if columns is not None and len(columns) > 0:
-                dataviewMapping.Columns = []
+                dataViewMapping.Columns = []
                 for value in columns:
-                    dataviewMapping.Columns.append(
-                        DataviewMappingColumn.fromDictionary(value))
+                    dataViewMapping.Columns.append(
+                        DataViewMappingColumn.fromDictionary(value))
 
-        return dataviewMapping
+        return dataViewMapping

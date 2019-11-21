@@ -1,7 +1,3 @@
-# program.py
-#
-# version 0.0.2
-
 import configparser
 import inspect
 import math
@@ -12,9 +8,8 @@ from ocs_sample_library_preview import (SdsType, SdsTypeCode, SdsTypeProperty,
                                         SdsStreamViewProperty, SdsStreamView,
                                         SdsStreamViewMap, SdsStreamIndex)
 
-from WaveData import (WaveData, WaveDataCompound, WaveDataInteger,
+from .WaveData import (WaveData, WaveDataCompound, WaveDataInteger,
                       WaveDataTarget)
-
 
 # returns a type that represents the WaveData data
 def getWaveDataType(sampleTypeId):
@@ -279,8 +274,8 @@ def nextWave(order, multiplier):
     return newWave
 
 
-# we'll use the following for cleanup, supressing errors
-def supressError(sdsCall):
+# we'll use the following for cleanup, suppressing errors
+def suppressError(sdsCall):
     try:
         sdsCall()
     except Exception as e:
@@ -843,29 +838,28 @@ def main():
         # Clean up the remaining artifacts
         print("Cleaning up")
         print("Deleting the stream")
-        supressError(lambda: ocsClient.Streams.deleteStream(
+        suppressError(lambda: ocsClient.Streams.deleteStream(
             namespaceId, sampleStreamId))
-        supressError(lambda: ocsClient.Streams.deleteStream(
+        suppressError(lambda: ocsClient.Streams.deleteStream(
             namespaceId, streamIdSecondary))
-        supressError(lambda: ocsClient.Streams.deleteStream(
+        suppressError(lambda: ocsClient.Streams.deleteStream(
             namespaceId, streamIdCompound))
 
         print("Deleting the streamViews")
-        supressError(lambda: ocsClient.Streams.deleteStreamView(
+        suppressError(lambda: ocsClient.Streams.deleteStreamView(
             namespaceId, sampleStreamViewId))
-        supressError(lambda: ocsClient.Streams.deleteStreamView(
+        suppressError(lambda: ocsClient.Streams.deleteStreamView(
             namespaceId, sampleStreamViewIntId))
 
         print("Deleting the types")
-        supressError(lambda: ocsClient.Types.deleteType(
+        suppressError(lambda: ocsClient.Types.deleteType(
             namespaceId, sampleTypeId))
-        supressError(lambda: ocsClient.Types.deleteType(
+        suppressError(lambda: ocsClient.Types.deleteType(
             namespaceId, sampleTargetTypeId))
-        supressError(lambda: ocsClient.Types.deleteType(
+        suppressError(lambda: ocsClient.Types.deleteType(
             namespaceId, sampleIntegerTypeId))
-        supressError(lambda: ocsClient.Types.deleteType(
+        suppressError(lambda: ocsClient.Types.deleteType(
             namespaceId, compoundTypeId))
-
 
 main()
 print("done")

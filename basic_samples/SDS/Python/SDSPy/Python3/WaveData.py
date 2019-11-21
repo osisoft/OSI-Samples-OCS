@@ -1,6 +1,3 @@
-# WaveData.py
-#
-
 import json
 import inspect
 

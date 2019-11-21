@@ -1,6 +1,6 @@
 # Using the OCS Dataview Service in Java
 
-The sample code in this demonstrates how to invoke Dataview REST APIs via the sample Java client [library](https://github.com/osisoft/OSI-Samples/tree/master/library_samples/Java/ocs_sample_library_preview). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a Dataview, update it, retreive it, and retrieve data from it a couple of different ways. At the end of the sample, everything that was created is deleted.
+The sample code in this demonstrates how to invoke Dataview REST APIs via the sample Java client [library](https://github.com/osisoft/OSI-Samples/tree/master/library_samples/Java/ocs_sample_library_preview). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a Dataview, update it, retreive it, and retrieve data from it in different ways. At the end of the sample, everything that was created is deleted.
 
 ## Summary of steps to run the Java demo
 

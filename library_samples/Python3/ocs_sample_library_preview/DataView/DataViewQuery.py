@@ -1,12 +1,9 @@
-# DataviewQuery.py
-#
-
 import json
 
 
-class DataviewQuery(object):
+class DataViewQuery(object):
     """
-    Dataview Query
+    DataView Query
     """
 
     def __init__(self, id=None, query=None):
@@ -63,25 +60,25 @@ class DataviewQuery(object):
         dictionary = {'Id': self.Id, 'Query': self.Query}
 
         return [dictionary]
-    
+
     @staticmethod
     def fromJson(jsonObj):
-        return DataviewQuery.fromDictionary(jsonObj)
+        return DataViewQuery.fromDictionary(jsonObj)
 
     @staticmethod
     def fromDictionary(content):
         if isinstance(content, list):
             content = content[0]
-            
-        dataviewQuery = DataviewQuery()
+
+        dataViewQuery = DataViewQuery()
 
         if not content:
-            return dataviewQuery
+            return dataViewQuery
 
         if 'Id' in content:
-            dataviewQuery.Id = content['Id']
+            dataViewQuery.Id = content['Id']
 
         if 'Query' in content:
-            dataviewQuery.Query = content['Query']
+            dataViewQuery.Query = content['Query']
 
-        return dataviewQuery
+        return dataViewQuery

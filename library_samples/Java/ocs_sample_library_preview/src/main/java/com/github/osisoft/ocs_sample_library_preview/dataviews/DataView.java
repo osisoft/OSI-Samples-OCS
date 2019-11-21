@@ -1,33 +1,33 @@
 package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
-public class Dataview {
+public class DataView {
     private String Id = "";
     private String Name = "";
     private String Description = "";
-    private DataviewQuery[] Queries;
-    private DataviewGroupRule[] GroupRules;
-    private DataviewMappings Mappings;
-    private DataviewIndexConfig IndexConfig;
+    private DataViewQuery[] Queries;
+    private DataViewGroupRule[] GroupRules;
+    private DataViewMappings Mappings;
+    private DataViewIndexConfig IndexConfig;
     private String IndexDataType = "";
 
     /** Base constructor */
-    public Dataview() {
-        this.Mappings = new DataviewMappings();
+    public DataView() {
+        this.Mappings = new DataViewMappings();
     }
 
     /**
      * Constructor
      * 
      * @param id            Required
-     * @param queries       DataviewQuery[] Required
-     * @param groupRules    DataviewGroupRule[] Required
+     * @param queries       DataViewQuery[] Required
+     * @param groupRules    DataViewGroupRule[] Required
      * @param indexDataType Limited to "DateTime" currently Required
      */
-    public Dataview(String id, DataviewQuery[] queries, DataviewGroupRule[] groupRules, String indexDataType) {
+    public DataView(String id, DataViewQuery[] queries, DataViewGroupRule[] groupRules, String indexDataType) {
         this.Id = id;
         this.Queries = queries;
         this.GroupRules = groupRules;
-        this.Mappings = new DataviewMappings();
+        this.Mappings = new DataViewMappings();
         this.IndexDataType = indexDataType;
     }
 
@@ -37,16 +37,16 @@ public class Dataview {
      * @param id            Required
      * @param name          not required
      * @param description   not required
-     * @param queries       DataviewQuery[] Required
-     * @param groupRules    DataviewGroupRule[] Required
+     * @param queries       DataViewQuery[] Required
+     * @param groupRules    DataViewGroupRule[] Required
      * @param indexDataType Limited to "DateTime" currently Required
      */
-    public Dataview(String id, String name, String description, DataviewQuery[] queries, DataviewGroupRule[] groupRules,
+    public DataView(String id, String name, String description, DataViewQuery[] queries, DataViewGroupRule[] groupRules,
             String indexDataType) {
         this.Id = id;
         this.Queries = queries;
         this.GroupRules = groupRules;
-        this.Mappings = new DataviewMappings();
+        this.Mappings = new DataViewMappings();
         this.IndexDataType = indexDataType;
     }
 
@@ -56,14 +56,14 @@ public class Dataview {
      * @param id            Required
      * @param name          not required
      * @param description   not required
-     * @param queries       DataviewQuery[] Required
-     * @param groupRules    DataviewGroupRule[] Required
-     * @param mappings      DataviewMapping required
-     * @param indexConfig   DataviewIndexConfig not require
+     * @param queries       DataViewQuery[] Required
+     * @param groupRules    DataViewGroupRule[] Required
+     * @param mappings      DataViewMapping required
+     * @param indexConfig   DataViewIndexConfig not require
      * @param indexDataType Limited to "DateTime" currently Required
      */
-    public Dataview(String id, String name, String description, DataviewQuery[] queries, DataviewGroupRule[] groupRules,
-            DataviewMappings mappings, DataviewIndexConfig indexConfig, String indexDataType) {
+    public DataView(String id, String name, String description, DataViewQuery[] queries, DataViewGroupRule[] groupRules,
+            DataViewMappings mappings, DataViewIndexConfig indexConfig, String indexDataType) {
         this.Id = id;
         this.Name = name;
         this.Description = description;
@@ -98,27 +98,27 @@ public class Dataview {
         this.Description = description;
     }
 
-    public DataviewQuery[] getQueries() {
+    public DataViewQuery[] getQueries() {
         return Queries;
     }
 
-    public void setQueries(DataviewQuery[] queries) {
+    public void setQueries(DataViewQuery[] queries) {
         this.Queries = queries;
     }
 
-    public DataviewMappings getMappings() {
+    public DataViewMappings getMappings() {
         return Mappings;
     }
 
-    public void setMappings(DataviewMappings mappings) {
+    public void setMappings(DataViewMappings mappings) {
         this.Mappings = mappings;
     }
 
-    public DataviewIndexConfig getIndexConfig() {
+    public DataViewIndexConfig getIndexConfig() {
         return IndexConfig;
     }
 
-    public void setIndexConfig(DataviewIndexConfig indexConfig) {
+    public void setIndexConfig(DataViewIndexConfig indexConfig) {
         this.IndexConfig = indexConfig;
     }
 
@@ -130,11 +130,11 @@ public class Dataview {
         this.IndexDataType = indexDataType;
     }
 
-    public DataviewGroupRule[] getGroupRules() {
+    public DataViewGroupRule[] getGroupRules() {
         return GroupRules;
     }
 
-    public void setGroupRules(DataviewGroupRule[] rules) {
+    public void setGroupRules(DataViewGroupRule[] rules) {
         this.GroupRules = rules;
     }
 }

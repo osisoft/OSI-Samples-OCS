@@ -1,6 +1,6 @@
 package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
-public class DataviewIndexConfig {
+public class DataViewIndexConfig {
 
     private Boolean IsDefault = true;
     private String StartIndex = "";

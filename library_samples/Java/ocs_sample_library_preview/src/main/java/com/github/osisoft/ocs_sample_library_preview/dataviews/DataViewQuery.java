@@ -1,11 +1,11 @@
 package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
-public class DataviewQuery {
+public class DataViewQuery {
     private String Id = "";
     private String Query = "";
 
     /** Base constructor */
-    public DataviewQuery() {
+    public DataViewQuery() {
     }
 
     /**
@@ -14,7 +14,7 @@ public class DataviewQuery {
      * @param id
      * @param query
      */
-    public DataviewQuery(String id, String query) {
+    public DataViewQuery(String id, String query) {
         Id = id;
         Query = query;
     }

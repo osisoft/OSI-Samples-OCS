@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - basic_samples/Dataviews/Java
+      - basic_samples/DataViews/Java
 
 pr:
   branches:
@@ -13,12 +13,12 @@ pr:
       - master
   paths:
     include:
-      - basic_samples/Dataviews/Java
+      - basic_samples/DataViews/Java
 
 variables:
   - group: LocalServer
   - name: projpath
-    value: /basic_samples/Dataviews/Java/dataviewjava
+    value: /basic_samples/DataViews/Java/DataViewjava
   - name: CredFile
     value: config.properties
   - name: CredFileLibrary
@@ -26,7 +26,7 @@ variables:
   - name: libpath
     value: /library_samples/Java/ocs_sample_library_preview
   - name: repo
-    value: DataviewJava
+    value: DataViewJava
 
 jobs:
   - job: Tests

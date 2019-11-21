@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - basic_samples/Dataviews/Python3
+      - basic_samples/DataViews/Python3
 
 pr:
   branches:
@@ -13,20 +13,20 @@ pr:
       - master
   paths:
     include:
-      - basic_samples/Dataviews/Python3
+      - basic_samples/DataViews/Python3
 
 variables:
   - group: LocalServer
   - name: projpath
-    value: /basic_samples/Dataviews/Python3
+    value: /basic_samples/DataViews/Python3
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
     value: product-readiness.dataviews_python.ini
   - name: testpath
-    value: /basic_samples/Dataviews/Python3
+    value: /basic_samples/DataViews/Python3
   - name: repo
-    value: DataviewPy
+    value: DataViewPy
 
 jobs:
   - job: Tests

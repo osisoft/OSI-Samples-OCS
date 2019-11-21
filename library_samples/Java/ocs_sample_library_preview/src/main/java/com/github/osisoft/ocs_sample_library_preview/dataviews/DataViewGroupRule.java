@@ -1,22 +1,22 @@
 package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
-public class DataviewGroupRule {
+public class DataViewGroupRule {
     private String Id = "";
     private String Resource = "Streams";
     private String Field = "";
     private String[] Values;
 
     /** Base constructor */
-    public DataviewGroupRule() {
+    public DataViewGroupRule() {
     }
 
     /**
-     * Creates a DataviewGroupRule
+     * Creates a DataViewGroupRule
      * 
      * @param id
      * @param field
      */
-    public DataviewGroupRule(String id, String field) {
+    public DataViewGroupRule(String id, String field) {
         this.Id = id;
         this.Field = field;
     }

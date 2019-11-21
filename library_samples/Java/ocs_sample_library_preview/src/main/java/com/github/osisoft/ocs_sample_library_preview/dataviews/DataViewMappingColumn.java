@@ -1,20 +1,20 @@
 package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
-public class DataviewMappingColumn {
+public class DataViewMappingColumn {
     private String Name = "";
     private Boolean IsKey;
     private String DataType = "";
-    private DataviewMappingRule MappingRule;
+    private DataViewMappingRule MappingRule;
 
     /** Base constructor */
-    public DataviewMappingColumn() {
+    public DataViewMappingColumn() {
     }
 
     /**
      * Constructor
      * 
      */
-    public DataviewMappingColumn(String name, Boolean isKey, String dataType, DataviewMappingRule mappingRule) {
+    public DataViewMappingColumn(String name, Boolean isKey, String dataType, DataViewMappingRule mappingRule) {
         this.Name = name;
         this.IsKey = isKey;
         this.DataType = dataType;
@@ -45,11 +45,11 @@ public class DataviewMappingColumn {
         this.DataType = dataType;
     }
 
-    public DataviewMappingRule getMappingRule() {
+    public DataViewMappingRule getMappingRule() {
         return MappingRule;
     }
 
-    public void setMappingRule(DataviewMappingRule mappingRule) {
+    public void setMappingRule(DataViewMappingRule mappingRule) {
         this.MappingRule = mappingRule;
     }
 }
