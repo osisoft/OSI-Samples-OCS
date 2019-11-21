@@ -373,7 +373,7 @@ public class DataviewClient {
     }
 
     /**
-     * Get Dataview preview using defaults
+     * Gets interpolated values for the Dataview
      * 
      * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
@@ -381,12 +381,12 @@ public class DataviewClient {
      * @return the values to return as string
      * @throws SdsError any error that occurs
      */
-    public String getDataviewPreview(String tenantId, String namespaceId, String dataviewId) throws SdsError {
+    public String getDataviewInterpolated(String tenantId, String namespaceId, String dataviewId) throws SdsError {
         return getDataviewInterpolated(tenantId, namespaceId, dataviewId, "", "", "", "", 0);
     }
 
     /**
-     * gets the itnerpolated values of the dataview preview
+     * Gets interpolated values for the Dataview
      * 
      * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
