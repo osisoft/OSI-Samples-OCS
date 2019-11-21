@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 
-
 /**
  * StreamsClient
  */
@@ -35,28 +34,31 @@ public class StreamsClient {
     // StreamView paths
     private String streamViewBase = requestBase + "/StreamViews";
     private String getStreamViewPath = streamViewBase + "/{streamViewId}";
-        
-    
+
     // data paths
     private String dataBase = requestBase + "/Streams/{streamId}/Data";
     private String insertMultiplePath = dataBase;
     private String getSingleQuery = dataBase + "?index={index}";
     private String getLastValuePath = dataBase + "/Last?";
     private String getFirstValuePath = dataBase + "/First?";
-    private String getWindowQuery = dataBase + "?startIndex={startIndex}&endIndex={endIndex}&form={form}&filter={filter}";
-    private String getRangeQuery = dataBase + "/Transform?startIndex={startIndex}&endindex={endindex}&skip={skip}&count={count}&reversed={reverse}&boundaryType={boundaryType}";
-    private String getRangeInterpolatedQuery = dataBase + "/Transform/Interpolated?startIndex={startIndex}&endindex={endindex}&count={count}";
-    private String getRangeStreamViewQuery = dataBase + "/Transform?startIndex={startIndex}&skip={skip}&count={count}&reversed={reverse}&boundaryType={boundaryType}&streamViewId={streamViewId}";
+    private String getWindowQuery = dataBase
+            + "?startIndex={startIndex}&endIndex={endIndex}&form={form}&filter={filter}";
+    private String getRangeQuery = dataBase
+            + "/Transform?startIndex={startIndex}&endindex={endindex}&skip={skip}&count={count}&reversed={reverse}&boundaryType={boundaryType}";
+    private String getRangeInterpolatedQuery = dataBase
+            + "/Transform/Interpolated?startIndex={startIndex}&endindex={endindex}&count={count}";
+    private String getRangeStreamViewQuery = dataBase
+            + "/Transform?startIndex={startIndex}&skip={skip}&count={count}&reversed={reverse}&boundaryType={boundaryType}&streamViewId={streamViewId}";
     private String updateMultiplePath = dataBase;
     private String replaceMultiplePath = dataBase + "?allowCreate=false";
     private String removeSingleQuery = dataBase + "?index={index}";
     private String removeMultipleQuery = dataBase + "?startIndex={startIndex}&endIndex={endIndex}";
-    private String getSampledValuesQuery = dataBase + "/Sampled?startIndex={startIndex}&endIndex={endIndex}&intervals={intervals}&sampleBy={sampleBy}";
-
-
+    private String getSampledValuesQuery = dataBase
+            + "/Sampled?startIndex={startIndex}&endIndex={endIndex}&intervals={intervals}&sampleBy={sampleBy}";
 
     /**
      * Base Constructor
+     * 
      * @param base baseclient that helps with OCS calls
      */
     public StreamsClient(BaseClient base) {
@@ -68,21 +70,23 @@ public class StreamsClient {
 
     /**
      * creates a stream view
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
+     * 
+     * @param tenantId        tenant to work against
+     * @param namespaceId     namespace to work against
      * @param {SdsStreamView} streamViewDef SdsStreamView to create
      * @return created SdsStreamView as a string
-     * @throws SdsError  any error that occurs
+     * @throws SdsError any error that occurs
      */
     public String createStreamView(String tenantId, String namespaceId, SdsStreamView streamViewDef) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+        String response = "";
         String streamViewId = streamViewDef.getId();
-        
+
         try {
-            url = new URL(baseUrl + getStreamViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamViewId}", streamViewId));
+            url = new URL(
+                    baseUrl + getStreamViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamViewId}", streamViewId));
 
             urlConnection = baseClient.getConnection(url, "POST");
 
@@ -98,16 +102,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "create streamView request failed");
             }
 
-            BufferedReader in = new BufferedReader( 
-                    new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -116,13 +114,14 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return response.toString();
+        return response;
     }
 
     /**
      * gets a streamviewmap
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
+     * 
+     * @param tenantId     tenant to work against
+     * @param namespaceId  namespace to work against
      * @param streamViewId the streamview to retreivemap
      * @return the streamviewmap as a string
      * @throws SdsError any error that occurs
@@ -130,29 +129,25 @@ public class StreamsClient {
     public String getStreamViewMap(String tenantId, String namespaceId, String streamViewId) throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getStreamViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamViewId}", streamViewId) + "/Map");
+            url = new URL(
+                    baseUrl + getStreamViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamViewId}", streamViewId) + "/Map");
 
             urlConnection = baseClient.getConnection(url, "GET");
-            
+
             int httpResult = urlConnection.getResponseCode();
             if (httpResult == HttpURLConnection.HTTP_OK) {
             } else {
                 throw new SdsError(urlConnection, "get streamView map request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -161,13 +156,14 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
-    
+
     /**
      * delete stream view
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
+     * 
+     * @param tenantId     tenant to work against
+     * @param namespaceId  namespace to work against
      * @param streamViewId the streamview to delete
      * @throws SdsError any error that occurs
      */
@@ -176,7 +172,9 @@ public class StreamsClient {
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + getStreamViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamViewId}", streamViewId));
+            url = new URL(
+                    baseUrl + getStreamViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamViewId}", streamViewId));
 
             urlConnection = baseClient.getConnection(url, "DELETE");
 
@@ -187,7 +185,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -199,21 +197,22 @@ public class StreamsClient {
 
     /**
      * creates the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamDef the stream to create
+     * @param streamDef   the stream to create
      * @return the created stream as a string
      * @throws SdsError any error that occurs
      */
-     public String createStream(String tenantId, String namespaceId, SdsStream streamDef) throws SdsError {
+    public String createStream(String tenantId, String namespaceId, SdsStream streamDef) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-		String streamId = streamDef.getId();
+        String response = "";
+        String streamId = streamDef.getId();
 
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "POST");
 
             String body = mGson.toJson(streamDef);
@@ -230,16 +229,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "create stream request failed");
             }
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -248,26 +241,27 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return response.toString();
+        return response;
 
     }
 
     /**
      * gets the specified stream
-     * @param tenantId tenant to wrok against
+     * 
+     * @param tenantId    tenant to wrok against
      * @param namespaceId namespace to work against
-     * @param streamId stream to get
+     * @param streamId    stream to get
      * @return the stream as a string
      * @throws SdsError
      */
     public String getStream(String tenantId, String namespaceId, String streamId) throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResponse = urlConnection.getResponseCode();
@@ -276,14 +270,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get single stream request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -292,44 +282,42 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /**
      * gets a streams
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param query query used to help filter the results
-     * @param skip number of streams to skip, used for paging
-     * @param count number of streams to return
-     * @return Arraylist<SdsStream> 
+     * @param query       query used to help filter the results
+     * @param skip        number of streams to skip, used for paging
+     * @param count       number of streams to return
+     * @return Arraylist<SdsStream>
      * @throws SdsError any error that occurs
      */
-    public ArrayList<SdsStream> getStreams(String tenantId, String namespaceId, String query, String skip, String count) throws SdsError {
+    public ArrayList<SdsStream> getStreams(String tenantId, String namespaceId, String query, String skip, String count)
+            throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getStreamsPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{query}", query)
-                    .replace("{skip}", skip).replace("{count}", count));
+            url = new URL(baseUrl + getStreamsPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{query}", query).replace("{skip}", skip)
+                    .replace("{count}", count));
             urlConnection = baseClient.getConnection(url, "GET");
-            
+
             int httpResponse = urlConnection.getResponseCode();
             if (httpResponse == HttpURLConnection.HTTP_OK) {
             } else {
                 throw new SdsError(urlConnection, "get multiple streams request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -337,28 +325,30 @@ public class StreamsClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-     
-        ArrayList<SdsStream> results = mGson.fromJson(jsonResults.toString(), new TypeToken<ArrayList<SdsStream>>(){}.getType());
+
+        ArrayList<SdsStream> results = mGson.fromJson(response, new TypeToken<ArrayList<SdsStream>>() {
+        }.getType());
         return results;
-        //   return jsonResults.toString();
     }
 
     /**
      * updates the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId the id of the stream to update
-     * @param streamDef the new stream definition
+     * @param streamId    the id of the stream to update
+     * @param streamDef   the new stream definition
      * @throws SdsError any error that occurs
      */
-    public void updateStream(String tenantId, String namespaceId, String streamId, SdsStream streamDef) throws SdsError {
+    public void updateStream(String tenantId, String namespaceId, String streamId, SdsStream streamDef)
+            throws SdsError {
 
         URL url = null;
         HttpURLConnection urlConnection = null;
 
-
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String body = mGson.toJson(streamDef);
@@ -374,7 +364,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -386,9 +376,10 @@ public class StreamsClient {
 
     /**
      * delete the specified stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to delete
+     * @param streamId    stream to delete
      * @throws SdsError any error that occurs
      */
     public void deleteStream(String tenantId, String namespaceId, String streamId) throws SdsError {
@@ -396,7 +387,8 @@ public class StreamsClient {
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "DELETE");
 
             int httpResult = urlConnection.getResponseCode();
@@ -406,7 +398,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -418,20 +410,22 @@ public class StreamsClient {
 
     /**
      * update the tags associated with a stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to update tags on
-     * @param tags ArrayList<String> of tags
+     * @param streamId    stream to update tags on
+     * @param tags        ArrayList<String> of tags
      * @throws SdsError any error that occurs
      */
-    public void updateTags(String tenantId, String namespaceId, String streamId, ArrayList<String> tags) throws SdsError {
+    public void updateTags(String tenantId, String namespaceId, String streamId, ArrayList<String> tags)
+            throws SdsError {
 
         URL url = null;
         HttpURLConnection urlConnection = null;
 
-
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Tags");
+            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Tags");
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String body = mGson.toJson(tags);
@@ -447,7 +441,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -459,20 +453,21 @@ public class StreamsClient {
 
     /**
      * gets the tags assocaited with the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to get tags of
+     * @param streamId    stream to get tags of
      * @return ArrayList<String> of tags
      * @throws SdsError any error that occurs
      */
     public ArrayList<String> getTags(String tenantId, String namespaceId, String streamId) throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Tags");
+            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Tags");
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResponse = urlConnection.getResponseCode();
@@ -481,14 +476,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get multiple streams request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -496,27 +487,30 @@ public class StreamsClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        ArrayList<String> results = mGson.fromJson(jsonResults.toString(), new TypeToken<ArrayList<String>>(){}.getType());
+
+        ArrayList<String> results = mGson.fromJson(response, new TypeToken<ArrayList<String>>() {
+        }.getType());
         return results;
     }
-    
+
     /***
      * updates the meta data of a stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId the stream to update the meta data of
-     * @param metadata Map<String, String> 
-     * @throws SdsError  any error that occurs
+     * @param streamId    the stream to update the meta data of
+     * @param metadata    Map<String, String>
+     * @throws SdsError any error that occurs
      */
-    public void updateMetadata(String tenantId, String namespaceId, String streamId, Map<String, String> metadata) throws SdsError {
+    public void updateMetadata(String tenantId, String namespaceId, String streamId, Map<String, String> metadata)
+            throws SdsError {
 
         URL url = null;
         HttpURLConnection urlConnection = null;
 
-
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Metadata");
+            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Metadata");
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String body = mGson.toJson(metadata);
@@ -532,7 +526,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -541,24 +535,27 @@ public class StreamsClient {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * gets metadata value from key associated with the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to get metadata from
-     * @param key the specific key to get the value from 
-     * @return the specific string value from the metadata Map<String, String> 
-     * @throws SdsError  any error that occurs
+     * @param streamId    stream to get metadata from
+     * @param key         the specific key to get the value from
+     * @return the specific string value from the metadata Map<String, String>
+     * @throws SdsError any error that occurs
      */
     public String getMetadata(String tenantId, String namespaceId, String streamId, String key) throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Metadata/" + key);
+            url = new URL(baseUrl
+                    + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId)
+                    + "/Metadata/" + key);
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResponse = urlConnection.getResponseCode();
@@ -567,14 +564,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get metadata request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -583,22 +576,25 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /**
      * inserts values into the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to insert values into
-     * @param json json string of the array of values to insert
-     * @throws SdsError  any error that occurs
+     * @param streamId    stream to insert values into
+     * @param json        json string of the array of values to insert
+     * @throws SdsError any error that occurs
      */
     public void insertValues(String tenantId, String namespaceId, String streamId, String json) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
         try {
-            url = new URL(baseUrl + insertMultiplePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(
+                    baseUrl + insertMultiplePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "POST");
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
@@ -614,7 +610,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -626,21 +622,22 @@ public class StreamsClient {
 
     /**
      * gets value at specified index
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to get value of
-     * @param index index to get value at
+     * @param streamId    stream to get value of
+     * @param index       index to get value at
      * @return string of the value
-     * @throws SdsError  any error that occurs
+     * @throws SdsError any error that occurs
      */
     public String getValue(String tenantId, String namespaceId, String streamId, String index) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getSingleQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId).replace("{index}", index));
+            url = new URL(baseUrl + getSingleQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId).replace("{index}", index));
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -650,16 +647,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get single value request failed");
             }
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -668,25 +659,26 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /***
      * gets the last value of a stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId the stream to get the last of 
+     * @param streamId    the stream to get the last of
      * @return string of the last value
-     * @throws SdsError  any error that occurs
+     * @throws SdsError any error that occurs
      */
     public String getLastValue(String tenantId, String namespaceId, String streamId) throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getLastValuePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(baseUrl + getLastValuePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -695,15 +687,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get last value request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -712,14 +699,15 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /**
      * gets the first value in the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to get the first value of
+     * @param streamId    stream to get the first value of
      * @return string value of the fire value in the stream
      * @throws SdsError any error that occurs
      */
@@ -727,12 +715,13 @@ public class StreamsClient {
 
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
 
-            url = new URL(baseUrl + getFirstValuePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(
+                    baseUrl + getFirstValuePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -740,16 +729,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get first value request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -758,59 +741,67 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /**
      * gets window value of stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to get window value from 
-     * @param startIndex starting index
-     * @param endIndex ending index
-     * @return string of values
-     * @throws SdsError  any error that occurs
-     */
-    public String getWindowValues(String tenantId, String namespaceId, String streamId, String startIndex, String endIndex) throws SdsError {
-        return getWindowValues(tenantId,namespaceId,streamId,startIndex,endIndex,"");
-    }
-    
-    /**
-     * gets window value of stream
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
-     * @param streamId stream to get window value from 
-     * @param startIndex starting index
-     * @param endIndex ending index
-     * @param filter filter to reduce the number of values returned
+     * @param streamId    stream to get window value from
+     * @param startIndex  starting index
+     * @param endIndex    ending index
      * @return string of values
      * @throws SdsError any error that occurs
      */
-    public String getWindowValues(String tenantId, String namespaceId, String streamId, String startIndex, String endIndex, String filter) throws SdsError {
-        return getWindowValues(tenantId,namespaceId,streamId,startIndex,endIndex, filter, "");
-    }    
+    public String getWindowValues(String tenantId, String namespaceId, String streamId, String startIndex,
+            String endIndex) throws SdsError {
+        return getWindowValues(tenantId, namespaceId, streamId, startIndex, endIndex, "");
+    }
 
     /**
      * gets window value of stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to get window value from 
-     * @param startIndex starting index
-     * @param endIndex ending index
-     * @param filter filter to reduce the number of values returned
-     * @param form use this to specify the format of the returned payload 
+     * @param streamId    stream to get window value from
+     * @param startIndex  starting index
+     * @param endIndex    ending index
+     * @param filter      filter to reduce the number of values returned
      * @return string of values
      * @throws SdsError any error that occurs
      */
-    public String getWindowValues(String tenantId, String namespaceId, String streamId, String startIndex, String endIndex, String filter, String form) throws SdsError {
+    public String getWindowValues(String tenantId, String namespaceId, String streamId, String startIndex,
+            String endIndex, String filter) throws SdsError {
+        return getWindowValues(tenantId, namespaceId, streamId, startIndex, endIndex, filter, "");
+    }
+
+    /**
+     * gets window value of stream
+     * 
+     * @param tenantId    tenant to work against
+     * @param namespaceId namespace to work against
+     * @param streamId    stream to get window value from
+     * @param startIndex  starting index
+     * @param endIndex    ending index
+     * @param filter      filter to reduce the number of values returned
+     * @param form        use this to specify the format of the returned payload
+     * @return string of values
+     * @throws SdsError any error that occurs
+     */
+    public String getWindowValues(String tenantId, String namespaceId, String streamId, String startIndex,
+            String endIndex, String filter, String form) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            String intermediate  = getWindowQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{endIndex}", endIndex).replace("{form}", form).replace("{filter}", filter);
-            if(form.equals("")){
+            String intermediate = getWindowQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId)
+                    .replace("{startIndex}", startIndex).replace("{endIndex}", endIndex).replace("{form}", form)
+                    .replace("{filter}", filter);
+            if (form.equals("")) {
                 intermediate = intermediate.replace("&form=", "");
             }
             url = new URL(baseUrl + intermediate);
@@ -823,17 +814,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get window of values request request failed");
             }
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -842,45 +826,44 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /**
      * gets sampled values from the stream
-     * @param tenantId tenant to work under
+     * 
+     * @param tenantId    tenant to work under
      * @param namespaceId namespace within tenant
-     * @param streamId name of stream to get data from
-     * @param startIndex starting index
-     * @param endIndex ending index
-     * @param intervals number of intervals to run sample
-     * @param sampleBy property to sample by
+     * @param streamId    name of stream to get data from
+     * @param startIndex  starting index
+     * @param endIndex    ending index
+     * @param intervals   number of intervals to run sample
+     * @param sampleBy    property to sample by
      * @return
      * @throws SdsError errors that may occur
      */
-    public String getSampledValues(String tenantId, String namespaceId, String streamId, String startIndex, String endIndex, int intervals, String sampleBy) throws SdsError {
+    public String getSampledValues(String tenantId, String namespaceId, String streamId, String startIndex,
+            String endIndex, int intervals, String sampleBy) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-        try{
-            url = new URL(baseUrl + getSampledValuesQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
-            .replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{endIndex}", endIndex)
-            .replace("{intervals}", "" + intervals).replace("{sampleBy}", sampleBy));
+        String response = "";
+
+        try {
+            url = new URL(baseUrl + getSampledValuesQuery.replace("{apiVersion}", apiVersion)
+                    .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+                    .replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{endIndex}", endIndex)
+                    .replace("{intervals}", "" + intervals).replace("{sampleBy}", sampleBy));
             urlConnection = baseClient.getConnection(url, "GET");
-        
+
             int httpResult = urlConnection.getResponseCode();
-            if(httpResult != HttpURLConnection.HTTP_OK){
+            if (httpResult != HttpURLConnection.HTTP_OK) {
                 throw new SdsError(urlConnection, "get sampled values request failed");
             }
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
 
-            while((inputLine = in.readLine()) != null){
-                response.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -888,55 +871,62 @@ public class StreamsClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return response.toString();
+
+        return response;
     }
 
     /**
      * gets the specified range of values from the stream
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
-     * @param streamId stream to get range of values from 
-     * @param startIndex the starting index
-     * @param skip number of values to skip (good for paging)
-     * @param count number of values to return 
-     * @param reverse whether to go forward or backward in regards to the index when getting more values 
-     * @param boundaryType  SdsBoundaryType
-     * @return string of the array of values 
+     * 
+     * @param tenantId     tenant to work against
+     * @param namespaceId  namespace to work against
+     * @param streamId     stream to get range of values from
+     * @param startIndex   the starting index
+     * @param skip         number of values to skip (good for paging)
+     * @param count        number of values to return
+     * @param reverse      whether to go forward or backward in regards to the index
+     *                     when getting more values
+     * @param boundaryType SdsBoundaryType
+     * @return string of the array of values
      * @throws SdsError any error that occurs
      */
-    public String getRangeValues(String tenantId, String namespaceId, String streamId, String startIndex, int skip, int count, boolean reverse, SdsBoundaryType boundaryType) throws SdsError {
-        return getRangeValues(tenantId, namespaceId, streamId, startIndex, "", skip,count, reverse, boundaryType);
+    public String getRangeValues(String tenantId, String namespaceId, String streamId, String startIndex, int skip,
+            int count, boolean reverse, SdsBoundaryType boundaryType) throws SdsError {
+        return getRangeValues(tenantId, namespaceId, streamId, startIndex, "", skip, count, reverse, boundaryType);
     }
 
     /**
      * gets the specified range of values from the stream
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
-     * @param streamId stream to get range of values from 
-     * @param startIndex the starting index
-     * @param endIndex the ending index
-     * @param skip number of values to skip (good for paging)
-     * @param count number of values to return 
-     * @param reverse whether to go forward or backward in regards to the index when getting more values 
-     * @param boundaryType  SdsBoundaryType
-     * @return string of the array of values 
+     * 
+     * @param tenantId     tenant to work against
+     * @param namespaceId  namespace to work against
+     * @param streamId     stream to get range of values from
+     * @param startIndex   the starting index
+     * @param endIndex     the ending index
+     * @param skip         number of values to skip (good for paging)
+     * @param count        number of values to return
+     * @param reverse      whether to go forward or backward in regards to the index
+     *                     when getting more values
+     * @param boundaryType SdsBoundaryType
+     * @return string of the array of values
      * @throws SdsError any error that occurs
      */
-    public String getRangeValues(String tenantId, String namespaceId, String streamId, String startIndex, String endIndex, int skip, int count, boolean reverse, SdsBoundaryType boundaryType) throws SdsError {
+    public String getRangeValues(String tenantId, String namespaceId, String streamId, String startIndex,
+            String endIndex, int skip, int count, boolean reverse, SdsBoundaryType boundaryType) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+        String response = "";
 
         try {
-            String intermediate = getRangeQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
-            .replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{endindex}", endIndex)
-            .replace("{skip}", "" + skip).replace("{count}", "" + count)
-            .replace("{reverse}", "" + reverse).replace("{boundaryType}", "" + boundaryType);
-            if(endIndex.equals("")){
+            String intermediate = getRangeQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId)
+                    .replace("{startIndex}", startIndex).replace("{endindex}", endIndex).replace("{skip}", "" + skip)
+                    .replace("{count}", "" + count).replace("{reverse}", "" + reverse)
+                    .replace("{boundaryType}", "" + boundaryType);
+            if (endIndex.equals("")) {
                 intermediate = intermediate.replace("&endindex=", "");
             }
-            url = new URL(baseUrl + intermediate );
+            url = new URL(baseUrl + intermediate);
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -946,14 +936,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get range of values request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -962,30 +948,33 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return response.toString();
+        return response;
     }
-        
+
     /**
      * gets interpolated values in the range specified
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId the stream to get values from 
-     * @param startIndex the starting index
-     * @param endIndex the ending index
-     * @param count the number of values to return
+     * @param streamId    the stream to get values from
+     * @param startIndex  the starting index
+     * @param endIndex    the ending index
+     * @param count       the number of values to return
      * @return string of the array of values
      * @throws SdsError any error that occurs
      */
-    public String getRangeValuesInterpolated(String tenantId, String namespaceId, String streamId, String startIndex, String endIndex, int count) throws SdsError {
+    public String getRangeValuesInterpolated(String tenantId, String namespaceId, String streamId, String startIndex,
+            String endIndex, int count) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+        String response = "";
 
         try {
-            String intermediate = getRangeInterpolatedQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
-            .replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{endindex}", endIndex).replace("{count}", "" + count);
-            url = new URL(baseUrl + intermediate );
+            String intermediate = getRangeInterpolatedQuery.replace("{apiVersion}", apiVersion)
+                    .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+                    .replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{endindex}", endIndex)
+                    .replace("{count}", "" + count);
+            url = new URL(baseUrl + intermediate);
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -995,14 +984,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get range of interpolated values request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -1011,35 +996,37 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return response.toString();
+        return response;
     }
 
     /**
      * gets a range of values from a streamview
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
-     * @param streamId the stream to get values from 
-     * @param startIndex the starting index
-     * @param skip the number of values to skip (good for paging)
-     * @param count the number of values to return
-     * @param reverse whether to go forward or backward in regards to the index when getting more values 
+     * 
+     * @param tenantId     tenant to work against
+     * @param namespaceId  namespace to work against
+     * @param streamId     the stream to get values from
+     * @param startIndex   the starting index
+     * @param skip         the number of values to skip (good for paging)
+     * @param count        the number of values to return
+     * @param reverse      whether to go forward or backward in regards to the index
+     *                     when getting more values
      * @param boundaryType SdsBoundaryType
-     * @param streamViewId the streamview definition to desribe how to view the data 
+     * @param streamViewId the streamview definition to desribe how to view the data
      * @return string of the array of values
      * @throws SdsError any error that occurs
      */
-    public String getRangeValuesStreamView(String tenantId, String namespaceId, String streamId, String startIndex, int skip, int count, boolean reverse, SdsBoundaryType boundaryType, String streamViewId) throws SdsError {
+    public String getRangeValuesStreamView(String tenantId, String namespaceId, String streamId, String startIndex,
+            int skip, int count, boolean reverse, SdsBoundaryType boundaryType, String streamViewId) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + getRangeStreamViewQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
-                    .replace("{streamId}", streamId).replace("{startIndex}", startIndex)
-                    .replace("{skip}", "" + skip).replace("{count}", "" + count)
-                    .replace("{reverse}", "" + reverse).replace("{boundaryType}", "" + boundaryType)
-                    .replace("{streamViewId}", "" + streamViewId));
+            url = new URL(baseUrl + getRangeStreamViewQuery.replace("{apiVersion}", apiVersion)
+                    .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+                    .replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{skip}", "" + skip)
+                    .replace("{count}", "" + count).replace("{reverse}", "" + reverse)
+                    .replace("{boundaryType}", "" + boundaryType).replace("{streamViewId}", "" + streamViewId));
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -1049,14 +1036,10 @@ public class StreamsClient {
                 throw new SdsError(urlConnection, "get range of values request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -1065,15 +1048,16 @@ public class StreamsClient {
             e.printStackTrace();
         }
 
-        return response.toString();
+        return response;
     }
 
     /**
      * updates the stream with the values specified
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namepsace to work against
-     * @param streamId the stream to update the values of
-     * @param json the values to update on the stream
+     * @param streamId    the stream to update the values of
+     * @param json        the values to update on the stream
      * @throws SdsError any error that occurs
      */
     public void updateValues(String tenantId, String namespaceId, String streamId, String json) throws SdsError {
@@ -1081,7 +1065,9 @@ public class StreamsClient {
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + updateMultiplePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(
+                    baseUrl + updateMultiplePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "PUT");
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
@@ -1096,7 +1082,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -1108,10 +1094,11 @@ public class StreamsClient {
 
     /**
      * replace the values on the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId the stream to replace values in
-     * @param json the values to replace
+     * @param streamId    the stream to replace values in
+     * @param json        the values to replace
      * @throws SdsError any error that occurs
      */
     public void replaceValues(String tenantId, String namespaceId, String streamId, String json) throws SdsError {
@@ -1119,7 +1106,9 @@ public class StreamsClient {
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + replaceMultiplePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
+            url = new URL(
+                    baseUrl + replaceMultiplePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "PUT");
 
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
@@ -1134,7 +1123,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -1146,10 +1135,11 @@ public class StreamsClient {
 
     /**
      * removes a value from the stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to remove value from 
-     * @param index index to remove
+     * @param streamId    stream to remove value from
+     * @param index       index to remove
      * @throws SdsError any error that occurs
      */
     public void removeValue(String tenantId, String namespaceId, String streamId, String index) throws SdsError {
@@ -1157,7 +1147,9 @@ public class StreamsClient {
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + removeSingleQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{streamId}", streamId).replace("{index}", index));
+            url = new URL(baseUrl + removeSingleQuery.replace("{apiVersion}", apiVersion)
+                    .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+                    .replace("{streamId}", streamId).replace("{index}", index));
             urlConnection = baseClient.getConnection(url, "DELETE");
 
             int httpResult = urlConnection.getResponseCode();
@@ -1167,7 +1159,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -1179,21 +1171,24 @@ public class StreamsClient {
 
     /**
      * remove a window of values from a stream
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param streamId stream to remove values from
-     * @param startIndex starting index to remove
-     * @param endIndex ending index to remove
-     * @throws SdsError any error that occurs 
+     * @param streamId    stream to remove values from
+     * @param startIndex  starting index to remove
+     * @param endIndex    ending index to remove
+     * @throws SdsError any error that occurs
      */
-    public void removeWindowValues(String tenantId, String namespaceId, String streamId, String startIndex, String endIndex) throws SdsError {
+    public void removeWindowValues(String tenantId, String namespaceId, String streamId, String startIndex,
+            String endIndex) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + removeMultipleQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId)
-                    .replace("{startIndex}", startIndex).replace("{endIndex}", endIndex));
+            url = new URL(
+                    baseUrl + removeMultipleQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                            .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId)
+                            .replace("{startIndex}", startIndex).replace("{endIndex}", endIndex));
             urlConnection = baseClient.getConnection(url, "DELETE");
 
             int httpResult = urlConnection.getResponseCode();
@@ -1203,7 +1198,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -1215,20 +1210,22 @@ public class StreamsClient {
 
     /**
      * update the stream type to a new type using a streamview
-     * @param tenantId tenant to work against
-     * @param namespaceId namespace to work against
-     * @param streamId stream to update 
+     * 
+     * @param tenantId     tenant to work against
+     * @param namespaceId  namespace to work against
+     * @param streamId     stream to update
      * @param streamViewId streamview to change the type of the stream to
      * @throws SdsError any error that occurs
      */
-	public void updateStreamType(String tenantId, String namespaceId, String streamId, String streamViewId) throws SdsError {
+    public void updateStreamType(String tenantId, String namespaceId, String streamId, String streamViewId)
+            throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + updateStreamTypePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId)
-                    .replace("{streamViewId}", streamViewId));
+            url = new URL(baseUrl + updateStreamTypePath.replace("{apiVersion}", apiVersion)
+                    .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+                    .replace("{streamId}", streamId).replace("{streamViewId}", streamViewId));
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String json = "";
@@ -1244,7 +1241,7 @@ public class StreamsClient {
             }
         } catch (SdsError sdsError) {
             sdsError.print();
-            throw sdsError;        
+            throw sdsError;
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
@@ -1252,5 +1249,5 @@ public class StreamsClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-	}
+    }
 }

@@ -30,6 +30,7 @@ public class TypesClient {
 
     /**
      * base constructor
+     * 
      * @param base this base client helps make the OCS calls
      */
     public TypesClient(BaseClient base) {
@@ -41,26 +42,27 @@ public class TypesClient {
 
     /**
      * creates the type
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param typeDef the type to create
+     * @param typeDef     the type to create
      * @return the created type
-     * @throws SdsError  any error that occurs
+     * @throws SdsError any error that occurs
      */
     public String createType(String tenantId, String namespaceId, SdsType typeDef) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+        String response = "";
         String typeId = typeDef.getId();
-        
+
         try {
-            url = new URL(baseUrl + typePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{typeId}", typeId));
+            url = new URL(baseUrl + typePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{typeId}", typeId));
             urlConnection = baseClient.getConnection(url, "POST");
 
             String body = mGson.toJson(typeDef);
             OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8); 
+            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
             writer.write(body);
             writer.close();
 
@@ -70,13 +72,7 @@ public class TypesClient {
                 throw new SdsError(urlConnection, "create type request failed ");
             }
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
             throw sdsError;
@@ -88,25 +84,26 @@ public class TypesClient {
             e.printStackTrace();
         }
 
-        return response.toString();
+        return response;
     }
-    
+
     /**
-     * get the type 
-     * @param tenantId tenant to work against
+     * get the type
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param typeId the type to get
+     * @param typeId      the type to get
      * @return the string of the type
-     * @throws SdsError  any error that occurs
+     * @throws SdsError any error that occurs
      */
     public String getType(String tenantId, String namespaceId, String typeId) throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            url = new URL(baseUrl + typePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{typeId}", typeId));
+            url = new URL(baseUrl + typePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{typeId}", typeId));
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -115,12 +112,7 @@ public class TypesClient {
                 throw new SdsError(urlConnection, "get single type request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
             throw sdsError;
@@ -132,41 +124,44 @@ public class TypesClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /**
-     * gets the types 
-     * @param tenantId tenant to work against
+     * gets the types
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param skip number of types to skip, useful in paging
-     * @param count number of types to return
+     * @param skip        number of types to skip, useful in paging
+     * @param count       number of types to return
      * @return string of the types
      * @throws SdsError any error that occurs
      */
     public String getTypes(String tenantId, String namespaceId, int skip, int count) throws SdsError {
-        return getTypes(tenantId,namespaceId,skip,count, "");
+        return getTypes(tenantId, namespaceId, skip, count, "");
     }
 
     /**
-     * gets the types 
-     * @param tenantId tenant to work against
+     * gets the types
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param skip number of types to skip, useful in paging
-     * @param count number of types to return
-     * @param query query to reduce the number of types returned
+     * @param skip        number of types to skip, useful in paging
+     * @param count       number of types to return
+     * @param query       query to reduce the number of types returned
      * @return string of the types
      * @throws SdsError any error that occurs
      */
     public String getTypes(String tenantId, String namespaceId, int skip, int count, String query) throws SdsError {
         URL url;
         HttpURLConnection urlConnection = null;
-        String inputLine;
-        StringBuffer jsonResults = new StringBuffer();
+        String response = "";
 
         try {
-            //string 
-            url = new URL(baseUrl + getTypesPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{query}", query).replace("{skip}", String.valueOf(skip)).replace("{count}", String.valueOf(count)));
+            // string
+            url = new URL(baseUrl + getTypesPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{query}", query)
+                    .replace("{skip}", String.valueOf(skip)).replace("{count}", String.valueOf(count)));
             urlConnection = baseClient.getConnection(url, "GET");
 
             int httpResult = urlConnection.getResponseCode();
@@ -175,11 +170,7 @@ public class TypesClient {
                 throw new SdsError(urlConnection, "get multiple types request failed");
             }
 
-            BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),StandardCharsets.UTF_8));
-            while ((inputLine = in.readLine()) != null) {
-                jsonResults.append(inputLine);
-            }
-            in.close();
+            response = baseClient.getResponse(urlConnection);
         } catch (SdsError sdsError) {
             sdsError.print();
             throw sdsError;
@@ -191,22 +182,24 @@ public class TypesClient {
             e.printStackTrace();
         }
 
-        return jsonResults.toString();
+        return response;
     }
 
     /**
      * Deletes the type
-     * @param tenantId tenant to work against
+     * 
+     * @param tenantId    tenant to work against
      * @param namespaceId namespace to work against
-     * @param typeId the type to delete
-     * @throws SdsError  any error that occurs
+     * @param typeId      the type to delete
+     * @throws SdsError any error that occurs
      */
     public void deleteType(String tenantId, String namespaceId, String typeId) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
 
         try {
-            url = new URL(baseUrl + typePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId).replace("{typeId}", typeId));
+            url = new URL(baseUrl + typePath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{typeId}", typeId));
             urlConnection = baseClient.getConnection(url, "DELETE");
 
             int httpResult = urlConnection.getResponseCode();
