@@ -43,7 +43,7 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          projPath: $(projPath)
+          filePath: $(projPath)
 
       - script: |
           dotnet restore
