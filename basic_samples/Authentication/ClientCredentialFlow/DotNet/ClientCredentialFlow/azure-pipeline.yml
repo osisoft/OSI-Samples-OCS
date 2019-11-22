@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - /basic_samples/Authentication/ClientCredentialFlow/DotNet
+      - basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 pr:
   branches:
@@ -13,20 +13,19 @@ pr:
       - master
   paths:
     include:
-      - /basic_samples/Authentication/ClientCredentialFlow/DotNet
+      - basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 variables:
-  - template: /miscellaneous/build_templates/variables.yml
   - group: LocalServer
-  - name: projPath
+  - name: projpath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
-  - name: testPath
+  - name: testpath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
-  - name: covStream
+  - name: cov
     value: Auth_CC_DotNet
 
 jobs:
@@ -34,9 +33,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: ubuntu-16.04
+          imageName: 'ubuntu-16.04'
         windows:
-          imageName: vs2017-win2016
+          imageName: 'vs2017-win2016'
     pool:
       vmImage: $(imageName)
     steps:
@@ -53,41 +52,35 @@ jobs:
         inputs:
           sourceFolder: $(Agent.TempDirectory)
           contents: $(CredFileLibrary)
-          targetFolder: $(Build.SourcesDirectory)$(projPath)/
+          targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
           #cleanTargetFolder: false # Optional
           overWrite: true # Optional
           #flattenFolders: false # Optional
         displayName: 'Copy library config file'
 
       - bash: rm $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Delete default config file'
 
       - bash: mv $(CredFileLibrary) $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Rename library config file'
 
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
         displayName: 'Build app'
-
       - script: |
           dotnet restore
           dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(testpath)/
         displayName: 'Run tests'
 
   # - template: '/miscellaneous/build_templates/coverity.yml'
   #   parameters:
-  #     agent: $(Agent)
-  #     authPath: $(AuthPath)
-  #     folder: $(Folder)
-  #     path: $(Path)
-  #     server: $(Server)
-  #     projPath: $(projPath)
-  #     stream: $(covStream)
+  #     name: '$(cov)'
+  #     directory: $(Build.SourcesDirectory)$(projpath)
 
   - job: BinSkim
     pool:
@@ -96,9 +89,8 @@ jobs:
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        workingDirectory: $(Build.SourcesDirectory)$(projpath)
         displayName: 'Build'
-
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'Analyze'
         inputs:
