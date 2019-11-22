@@ -14,8 +14,13 @@ jobs:
       demands: 'USERNAME -equals $(agent)'
     steps:
       - script: 'if not exist $(folder) mkdir $(folder)'
-        workingDirectory: $(projPath)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Make dir'
+        continueOnError: true
+
+      - script: '"$(path)cov-build" --dir . --no-command --fs-capture-search ../ '
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(folder)'
+        displayName: 'Build'
 
       - script: '"$(path)cov-analyze" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
