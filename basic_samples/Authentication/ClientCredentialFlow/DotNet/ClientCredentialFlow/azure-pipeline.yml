@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - basic_samples/Authentication/ClientCredentialFlow/DotNet
+      - '/basic_samples/Authentication/ClientCredentialFlow/DotNet'
 
 pr:
   branches:
@@ -13,19 +13,20 @@ pr:
       - master
   paths:
     include:
-      - basic_samples/Authentication/ClientCredentialFlow/DotNet
+      - '/basic_samples/Authentication/ClientCredentialFlow/DotNet'
 
 variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
   - group: LocalServer
-  - name: projpath
-    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
+  - name: projPath
+    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
-  - name: testpath
-    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
-  - name: cov
+  - name: testPath
+    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest'
+  - name: covStream
     value: Auth_CC_DotNet
 
 jobs:
@@ -33,9 +34,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-16.04'
+          imageName: ubuntu-16.04
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: vs2017-win2016
     pool:
       vmImage: $(imageName)
     steps:
@@ -44,7 +45,7 @@ jobs:
       - task: DownloadSecureFile@1
         inputs:
           secureFile: $(CredFileLibrary)
-        displayName: 'Download library config file'
+        displayName: Download library config file
 
       # Copy Files
       # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
@@ -52,36 +53,41 @@ jobs:
         inputs:
           sourceFolder: $(Agent.TempDirectory)
           contents: $(CredFileLibrary)
-          targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
+          targetFolder: $(Build.SourcesDirectory)$(projPath)/
           #cleanTargetFolder: false # Optional
           overWrite: true # Optional
           #flattenFolders: false # Optional
-        displayName: 'Copy library config file'
+        displayName: Copy library config file
 
       - bash: rm $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Delete default config file'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: Delete default config file
 
       - bash: mv $(CredFileLibrary) $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Rename library config file'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: Rename library config file
 
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Build app'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: Build app
 
       - script: |
           dotnet restore
           dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testpath)/
-        displayName: 'Run tests'
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: Run tests
 
   - template: '/miscellaneous/build_templates/coverity.yml'
     parameters:
-      name: '$(cov)'
-      directory: $(Build.SourcesDirectory)$(projpath)
+      agent: $(Agent)
+      authPath: $(AuthPath)
+      folder: $(Folder)
+      path: $(Path)
+      server: $(Server)
+      projPath: $(projPath)
+      name: $(covStream)
 
   - job: BinSkim
     pool:
@@ -90,10 +96,10 @@ jobs:
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)
-        displayName: 'Build'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: Build
 
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
-        displayName: 'Analyze'
+        displayName: Analyze
         inputs:
-          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
+          AnalyzeTarget: $(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe

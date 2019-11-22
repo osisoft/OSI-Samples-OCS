@@ -1,29 +1,32 @@
 parameters:
+  agent: ''
+  authPath: ''
+  folder: ''
+  path: ''
+  server: ''
+  projPath: ''
   name: ''
-  directory: ''
-
-variables:
-  group: product-readiness.coverity
 
 jobs:
-- job: Coverity
+  - job: Coverity
     pool:
       name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(Agent)
+      demands: USERNAME -equals $(agent)
+
     steps:
-    - script: 'if not exist $(Folder) mkdir $(Folder)'
-      workingDirectory: '$(directory)'
-      displayName: 'Make dir'
-      continueOnError: true
+      - script: if not exist $(folder) mkdir $(folder)
+        workingDirectory: $(projPath)
+        displayName: Make dir
+        continueOnError: true
 
-    - script: '"$(Path)cov-build" --dir . --no-command --fs-capture-search ../'
-      workingDirectory: '$(directory)/$(Folder)'
-      displayName: 'Build'
+      - script: "$(path)cov-build" --dir . --no-command --fs-capture-search ../
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
+        displayName: Build
 
-    - script: '"$(Path)cov-analyze" --dir .'
-      workingDirectory: '$(directory)/$(Folder)'
-      displayName: 'Analyze'
+      - script: "$(path)cov-analyze" --dir .
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
+        displayName: Analyze
 
-    - script: '"$(Path)cov-commit-defects" --stream "Engineering Incubation - $(name)" --host $(Server) --https-port 8443 --auth-key-file "$(AuthPath)" --dir .'
-      workingDirectory: '$(directory)/$(Folder)'
-      displayName: 'Upload'
+      - script: "$(path)cov-commit-defects" --stream "Engineering Incubation - $(name)" --host $(server) --https-port 8443 --auth-key-file "$(authPath)" --dir .
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
+        displayName: Upload
