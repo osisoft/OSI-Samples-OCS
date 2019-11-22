@@ -16,6 +16,7 @@ pr:
       - basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
   - group: LocalServer
   - name: projPath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
@@ -71,6 +72,7 @@ jobs:
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build app'
+
       - script: |
           dotnet restore
           dotnet test
