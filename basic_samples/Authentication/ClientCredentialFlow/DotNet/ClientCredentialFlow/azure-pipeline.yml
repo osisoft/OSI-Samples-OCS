@@ -45,7 +45,7 @@ jobs:
       - task: DownloadSecureFile@1
         inputs:
           secureFile: $(CredFileLibrary)
-        displayName: Download library config file
+        displayName: 'Download library config file'
 
       # Copy Files
       # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
@@ -57,27 +57,27 @@ jobs:
           #cleanTargetFolder: false # Optional
           overWrite: true # Optional
           #flattenFolders: false # Optional
-        displayName: Copy library config file
+        displayName: 'Copy library config file'
 
       - bash: rm $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: Delete default config file
+        displayName: 'Delete default config file'
 
       - bash: mv $(CredFileLibrary) $(CredFile)
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: Rename library config file
+        displayName: 'Rename library config file'
 
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: Build app
+        displayName: 'Build app'
 
       - script: |
           dotnet restore
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: Run tests
+        displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/coverity.yml'
     parameters:
@@ -87,7 +87,7 @@ jobs:
       path: $(Path)
       server: $(Server)
       projPath: $(projPath)
-      name: $(covStream)
+      stream: $(covStream)
 
   - job: BinSkim
     pool:
@@ -97,9 +97,9 @@ jobs:
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
-        displayName: Build
+        displayName: 'Build'
 
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
-        displayName: Analyze
+        displayName: 'Analyze'
         inputs:
           AnalyzeTarget: $(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe

@@ -5,7 +5,7 @@ parameters:
   path: ''
   server: ''
   projPath: ''
-  name: ''
+  stream: ''
 
 jobs:
   - job: 'Coverity'
@@ -26,6 +26,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
         displayName: 'Analyze'
 
-      - script: '"$(path)cov-commit-defects" --stream "Engineering Incubation - $(name)" --host $(server) --https-port 8443 --auth-key-file "$(authPath)" --dir .'
+      - script: '"$(path)cov-commit-defects" --stream "Engineering Incubation - $(stream)" --host $(server) --https-port 8443 --auth-key-file "$(authPath)" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
         displayName: 'Upload'
