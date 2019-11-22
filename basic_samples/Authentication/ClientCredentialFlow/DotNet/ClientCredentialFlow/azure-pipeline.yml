@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - basic_samples/Authentication/ClientCredentialFlow/DotNet
+      - '/basic_samples/Authentication/ClientCredentialFlow/DotNet'
 
 pr:
   branches:
@@ -13,19 +13,18 @@ pr:
       - master
   paths:
     include:
-      - basic_samples/Authentication/ClientCredentialFlow/DotNet
+      - '/basic_samples/Authentication/ClientCredentialFlow/DotNet'
 
 variables:
-  - group: product-readiness.coverity
-  - group: LocalServer
+  - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
+    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
   - name: testPath
-    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
+    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest'
   - name: cov
     value: Auth_CC_DotNet
 
@@ -53,7 +52,7 @@ jobs:
         inputs:
           sourceFolder: $(Agent.TempDirectory)
           contents: $(CredFileLibrary)
-          targetFolder: '$(Build.SourcesDirectory)$(projPath)/'
+          targetFolder: $(Build.SourcesDirectory)$(projPath)/
           #cleanTargetFolder: false # Optional
           overWrite: true # Optional
           #flattenFolders: false # Optional
