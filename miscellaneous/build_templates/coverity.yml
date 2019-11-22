@@ -26,6 +26,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
         displayName: 'Analyze'
 
-      - script: '"$(covPpath)cov-commit-defects" --stream "Engineering Incubation - $(covStream)" --host $(covServer) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir .'
+      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(covStream)" --host $(covServer) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
         displayName: 'Upload'
