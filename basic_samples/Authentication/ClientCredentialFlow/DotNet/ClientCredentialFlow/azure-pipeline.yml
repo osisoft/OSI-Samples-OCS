@@ -79,15 +79,15 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
-    parameters:
-      agent: $(Agent)
-      authPath: $(AuthPath)
-      folder: $(Folder)
-      path: $(Path)
-      server: $(Server)
-      projPath: $(projPath)
-      stream: $(covStream)
+  # - template: '/miscellaneous/build_templates/coverity.yml'
+  #   parameters:
+  #     agent: $(Agent)
+  #     authPath: $(AuthPath)
+  #     folder: $(Folder)
+  #     path: $(Path)
+  #     server: $(Server)
+  #     projPath: $(projPath)
+  #     stream: $(covStream)
 
   - job: BinSkim
     pool:
