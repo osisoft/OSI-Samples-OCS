@@ -1,6 +1,3 @@
-parameters:
-  projPath: ''
-
 jobs:
   - job: BinSkim
     pool:

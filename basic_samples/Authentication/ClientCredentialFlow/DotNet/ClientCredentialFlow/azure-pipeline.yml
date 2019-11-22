@@ -58,15 +58,5 @@ jobs:
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/coverity.yml'
-    parameters:
-      covAgent: $(covAgent)
-      covAuthPath: $(covAuthPath)
-      covFolder: $(covFolder)
-      covPath: $(covPath)
-      covServer: $(covServer)
-      covStream: $(covStream)
-      projPath: $(projPath)
 
   - template: '/miscellaneous/build_templates/binskim.yml'
-    parameters:
-      projPath: $(projPath)

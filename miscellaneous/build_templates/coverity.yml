@@ -1,12 +1,3 @@
-parameters:
-  covAgent: ''
-  covAuthPath: ''
-  covFolder: ''
-  covPath: ''
-  covServer: ''
-  covStream: ''
-  projPath: ''
-
 jobs:
   - job: Coverity
     pool:
