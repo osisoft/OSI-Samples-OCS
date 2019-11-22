@@ -1,31 +1,31 @@
 parameters:
-  agent: ''
-  authPath: ''
-  folder: ''
-  path: ''
-  server: ''
+  covAgent: ''
+  covAuthPath: ''
+  covFolder: ''
+  covPath: ''
+  covServer: ''
+  covStream: ''
   projPath: ''
-  stream: ''
 
 jobs:
-  - job: 'Coverity'
+  - job: Coverity
     pool:
       name: 00-OSIManaged-Test
-      demands: 'USERNAME -equals $(agent)'
+      demands: USERNAME -equals $(covAgent)
     steps:
-      - script: 'if not exist $(folder) mkdir $(folder)'
+      - script: if not exist $(covFolder) mkdir $(covFolder)
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Make dir'
         continueOnError: true
 
-      - script: '"$(path)cov-build" --dir . --no-command --fs-capture-search ../ '
-        workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(folder)'
+      - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(covFolder)'
         displayName: 'Build'
 
-      - script: '"$(path)cov-analyze" --dir .'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
+      - script: '"$(covPath)cov-analyze" --dir .'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
         displayName: 'Analyze'
 
-      - script: '"$(path)cov-commit-defects" --stream "Engineering Incubation - $(stream)" --host $(server) --https-port 8443 --auth-key-file "$(authPath)" --dir .'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
+      - script: '"$(covPpath)cov-commit-defects" --stream "Engineering Incubation - $(covStream)" --host $(covServer) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir .'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
         displayName: 'Upload'

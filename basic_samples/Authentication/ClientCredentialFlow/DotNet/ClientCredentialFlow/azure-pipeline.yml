@@ -25,7 +25,7 @@ variables:
     value: product-readiness.auth_cc_dotnet.json
   - name: testPath
     value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest'
-  - name: cov
+  - name: covStream
     value: Auth_CC_DotNet
 
 jobs:
@@ -78,10 +78,15 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  # - template: '/miscellaneous/build_templates/coverity.yml'
-  #   parameters:
-  #     name: '$(cov)'
-  #     directory: $(Build.SourcesDirectory)$(projPath)
+  - template: '/miscellaneous/build_templates/coverity.yml'
+    parameters:
+      covAgent: $(covAgent)
+      covAuthPath: $(covAuthPath)
+      covFolder: $(covFolder)
+      covPath: $(covPath)
+      covServer: $(covServer)
+      covStream: $(covStream)
+      projPath: $(projPath)
 
   - job: BinSkim
     pool:
