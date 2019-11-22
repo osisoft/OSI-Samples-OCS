@@ -1,0 +1,29 @@
+parameters:
+  name: ''
+  directory: ''
+
+variables:
+  group: product-readiness.coverity
+
+jobs:
+- job: Coverity
+    pool:
+      name: 00-OSIManaged-Test
+      demands: USERNAME -equals $(Agent)
+    steps:
+    - script: 'if not exist $(Folder) mkdir $(Folder)'
+      workingDirectory: '$(directory)'
+      displayName: 'Make dir'
+      continueOnError: true
+
+    - script: '"$(Path)cov-build" --dir . --no-command --fs-capture-search ../'
+      workingDirectory: '$(directory)/$(Folder)'
+      displayName: 'Build'
+
+    - script: '"$(Path)cov-analyze" --dir .'
+      workingDirectory: '$(directory)/$(Folder)'
+      displayName: 'Analyze'
+
+    - script: '"$(Path)cov-commit-defects" --stream "Engineering Incubation - $(name)" --host $(Server) --https-port 8443 --auth-key-file "$(AuthPath)" --dir .'
+      workingDirectory: '$(directory)/$(Folder)'
+      displayName: 'Upload'
