@@ -39,32 +39,11 @@ jobs:
     pool:
       vmImage: $(imageName)
     steps:
-      # Download Secure File
-      # Download a secure file to a temporary location on the build or release agent
-      - task: DownloadSecureFile@1
-        inputs:
-          secureFile: $(CredFileLibrary)
-        displayName: 'Download library config file'
-
-      # Copy Files
-      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-      - task: CopyFiles@2
-        inputs:
-          sourceFolder: $(Agent.TempDirectory)
-          contents: $(CredFileLibrary)
-          targetFolder: $(Build.SourcesDirectory)$(projPath)/
-          #cleanTargetFolder: false # Optional
-          overWrite: true # Optional
-          #flattenFolders: false # Optional
-        displayName: 'Copy library config file'
-
-      - bash: rm $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Delete default config file'
-
-      - bash: mv $(CredFileLibrary) $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Rename library config file'
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          projPath: $(projPath)
 
       - script: |
           dotnet restore
@@ -88,17 +67,6 @@ jobs:
       covStream: $(covStream)
       projPath: $(projPath)
 
-  - job: BinSkim
-    pool:
-      name: Hosted VS2017
-    steps:
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)
-        displayName: 'Build'
-
-      - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
-        displayName: 'Analyze'
-        inputs:
-          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
+  - template: '/miscellaneous/build_templates/binskim.yml'
+    parameters:
+      projPath: $(projPath)
