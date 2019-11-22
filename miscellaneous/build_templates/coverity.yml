@@ -8,25 +8,19 @@ parameters:
   name: ''
 
 jobs:
-  - job: Coverity
+  - job: 'Coverity'
     pool:
       name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(agent)
-
+      demands: 'USERNAME -equals $(agent)'
     steps:
-      - script: if not exist $(folder) mkdir $(folder)
+      - script: 'if not exist $(folder) mkdir $(folder)'
         workingDirectory: $(projPath)
-        displayName: Make dir
-        continueOnError: true
+        displayName: 'Make dir'
 
-      - script: "$(path)cov-build" --dir . --no-command --fs-capture-search ../
+      - script: '"$(path)cov-analyze" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
-        displayName: Build
+        displayName: 'Analyze'
 
-      - script: "$(path)cov-analyze" --dir .
+      - script: '"$(path)cov-commit-defects" --stream "Engineering Incubation - $(name)" --host $(server) --https-port 8443 --auth-key-file "$(authPath)" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
-        displayName: Analyze
-
-      - script: "$(path)cov-commit-defects" --stream "Engineering Incubation - $(name)" --host $(server) --https-port 8443 --auth-key-file "$(authPath)" --dir .
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(folder)
-        displayName: Upload
+        displayName: 'Upload'
