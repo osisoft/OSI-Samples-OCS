@@ -16,7 +16,7 @@ pr:
       - basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 variables:
-  - template: '/miscellaneous/build_templates/variables.yml'
+  - group: product-readiness.coverity
   - group: LocalServer
   - name: projPath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
