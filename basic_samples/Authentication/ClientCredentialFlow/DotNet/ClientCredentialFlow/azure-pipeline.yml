@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/basic_samples/Authentication/ClientCredentialFlow/DotNet'
+      - /basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 pr:
   branches:
@@ -13,19 +13,19 @@ pr:
       - master
   paths:
     include:
-      - '/basic_samples/Authentication/ClientCredentialFlow/DotNet'
+      - /basic_samples/Authentication/ClientCredentialFlow/DotNet
 
 variables:
-  - template: '/miscellaneous/build_templates/variables.yml'
+  - template: /miscellaneous/build_templates/variables.yml
   - group: LocalServer
   - name: projPath
-    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow'
+    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
   - name: testPath
-    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest'
+    value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
   - name: covStream
     value: Auth_CC_DotNet
 
@@ -102,4 +102,4 @@ jobs:
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'Analyze'
         inputs:
-          AnalyzeTarget: $(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe
+          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
