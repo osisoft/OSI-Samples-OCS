@@ -17,13 +17,13 @@ pr:
 
 variables:
   - group: LocalServer
-  - name: projpath
+  - name: projPath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
-  - name: testpath
+  - name: testPath
     value: /basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest
   - name: cov
     value: Auth_CC_DotNet
@@ -33,9 +33,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-16.04'
+          imageName: ubuntu-16.04
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: vs2017-win2016
     pool:
       vmImage: $(imageName)
     steps:
@@ -52,35 +52,35 @@ jobs:
         inputs:
           sourceFolder: $(Agent.TempDirectory)
           contents: $(CredFileLibrary)
-          targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
+          targetFolder: '$(Build.SourcesDirectory)$(projPath)/'
           #cleanTargetFolder: false # Optional
           overWrite: true # Optional
           #flattenFolders: false # Optional
         displayName: 'Copy library config file'
 
       - bash: rm $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Delete default config file'
 
       - bash: mv $(CredFileLibrary) $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Rename library config file'
 
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build app'
       - script: |
           dotnet restore
           dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testpath)/
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
   # - template: '/miscellaneous/build_templates/coverity.yml'
   #   parameters:
   #     name: '$(cov)'
-  #     directory: $(Build.SourcesDirectory)$(projpath)
+  #     directory: $(Build.SourcesDirectory)$(projPath)
 
   - job: BinSkim
     pool:
@@ -89,8 +89,9 @@ jobs:
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
+
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'Analyze'
         inputs:
