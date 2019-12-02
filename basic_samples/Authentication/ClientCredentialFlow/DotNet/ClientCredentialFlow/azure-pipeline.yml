@@ -44,6 +44,7 @@ jobs:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)
+        displayName: 'Download config'
 
       - script: |
           dotnet restore
