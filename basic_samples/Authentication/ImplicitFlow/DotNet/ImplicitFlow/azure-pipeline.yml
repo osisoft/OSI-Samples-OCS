@@ -48,7 +48,7 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/wwwroot
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
