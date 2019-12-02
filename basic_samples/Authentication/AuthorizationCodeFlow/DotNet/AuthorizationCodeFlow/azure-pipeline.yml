@@ -49,14 +49,12 @@ jobs:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)
-        displayName: 'Download config'
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFileTestOnly)
           fileLibrary: $(CredFileTestOnlyLibrary)
           filePath: $(testPath)
-        displayName: 'Download test-only config'
 
       - script: |
           dotnet restore
