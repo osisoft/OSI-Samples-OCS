@@ -16,7 +16,7 @@ pr:
       - '/basic_samples/Authentication/ImplicitFlow/DotNet'
 
 variables:
-  - group: LocalServer
+  - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/Authentication/ImplicitFlow/DotNet/ImplicitFlow'
   - name: CredFileTestOnly
