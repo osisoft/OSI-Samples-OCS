@@ -1,5 +1,4 @@
 variables:
-- group: product-readiness.pypublish
 - name: projpath
   value: /library_samples/Python3/
 
