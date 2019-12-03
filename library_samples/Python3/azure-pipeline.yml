@@ -1,0 +1,20 @@
+variables:
+- group: PythonPublish
+
+jobs:      
+- job: publish library
+- name: projpath
+  value: /library_samples/Python3/
+
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps :
+
+
+    - script: |
+        python setup.py sdist bdist_wheel
+        python -m twine upload dist/* -u $(username) -p $(password) 
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      displayName: 'rename config file'                
+      
+
