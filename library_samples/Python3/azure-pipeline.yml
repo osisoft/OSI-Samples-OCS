@@ -1,10 +1,10 @@
 variables:
-- group: PythonPublish
-
-jobs:      
-- job: publish library
+- group: product-readiness.pypublish
 - name: projpath
   value: /library_samples/Python3/
+
+jobs:      
+- job: publish_library
 
   pool:
     vmImage: 'Ubuntu-16.04'
