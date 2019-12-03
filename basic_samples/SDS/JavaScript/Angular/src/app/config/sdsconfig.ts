@@ -1,6 +1,3 @@
-// sdsconfig.ts
-//
-
 export interface SdsConfig {
   serviceBaseUri: string;
   tenantId: string;
