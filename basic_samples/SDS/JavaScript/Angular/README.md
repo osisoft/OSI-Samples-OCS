@@ -1,5 +1,7 @@
 ﻿# SDS JavaScript Example using Angular
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Angular?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=921&branchName=master)
+
 ## Building a client to make REST API calls to the SDS Service
 
 The sample code in this topic demonstrates how to invoke SDS REST APIs using Angular. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, create an SdsNamespace, SdsType, and SdsStream, and how to create, read, update, and delete values in SDS. Although this example uses Angular, other javascript frameworks should also work.
@@ -243,7 +245,7 @@ getWindowValues(streamId: string, start, end, filter: string = ''): Observable<a
 Here is how it is called:
 
 ```js
-this.sdsService.getWindowValues(streamId, 0, 40, "Radians%20lt%203");
+this.sdsService.getWindowValues(streamId, 0, 40, 'Radians%20lt%203');
 ```
 
 ### Get Range Values
@@ -267,7 +269,7 @@ The `getRangeValues` method is called as shown :
 ```js
 this.sdsService.getRangeValues(
   streamId,
-  "1",
+  '1',
   40,
   SdsBoundaryType.ExactOrCalculated
 );
@@ -290,7 +292,7 @@ Here is how it is called:
 ```js
 this.sdsService.getRangeValuesHeaders(
   streamId,
-  "1",
+  '1',
   40,
   SdsBoundaryType.ExactOrCalculated
 );
@@ -311,7 +313,7 @@ getSampledValues(streamId: string, start, end, intervals, sampleBy, filter: stri
 Here is how it is called:
 
 ```js
-this.sdsService.getSampledValues(streamId, 0, 40, 4, "sin");
+this.sdsService.getSampledValues(streamId, 0, 40, 4, 'sin');
 ```
 
 ## Update Events and Replacing Values
@@ -373,7 +375,7 @@ The following shows how this is done in the code:
 
 ```js
 const propertyOverride = new SdsStreamPropertyOverride();
-propertyOverride.SdsTypePropertyId = "Radians";
+propertyOverride.SdsTypePropertyId = 'Radians';
 propertyOverride.InterpolationMode = SdsStreamMode.Discrete;
 this.stream.PropertyOverrides = [propertyOverride];
 this.sdsService.updateStream(this.stream);
@@ -390,7 +392,7 @@ SDS attempts to determine how to map Properties from the source to the destinati
 ```js
 this.sdsService.getRangeValues(
   streamId,
-  "3",
+  '3',
   5,
   SdsBoundaryType.ExactOrCalculated,
   autoStreamViewId
@@ -403,19 +405,19 @@ you should define an SdsStreamViewProperty and add it to the SdsStreamView’s P
 ```js
 const manualStreamView = new SdsStreamView();
 manualStreamView.Id = manualStreamViewId;
-manualStreamView.Name = "WaveData_AutoStreamView";
+manualStreamView.Name = 'WaveData_AutoStreamView';
 manualStreamView.Description =
-  "This StreamView uses SDS Types of different shapes, mappings are made explicitly with SdsStreamViewProperties.";
+  'This StreamView uses SDS Types of different shapes, mappings are made explicitly with SdsStreamViewProperties.';
 manualStreamView.SourceTypeId = typeId;
 manualStreamView.TargetTypeId = targetIntTypeId;
 
 const streamViewProperty0 = new SdsStreamViewProperty();
-streamViewProperty0.SourceId = "Order";
-streamViewProperty0.TargetId = "OrderTarget";
+streamViewProperty0.SourceId = 'Order';
+streamViewProperty0.TargetId = 'OrderTarget';
 
 const streamViewProperty1 = new SdsStreamViewProperty();
-streamViewProperty1.SourceId = "Sinh";
-streamViewProperty1.TargetId = "SinhInt";
+streamViewProperty1.SourceId = 'Sinh';
+streamViewProperty1.TargetId = 'SinhInt';
 ```
 
 ## SdsStreamViewMap
@@ -451,13 +453,9 @@ deleteValue(streamId: string, index): Observable<any>
 deleteWindowValues(streamId: string, start, end): Observable<any>
 ```
 
-## Test
+---
 
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDSangJS?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4923&branchName=master)
-
-Note this samaple sometimes fails in automation due to automation issues. Testing locally & manually it is normally OK.
-
-Automated test uses Node10.16.0 x64
+Tested using Node10.16.0 x64
 
 For the general steps or switch languages see the Task [ReadMe](../../)  
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  

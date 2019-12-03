@@ -1,5 +1,7 @@
 # .NET Samples using API Calls
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_DotNet_REST?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=888&branchName=master)
+
 Developed against DotNet 2.2.105.
 
 ## Building a Client with the rest calls directly
@@ -282,10 +284,6 @@ In order for the program to run repeatedly without collisions, the sample perfor
 RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{StreamId}");
 RunInTryCatch(httpClient.DeleteAsync,($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{TypeId}"));
 ```
-
----
-
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDSDotNetAPI?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4914&branchName=master)
 
 ---
 

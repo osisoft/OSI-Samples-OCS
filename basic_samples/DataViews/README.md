@@ -17,7 +17,7 @@ The steps performed in the examples are similar and follow this general flow:
 | Languages                            | Test Status                                                                                                                                                                                                                        |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <a href="Java/dataviewjava">Java</a> | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=884&branchName=master)   |
-| <a href="Python3/">Python3</a>       | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=885&branchName=master) |
+| <a href="Python3/">Python</a>        | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=885&branchName=master) |
 
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

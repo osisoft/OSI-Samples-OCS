@@ -1,5 +1,7 @@
 # Building a Java client to make REST API calls to the SDS Service
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=920&branchName=master)
+
 The sample code described in this topic demonstrates how to use Java to store and retrieve data from SDS using only the SDS REST API. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, obtain an SdsNamespace, create an SdsType and SdsStream, and how to create, read, update, and delete values in SDS.
 
 [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
@@ -348,10 +350,6 @@ Note that the IDs of the objects are passed, not the object themselves. Similarl
 ```java
 ocsClient.Types.deleteType(tenantId, namespaceId, sampleTypeId);
 ```
-
----
-
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDSJava?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4910&branchName=master)
 
 ---
 

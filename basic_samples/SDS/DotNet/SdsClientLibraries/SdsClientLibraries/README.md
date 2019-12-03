@@ -1,5 +1,7 @@
 # .NET Samples
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_DotNet_Libs?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=887&branchName=master)
+
 ## Building a Client with the OCS Client Libraries
 
 The sample described in this section makes use of the OSIsoft Cloud Services Client Libraries. When working in .NET, it is recommended that you use the OCS Client Libraries metapackage, OSIsoft.OCSClients. The metapackage is a NuGet package available from https://api.nuget.org/v3/index.json. The libraries offer a framework of classes that make client development easier.
@@ -319,10 +321,6 @@ In order for the program to run repeatedly without collisions, the sample perfor
 await metadataService.DeleteStreamAsync(streamId);
 await metadataService.DeleteTypeAsync(typeId);
 ```
-
----
-
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDSDotNet?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4912&branchName=master)
 
 ---
 

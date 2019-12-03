@@ -1,5 +1,7 @@
 ﻿# SDS JavaScript Example using Python
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=925&branchName=master)
+
 ## Building a Python client to make REST API calls to the SDS Service
 
 The sample code in this topic demonstrates how to invoke SDS REST APIs using Python. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, create an SdsNamespace, SdsType, and SdsStream, and how to create, read, update, and delete values in SDS.
@@ -436,10 +438,6 @@ ocsClient.Streams.deleteStreamView(namespaceId, sampleStreamViewId)
 ```
 
 _Note: Types and Stream Views cannot be deleted until any streams referencing them are deleted first. Their references are counted so deletion will fail if any streams still reference them._
-
----
-
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDSPy?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4907&branchName=master)
 
 ---
 

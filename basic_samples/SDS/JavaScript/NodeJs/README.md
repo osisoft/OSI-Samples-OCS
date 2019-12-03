@@ -1,5 +1,7 @@
 ﻿# SDS JavaScript Example using NodeJS
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_NodeJs?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=924&branchName=master)
+
 ## Building a Client to make REST API Calls to the SDS Service.
 
 This sample demonstrates how SDS REST APIs are invoked using JavaScript. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, obtain an SdsNamespace, create an SdsType and SdsStream, and how to create, read, update, and delete values in SDS. It has the following dependencies:
@@ -52,18 +54,18 @@ The sample uses `request-promise` module to connect a service endpoint. Each RES
 The REST calls in this sample are set up as follows:
 
 ```js
-var restCall = require("request-promise");
+var restCall = require('request-promise');
 restCall({
-  url: authItems["authority"],
-  method: "POST",
+  url: authItems['authority'],
+  method: 'POST',
   headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
+    'Content-Type': 'application/x-www-form-urlencoded'
   },
   form: {
-    grant_type: "client_credentials",
-    client_id: authItems["clientId"],
-    client_secret: authItems["clientSecret"],
-    resource: authItems["resource"]
+    grant_type: 'client_credentials',
+    client_id: authItems['clientId'],
+    client_secret: authItems['clientSecret'],
+    resource: authItems['resource']
   },
   gzip: true
 });
@@ -164,11 +166,11 @@ In the sample code, the SdsType representing WaveData is defined in Sample.js. W
 ```js
 // define basic SdsTypes
 var doubleType = new sdsObjs.SdsType({
-  Id: "doubleType",
+  Id: 'doubleType',
   SdsTypeCode: sdsObjs.sdsTypeCode.Double
 });
 var intType = new sdsObjs.SdsType({
-  Id: "intType",
+  Id: 'intType',
   SdsTypeCode: sdsObjs.sdsTypeCode.Int32
 });
 ```
@@ -178,7 +180,7 @@ Next, the WaveData properties are each represented by an SdsTypeProperty. Each S
 ```js
 // define properties
 var orderProperty = new sdsObjs.SdsTypeProperty({
-  Id: "Order",
+  Id: 'Order',
   SdsType: intType,
   IsKey: true
 });
@@ -189,8 +191,8 @@ An SdsType can be created by a POST request as follows:
 ```js
 restCall({
   url:
-    this.url + this.typesBase.format([tenantId, namespaceId]) + "/" + type.Id,
-  method: "POST",
+    this.url + this.typesBase.format([tenantId, namespaceId]) + '/' + type.Id,
+  method: 'POST',
   headers: this.getHeaders(),
   body: JSON.stringify(type).toString(),
   gzip: true
@@ -209,8 +211,8 @@ An SdsStream stores an ordered series of events. To create a SdsStream instance,
 ```js
 var sampleStream = new sdsObjs.SdsStream({
   Id: sampleStreamId,
-  Name: "WaveStreamJs",
-  Description: "A Stream to store the WaveDatan Sds types events",
+  Name: 'WaveStreamJs',
+  Description: 'A Stream to store the WaveDatan Sds types events',
   TypeId: sampleTypeId
 });
 ```
@@ -222,9 +224,9 @@ restCall({
   url:
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
-    "/" +
+    '/' +
     stream.Id,
-  method: "POST",
+  method: 'POST',
   headers: this.getHeaders(),
   body: JSON.stringify(stream).toString(),
   gzip: true
@@ -242,10 +244,10 @@ restCall({
   url:
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
-    "/" +
+    '/' +
     streamId +
     this.insertValuesBase,
-  method: "POST",
+  method: 'POST',
   headers: this.getHeaders(),
   body: JSON.stringify(events),
   gzip: true
@@ -316,7 +318,7 @@ restCall({
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
     this.getWindowValuesBase.format([streamId, start, end]),
-  method: "GET",
+  method: 'GET',
   headers: this.getHeaders(),
   gzip: true
 });
@@ -341,9 +343,9 @@ restCall({
   url:
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
-    this.getWindowValuesBase.format([streamId, start, end, ""]) +
-    "&form=tableh",
-  method: "GET",
+    this.getWindowValuesBase.format([streamId, start, end, '']) +
+    '&form=tableh',
+  method: 'GET',
   headers: this.getHeaders(),
   gzip: true
 });
@@ -383,7 +385,7 @@ restCall({
       boundaryType,
       streamView
     ]),
-  method: "GET",
+  method: 'GET',
   headers: this.getHeaders(),
   gzip: true
 });
@@ -401,10 +403,10 @@ client.getRangeValues(
   tenantId,
   sampleNamespaceId,
   sampleStreamId,
-  "1",
+  '1',
   0,
   3,
-  "False",
+  'False',
   sdsObjs.sdsBoundaryType.ExactOrCalculated
 );
 ```
@@ -427,7 +429,7 @@ restCall({
       filter,
       streamViewId
     ]),
-  method: "GET",
+  method: 'GET',
   headers: this.getHeaders(),
   gzip: true
 });
@@ -446,7 +448,7 @@ client.getSampledValues(
   0,
   40,
   4,
-  "sin"
+  'sin'
 );
 ```
 
@@ -461,10 +463,10 @@ restCall({
   url:
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
-    "/" +
+    '/' +
     streamId +
     this.updateValuesBase,
-  method: "PUT",
+  method: 'PUT',
   headers: this.getHeaders(),
   body: JSON.stringify(events),
   gzip: true
@@ -493,10 +495,10 @@ restCall({
   url:
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
-    "/" +
+    '/' +
     streamId +
     this.replaceValuesBase,
-  method: "PUT",
+  method: 'PUT',
   headers: this.getHeaders(),
   body: JSON.stringify(events),
   gzip: true
@@ -522,7 +524,7 @@ In the sample, the InterpolationMode is overridden to a value of Discrete for th
 ```js
 // Create a Discrete stream PropertyOverride indicating that we do not want SDS to calculate a value for Radians and update our stream
 var propertyOverride = new sdsObjs.SdsPropertyOverride({
-  SdsTypePropertyId: "Radians",
+  SdsTypePropertyId: 'Radians',
   InterpolationMode: sdsObjs.sdsStreamMode.Discrete
 });
 var propertyOverrides = [propertyOverride];
@@ -596,7 +598,7 @@ restCall({
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
     this.removeSingleValueBase.format([streamId, index]),
-  method: "DELETE",
+  method: 'DELETE',
   headers: this.getHeaders(),
   gzip: true
 });
@@ -606,7 +608,7 @@ restCall({
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
     this.removeMultipleValuesBase.format([streamId, start, end]),
-  method: "DELETE",
+  method: 'DELETE',
   headers: this.getHeaders(),
   gzip: true
 });
@@ -623,9 +625,9 @@ restCall({
   url:
     this.url +
     this.streamsBase.format([tenantId, namespaceId]) +
-    "/" +
+    '/' +
     streamId,
-  method: "DELETE",
+  method: 'DELETE',
   headers: this.getHeaders(),
   gzip: true
 });
@@ -633,16 +635,12 @@ restCall({
 
 ```js
 restCall({
-  url: this.url + this.typesBase.format([tenantId, namespaceId]) + "/" + typeId,
-  method: "DELETE",
+  url: this.url + this.typesBase.format([tenantId, namespaceId]) + '/' + typeId,
+  method: 'DELETE',
   headers: this.getHeaders(),
   gzip: true
 });
 ```
-
----
-
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDSnodeJS?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4922&branchName=master)
 
 ---
 

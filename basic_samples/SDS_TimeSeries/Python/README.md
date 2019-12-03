@@ -1,5 +1,7 @@
 # Building a Python client to make REST API calls to the SDS Service
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=927&branchName=master)
+
 The sample code in this topic demonstrates how to invoke SDS REST APIs using Python. By examining the code, you will see how to create an SdsType and SdsStream, and how to create, read, update, and delete values in SDS. You will also see the effect of the accept verbosity header, summaries value call, and how to do bulk streams calls.
 
 This sample code uses the python `requests` module, which natively supports encoding. As a result, the requests in this sample will automatically include the `Accept-Encoding` header and automatically decompress the encoded responses before returning them to the user, so no special handling is required to support compression.
@@ -47,12 +49,8 @@ ClientSecret = REPLACE_WITH_APPLICATION_SECRET
 
 ---
 
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDS_TSPy?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4909&branchName=master)
-
----
-
 Automated test uses Python 3.6.8 x64
 
-For the general steps or switch languages see the Task [ReadMe](../../../)<br />
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
+For the general steps or switch languages see the Task [ReadMe](../../../)  
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
