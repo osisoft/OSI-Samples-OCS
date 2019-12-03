@@ -11,6 +11,9 @@ jobs:
 
 
     - script: |
+        pip install wheel
+        pip install twine
+
         python setup.py sdist bdist_wheel
         python -m twine upload dist/* -u $(username) -p $(password) 
       workingDirectory: $(Build.SourcesDirectory)$(projpath)/
