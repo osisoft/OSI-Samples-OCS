@@ -1,5 +1,7 @@
 # Using the OCS Dataview Service in Python
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=885&branchName=master)
+
 The sample code in this demonstrates how to invoke Dataview REST APIs via the sample Python client [library](https://github.com/osisoft/OSI-Samples/tree/master/library_samples/Python3/ocs_sample_library_preview). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a Dataview, update it, retreive it, and retrieve data from it in different ways. At the end of the sample, everything that was created is deleted.
 
 This example uses the ocs_sample_library_preview library which is also included in this github repo. It is downloadable via pip.
@@ -22,10 +24,6 @@ or
 
 1. Install pytest `pip install pytest`
 1. Run `pytest program.py`
-
----
-
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/DataviewPy?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4908&branchName=master)
 
 ---
 
