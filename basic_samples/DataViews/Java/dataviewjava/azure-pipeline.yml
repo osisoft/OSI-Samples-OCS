@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - basic_samples/DataViews/Java
+      - '/basic_samples/DataViews/Java'
 
 pr:
   branches:
@@ -13,19 +13,19 @@ pr:
       - master
   paths:
     include:
-      - basic_samples/DataViews/Java
+      - '/basic_samples/DataViews/Java'
 
 variables:
-  - group: LocalServer
-  - name: projpath
-    value: /basic_samples/DataViews/Java/dataviewjava
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/basic_samples/DataViews/Java/dataviewjava'
   - name: CredFile
     value: config.properties
   - name: CredFileLibrary
     value: product-readiness.dataviews_java.properties
-  - name: libpath
-    value: /library_samples/Java/ocs_sample_library_preview
-  - name: cov
+  - name: libPath
+    value: '/library_samples/Java/ocs_sample_library_preview'
+  - name: covStream
     value: DataviewJava
 
 jobs:
@@ -39,63 +39,22 @@ jobs:
     pool:
       vmImage: $(imageName)
     steps:
-      # Download Secure File
-      # Download a secure file to a temporary location on the build or release agent
-      - task: DownloadSecureFile@1
-        inputs:
-          secureFile: $(CredFileLibrary)
-        displayName: 'Download library config file'
-
-      # Copy Files
-      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-      - task: CopyFiles@2
-        inputs:
-          sourceFolder: $(Agent.TempDirectory)
-          contents: $(CredFileLibrary)
-          targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
-          #cleanTargetFolder: false # Optional
-          overWrite: true # Optional
-          #flattenFolders: false # Optional
-        displayName: 'Copy library config file'
-
-      - bash: rm $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Delete default config file'
-
-      - bash: mv $(CredFileLibrary) $(CredFile)
-        workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-        displayName: 'Rename library config file'
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
 
       - script: mvn install -f pom.xml
-        workingDirectory: $(Build.SourcesDirectory)$(libpath)/
+        workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Maven install'
 
       - task: Maven@3
         inputs:
-          mavenPomFile: '$(Build.SourcesDirectory)$(projpath)/pom.xml'
+          mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
           goals: 'test'
         displayName: 'Run tests'
 
-  - job: Coverity
-    pool:
-      name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(LocalServer)
-    steps:
-      - script: 'if not exist $(covFolder) mkdir $(covFolder)'
-        workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
-        displayName: 'Make dir'
-        continueOnError: true
-
-      - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
-        workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-        displayName: 'Build'
-
-      - script: '"$(covPath)cov-analyze" --dir . '
-        workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-        displayName: 'Analyze'
-
-      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(cov)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
-        workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-        displayName: 'Upload'
+  - template: '/miscellaneous/build_templates/coverity.yml'
