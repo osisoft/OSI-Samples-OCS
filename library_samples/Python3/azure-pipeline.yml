@@ -1,38 +1,35 @@
 variables:
-- name: projpath
-  value: /library_samples/Python3/
+  - name: projPath
+    value: '/library_samples/Python3/'
 
-jobs:      
-- job: publish_library
+jobs:
+  - job: 'Publish Library'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.x'
+          addToPath: true
+          architecture: 'x64'
+        displayName: 'Specify Python version'
 
-  pool:
-    vmImage: 'Ubuntu-16.04'
-    
+      - script: |
+          pip install wheel
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Install wheel'
 
-  steps :        
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.x'
-        addToPath: true
-        architecture: 'x64'  
+      - script: |
+          pip install twine
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Install twine'
 
-    - script: |
-        pip install wheel
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'install wheel'                
-      
-    - script: |
-        pip install twine        
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'install twine'  
+      - script: |
+          python setup.py sdist bdist_wheel
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build library'
 
-    - script: |
-        python setup.py sdist bdist_wheel
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'build'  
-
-    - script: |
-        python -m twine upload dist/* -u $(username) -p $(password) 
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'upload'  
-
+      - script: |
+          python -m twine upload dist/* -u $(username) -p $(password)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Upload library'
