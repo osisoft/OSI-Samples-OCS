@@ -40,6 +40,7 @@ variables:
 
 jobs:
   - job: Tests
+    # Tests run in Chrome, no reason to run on multiple OS
     pool:
       vmImage: 'vs2017-win2016'
     steps:
@@ -72,14 +73,14 @@ jobs:
         displayName: 'Install Angular CLI'
 
       - script: |
-          npx webdriver-manager update --versions.chrome 76.0.3809.126
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Install webdriver'
-
-      - script: |
           npm ci
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Install dependencies'
+
+      - script: |
+          npx webdriver-manager update --versions.chrome 76.0.3809.126
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Install webdriver'
 
       - script: |
           ng e2e --webdriver-update=false
