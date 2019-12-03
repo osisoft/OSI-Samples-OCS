@@ -22,7 +22,7 @@ variables:
   - name: CredFile
     value: config.properties
   - name: CredFileLibrary
-    value: prod_config.properties
+    value: product-readiness.sds_java.properties
   - name: libPath
     value: '/library_samples/Java/ocs_sample_library_preview'
   - name: covStream
