@@ -19,12 +19,12 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/OmfIngress/DotNet/OmfIngressClientLibraries/OmfIngressClientLibraries'
+  - name: testPath
+    value: '/basic_samples/OmfIngress/DotNet/OmfIngressClientLibraries/OmfIngressClientLibrariesTests'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.omf_ing_dotnet.json
-  - name: testPath
-    value: '/basic_samples/OmfIngress/DotNet/OmfIngressClientLibraries/OmfIngressClientLibrariesTests'
   - name: covStream
     value: OMF_Ing_DotNet
 

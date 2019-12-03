@@ -19,12 +19,12 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/SDS/Java/sdsjava'
+  - name: libPath
+    value: '/library_samples/Java/ocs_sample_library_preview'
   - name: CredFile
     value: config.properties
   - name: CredFileLibrary
     value: product-readiness.sds_java.properties
-  - name: libPath
-    value: '/library_samples/Java/ocs_sample_library_preview'
   - name: covStream
     value: SDSJava
 

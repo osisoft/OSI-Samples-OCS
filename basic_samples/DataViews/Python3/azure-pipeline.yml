@@ -19,12 +19,12 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/DataViews/Python3'
+  - name: testPath
+    value: '/basic_samples/DataViews/Python3'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
     value: product-readiness.dataviews_python.ini
-  - name: testPath
-    value: '/basic_samples/DataViews/Python3'
   - name: covStream
     value: DataviewPy
 

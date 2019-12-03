@@ -19,6 +19,8 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/Authentication/ImplicitFlow/DotNet/ImplicitFlow'
+  - name: testPath
+    value: '/basic_samples/Authentication/ImplicitFlow/DotNet/ImplicitFlowTest'
   - name: CredFileTestOnly
     value: appsettings.json
   - name: CredFile
@@ -27,8 +29,6 @@ variables:
     value: product-readiness.auth_implicit_dotnet.json
   - name: CredFileLibrary
     value: product-readiness.auth_implicit_dotnet.js
-  - name: testPath
-    value: '/basic_samples/Authentication/ImplicitFlow/DotNet/ImplicitFlowTest'
   - name: covStream
     value: Auth_Implicit_DotNet
 

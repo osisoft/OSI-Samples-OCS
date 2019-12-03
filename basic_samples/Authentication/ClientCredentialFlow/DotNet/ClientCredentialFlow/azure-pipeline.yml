@@ -19,12 +19,12 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow'
+  - name: testPath
+    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
-  - name: testPath
-    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest'
   - name: covStream
     value: Auth_CC_DotNet
 

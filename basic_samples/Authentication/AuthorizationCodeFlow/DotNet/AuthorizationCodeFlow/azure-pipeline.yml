@@ -19,6 +19,8 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/Authentication/AuthorizationCodeFlow/DotNet/AuthorizationCodeFlow'
+  - name: testPath
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/DotNet/AuthorizationCodeFlowTest'
   - name: CredFileTestOnly
     value: appsettings.json
   - name: CredFile
@@ -27,8 +29,6 @@ variables:
     value: product-readiness.auth_pkce_dotnet.json
   - name: CredFileLibrary
     value: product-readiness.auth_pkce_dotnet.js
-  - name: testPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/DotNet/AuthorizationCodeFlowTest'
   - name: covStream
     value: Auth_PKCE_DotNet
 

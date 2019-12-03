@@ -19,12 +19,12 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/Authentication/HybridFlow/DotNet/HybridFlow'
+  - name: testPath
+    value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_hybrid_dotnet.json
-  - name: testPath
-    value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest
   - name: covStream
     value: Auth_Hybrid_DotNet
 

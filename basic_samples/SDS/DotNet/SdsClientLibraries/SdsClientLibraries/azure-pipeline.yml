@@ -19,12 +19,12 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/SDS/DotNet/SdsClientLibraries/SdsClientLibraries'
+  - name: testPath
+    value: '/basic_samples/SDS/DotNet/SdsClientLibraries/SdsClientLibrariesCoreTests'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.sds_dotnet_libs.json
-  - name: testPath
-    value: '/basic_samples/SDS/DotNet/SdsClientLibraries/SdsClientLibrariesCoreTests'
   - name: covStream
     value: SDSDotNet
 
