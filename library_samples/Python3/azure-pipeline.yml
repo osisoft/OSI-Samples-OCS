@@ -12,13 +12,26 @@ jobs:
 
     - script: |
         pip install --upgrade pip
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      displayName: 'upgrade pip'           
+
+    - script: |
         pip install wheel
-        pip install --upgrade twine
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      displayName: 'install wheel'                
+      
+    - script: |
+        pip install twine        
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      displayName: 'install twine'  
 
-
+    - script: |
         python setup.py sdist bdist_wheel
+      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
+      displayName: 'build'  
+
+    - script: |
         python -m twine upload dist/* -u $(username) -p $(password) 
       workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'rename config file'                
-      
+      displayName: 'upload'  
 
