@@ -18,9 +18,9 @@ pr:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: /basic_samples/SDS/Python/SDSPy/Python3
+    value: '/basic_samples/SDS/Python/SDSPy/Python3'
   - name: testPath
-    value: /basic_samples/SDS/Python/SDSPy/Python3
+    value: '/basic_samples/SDS/Python/SDSPy/Python3'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
