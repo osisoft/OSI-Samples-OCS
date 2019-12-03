@@ -45,7 +45,7 @@ jobs:
 
       - task: UsePythonVersion@0
         inputs:
-          versionSpec: $(python_version)
+          versionSpec: '3.6'
           architecture: 'x64'
         displayName: 'Specify Python version'
 
