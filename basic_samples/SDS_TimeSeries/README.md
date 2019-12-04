@@ -25,10 +25,10 @@ These steps illustrate the fundamental programming steps of SDS. Feel free to mo
 
 Step numbers are searchable in the code. For example to find the relevant part of the code for accepting verbosity, search: `step 9`
 
-| Languages                       | Test Status                                                                                                                                                                                                                                          |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a href="Python">Python3</a>    | [![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDS_TSPy?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4909&branchName=master)     |
-| <a href="DotNet/Try">DotNet</a> | [![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/SDS_TSDotNet?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4915&branchName=master) |
+| Languages                       | Test Status                                                                                                                                                                                                                     |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="Python">Python</a>     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=927&branchName=master) |
+| <a href="DotNet/Try">DotNet</a> | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=926&branchName=master) |
 
 For the main OCS page [ReadMe](../../)<br />
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

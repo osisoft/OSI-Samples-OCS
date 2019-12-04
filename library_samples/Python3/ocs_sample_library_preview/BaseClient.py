@@ -107,7 +107,8 @@ class BaseClient(object):
 
         expiration = token.get("expires_in", None)
         if expiration is None:
-            raise SdsError(f"Failed to get token, check client id/secret: {token['error']}")
+            raise SdsError(
+                f"Failed to get token, check client id/secret: {token['error']}")
 
         self.__expiration = float(expiration) + time.time()
         self.__token = token['access_token']
@@ -139,8 +140,8 @@ class BaseClient(object):
 
             message = main_message + error
             raise SdsError(message)
-        
-        #this happens on a collection return that is partially successful
+
+        # this happens on a collection return that is partially successful
         if response.status_code == 207:
             status = response.status_code
             error = response.json["Error"]

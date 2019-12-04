@@ -1,83 +1,59 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/SDS/JavaScript/NodeJs'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/SDS/JavaScript/NodeJs'
+
 variables:
-- group: LocalServer
-- name: projpath
-  value: /basic_samples/SDS/JavaScript/NodeJs
-- name: CredFile
-  value: config.js
-- name: CredFileLibrary
-  value: prod_config.js
-- name: testpath
-  value: /basic_samples/SDS/JavaScript/NodeJs
-- name: job
-  value: SDSnodeJS
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: testPath
+    value: /basic_samples/SDS/JavaScript/NodeJs
+  - name: projPath
+    value: /basic_samples/SDS/JavaScript/NodeJs
+  - name: CredFile
+    value: config.js
+  - name: CredFileLibrary
+    value: product-readiness.sds_nodejs.js
+  - name: covStream
+    value: SDSnodeJS
 
-jobs:      
-- job: SDSnodeJS
+jobs:
+  - job: Tests
+    # Tests run in Chrome, no reason to run on multiple OS
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
 
-  pool:
-    vmImage: 'Ubuntu-16.04'
-  steps :
-    - task: NodeTool@0 
-      inputs:
-        versionSpec: '8.x' # replace this value with the version that you need for your project
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '8.x'
+        displayName: 'Specify Node version'
 
-    # Download Secure File
-    # Download a secure file to a temporary location on the build or release agent
-    - task: DownloadSecureFile@1
-      inputs:
-        secureFile: $(CredFileLibrary)
+      - script: |
+          npm install request
+          npm install request-promise
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Install dependencies'
 
+      - script: |
+          node Sample.js
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Run tests'
 
-    # Copy Files
-    # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
-    - task: CopyFiles@2
-      inputs:
-        sourceFolder: $(Agent.TempDirectory)
-        contents: $(CredFileLibrary)
-        targetFolder: '$(Build.SourcesDirectory)$(projpath)/'
-        #cleanTargetFolder: false # Optional 
-        overWrite: true # Optional
-        #flattenFolders: false # Optional
-      displayName: copy file
-
-    - script: |
-        mv $(CredFileLibrary) $(CredFile)
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'rename config file'
-      
-
-      
-    - script: |
-       npm install request
-       npm install request-promise
-      workingDirectory: $(Build.SourcesDirectory)$(projpath)/
-      displayName: 'Install tools'      
-      
-    - script: |
-        node Sample.js
-      displayName: 'Test that the app runs'
-      workingDirectory: $(Build.SourcesDirectory)$(testpath)/
-
-- job: SDSnodeJS_COV
-
-  pool:
-    name: 00-OSIManaged-Test
-    demands: USERNAME -equals $(LocalServer)
-
-  steps:
-  - script: 'if not exist $(covFolder) mkdir $(covFolder)'
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)'
-    displayName: 'make dir '
-    continueOnError: true
-
-  - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../ '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'build '
-
-  - script: '"$(covPath)cov-analyze" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'analyze '
-
-  - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(job)" --host $(coverity_server) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir . '
-    workingDirectory: '$(Build.SourcesDirectory)$(projpath)/$(covFolder)'
-    displayName: 'upload '
+  - template: '/miscellaneous/build_templates/coverity.yml'

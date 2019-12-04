@@ -1,14 +1,16 @@
-# Setup
+# UOMs DotNet Sample
+
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/UOM_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=928&branchName=master)
 
 Developed against DotNet 2.2.105.
 
-Replace the placeholders in the [apsettings](./apsettings.json) file with your TenantID, NamespaceId, ClientID and ClientSecret.
-
 ## Running the sample
+
+Replace the placeholders in the [apsettings](./apsettings.json) file with your TenantID, NamespaceId, ClientID and ClientSecret.
 
 ### Requirements
 
-- .net core 2.2.1 or later
+- .NET Core 2.2.1 or later
 - Reliable internet connection
 
 ### Using Visual Studio
@@ -27,13 +29,9 @@ Replace the placeholders in the [apsettings](./apsettings.json) file with your T
 dotnet run
 ```
 
-----------
-[[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/UOM_DotNet?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4921&branchName=master)
-
------------
-
+---
 
 Tested against DotNet 2.2.105.
 
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

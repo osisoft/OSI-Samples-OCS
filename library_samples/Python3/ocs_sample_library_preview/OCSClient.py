@@ -1,8 +1,5 @@
-# OCSClient.py
-#
-
 from .BaseClient import BaseClient
-from .Dataviews import Dataviews
+from .DataViews import DataViews
 from .Types import Types
 from .Streams import Streams
 
@@ -26,7 +23,7 @@ class OCSClient:
         """
         self.__baseClient = BaseClient(apiversion, tenant, url, clientId,
                                        clientSecret, acceptVerbosity)
-        self.__Dataviews = Dataviews(self.__baseClient)
+        self.__DataViews = DataViews(self.__baseClient)
         self.__Types = Types(self.__baseClient)
         self.__Streams = Streams(self.__baseClient)
 
@@ -67,11 +64,11 @@ class OCSClient:
         self.__baseClient.RequestTimeout = timeout
 
     @property
-    def Dataviews(self):
+    def DataViews(self):
         """
-        :return: A client for interacting with Dataviews
+        :return: A client for interacting with DataViews
         """
-        return self.__Dataviews
+        return self.__DataViews
 
     @property
     def Types(self):

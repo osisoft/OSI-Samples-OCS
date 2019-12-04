@@ -1,0 +1,67 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/DataViews/Python3'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/DataViews/Python3'
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/basic_samples/DataViews/Python3'
+  - name: testPath
+    value: '/basic_samples/DataViews/Python3'
+  - name: CredFile
+    value: config.ini
+  - name: CredFileLibrary
+    value: product-readiness.dataviews_python.ini
+  - name: covStream
+    value: DataviewPy
+
+jobs:
+  - job: Tests
+    strategy:
+      matrix:
+        linux:
+          imageName: 'ubuntu-16.04'
+        windows:
+          imageName: 'vs2017-win2016'
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+        displayName: 'Specify Python version'
+
+      - script: |
+          pip install setuptools wheel
+          pip install unittest-xml-reporting    
+          pip install pytest
+          pip install pytest-cov
+        displayName: 'Install tools'
+
+      - script: pip install -r requirements.txt
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Install requirements'
+
+      - script: python -m pytest ./program.py
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Run tests'
+
+  - template: '/miscellaneous/build_templates/coverity.yml'

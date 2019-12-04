@@ -1,10 +1,12 @@
 # Client Credential Flow Sample and Test
 
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_CC_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=595&branchName=master)
+
 This client uses the OAuth2/OIDC Client Credential Flow to obtain an access token. See the root folder [README](../../../README.md) for more information about this flow.
 
 ## Requirements
 
-- .Net Core 2.2.1 or later
+- .NET Core 2.2.1 or later
 
 Replace the placeholders in the [apsettings](./apsettings.json) file with your Tenant Id, Client Id and Client Secret, and the current Api Version. There is no need to replace the Namespace Id for this sample.
 
@@ -15,7 +17,7 @@ Developed against DotNet 2.2.105.
 ### Prerequisites
 
 - Register a Client Credential client in OCS.
-- Replace the placeholders in the [appsettings](./appsettings.json)  file with your Tenant Id, Client Id, and Client Secret obtained from registration.
+- Replace the placeholders in the [appsettings](./appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Using Visual Studio
 
@@ -35,8 +37,8 @@ dotnet run
 
 ## Running the automated test
 
-### Using Visual Studio 
- 
+### Using Visual Studio
+
 - Load the .csproj from the ClientCredentialFlowTest directory above this in Visual Studio
 - Rebuild project
 - Open Test Explorer and make sure there is one test called Test1 showing
@@ -51,12 +53,10 @@ dotnet run
 dotnet test
 ```
 
-&nbsp;
-
-[![Build Status](https://osisoft.visualstudio.com/Engineering%20Incubation/_apis/build/status/All_Test/Auth_CC_DotNet?branchName=master)](https://osisoft.visualstudio.com/Engineering%20Incubation/_build/latest?definitionId=4917&branchName=master)
+---
 
 Tested against DotNet 2.2.105.
 
-For the general steps or switch languages see the Task  [ReadMe](../../../)<br />
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)<br />
+For the general steps or switch languages see the Task [ReadMe](../../../)  
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

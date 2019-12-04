@@ -27,7 +27,7 @@ namespace ImplicitFlowTest
         }
 
 
-        private static void AutoLogin(string url, string userName, string password)
+        private void AutoLogin(string url, string userName, string password)
         {
             // Automatic login works against Microsoft personal account option only
             // Must use Live account email that isn't also an AAD account
@@ -42,16 +42,12 @@ namespace ImplicitFlowTest
 
                 Thread.Sleep(sleep);
 
-
-
                 driver.FindElement(By.XPath("descendant::a[@title=\"Personal Account\"]")).Click();
-
 
                 Thread.Sleep(sleep);
 
                 driver.FindElement(By.XPath("//*[@id=\"i0116\"]")).SendKeys(userName);
                 driver.FindElement(By.XPath("//*[@id=\"idSIButton9\"]")).Click();
-
 
                 Thread.Sleep(sleep);
 
@@ -59,15 +55,13 @@ namespace ImplicitFlowTest
                 driver.FindElement(By.XPath("//*[@id=\"idSIButton9\"]")).Click();
 
                 Thread.Sleep(sleep);
-
-                driver.FindElement(By.XPath("//*[@id=\"users\"]")).Click();
+                    driver.FindElement(By.XPath("//*[@id=\"users\"]")).Click();
                 Thread.Sleep(sleep);
 
                 var results = driver.FindElement(By.XPath("//*[@id=\"results\"]")).Text;
 
                 if (results.Contains("not logged"))
                     throw new Exception("Logging in failed");
-
 
                 driver.Close();
             }

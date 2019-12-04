@@ -13,7 +13,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/osisoft/OSI-Samples-OCS",
-    packages=setuptools.find_packages(),    
+    packages=setuptools.find_packages(),
     install_requires=[
         'requests==2.22.0',
         'python-dateutil==2.8.0'
