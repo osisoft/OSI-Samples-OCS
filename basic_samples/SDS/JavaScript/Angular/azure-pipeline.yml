@@ -37,6 +37,8 @@ variables:
     value: product-readiness.sds_angular.oidc.json
   - name: covStream
     value: SDSangJS
+  - name: bdProject
+    value: SDS_Angular
 
 jobs:
   - job: Tests
@@ -87,4 +89,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: angular
