@@ -68,4 +68,4 @@ jobs:
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
-      language: 'python'
+      language: python

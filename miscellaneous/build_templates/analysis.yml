@@ -20,7 +20,7 @@ jobs:
           '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../'
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(covFolder)'
         displayName: 'Coverity: Build DotNet'
-        condition: eq(${{ parameters.language }}, 'dotnet')
+        condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
       - script: |
@@ -28,13 +28,13 @@ jobs:
           '"$(covPath)cov-build" --dir $(covFolder) mvn compile'
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Coverity: Build Java'
-        condition: eq(${{ parameters.language }}, 'java')
+        condition: eq('${{ parameters.language }}', 'java')
 
       # - Default
       - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../'
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(covFolder)'
         displayName: 'Coverity: Build'
-        condition: or(and(ne(${{ parameters.language }}, 'dotnet'), ne(${{ parameters.language }}, 'java')), eq(${{ parameters.web }}, true))
+        condition: or(and(ne('${{ parameters.language }}', 'dotnet'), ne('${{ parameters.language }}', 'java')), eq(${{ parameters.web }}, true))
 
       - script: '"$(covPath)cov-analyze" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
@@ -51,13 +51,13 @@ jobs:
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Synopsys (DotNet): Build'
-        condition: eq(${{ parameters.language }}, 'dotnet')
+        condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
       - script: mvn install -f pom.xml
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Synopsys (Java): Maven install library'
-        condition: and(eq(${{ parameters.language }}, 'java'), ne($(libPath), ''))
+        condition: and(eq('${{ parameters.language }}', 'java'), ne($(libPath), ''))
       - task: Maven@3
         inputs:
           mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
@@ -65,7 +65,7 @@ jobs:
           testResultsFiles: '**/TEST-*.xml'
           goals: package
         displayName: 'Synopsys (Java): Build'
-        condition: eq(${{ parameters.language }}, 'java')
+        condition: eq('${{ parameters.language }}', 'java')
 
       # - Python
       - task: UsePythonVersion@0
@@ -73,7 +73,7 @@ jobs:
           versionSpec: '3.6'
           architecture: 'x64'
         displayName: 'Synopsys (Python): Specify Python version'
-        condition: eq(${{ parameters.language }}, 'python')
+        condition: eq('${{ parameters.language }}', 'python')
       - script: |
           pip install setuptools wheel
           pip install unittest-xml-reporting    
@@ -82,32 +82,32 @@ jobs:
           pip install -r requirements.txt
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Synopsys (Python): Install dependencies'
-        condition: eq(${{ parameters.language }}, 'python')
+        condition: eq('${{ parameters.language }}', 'python')
 
       # - Angular
       - task: NodeTool@0
         inputs:
           versionSpec: '10.x'
         displayName: 'Synopsys (Angular): Specify Node version'
-        condition: eq(${{ parameters.language }}, 'angular')
+        condition: eq('${{ parameters.language }}', 'angular')
       - script: |
           npm install -g @angular/cli
           npm ci
           npm run build
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Synopsys (Angular): Build'
-        condition: eq(${{ parameters.language }}, 'angular')
+        condition: eq('${{ parameters.language }}', 'angular')
 
       # - NodeJS
       - task: NodeTool@0
         inputs:
           versionSpec: '10.x'
         displayName: 'Synopsys (NodeJS): Specify Node version'
-        condition: eq(${{ parameters.language }}, 'nodejs')
+        condition: eq('${{ parameters.language }}', 'nodejs')
       - script: npm ci
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Synopsys (NodeJS): Install dependencies'
-        condition: eq(${{ parameters.language }}, 'nodejs')
+        condition: eq('${{ parameters.language }}', 'nodejs')
 
       - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
         inputs:

@@ -59,6 +59,6 @@ jobs:
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
-      language: 'dotnet'
+      language: dotnet
 
   - template: '/miscellaneous/build_templates/binskim.yml'
