@@ -57,7 +57,7 @@ jobs:
       - script: mvn install -f pom.xml
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Synopsys (Java): Maven install library'
-        condition: and(eq('${{ parameters.language }}', 'java'), ne($(libPath), ''))
+        condition: eq('${{ parameters.language }}', 'java')
       - task: Maven@3
         inputs:
           mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
