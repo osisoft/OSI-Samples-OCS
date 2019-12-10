@@ -6,7 +6,7 @@ jobs:
   - job: Analysis
     pool:
       name: 00-OSIManaged-Test
-      demands: USERNAME -equals $(covAgent)
+      demands: USERNAME -equals $(buildAgent)
     steps:
       # Coverity
       - script: if not exist $(covFolder) mkdir $(covFolder)
@@ -17,6 +17,7 @@ jobs:
       # - DotNet
       - script: |
           dotnet clean
+          echo '"$(covPath)cov-build" --dir $(covFolder) dotnet build'
           '"$(covPath)cov-build" --dir $(covFolder) dotnet build'
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Coverity: Build DotNet'
