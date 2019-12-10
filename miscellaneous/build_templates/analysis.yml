@@ -18,6 +18,7 @@ jobs:
       - script: |
           dotnet clean
           echo '"$(covPath)cov-build" --dir $(covFolder) dotnet build'
+          dir
           '"$(covPath)cov-build" --dir $(covFolder) dotnet build'
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Coverity: Build DotNet'
