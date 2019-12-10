@@ -17,8 +17,8 @@ jobs:
       # - DotNet
       - script: |
           dotnet clean
-          '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../'
-        workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(covFolder)'
+          '"$(covPath)cov-build" --dir $(covFolder) dotnet build'
+        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Coverity: Build DotNet'
         condition: eq('${{ parameters.language }}', 'dotnet')
 
