@@ -77,5 +77,6 @@ jobs:
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
       language: dotnet
+      web: true
 
   - template: '/miscellaneous/build_templates/binskim.yml'

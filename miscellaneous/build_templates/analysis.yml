@@ -1,5 +1,6 @@
 parameters:
   language: ''
+  web: false
 
 jobs:
   - job: Analysis
@@ -33,7 +34,7 @@ jobs:
       - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../'
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(covFolder)'
         displayName: 'Coverity: Build'
-        condition: and(ne(${{ parameters.language }}, 'dotnet'), ne(${{ parameters.language }}, 'java'))
+        condition: or(and(ne(${{ parameters.language }}, 'dotnet'), ne(${{ parameters.language }}, 'java')), eq(${{ parameters.web }}, true)
 
       - script: '"$(covPath)cov-analyze" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
