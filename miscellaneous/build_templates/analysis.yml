@@ -16,9 +16,12 @@ jobs:
 
       # - DotNet
       - script: |
+          echo clean
           dotnet clean
+          echo restore
           dotnet restore
-          "$(covPath)cov-build" --dir $(covFolder) dotnet msbuild
+          echo build
+          "$(covPath)cov-build" --dir $(covFolder) dotnet build
         workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
         displayName: 'Coverity: Build DotNet'
         condition: eq('${{ parameters.language }}', 'dotnet')
