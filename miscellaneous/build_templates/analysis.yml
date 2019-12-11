@@ -54,11 +54,11 @@ jobs:
         condition: eq('${{ parameters.language }}', 'angular')
       - script: |
           echo "Angular CLI"
-          npm install -g @angular/cli
+          call npm install -g @angular/cli
           echo "NPM CI"
-          npm ci
+          call npm ci
           echo "Build"
-          npm run build
+          call npm run build
           echo "Complete"
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Angular)'
