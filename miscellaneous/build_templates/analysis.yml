@@ -34,6 +34,8 @@ jobs:
           dir
           echo Clean
           mvn clean
+          echo ASDASD
+          echo 'ASDASD'
           echo Build
           "$(covPath)cov-build" --dir $(covFolder) mvn compile
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
