@@ -30,7 +30,11 @@ jobs:
 
       # - Java
       - script: |
+          echo Dir
+          dir
+          echo Clean
           mvn clean
+          echo Build
           "$(covPath)cov-build" --dir $(covFolder) mvn compile
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity: Build Java'
