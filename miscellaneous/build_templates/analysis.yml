@@ -19,16 +19,10 @@ jobs:
         condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
-      - script: mvn install -f pom.xml
+      - script: |
+          mvn install -f pom.xml
+          mvn compile
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
-        displayName: 'Java: Maven install library'
-        condition: eq('${{ parameters.language }}', 'java')
-      - task: Maven@3
-        inputs:
-          mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
-          publishJUnitResults: false
-          testResultsFiles: '**/TEST-*.xml'
-          goals: package
         displayName: 'Java: Build'
         condition: eq('${{ parameters.language }}', 'java')
 
