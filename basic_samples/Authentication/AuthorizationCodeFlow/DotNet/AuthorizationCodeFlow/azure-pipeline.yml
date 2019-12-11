@@ -78,5 +78,3 @@ jobs:
     parameters:
       language: dotnet
       web: true
-
-  - template: '/miscellaneous/build_templates/binskim.yml'

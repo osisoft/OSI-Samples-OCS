@@ -1,6 +1,7 @@
 parameters:
   language: ''
   web: false
+  skipBinSkim: false
 
 jobs:
   - job: Analysis
@@ -8,6 +9,71 @@ jobs:
       name: 00-OSIManaged-Test
       demands: USERNAME -equals $(buildAgent)
     steps:
+      # Build Sample
+      # - DotNet
+      - script: |
+          dotnet restore
+          dotnet msbuild -p:HIGHENTROPYVA=true
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'DotNet: Build'
+        condition: eq('${{ parameters.language }}', 'dotnet')
+
+      # - Java
+      - script: mvn install -f pom.xml
+        workingDirectory: $(Build.SourcesDirectory)$(libPath)/
+        displayName: 'Java: Maven install library'
+        condition: eq('${{ parameters.language }}', 'java')
+      - task: Maven@3
+        inputs:
+          mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
+          publishJUnitResults: false
+          testResultsFiles: '**/TEST-*.xml'
+          goals: package
+        displayName: 'Java: Build'
+        condition: eq('${{ parameters.language }}', 'java')
+
+      # - Python
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x86'
+        displayName: 'Python: Specify Python version'
+        condition: eq('${{ parameters.language }}', 'python')
+      - script: |
+          pip install setuptools wheel
+          pip install unittest-xml-reporting    
+          pip install pytest
+          pip install pytest-cov
+          pip install -r requirements.txt
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Python: Install dependencies'
+        condition: eq('${{ parameters.language }}', 'python')
+
+      # - Angular
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+        displayName: 'Angular: Specify Node version'
+        condition: eq('${{ parameters.language }}', 'angular')
+      - script: |
+          npm install -g @angular/cli
+          npm ci
+          npm run build
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Angular: Build'
+        condition: eq('${{ parameters.language }}', 'angular')
+
+      # - NodeJS
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+        displayName: 'NodeJS: Specify Node version'
+        condition: eq('${{ parameters.language }}', 'nodejs')
+      - script: npm ci
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'NodeJS: Install dependencies'
+        condition: eq('${{ parameters.language }}', 'nodejs')
+
       # Coverity
       - script: if not exist $(covFolder) mkdir $(covFolder)
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
@@ -16,8 +82,6 @@ jobs:
 
       # - DotNet
       - script: |
-          echo Dir
-          dir
           echo Clean
           dotnet clean
           echo Restore
@@ -25,23 +89,23 @@ jobs:
           echo Build
           "$(covPath)cov-build" --dir $(covFolder) dotnet build --ignore-failed-sources
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Coverity: Build DotNet'
+        displayName: 'Coverity (DotNet): Build'
         condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
       - script: 'mvn clean'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Coverity: Maven clean'
+        displayName: 'Coverity (Java): Maven clean'
         condition: eq('${{ parameters.language }}', 'java')
       - script: '"$(covPath)cov-build" --dir $(covFolder) mvn compile'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Coverity: Build Java'
+        displayName: 'Coverity (Java): Build'
         condition: eq('${{ parameters.language }}', 'java')
 
       # - Default
       - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
-        displayName: 'Coverity: Build'
+        displayName: 'Coverity (Default): Build'
         condition: or(and(ne('${{ parameters.language }}', 'dotnet'), ne('${{ parameters.language }}', 'java')), eq(${{ parameters.web }}, true))
 
       - script: '"$(covPath)cov-analyze" --dir .'
@@ -52,71 +116,21 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
         displayName: 'Coverity: Upload'
 
+      # BinSkim
+      - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
+        displayName: 'BinSkim (DotNet): Analyze'
+        inputs:
+          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
+        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
+
+      - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-postanalysis.PostAnalysis@1
+        displayName: 'BinSkim (DotNet): Post-Analysis'
+        inputs:
+          BinSkim: true
+          BinSkimBreakOn: WarningAbove
+        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
+
       # Synopsys
-      # - DotNet
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Synopsys (DotNet): Build'
-        condition: eq('${{ parameters.language }}', 'dotnet')
-
-      # - Java
-      - script: mvn install -f pom.xml
-        workingDirectory: $(Build.SourcesDirectory)$(libPath)/
-        displayName: 'Synopsys (Java): Maven install library'
-        condition: eq('${{ parameters.language }}', 'java')
-      - task: Maven@3
-        inputs:
-          mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
-          publishJUnitResults: false
-          testResultsFiles: '**/TEST-*.xml'
-          goals: package
-        displayName: 'Synopsys (Java): Build'
-        condition: eq('${{ parameters.language }}', 'java')
-
-      # - Python
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x86'
-        displayName: 'Synopsys (Python): Specify Python version'
-        condition: eq('${{ parameters.language }}', 'python')
-      - script: |
-          pip install setuptools wheel
-          pip install unittest-xml-reporting    
-          pip install pytest
-          pip install pytest-cov
-          pip install -r requirements.txt
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: 'Synopsys (Python): Install dependencies'
-        condition: eq('${{ parameters.language }}', 'python')
-
-      # - Angular
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.x'
-        displayName: 'Synopsys (Angular): Specify Node version'
-        condition: eq('${{ parameters.language }}', 'angular')
-      - script: |
-          npm install -g @angular/cli
-          npm ci
-          npm run build
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Synopsys (Angular): Build'
-        condition: eq('${{ parameters.language }}', 'angular')
-
-      # - NodeJS
-      - task: NodeTool@0
-        inputs:
-          versionSpec: '10.x'
-        displayName: 'Synopsys (NodeJS): Specify Node version'
-        condition: eq('${{ parameters.language }}', 'nodejs')
-      - script: npm ci
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Synopsys (NodeJS): Install dependencies'
-        condition: eq('${{ parameters.language }}', 'nodejs')
-
       - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
         inputs:
           Products: BD
