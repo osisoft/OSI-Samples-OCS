@@ -12,27 +12,36 @@ jobs:
       # Build Sample
       # - DotNet
       - script: |
+          echo Restore
           dotnet restore
+          echo Build
           dotnet msbuild -p:HIGHENTROPYVA=true
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (DotNet)'
         condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
       - script: |
+          echo Install
           mvn install -f pom.xml
+          echo Compile
           mvn compile
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Build (Java)'
         condition: eq('${{ parameters.language }}', 'java')
 
       # - Python
       - script: |
+          echo Install
           pip install setuptools wheel
           pip install unittest-xml-reporting    
           pip install pytest
           pip install pytest-cov
+          echo Requirements
           pip install -r requirements.txt
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Build (Python): Install dependencies'
         condition: eq('${{ parameters.language }}', 'python')
@@ -44,9 +53,13 @@ jobs:
         displayName: 'Build (Angular): Specify Node version'
         condition: eq('${{ parameters.language }}', 'angular')
       - script: |
+          echo Angular CLI
           npm install -g @angular/cli
+          echo NPM CI
           npm ci
+          echo Build
           npm run build
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Angular)'
         condition: eq('${{ parameters.language }}', 'angular')
@@ -104,6 +117,7 @@ jobs:
           dotnet restore
           echo Build
           "$(covPath)cov-build" --dir $(covFolder) dotnet build
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity (DotNet): Build'
         condition: eq('${{ parameters.language }}', 'dotnet')
