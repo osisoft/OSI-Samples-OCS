@@ -27,12 +27,6 @@ jobs:
         condition: eq('${{ parameters.language }}', 'java')
 
       # - Python
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-        displayName: 'Build (Python): Specify Python version'
-        condition: eq('${{ parameters.language }}', 'python')
       - script: |
           pip install setuptools wheel
           pip install unittest-xml-reporting    
