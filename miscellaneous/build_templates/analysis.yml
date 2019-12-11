@@ -21,7 +21,7 @@ jobs:
           echo Clean
           dotnet clean
           echo Restore
-          dotnet restore
+          dotnet restore --ignore-failed-sources
           echo Build
           "$(covPath)cov-build" --dir $(covFolder) dotnet build
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
