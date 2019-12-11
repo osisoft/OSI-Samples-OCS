@@ -12,13 +12,7 @@ jobs:
       # Build Sample
       # - DotNet
       - script: |
-          echo Dir
-          dir
-          echo Nuget locals
-          dotnet nuget locals all --list
-          echo Restore
-          dotnet restore --ignore-failed-sources
-          echo Build
+          dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (DotNet)'
