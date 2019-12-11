@@ -62,6 +62,34 @@ jobs:
         displayName: 'Build (NodeJS): Install dependencies'
         condition: eq('${{ parameters.language }}', 'nodejs')
 
+      # BinSkim
+      - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
+        displayName: 'BinSkim (DotNet): Analyze'
+        inputs:
+          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
+        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
+
+      - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-postanalysis.PostAnalysis@1
+        displayName: 'BinSkim (DotNet): Post-Analysis'
+        inputs:
+          BinSkim: true
+          BinSkimBreakOn: WarningAbove
+        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
+
+      # Synopsys
+      - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
+        inputs:
+          Products: BD
+          BlackDuckService: 'product-readiness.BlackDuck'
+          DetectArguments: |
+            --detect.project.name="product-readiness.$(bdProject)"
+            --detect.project.version.name="$(Build.SourceBranchName)"
+            --detect.source.path=$(Build.SourcesDirectory)
+            --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
+            --detect.bom.aggregate.name="bom_$(bdProject)_$(Build.SourceBranchName)"
+        condition: succeeded()
+        displayName: 'Synopsys: Detect'
+
       # Coverity
       - script: if not exist $(covFolder) mkdir $(covFolder)
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
@@ -103,31 +131,3 @@ jobs:
       - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(covStream)" --host $(covServer) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir .'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
         displayName: 'Coverity: Upload'
-
-      # BinSkim
-      - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
-        displayName: 'BinSkim (DotNet): Analyze'
-        inputs:
-          AnalyzeTarget: '$(Build.SourcesDirectory)\*.dll;$(Build.SourcesDirectory)\*.exe'
-        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
-
-      - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-postanalysis.PostAnalysis@1
-        displayName: 'BinSkim (DotNet): Post-Analysis'
-        inputs:
-          BinSkim: true
-          BinSkimBreakOn: WarningAbove
-        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
-
-      # Synopsys
-      - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
-        inputs:
-          Products: BD
-          BlackDuckService: 'product-readiness.BlackDuck'
-          DetectArguments: |
-            --detect.project.name="product-readiness.$(bdProject)"
-            --detect.project.version.name="$(Build.SourceBranchName)"
-            --detect.source.path=$(Build.SourcesDirectory)
-            --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
-            --detect.bom.aggregate.name="bom_$(bdProject)_$(Build.SourceBranchName)"
-        condition: succeeded()
-        displayName: 'Synopsys: Detect'
