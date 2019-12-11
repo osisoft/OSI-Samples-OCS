@@ -13,9 +13,9 @@ jobs:
       # - DotNet
       - script: |
           echo Restore
-          dotnet restore
+          call dotnet restore
           echo Build
-          dotnet msbuild -p:HIGHENTROPYVA=true
+          call dotnet msbuild -p:HIGHENTROPYVA=true
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (DotNet)'
@@ -24,9 +24,9 @@ jobs:
       # - Java
       - script: |
           echo Install
-          mvn install -f pom.xml
+          call mvn install -f pom.xml
           echo Compile
-          mvn compile
+          call mvn compile
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Build (Java)'
@@ -35,12 +35,12 @@ jobs:
       # - Python
       - script: |
           echo Install
-          pip install setuptools wheel
-          pip install unittest-xml-reporting    
-          pip install pytest
-          pip install pytest-cov
+          call pip install setuptools wheel
+          call pip install unittest-xml-reporting    
+          call pip install pytest
+          call pip install pytest-cov
           echo Requirements
-          pip install -r requirements.txt
+          call pip install -r requirements.txt
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Build (Python): Install dependencies'
@@ -53,13 +53,13 @@ jobs:
         displayName: 'Build (Angular): Specify Node version'
         condition: eq('${{ parameters.language }}', 'angular')
       - script: |
-          echo "Angular CLI"
+          echo Angular CLI
           call npm install -g @angular/cli
-          echo "NPM CI"
+          echo NPM CI
           call npm ci
-          echo "Build"
+          echo Build
           call npm run build
-          echo "Complete"
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Angular)'
         condition: eq('${{ parameters.language }}', 'angular')
@@ -112,9 +112,9 @@ jobs:
       # - DotNet
       - script: |
           echo Clean
-          dotnet clean
+          call dotnet clean
           echo Restore
-          dotnet restore
+          call dotnet restore
           echo Build
           "$(covPath)cov-build" --dir $(covFolder) dotnet build
           echo Complete
@@ -123,11 +123,12 @@ jobs:
         condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
-      - script: 'mvn clean'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Coverity (Java): Maven clean'
-        condition: eq('${{ parameters.language }}', 'java')
-      - script: '"$(covPath)cov-build" --dir $(covFolder) mvn compile'
+      - script: |
+          echo Clean
+          call mvn clean
+          echo Build
+          "$(covPath)cov-build" --dir $(covFolder) mvn compile
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity (Java): Build'
         condition: eq('${{ parameters.language }}', 'java')
