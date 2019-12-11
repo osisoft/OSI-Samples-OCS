@@ -15,7 +15,7 @@ jobs:
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'DotNet: Build'
+        displayName: 'Build (DotNet)'
         condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
@@ -23,7 +23,7 @@ jobs:
           mvn install -f pom.xml
           mvn compile
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
-        displayName: 'Java: Build'
+        displayName: 'Build (Java)'
         condition: eq('${{ parameters.language }}', 'java')
 
       # - Python
@@ -31,7 +31,7 @@ jobs:
         inputs:
           versionSpec: '3.6'
           architecture: 'x86'
-        displayName: 'Python: Specify Python version'
+        displayName: 'Build (Python): Specify Python version'
         condition: eq('${{ parameters.language }}', 'python')
       - script: |
           pip install setuptools wheel
@@ -40,32 +40,32 @@ jobs:
           pip install pytest-cov
           pip install -r requirements.txt
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: 'Python: Install dependencies'
+        displayName: 'Build (Python): Install dependencies'
         condition: eq('${{ parameters.language }}', 'python')
 
       # - Angular
       - task: NodeTool@0
         inputs:
           versionSpec: '10.x'
-        displayName: 'Angular: Specify Node version'
+        displayName: 'Build (Angular): Specify Node version'
         condition: eq('${{ parameters.language }}', 'angular')
       - script: |
           npm install -g @angular/cli
           npm ci
           npm run build
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Angular: Build'
+        displayName: 'Build (Angular)'
         condition: eq('${{ parameters.language }}', 'angular')
 
       # - NodeJS
       - task: NodeTool@0
         inputs:
           versionSpec: '10.x'
-        displayName: 'NodeJS: Specify Node version'
+        displayName: 'Build (NodeJS): Specify Node version'
         condition: eq('${{ parameters.language }}', 'nodejs')
       - script: npm ci
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'NodeJS: Install dependencies'
+        displayName: 'Build (NodeJS): Install dependencies'
         condition: eq('${{ parameters.language }}', 'nodejs')
 
       # Coverity
