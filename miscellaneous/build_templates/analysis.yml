@@ -7,22 +7,26 @@ jobs:
     pool:
       name: 00-OSIManaged-Test
       demands: USERNAME -equals $(buildAgent)
+    workspace:
+      clean: all
     steps:
       # Coverity
       - script: if not exist $(covFolder) mkdir $(covFolder)
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity: Make dir'
         continueOnError: true
 
       # - DotNet
       - script: |
-          echo clean
+          echo Dir
+          dir
+          echo Clean
           dotnet clean
-          echo restore
+          echo Restore
           dotnet restore
-          echo build
+          echo Build
           "$(covPath)cov-build" --dir $(covFolder) dotnet build
-        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity: Build DotNet'
         condition: eq('${{ parameters.language }}', 'dotnet')
 
@@ -30,22 +34,22 @@ jobs:
       - script: |
           mvn clean
           '"$(covPath)cov-build" --dir $(covFolder) mvn compile'
-        workingDirectory: '$(Build.SourcesDirectory)$(projPath)'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity: Build Java'
         condition: eq('${{ parameters.language }}', 'java')
 
       # - Default
       - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../'
-        workingDirectory: '$(Build.SourcesDirectory)$(projPath)/$(covFolder)'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
         displayName: 'Coverity: Build'
         condition: or(and(ne('${{ parameters.language }}', 'dotnet'), ne('${{ parameters.language }}', 'java')), eq(${{ parameters.web }}, true))
 
       - script: '"$(covPath)cov-analyze" --dir .'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
         displayName: 'Coverity: Analyze'
 
       - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(covStream)" --host $(covServer) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir .'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
         displayName: 'Coverity: Upload'
 
       # Synopsys
