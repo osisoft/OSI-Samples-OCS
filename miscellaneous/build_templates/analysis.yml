@@ -21,9 +21,9 @@ jobs:
           echo Clean
           dotnet clean
           echo Restore
-          dotnet restore
+          dotnet restore --ignore-failed-sources
           echo Build
-          "$(covPath)cov-build" --dir $(covFolder) dotnet build
+          "$(covPath)cov-build" --dir $(covFolder) dotnet build --ignore-failed-sources
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity: Build DotNet'
         condition: eq('${{ parameters.language }}', 'dotnet')
