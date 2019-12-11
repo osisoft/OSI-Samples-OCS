@@ -12,7 +12,13 @@ jobs:
       # Build Sample
       # - DotNet
       - script: |
-          dotnet restore
+          echo Dir
+          dir
+          echo Nuget locals
+          dotnet nuget locals all --list
+          echo Restore
+          dotnet restore --ignore-failed-sources
+          echo Build
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (DotNet)'
@@ -73,9 +79,9 @@ jobs:
           echo Clean
           dotnet clean
           echo Restore
-          dotnet restore --ignore-failed-sources
+          dotnet restore
           echo Build
-          "$(covPath)cov-build" --dir $(covFolder) dotnet build --ignore-failed-sources
+          "$(covPath)cov-build" --dir $(covFolder) dotnet build
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Coverity (DotNet): Build'
         condition: eq('${{ parameters.language }}', 'dotnet')
