@@ -38,7 +38,8 @@ The UOM sample follows these steps
 1.  Create SdsStream with uom override
 1.  Create SdsStream using default uom
 1.  Generate data and send to both streams
-1.  Retreive data for both streams using stream default UOM
+1.  Retrieve data for both streams using stream default UOM
+1.  Retrieve data for both streams using UOM request override
 1.  Retreive data for both streamsusing UOM request override
 1.  Delete objects
 
