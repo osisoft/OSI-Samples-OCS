@@ -31,6 +31,15 @@ jobs:
           call mvn compile
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
+        displayName: 'Build (Java): Library'
+        condition: eq('${{ parameters.language }}', 'java')
+      - script: |
+          echo Install
+          call mvn install -f pom.xml
+          echo Compile
+          call mvn compile
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Java)'
         condition: eq('${{ parameters.language }}', 'java')
 
