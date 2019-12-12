@@ -97,7 +97,7 @@ jobs:
           DetectArguments: |
             --detect.project.name="product-readiness.$(bdProject)"
             --detect.project.version.name="$(Build.SourceBranchName)"
-            --detect.source.path=$(Build.SourcesDirectory)
+            --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
             --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
             --detect.bom.aggregate.name="bom_$(bdProject)_$(Build.SourceBranchName)"
         condition: succeeded()
