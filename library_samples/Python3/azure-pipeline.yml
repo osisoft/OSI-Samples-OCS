@@ -3,7 +3,7 @@ variables:
     value: '/library_samples/Python3/'
 
 jobs:
-  - job: 'Publish Library'
+  - job: 'PublishLibrary'
     pool:
       vmImage: 'ubuntu-16.04'
     steps:
