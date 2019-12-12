@@ -12,6 +12,8 @@ jobs:
       # Build Sample
       # - DotNet
       - script: |
+          echo Clear local NuGet
+          call dotnet nuget locals all --clear
           echo Restore
           call dotnet restore
           echo Build
