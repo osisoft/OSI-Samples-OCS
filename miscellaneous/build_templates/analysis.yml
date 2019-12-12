@@ -12,6 +12,8 @@ jobs:
       # Build Sample
       # - DotNet
       - script: |
+          echo Clean
+          call dotnet clean
           echo Restore
           call dotnet restore --ignore-failed-sources
           echo Build
