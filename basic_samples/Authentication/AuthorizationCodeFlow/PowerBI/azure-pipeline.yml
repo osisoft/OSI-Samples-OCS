@@ -60,11 +60,11 @@ jobs:
           fileLibrary: $(CredFileURLLibrary)
           filePath: $(projPath)
 
-      - script: msbuild
+      - script: C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
 
-      - script: mstest /testcontainer:OCSConnectorTest.dll
+      - script: C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest /testcontainer:OCSConnectorTest.dll
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/bin/debug
         displayName: 'Run coded UI'
 
