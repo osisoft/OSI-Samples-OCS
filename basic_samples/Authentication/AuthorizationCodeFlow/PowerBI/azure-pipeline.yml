@@ -1,0 +1,77 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI'
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerB/OCSConnector'
+  - name: testPath
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnector'
+  - name: CredFile
+    value: client_id
+  - name: CredFileLibrary
+    value: product-readiness.client_id_PowerBI
+  - name: CredFileTenantID
+    value: tenant_id
+  - name: CredFileTenantIDLibrary
+    value: product-readiness.tenant_id_PowerBI
+  - name: CredFileURL
+    value: url
+  - name: CredFileURLLibrary
+    value: product-readiness.url_PowerBI
+  - name: covStream
+    value: Auth_PowerBI
+
+jobs:
+  - job: Tests
+    pool:
+      name: 00-OSIManaged-Test
+      demands: USERNAME -equals $(covAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFileTenantID)
+          fileLibrary: $(CredFileTenantIDLibrary)
+          filePath: $(projPath)
+
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFileURL)
+          fileLibrary: $(CredFileURLLibrary)
+          filePath: $(projPath)
+
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+        displayName: 'Specify Python version'
+
+      - script: msbuild
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build'
+
+      - script: mstest /testcontainer:OCSConnectorTest.dll
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/bin/debug
+        displayName: 'Run coded UI'
+
+  - template: '/miscellaneous/build_templates/coverity.yml'

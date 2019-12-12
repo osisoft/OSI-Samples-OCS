@@ -13,7 +13,9 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. Open Power BI Desktop, and navigate to File > Options and Settings > Options
 1. Navigate to Security, and under Data Extensions select the option "(Not Recommended) Allow any extension to load without validation or warning"
 1. Click OK, acknowledge any warnings, then close Power BI Desktop
-1. Once prerequisites are installed, open `OCSConnector.sln` in Visual Studio and build the project
+1. Once prerequisites are installed, open `OCSConnector.sln` in Visual Studio
+1. Update the files url, tenant_id, and client_id with your respective values
+1. Build the project
 1. In your user's `Documents` folder, create a folder `Power BI Desktop` with a subfolder `Custom Connectors`
 1. Copy the `.mez` file from either `/bin/Debug` or `/bin/Release` (depending on settings) into the new `Custom Connectors` folder
 1. Start up Power BI Desktop, and the connector should be available
@@ -55,6 +57,21 @@ let
 in
     #"Expanded Column1"
 ```
+
+
+## Tests
+
+Included is an automated test that runs CodedUI to make sure that the OCS Power BI Authentication connector works.  To run this test you must have at least one recent source in PowerBI that has at least 1 record, and you must have have been logged in and selected Stay Logged In. 
+This test simply checks to make sure the recent source works with a refresh and we can click on the first result.  Due to it being CodedUI the test might not work on other environments than the test comptuer due to window positioning and other settings.  
+
+To run the test from the commandline on the machine with PowerBI Desktop:
+
+1. Build the test project using ''' msbuild '''from the folder with the test .csproj
+1. Navigate to the sub-directoy \bin\debug
+1. Run ''' mstest /testcontainer:OCSConnectorTest.dll '''
+
+Note: when running a CodedUI test you should not move the mouse on that computer, or have anything else that can change the mouse movement or window focus during the test.  Doing so will probably cause the test to fail
+
 
 For the general steps or switch languages see the Task [ReadMe](../../../)  
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
