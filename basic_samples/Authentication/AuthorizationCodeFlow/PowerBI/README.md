@@ -66,7 +66,7 @@ This test simply checks to make sure the recent source works with a refresh and 
 
 To run the test from the commandline on the machine with PowerBI Desktop:
 
-1. Build the test project using ''' msbuild '''from the folder with the test .csproj
+1. Build the test project using ''' msbuild '''from the folder with the test .csproj (see all steps and prerequisites above need to do that)
 1. Navigate to the sub-directoy \bin\debug
 1. Run ''' mstest /testcontainer:OCSConnectorTest.dll '''
 
