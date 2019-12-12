@@ -18,9 +18,9 @@ pr:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI'
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnector'
   - name: testPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnector/OCSConnectorTest'
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnectorTest'
   - name: CredFile
     value: client_id
   - name: CredFileLibrary
@@ -63,6 +63,10 @@ jobs:
       - script: 'cmd.exe /k ""C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild" '
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
+        
+      - script: 'cmd.exe /k ""C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild" '
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Build test'
 
       - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
