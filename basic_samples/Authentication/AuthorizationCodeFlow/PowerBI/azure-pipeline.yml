@@ -60,12 +60,6 @@ jobs:
           fileLibrary: $(CredFileURLLibrary)
           filePath: $(projPath)
 
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-        displayName: 'Specify Python version'
-
       - script: msbuild
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
