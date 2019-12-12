@@ -34,7 +34,7 @@ variables:
   - name: CredFileURLLibrary
     value: product-readiness.url_PowerBI
   - name: covStream
-    value: Auth_PowerBI
+    value: Auth_PKCE_PowebBI
 
 jobs:
   - job: Tests
