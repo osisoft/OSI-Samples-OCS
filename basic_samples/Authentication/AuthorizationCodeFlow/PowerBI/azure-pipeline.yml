@@ -18,7 +18,7 @@ pr:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnector'
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI'
   - name: testPath
     value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnector/OCSConnectorTest'
   - name: CredFile
