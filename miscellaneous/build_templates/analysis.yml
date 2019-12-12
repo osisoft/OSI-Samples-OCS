@@ -12,10 +12,8 @@ jobs:
       # Build Sample
       # - DotNet
       - script: |
-          echo Clear local NuGet
-          call dotnet nuget locals all --clear
           echo Restore
-          call dotnet restore
+          call dotnet restore --ignore-failed-sources
           echo Build
           call dotnet msbuild -p:HIGHENTROPYVA=true
           echo Complete
