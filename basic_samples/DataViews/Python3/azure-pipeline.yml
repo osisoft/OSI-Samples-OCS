@@ -27,6 +27,8 @@ variables:
     value: product-readiness.dataviews_python.ini
   - name: covStream
     value: DataviewPy
+  - name: bdProject
+    value: DataViews_Python
 
 jobs:
   - job: Tests
@@ -64,4 +66,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: python

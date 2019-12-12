@@ -27,6 +27,8 @@ variables:
     value: product-readiness.sds_python.ini
   - name: covStream
     value: SDSPy
+  - name: bdProject
+    value: SDS_Python
 
 jobs:
   - job: Tests
@@ -68,4 +70,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: python

@@ -37,6 +37,8 @@ variables:
     value: product-readiness.sds_angular.oidc.json
   - name: covStream
     value: SDSangJS
+  - name: bdProject
+    value: SDS_Angular
 
 jobs:
   - job: Tests
@@ -68,23 +70,19 @@ jobs:
         displayName: 'Specify Node version'
 
       - script: |
-          npm install -g @angular/cli
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Install Angular CLI'
-
-      - script: |
-          npm ci
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Install dependencies'
-
-      - script: |
-          npx webdriver-manager update --versions.chrome 76.0.3809.126
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Install webdriver'
-
-      - script: |
-          ng e2e --webdriver-update=false
+          echo Install Angular CLI
+          call npm install -g @angular/cli
+          echo NPM CI
+          call npm ci
+          echo NPX Webdriver-Manager
+          call npx webdriver-manager update --versions.chrome 77.0.3865.40
+          echo Run e2e tests
+          call ng e2e --webdriver-update=false
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: angular
+      web: true

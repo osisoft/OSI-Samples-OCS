@@ -27,6 +27,8 @@ variables:
     value: product-readiness.sds_dotnet_libs.json
   - name: covStream
     value: SDSDotNet
+  - name: bdProject
+    value: SDS_DotNet_Libs
 
 jobs:
   - job: Tests
@@ -57,6 +59,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
-
-  - template: '/miscellaneous/build_templates/binskim.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet
