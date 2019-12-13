@@ -20,7 +20,7 @@ variables:
   - name: projPath
     value: '/library_samples/Python3'
   - name: covStream
-    value: LibPython
+    value: LibPy
   - name: bdProject
     value: Lib_Python
 
