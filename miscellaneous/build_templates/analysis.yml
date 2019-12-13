@@ -26,11 +26,20 @@ jobs:
       # - Java
       - script: |
           echo Install
-          call mvn install -f pom.xml
+          call mvn install -f pom.xml -DskipTests
           echo Compile
           call mvn compile
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
+        displayName: 'Build (Java): Library'
+        condition: eq('${{ parameters.language }}', 'java')
+      - script: |
+          echo Install
+          call mvn install -f pom.xml -DskipTests
+          echo Compile
+          call mvn compile
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Java)'
         condition: eq('${{ parameters.language }}', 'java')
 
@@ -44,7 +53,7 @@ jobs:
           echo Requirements
           call pip install -r requirements.txt
           echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Python): Install dependencies'
         condition: eq('${{ parameters.language }}', 'python')
 
@@ -138,7 +147,7 @@ jobs:
       # - Angular
       - script: '"$(covPath)cov-build" --dir . --no-command --fs-capture-search ../src'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
-        displayName: 'Coverity (Default): Build'
+        displayName: 'Coverity (Angular): Build'
         condition: eq('${{ parameters.language }}', 'angular')
 
       # - Default
