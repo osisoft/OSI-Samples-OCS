@@ -57,13 +57,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Python): Install dependencies'
         condition: and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false))
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.x'
-          addToPath: true
-          architecture: 'x64'
-        displayName: 'Build (Python Library): Specify Python version'
-        condition: and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true))
       - script: |
           echo Install tools
           call pip install wheel
