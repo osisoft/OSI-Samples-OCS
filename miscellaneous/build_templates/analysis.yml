@@ -32,7 +32,7 @@ jobs:
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Build (Java): Library'
-        condition: eq('${{ parameters.language }}', 'java')
+        condition: and(eq('${{ parameters.language }}', 'java'), startsWith('$(libPath)', '/'))
       - script: |
           echo Install
           call mvn install -f pom.xml -DskipTests
