@@ -15,21 +15,13 @@ jobs:
         displayName: 'Specify Python version'
 
       - script: |
-          pip install wheel
+          echo Install tools
+          call pip install wheel
+          call pip install twine
+          echo Build library
+          call python setup.py sdist bdist_wheel
+          echo Upload library
+          call python -m twine upload dist/* -u $(username) -p $(password)
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Install wheel'
-
-      - script: |
-          pip install twine
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Install twine'
-
-      - script: |
-          python setup.py sdist bdist_wheel
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Build library'
-
-      - script: |
-          python -m twine upload dist/* -u $(username) -p $(password)
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Upload library'
+        displayName: 'Publish library'

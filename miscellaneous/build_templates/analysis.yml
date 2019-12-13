@@ -1,6 +1,7 @@
 parameters:
   language: ''
   web: false
+  lib: false
   skipBinSkim: false
 
 jobs:
@@ -32,7 +33,7 @@ jobs:
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Build (Java): Library'
-        condition: eq('${{ parameters.language }}', 'java')
+        condition: and(eq('${{ parameters.language }}', 'java'), eq(${{ parameters.lib }}, false))
       - script: |
           echo Install
           call mvn install -f pom.xml -DskipTests
@@ -45,7 +46,7 @@ jobs:
 
       # - Python
       - script: |
-          echo Install
+          echo Install tools
           call pip install setuptools wheel
           call pip install unittest-xml-reporting    
           call pip install pytest
@@ -55,7 +56,17 @@ jobs:
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Python): Install dependencies'
-        condition: eq('${{ parameters.language }}', 'python')
+        condition: and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false))
+      - script: |
+          echo Install tools
+          call pip install wheel
+          call pip install twine
+          echo Build library
+          call python setup.py sdist bdist_wheel
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build (Python Library)'
+        condition: and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true))
 
       # - Angular
       - task: NodeTool@0
