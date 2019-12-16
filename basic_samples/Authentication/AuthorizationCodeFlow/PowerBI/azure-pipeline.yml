@@ -35,6 +35,8 @@ variables:
     value: product-readiness.url
   - name: covStream
     value: Auth_PKCE_PowerBI
+  - name: bdProject
+    value: Auth_PKCE_PowerBI
 
 jobs:
   - job: Tests
@@ -72,4 +74,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
         displayName: 'Run coded UI'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: powerbi
