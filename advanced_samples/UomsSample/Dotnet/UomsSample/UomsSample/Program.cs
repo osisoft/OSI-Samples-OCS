@@ -45,6 +45,7 @@ namespace UomsSample
             string StreamWithPropertyOverriden = $"{ResourcePrefix} UomPropertyOverridden";
             string StreamWithoutPropertyOverriden = $"{ResourcePrefix} UomNoPropertyOverridden";
 
+            // Step 1 
             AuthenticationHandler authenticationHandler = new AuthenticationHandler(new Uri(resource), clientId, clientKey);
             SdsService service = new SdsService(new Uri(resource), authenticationHandler);
 
@@ -75,12 +76,14 @@ namespace UomsSample
                 }
                 */
 
+                // Step 2
                 // Creating a Sdstype
                 SdsType sdsType = SdsTypeBuilder.CreateSdsType<Widget>();
                 sdsType.Id = TypeId;
 
                 sdsType = await MetadataService.GetOrCreateTypeAsync(sdsType);
 
+                // Step 3
                 //Creating a Stream overriding the distance property.
                 SdsStream sdsStreamOne = new SdsStream()
                 {
@@ -99,6 +102,7 @@ namespace UomsSample
 
                 sdsStreamOne = await MetadataService.GetOrCreateStreamAsync(sdsStreamOne);
 
+                // Step 4
                 //Creating a Stream without overriding properties.
                 SdsStream sdsStreamTwo = new SdsStream()
                 {
@@ -109,6 +113,7 @@ namespace UomsSample
 
                 sdsStreamTwo = await MetadataService.GetOrCreateStreamAsync(sdsStreamTwo);
 
+                // Step 5
                 // Generating data
                 IList<Widget> data = new List<Widget>();
                 for (int i = 0; i < 10; i++)
@@ -132,6 +137,7 @@ namespace UomsSample
                  */
                 await DataService.InsertValuesAsync<Widget>(sdsStreamTwo.Id, data);
 
+                // Step 6
                 /*
                  * The last value stored in stream one. 
                  */
@@ -147,6 +153,7 @@ namespace UomsSample
                 Console.WriteLine($"In stream two, the distance is {widgetFromStreamTwo.Distance} miles and the temperature is {widgetFromStreamTwo.Temperature} degrees fahrenheit");
                 Console.WriteLine();
 
+                // Step 7
                 /*
                  * If you want your data to be in specified uom, you can override your properties while making a call.
                  * In the following, I want the temperature to be in Celsius, and the distance to be in feet.
@@ -203,6 +210,7 @@ namespace UomsSample
             finally
             {
 
+                // Step 8
                 Console.WriteLine("Deleting");
                 RunInTryCatch(MetadataService.DeleteStreamAsync, StreamWithPropertyOverriden);
                 RunInTryCatch(MetadataService.DeleteStreamAsync, StreamWithoutPropertyOverriden);

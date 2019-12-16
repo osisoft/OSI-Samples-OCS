@@ -29,6 +29,19 @@ Replace the placeholders in the [apsettings](./apsettings.json) file with your T
 dotnet run
 ```
 
+## Sample Steps
+
+The UOM sample follows these steps
+
+1.  Instantiate an SDS client and obtain an authentication token
+1.  Create an SdsType with UOMs specified
+1.  Create SdsStream with uom override
+1.  Create SdsStream using default uom
+1.  Generate data and send to both streams
+1.  Retrieve data for both streams using stream default UOM
+1.  Retrieve data for both streams using UOM request override
+1.  Delete objects
+
 ---
 
 Tested against DotNet 2.2.105.
