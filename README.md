@@ -54,4 +54,4 @@ If you wish to contribute please take a look at the [contribution guide](https:/
 
 ## License
 
-[OSI Samples](https://github.com/osisoft/OSI-Samples) are licensed under the [Apache 2 license](./LICENSE).
+[OSI Samples](https://github.com/osisoft/OSI-Samples) are licensed under the [Apache 2 license](LICENSE).

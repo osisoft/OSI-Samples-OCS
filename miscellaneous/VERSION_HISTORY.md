@@ -13,12 +13,6 @@ DataviewPy
 | ------- | ------- | --------------------------------- |
 | 0.0.1   | 4-25-19 | This version was out earlier too. |
 
-OMF_APIPy
-
-| Version | Date    | Notes                             |
-| ------- | ------- | --------------------------------- |
-| 0.0.1   | 3-20-19 | This version was out earlier too. |
-
 SDSJava
 
 | Version | Date    | Notes                             |
@@ -34,24 +28,12 @@ DataviewJava
 | 0.0.4   | 5-10-19 | Updating library version for debugging that happens only in automated tests |
 | 0.0.5   | 7-2-19  | Updating to be compatible with .14 of lib                                   |
 
-OMF_APIJava
-
-| Version | Date    | Notes                             |
-| ------- | ------- | --------------------------------- |
-| 1.0.0.1 | 4-25-19 | This version was out earlier too. |
-
 SDSDotNet
 
 | Version | Date    | Notes                                |
 | ------- | ------- | ------------------------------------ |
 | 0.0.1   | 4-25-19 | This version was out earlier too.    |
 | 0.0.2   | 5-9-19  | Updating calls based on lib changes. |
-
-OMF_APIDotNet
-
-| Version | Date    | Notes                             |
-| ------- | ------- | --------------------------------- |
-| 0.0.1   | 4-25-19 | This version was out earlier too. |
 
 SDSDotNetAPI
 

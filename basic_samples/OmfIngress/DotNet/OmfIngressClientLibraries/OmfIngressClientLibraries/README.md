@@ -157,7 +157,7 @@ Deleting Subscriptions and Topics can be achieved using the Ingress client and p
 
 ## Steps to run this sample
 
-Replace the placeholders in the [appsettings](./appsettings.json) file with your TenantId, NamespaceId, ClientId, ClientSecret, DeviceClientId, DeviceClientSecret, ConnectionName and the StreamId.
+Replace the placeholders in the [appsettings](appsettings.json) file with your TenantId, NamespaceId, ClientId, ClientSecret, DeviceClientId, DeviceClientSecret, ConnectionName and the StreamId.
 
 ### Requirements
 
