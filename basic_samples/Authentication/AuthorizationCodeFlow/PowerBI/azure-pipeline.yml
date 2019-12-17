@@ -66,6 +66,13 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
 
+      - task: CopyFiles@2
+        inputs:
+          SourceFolder: '$(Build.SourcesDirectory)$(projPath)/OCSConnector/bin/Debug'
+          Contents: '**'
+          TargetFolder: 'C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors'
+          OverWrite: true
+
       - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" &  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"'
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Build test'
