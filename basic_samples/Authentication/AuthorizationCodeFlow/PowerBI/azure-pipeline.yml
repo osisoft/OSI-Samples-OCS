@@ -67,12 +67,12 @@ jobs:
           dir
           dir bin
           dir bin\Debug
-          call copy /y "$(Build.SourcesDirectory)$(projPath)/bin/Debug/OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+          call copy /y "$(Build.SourcesDirectory)$(projPath)\bin\Debug/\CSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
 
       - script: | 
-          call copy /y "$(Build.SourcesDirectory)$(projPath)/bin/Debug/OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+          call copy /y "$(Build.SourcesDirectory)$(projPath)\bin/Debug/OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
 
