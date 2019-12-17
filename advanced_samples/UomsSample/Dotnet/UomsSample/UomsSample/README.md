@@ -6,7 +6,7 @@ Developed against DotNet 2.2.105.
 
 ## Running the sample
 
-Replace the placeholders in the [apsettings](./apsettings.json) file with your TenantID, NamespaceId, ClientID and ClientSecret.
+Replace the placeholders in the [appsettings](appsettings.json) file with your TenantID, NamespaceId, ClientID and ClientSecret.
 
 ### Requirements
 

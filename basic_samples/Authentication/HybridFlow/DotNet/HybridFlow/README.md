@@ -11,7 +11,7 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 
   - You will need Google Chrome if you want to run the automated test
 
-1. Replace the placeholders in the [appsettings](./appsettings.json) file with your Tenant Id, Client Id and Client Secret
+1. Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id and Client Secret
 2. Ensure that this client was created to allow Refresh Tokens
 
 - If this client does not allow refresh tokens, no refresh token will be issued upon authentication
@@ -26,7 +26,7 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 ### Prerequisites
 
 - Register a Hybrid client in OCS and ensure that the registered client in OCS contains `https://127.0.0.1:54567/signin-oidc` in the list of RedirectUris.
-- Replace the placeholders in the [appsettings](./appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
+- Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Using Visual Studio
 

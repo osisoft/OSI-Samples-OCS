@@ -34,6 +34,10 @@ A credential file is used in the samples unless otherwise noted in the sample. T
 __Note__: This is not a secure way to store credentials. This is to be used at your own risk.     
 You will need to modify these files locally when you run the samples.
 
+## About this repo
+
+The [style guide](https://github.com/osisoft/OSI-Samples/blob/master/STYLE_GUIDE.md) describes the organization of the repo and the code samples provided. The [test guide](https://github.com/osisoft/OSI-Samples/blob/master/TEST_GUIDE.md) goes into detail about the included automated tests. The [on prem testing](https://github.com/osisoft/OSI-Samples/blob/master/miscellaneous/ON_PREM_TESTING.md) document describes the software installed on our internal OSIsoft build agent.
+
 ## Feedback
 
 If you have a need for a new sample; if there is a feature or capability that should be demonstrated; if there is an existing sample that should be in your favorite language; please reach out to us and give us feedback at https://feedback.osisoft.com under the OSIsoft GitHub Channel.  [Feedback](https://feedback.osisoft.com/forums/922279-osisoft-github).   
@@ -46,8 +50,8 @@ If your support question or issue is related to a non-modified sample (or test) 
 
 ## Contributions
 
-If you wish to contribute please take a look at the [contribution guide](CONTRIBUTING.md).
+If you wish to contribute please take a look at the [contribution guide](https://github.com/osisoft/OSI-Samples/blob/master/CONTRIBUTING.md).
 
 ## License
 
-[OSI Samples](https://github.com/osisoft/OSI-Samples) are licensed under the [Apache 2 license](./LICENSE.md).
+[OSI Samples](https://github.com/osisoft/OSI-Samples) are licensed under the [Apache 2 license](LICENSE).
