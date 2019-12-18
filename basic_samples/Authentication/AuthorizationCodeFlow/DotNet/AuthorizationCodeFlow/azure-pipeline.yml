@@ -31,6 +31,8 @@ variables:
     value: product-readiness.auth_pkce_dotnet.js
   - name: covStream
     value: Auth_PKCE_DotNet
+  - name: bdProject
+    value: Auth_PKCE_DotNet
 
 jobs:
   - job: Tests
@@ -72,6 +74,7 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
-
-  - template: '/miscellaneous/build_templates/binskim.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet
+      web: true

@@ -27,6 +27,8 @@ variables:
     value: product-readiness.sds_java.properties
   - name: covStream
     value: SDSJava
+  - name: bdProject
+    value: SDS_Java
 
 jobs:
   - job: Tests
@@ -57,4 +59,6 @@ jobs:
           goals: 'test'
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: java

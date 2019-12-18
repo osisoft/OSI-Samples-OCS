@@ -20,12 +20,14 @@ variables:
   - name: projPath
     value: '/basic_samples/Authentication/HybridFlow/DotNet/HybridFlow'
   - name: testPath
-    value: /basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest
+    value: '/basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_hybrid_dotnet.json
   - name: covStream
+    value: Auth_Hybrid_DotNet
+  - name: bdProject
     value: Auth_Hybrid_DotNet
 
 jobs:
@@ -58,6 +60,8 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
   # BinSkim fails due to Selenium reference in main project
-  # - template: '/miscellaneous/build_templates/binskim.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet
+      skipBinSkim: true

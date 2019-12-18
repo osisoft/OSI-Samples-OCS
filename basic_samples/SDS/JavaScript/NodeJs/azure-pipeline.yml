@@ -27,6 +27,8 @@ variables:
     value: product-readiness.sds_nodejs.js
   - name: covStream
     value: SDSnodeJS
+  - name: bdProject
+    value: SDS_NodeJS
 
 jobs:
   - job: Tests
@@ -42,7 +44,7 @@ jobs:
 
       - task: NodeTool@0
         inputs:
-          versionSpec: '8.x'
+          versionSpec: '10.x'
         displayName: 'Specify Node version'
 
       - script: |
@@ -56,4 +58,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: nodejs

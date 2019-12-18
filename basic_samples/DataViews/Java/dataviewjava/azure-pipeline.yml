@@ -27,6 +27,8 @@ variables:
     value: product-readiness.dataviews_java.properties
   - name: covStream
     value: DataviewJava
+  - name: bdProject
+    value: DataViews_Java
 
 jobs:
   - job: Tests
@@ -47,14 +49,16 @@ jobs:
 
       - script: mvn install -f pom.xml
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
-        displayName: 'Maven install'
+        displayName: 'Maven install library'
 
       - task: Maven@3
         inputs:
           mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
-          goals: 'test'
+          goals: test
         displayName: 'Run tests'
 
-  - template: '/miscellaneous/build_templates/coverity.yml'
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: java
