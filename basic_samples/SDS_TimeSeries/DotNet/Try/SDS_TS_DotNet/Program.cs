@@ -63,6 +63,7 @@ namespace SDS_TS_DotNet
                 var clientKey = configuration["ClientKey"];
                 #endregion
 
+                (configuration as ConfigurationRoot).Dispose();
                 var uriResource = new Uri(resource);
 
                 // Step 1 
