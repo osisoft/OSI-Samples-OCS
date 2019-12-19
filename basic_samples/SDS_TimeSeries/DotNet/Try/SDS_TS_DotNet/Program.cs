@@ -49,11 +49,12 @@ namespace SDS_TS_DotNet
             {
 
                 #region configurationSettings
-                IConfigurationBuilder builder = new ConfigurationBuilder()
+
+                IConfiguration configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
-                    .AddJsonFile("appsettings.test.json", optional: true);
-                IConfiguration configuration = builder.Build();
+                    .AddJsonFile("appsettings.test.json", optional: true)
+                    .Build();
 
                 var tenantId = configuration["TenantId"];
                 var namespaceId = configuration["NamespaceId"];
@@ -62,9 +63,8 @@ namespace SDS_TS_DotNet
                 var clientKey = configuration["ClientKey"];
                 #endregion
 
+                (configuration as ConfigurationRoot).Dispose();
                 var uriResource = new Uri(resource);
-
-
 
                 // Step 1 
                 // Get Sds Services to communicate with server
