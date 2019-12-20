@@ -16,8 +16,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {OidcService} from './libraries/auth/ocs-auth'
-import {UserManagerSettings, WebStorageStateStore} from 'oidc-client'
+import { OidcService } from './libraries/auth/ocs-auth';
+import { UserManagerSettings, WebStorageStateStore } from 'oidc-client';
 import oidcConfigJson from './config/oidc.config.json';
 import sdsConfig from './config/sdsconfig.json';
 import { SdsConfig } from './config/sdsconfig.js';
@@ -40,23 +40,23 @@ export class AppComponent implements OnInit {
     const configFromJson = oidcConfigJson as UserManagerSettings;
     this.authConfig = {
       ...configFromJson,
-      userStore: new WebStorageStateStore({store: window.localStorage}),
+      userStore: new WebStorageStateStore({ store: window.localStorage }),
       acr_values: `tenant:${this.sdsConfig.tenantId}`,
-      response_type: "id_token token",
-      scope: "openid ocsapi",
+      response_type: 'code',
+      scope: 'openid ocsapi',
       filterProtocolClaims: true,
       loadUserInfo: true,
       revokeAccessTokenOnSignout: true,
       automaticSilentRenew: true,
       accessTokenExpiringNotificationTime: 60,
       silentRequestTimeout: 10000
-    }
+    };
 
     this.auth.init(this.authConfig);
   }
 
   get loggedIn() {
-    return (this.auth.userInfo !== null);
+    return this.auth.userInfo !== null;
   }
 
   login() {
