@@ -7,6 +7,7 @@ namespace AuthorizationCodeFlow
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("WARNING: The web server used in this sample is intended for use in testing or debugging sample applications locally. It has not been reviewed for security issues.");
             CreateWebHostBuilder(args).Build().Run();
         }
 
