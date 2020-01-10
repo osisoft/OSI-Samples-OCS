@@ -15,6 +15,14 @@ pr:
     include:
       - '/advanced_samples/UomsSample/Dotnet'
 
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+    always: true
+
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath

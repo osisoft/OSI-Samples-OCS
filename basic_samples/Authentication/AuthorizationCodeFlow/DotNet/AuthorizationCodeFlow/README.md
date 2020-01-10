@@ -4,6 +4,8 @@
 
 This client uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an access token. See the root folder [README](../../../README.md) for more information about this flow.
 
+**WARNING:** The web server used in this sample is intended for use in testing or debugging sample applications locally. It has not been reviewed for security issues.
+
 ## Requirements
 
 - .NET Core 2.2.1 or later

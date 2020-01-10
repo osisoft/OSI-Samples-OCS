@@ -2,6 +2,8 @@
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Angular?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=921&branchName=master)
 
+**WARNING:** The web server used in this sample is intended for use in testing or debugging sample applications locally. It has not been reviewed for security issues.
+
 ## Building a client to make REST API calls to the SDS Service
 
 The sample code in this topic demonstrates how to invoke SDS REST APIs using Angular. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, create an SdsNamespace, SdsType, and SdsStream, and how to create, read, update, and delete values in SDS. Although this example uses Angular, other javascript frameworks should also work.
@@ -26,7 +28,7 @@ The SDS Service is secured by obtaining tokens from our OAuth2 identity provider
 
 The sample code includes several placeholder strings that must be modified with values you received from OSIsoft.
 
-Register an Implicit or AuthorizationCode client in OCS, or modify an existing client, and ensure that the registered client in OCS contains `http://localhost:4200/auth-callback.html` in the list of allowed Redirect URLs, and `https://localhost:4200/` in the list of allowed Logout URLs.
+Register an Authorization Code client in OCS, or modify an existing client, and ensure that the registered client in OCS contains `http://localhost:4200/auth-callback.html` in the list of allowed Redirect URLs, and `https://localhost:4200/` in the list of allowed Logout URLs.
 
 Replace the `client_id` in `src/app/config/oidc.config.json` with the Client ID of the client you registered.
 
@@ -51,7 +53,7 @@ Also edit the `tenantId` and `namespaceId` in `src/app/config/sdsconfig.json`.
 }
 ```
 
-The application relies on the OAuth2 implicit grant flow. Upon navigating to the webpage, users will be prompted to login to Azure Active Directory. In addition to these credentials, the application must be configured to allow for token retrieval on the user's behalf. Once this is correctly set up, the application will retrieve a bearer token and pass this token along with every request to the SDS Service. If the this token is not present, the SDS Service will return 401 Unauthorized for every request. Users are encouraged to use their browser's development tools to troubleshoot any issues with authentication.
+The application relies on the OAuth2 Authorization Code + PKCE grant flow. Upon navigating to the webpage, users will be prompted to login to Azure Active Directory. In addition to these credentials, the application must be configured to allow for token retrieval on the user's behalf. Once this is correctly set up, the application will retrieve a bearer token and pass this token along with every request to the SDS Service. If the this token is not present, the SDS Service will return 401 Unauthorized for every request. Users are encouraged to use their browser's development tools to troubleshoot any issues with authentication.
 
 To run the test, update `e2e\src\cred.json` with appropriate values.
 

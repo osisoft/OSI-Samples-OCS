@@ -11,7 +11,7 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 
   - You will need Google Chrome if you want to run the automated test
 
-1. Replace the placeholders in the [appsettings](./appsettings.json) file with your Tenant Id, Client Id and Client Secret
+1. Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id and Client Secret
 2. Ensure that this client was created to allow Refresh Tokens
 
 - If this client does not allow refresh tokens, no refresh token will be issued upon authentication
@@ -26,7 +26,7 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 ### Prerequisites
 
 - Register a Hybrid client in OCS and ensure that the registered client in OCS contains `https://127.0.0.1:54567/signin-oidc` in the list of RedirectUris.
-- Replace the placeholders in the [appsettings](./appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
+- Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Using Visual Studio
 
@@ -59,7 +59,7 @@ dotnet run
 ### Prerequisites
 
 - Make sure Google Chrome is the default browser on your test system.
-- Download the ChromeDriver version from `http://chromedriver.storage.googleapis.com/index.html` corresponding to the version of Google Chrome that is installed. Set the environmental variable ChromeWebDriver to the directory containing the Chrome Driver executable).
+- Download the ChromeDriver version from `http://chromedriver.storage.googleapis.com/index.html` corresponding to the version of Google Chrome that is installed. Set the environmental variable ChromeWebDriver to the directory containing the Chrome Driver executable.
 - Update the [appsettings.json](../HybridFlowTest/appsettings.json) with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the RedirectHost and/or RedirectPort.
 
 ### Using Visual Studio
@@ -72,7 +72,7 @@ dotnet run
 ### Using Command Line
 
 - Make sure you have the install location of dotnet added to your path
-- Run the following command from the location of the ImplicitFlowTest project (you may need to run as Administrator for the test to use the Chrome Driver):
+- Run the following command from the location of the HybridFlowTest project (you may need to run as Administrator for the test to use the Chrome Driver):
 
 ```shell
 dotnet test

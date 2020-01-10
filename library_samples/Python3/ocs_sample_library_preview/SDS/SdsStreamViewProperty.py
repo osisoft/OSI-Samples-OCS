@@ -92,10 +92,6 @@ class SdsStreamViewProperty(object):
     def fromDictionary(content):
         streamViewProperty = SdsStreamViewProperty()
         
-
-        if not content:
-            return streamViewProperty
-
         if not content:
             return streamViewProperty
 

@@ -50,7 +50,7 @@ This sample is also provided in Try .NET. Currently using this in Try .NET is av
 
 To get to the try .MD file that walk over the sample click here:
 
-- [Sample](./Sample.md)
+- [Sample](Sample.md)
 
 To learn more about try .NET and to learn how to install and use it please see [try .NET](https://github.com/dotnet/try). Included below are the abbreviated steps to do this.
 
