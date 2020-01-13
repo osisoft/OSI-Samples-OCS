@@ -6,21 +6,15 @@ tenant_id = Text.FromBinary(Extension.Contents("tenant_id"));
 // Note: Client ID should be an Authorization Code Client with the below redirect_uri and logout_uri
 client_id = Text.FromBinary(Extension.Contents("client_id")); 
 
-resourcez = Text.FromBinary(Extension.Contents("url")); 
-
 // OCS values
-resource = (("https://dat-b.osisoft.com/")); 
-
-
+resource = Text.FromBinary(Extension.Contents("url"));
 authorize_uri = Text.Combine({resource, "identity/connect/authorize"}); 
 token_uri = Text.Combine({resource, "identity/connect/token"});
+scope = "ocsapi";
 
-// oAuth values -- set by powerbi
+// OAuth values for PowerBI
 redirect_uri = "https://oauth.powerbi.com/views/oauthredirect.html";
 logout_uri = "https://login.microsoftonline.com/logout.srf";
-
-// oAuth value
-scope = "ocsapi";
 
 // Authorization Code + PKCE verifier/challenge
 code_verifier = Base64Encode(GenerateRandomBytes(32));
