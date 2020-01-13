@@ -1,6 +1,6 @@
 # Authorization Code Flow + PKCE Sample and Test for Power BI Desktop
 
-The OCS Connector for Power BI Desktop is used to get data from the OCS API into Power BI Desktop. The connector uses the OAuth Implicit with PKCE flow to connect to the API and get an access token.
+The OCS Connector for Power BI Desktop is used to get data from the OCS API into Power BI Desktop. The connector uses the OAuth Authorization Code with PKCE flow to connect to the API and get an access token.
 
 ## Prerequisites
 
@@ -23,7 +23,7 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 ## Using the Connector
 
 1. From Power BI Desktop, open Home > Get Data > More
-1. The connector should be available as "OSIsoft Cloud Services Sample(Beta)" in the category "Online Services"
+1. The connector should be available as "OSIsoft Cloud Services Sample (Beta)" in the category "Online Services"
 1. Select it and click "Connect"
 1. If using the connector for the first time, you may get another warning regarding untrusted connectors
 1. When prompted for a URL, enter the API URL to get data from, like `https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/`
@@ -58,20 +58,20 @@ in
     #"Expanded Column1"
 ```
 
-
 ## Tests
 
-Included is an automated test that runs CodedUI to make sure that the OCS Power BI Authentication connector works.  To run this test you must have at least one recent source in PowerBI that has at least 1 record, and you must have have been logged in and selected Stay Logged In. 
-This test simply checks to make sure the recent source works with a refresh and we can click on the first result.  Due to it being CodedUI the test might not work on other environments than the test comptuer due to window positioning and other settings.  
+Included is an automated test that runs CodedUI to make sure that the OCS Connector sample works. To run this test, you must have at least one recent source in PowerBI that has at least 1 record, and you must have have been logged in and selected Stay Logged In.
+This test simply checks to make sure the recent source works with a refresh and we can click on the first result. Since the test uses CodedUI, it might not work on environments other than the internal OSIsoft test agent due to window positioning and other settings.
 
-To run the test from the commandline on the machine with PowerBI Desktop:
+To run the test from the command line on the machine with PowerBI Desktop:
 
-1. Build the test project using ''' msbuild '''from the folder with the test .csproj (see all steps and prerequisites above need to do that)
-1. Navigate to the sub-directoy \bin\debug
+1. Build the test project using ''' msbuild ''' from the folder with the test .csproj (see all steps and prerequisites above need to do that)
+1. Navigate to the sub-directoy \bin\Debug
 1. Run ''' mstest /testcontainer:OCSConnectorTest.dll '''
 
-Note: when running a CodedUI test you should not move the mouse on that computer, or have anything else that can change the mouse movement or window focus during the test.  Doing so will probably cause the test to fail
+**Note:** When running a CodedUI test you should not move the mouse on that computer, or have anything else that can change the mouse movement or window focus during the test. Doing so can cause the test to fail.
 
+---
 
 For the general steps or switch languages see the Task [ReadMe](../../../)  
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
