@@ -65,9 +65,9 @@ This test simply checks to make sure the recent source works with a refresh and 
 
 To run the test from the command line on the machine with PowerBI Desktop:
 
-1. Build the test project using ''' msbuild ''' from the folder with the test .csproj (see all steps and prerequisites above need to do that)
+1. Build the test project using ``` msbuild ``` from the folder with the test .csproj (see all steps and prerequisites above need to do that)
 1. Navigate to the sub-directoy \bin\Debug
-1. Run ''' mstest /testcontainer:OCSConnectorTest.dll '''
+1. Run ``` mstest /testcontainer:OCSConnectorTest.dll ```
 
 **Note:** When running a CodedUI test you should not move the mouse on that computer, or have anything else that can change the mouse movement or window focus during the test. Doing so can cause the test to fail.
 
