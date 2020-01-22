@@ -99,6 +99,16 @@ jobs:
         displayName: 'Build (NodeJS): Install dependencies'
         condition: eq('${{ parameters.language }}', 'nodejs')
 
+      # - PowerBI
+      - script: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
+          dir
+          dir bin
+          dir bin\Debug
+          call copy /y "$(Build.SourcesDirectory)$(projPath)\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build (PowerBI)'
+
       # BinSkim
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'BinSkim (DotNet): Analyze'
