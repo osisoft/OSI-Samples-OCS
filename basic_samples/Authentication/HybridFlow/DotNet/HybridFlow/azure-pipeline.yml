@@ -62,7 +62,9 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-      - bash: rm -rf bin
+      - bash: |
+          rm -rf bin
+          rm -rf obj
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Delete test binaries prior to analysis'
 
