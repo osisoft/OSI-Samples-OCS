@@ -39,15 +39,10 @@ variables:
 
 jobs:
   - job: Tests
-    strategy:
-      matrix:
-        # Cannot run on Linux due to missing Selenium Chrome Driver
-        # linux:
-        #   imageName: 'ubuntu-16.04'
-        windows:
-          imageName: 'vs2017-win2016'
+    # Must run on internal agent to access staging environment
     pool:
-      vmImage: $(imageName)
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
