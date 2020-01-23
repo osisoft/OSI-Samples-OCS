@@ -48,10 +48,6 @@ jobs:
           imageName: 'vs2017-win2016'
     pool:
       vmImage: $(imageName)
-    # # Must run on internal agent to access staging environment
-    # pool:
-    #   name: 00-OSIManaged-Test
-    #   demands: COMPUTERNAME -equals $(buildAgent)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
@@ -70,12 +66,6 @@ jobs:
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
-
-      # - bash: |
-      #     rm -rf bin
-      #     rm -rf obj
-      #   workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-      #   displayName: 'Delete test binaries prior to analysis'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
