@@ -62,6 +62,10 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
+      - bash: rm -rf bin
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Delete test binaries prior to analysis'
+
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
       language: dotnet
