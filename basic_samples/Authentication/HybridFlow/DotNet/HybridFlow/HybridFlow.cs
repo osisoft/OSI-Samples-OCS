@@ -13,7 +13,6 @@ namespace HybridFlow
         private static string _redirectHost;
         private static int _redirectPort;
         private static string _redirectPath;
-        private const string Authority = "https://identity.osisoft.com";
 
         public static string OcsUrl
         {

@@ -1,22 +1,19 @@
 using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
-using System.Threading;
 
-namespace Tests
+namespace HybridFlowTest
 {
     public class Tests
     {
         [SetUp]
         public void Setup()
         {
+            HybridFlow.SystemBrowser.openBrowser = new OpenTestBrowser();
         }
 
         [Test]
         public void Test1()
         {
-            HybridFlow.Program.Main(new string[] { "test" });
+            HybridFlow.Program.Main(new string[0]);
         }
 
     }

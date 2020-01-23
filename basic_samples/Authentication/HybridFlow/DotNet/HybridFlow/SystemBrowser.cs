@@ -2,16 +2,11 @@ using IdentityModel.OidcClient.Browser;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace HybridFlow
@@ -20,10 +15,9 @@ namespace HybridFlow
     {
         public int Port { get; }
         private readonly string _path;
-        public static bool test = false;
-        public static string tenant;
         public static string userName;
         public static string password;
+        public static IOpenBrowser openBrowser;
 
         public SystemBrowser(int? port = null, string path = null)
         {
@@ -52,12 +46,12 @@ namespace HybridFlow
         {
             using (var listener = new LoopbackHttpListener(Port, _path))
             {
-                OpenBrowser(options.StartUrl);
+                openBrowser.OpenBrowser(options.StartUrl, userName, password);
 
                 try
                 {
                     var result = await listener.WaitForCallbackAsync();
-                    if (String.IsNullOrWhiteSpace(result))
+                    if (string.IsNullOrWhiteSpace(result))
                     {
                         return new BrowserResult
                             {ResultType = BrowserResultType.UnknownError, Error = "Empty response."};
@@ -75,77 +69,7 @@ namespace HybridFlow
                 }
             }
         }
-
-        public static void OpenBrowser(string url)
-        {
-            if (test)
-            {
-                AutoLogin(url);
-                return;
-            }
-
-            try
-            {
-                Process.Start(url);
-            }
-            catch
-            {
-                // hack because of this: https://github.com/dotnet/corefx/issues/10361
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    url = url.Replace("&", "^&");
-                    Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") {CreateNoWindow = true});
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    Process.Start("xdg-open", url);
-                }
-                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    Process.Start("open", url);
-                }
-                else
-                {
-                    throw;
-                }
-            }
-        }
-
-
-        private static void AutoLogin(string url)
-        {
-            // Automatic login works against Microsoft personal account option only
-            // Must use Live account email that isn't also an AAD account
-            // Account must have no 2FA enabled and the login flow must not have any other additional prompts after password entry
-            using (IWebDriver driver = new ChromeDriver(Environment.ExpandEnvironmentVariables("%ChromeWebDriver%")))
-            {
-                driver.Url = url;
-                int sleep = 6000;
-
-                Thread.Sleep(sleep);
-
-                driver.FindElement(By.XPath("descendant::a[@title=\"Personal Account\"]")).Click();
-
-
-                Thread.Sleep(sleep);
-
-                driver.FindElement(By.XPath("//*[@id=\"i0116\"]")).SendKeys(userName);
-                driver.FindElement(By.XPath("//*[@id=\"idSIButton9\"]")).Click();
-
-
-                Thread.Sleep(sleep);
-
-                driver.FindElement(By.XPath("//*[@id=\"i0118\"]")).SendKeys(password);
-                driver.FindElement(By.XPath("//*[@id=\"idSIButton9\"]")).Click();
-
-                Thread.Sleep(sleep);
-
-                driver.Close();
-            }
-        }
     }
-
-
 
     public class LoopbackHttpListener : IDisposable
     {
@@ -153,20 +77,19 @@ namespace HybridFlow
 
         IWebHost _host;
         TaskCompletionSource<string> _source = new TaskCompletionSource<string>();
-        string _url;
 
-        public string Url => _url;
+        public string Url { get; }
 
         public LoopbackHttpListener(int port, string path = null)
         {
-            path = path ?? String.Empty;
+            path = path ?? string.Empty;
             if (path.StartsWith("/")) path = path.Substring(1);
 
-            _url = $"https://127.0.0.1:{port}/{path}";
+            Url = $"https://127.0.0.1:{port}/{path}";
 
             _host = new WebHostBuilder()
                 .UseKestrel()
-                .UseUrls(_url)
+                .UseUrls(Url)
                 .Configure(Configure)
                 .Build();
             _host.Start();
@@ -234,7 +157,7 @@ namespace HybridFlow
 
         public Task<string> WaitForCallbackAsync(int timeoutInSeconds = DefaultTimeout)
         {
-            Task.Run(async () =>
+            Task.Run(async() =>
             {
                 await Task.Delay(timeoutInSeconds * 1000);
                 _source.TrySetCanceled();

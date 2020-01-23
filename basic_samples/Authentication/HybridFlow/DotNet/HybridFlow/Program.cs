@@ -13,16 +13,20 @@ namespace HybridFlow
 
         public static void Main(string[] args)
         {
+            bool test = false;
             try
             {
                 InitConfig();
 
-                if (args.Length > 0)
+                if (SystemBrowser.openBrowser == null)
                 {
-                    SystemBrowser.test = true;
+                    SystemBrowser.openBrowser = new OpenSystemBrowser();
+                }
+                else
+                {
+                    test = true;
                     SystemBrowser.password = GetConfigValue("Password");
                     SystemBrowser.userName = GetConfigValue("UserName");
-                    SystemBrowser.tenant = GetConfigValue("TenantId");
                 }
 
                 HybridFlow.OcsUrl = GetConfigValue("Resource");
@@ -71,11 +75,11 @@ namespace HybridFlow
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                if (SystemBrowser.test)
+                if (test)
                     throw e;
             }
 
-            if (!SystemBrowser.test)
+            if (!test)
                 Console.ReadLine();
         }
 
