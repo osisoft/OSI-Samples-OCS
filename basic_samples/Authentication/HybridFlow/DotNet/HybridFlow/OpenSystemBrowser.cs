@@ -8,8 +8,6 @@ namespace HybridFlow
     {
         public void OpenBrowser(string url, string userName, string password)
         {
-            Console.WriteLine("Opening System Browser...");
-
             try
             {
                 Process.Start(url);
