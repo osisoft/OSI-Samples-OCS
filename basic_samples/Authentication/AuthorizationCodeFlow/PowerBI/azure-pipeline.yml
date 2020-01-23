@@ -68,7 +68,13 @@ jobs:
           echo client_id
           dir
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
-          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"          
+          echo client_id
+          type client_id
+          echo client_id
+          echo client_id2
+          type obj\Debug\client_id
+          echo client_id
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
 
