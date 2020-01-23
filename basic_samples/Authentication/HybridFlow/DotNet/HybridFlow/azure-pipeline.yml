@@ -39,10 +39,19 @@ variables:
 
 jobs:
   - job: Tests
-    # Must run on internal agent to access staging environment
+    strategy:
+      matrix:
+        # Cannot run on Linux due to missing Selenium Chrome Driver
+        # linux:
+        #   imageName: 'ubuntu-16.04'
+        windows:
+          imageName: 'vs2017-win2016'
     pool:
-      name: 00-OSIManaged-Test
-      demands: COMPUTERNAME -equals $(buildAgent)
+      vmImage: $(imageName)
+    # # Must run on internal agent to access staging environment
+    # pool:
+    #   name: 00-OSIManaged-Test
+    #   demands: COMPUTERNAME -equals $(buildAgent)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
@@ -62,11 +71,11 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-      - bash: |
-          rm -rf bin
-          rm -rf obj
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: 'Delete test binaries prior to analysis'
+      # - bash: |
+      #     rm -rf bin
+      #     rm -rf obj
+      #   workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+      #   displayName: 'Delete test binaries prior to analysis'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
