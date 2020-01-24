@@ -68,8 +68,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
-  # BinSkim fails due to Selenium reference in main project
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
       language: dotnet
-      skipBinSkim: true
