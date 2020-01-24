@@ -1,0 +1,82 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI'
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnector'
+  - name: testPath
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnectorTest'
+  - name: CredFile
+    value: client_id
+  - name: CredFileLibrary
+    value: product-readiness.client_id
+  - name: CredFileTenantID
+    value: tenant_id
+  - name: CredFileTenantIDLibrary
+    value: product-readiness.tenant_id
+  - name: CredFileURL
+    value: url
+  - name: CredFileURLLibrary
+    value: product-readiness.url
+  - name: covStream
+    value: Auth_PKCE_PowerBI
+  - name: bdProject
+    value: Auth_PKCE_PowerBI
+
+jobs:
+  - job: Tests
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFileTenantID)
+          fileLibrary: $(CredFileTenantIDLibrary)
+          filePath: $(projPath)
+
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFileURL)
+          fileLibrary: $(CredFileURLLibrary)
+          filePath: $(projPath)
+
+      - script: | 
+          dir
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
+          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"          
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build'
+
+      - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" &  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"'
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: 'Build test'
+
+      - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
+        displayName: 'Run coded UI'
+
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: powerbi

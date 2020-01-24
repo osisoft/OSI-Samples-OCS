@@ -1,0 +1,1576 @@
+<?xml version="1.0"?>
+<UITest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="" Id="d8c0ccbe-9581-4cf9-9374-d716cbbe80f3" AssemblyVersion="15.0.26208.0" Version="1.0" xmlns="http://schemas.microsoft.com/VisualStudio/TeamTest/UITest/2010">
+  <Configuration>
+    <Group Name="IE">
+      <Setting Name="Version" Value="9.11.14393.0" WarningLevel="1" />
+      <Setting Name="InformationBar" WarningLevel="1" />
+      <Setting Name="AutoCompletePassword" WarningLevel="1" />
+      <Setting Name="AutoCompleteForm" WarningLevel="1" />
+      <Setting Name="DefaultBrowser" Value="IEXPLORE.EXE" WarningLevel="1" />
+      <Setting Name="PopupBlocker" Value="1" WarningLevel="1" />
+      <Setting Name="TabbedBrowsing" WarningLevel="2" />
+      <Setting Name="InternetZoneSecurity" Value="66816" WarningLevel="2" />
+      <Setting Name="IntranetZoneSecurity" Value="69632" WarningLevel="2" />
+      <Setting Name="TrustedZoneSecurity" Value="0" WarningLevel="2" />
+      <Setting Name="RestrictedZoneSecurity" Value="73728" WarningLevel="2" />
+      <Setting Name="PhishingFilter" WarningLevel="1" />
+      <Setting Name="EnhancedSecurityConfiguration" WarningLevel="1" />
+    </Group>
+    <Group Name="OS">
+      <Setting Name="Name" Value="Microsoft Windows Server 2016 Standard" WarningLevel="2" />
+      <Setting Name="Version" Value="Microsoft Windows NT 10.0.14393.0" WarningLevel="2" />
+      <Setting Name="IsUserAdmin" Value="True" WarningLevel="2" />
+      <Setting Name="Is64BitOperatingSystem" Value="True" WarningLevel="2" />
+      <Setting Name="IsTerminalServerSession" Value="True" WarningLevel="2" />
+      <Setting Name="OSLanguage" Value="1033" WarningLevel="1" />
+      <Setting Name="UserLocale" Value="1033" WarningLevel="1" />
+      <Setting Name="DragFullWindows" Value="True" WarningLevel="2" />
+      <Setting Name="ScreenResolutionWidth" Value="1920" WarningLevel="2" />
+      <Setting Name="ScreenResolutionHeight" Value="1080" WarningLevel="2" />
+      <Setting Name="SystemDPIX" Value="96" WarningLevel="2" />
+      <Setting Name="SystemDPIY" Value="96" WarningLevel="2" />
+      <Setting Name="Aero" Value="1" WarningLevel="1" />
+      <Setting Name="UACEnabled" Value="0" WarningLevel="2" />
+      <Setting Name="UACPromptEnabled" Value="0" WarningLevel="1" />
+    </Group>
+    <Group Name="TechnologyManagers" />
+  </Configuration>
+  <InitializeActions />
+  <ExecuteActions>
+    <MouseAction UIObjectName="UIMap.UIStartWindow.UIItemClient.UIMspbipbimicrosoftcomDocument.UIModalDialogPane.UIRecentsourcesPane">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="88" Y="12" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Clickrecent">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <MouseAction UIObjectName="UIMap.UIRecentSourcesWindow.UIItemClient.UIMspbipbimicrosoftcomDocument.UIModalDialogPane.UIHttpsstagingosipicomPane">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="138" Y="11" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIRecentSourcesWindow.UIItemClient.UIMspbipbimicrosoftcomDocument.UIModalDialogPane.UIConnectPane">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="30" Y="9" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Clickrecenturl">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <MouseAction UIObjectName="UIMap.UIUntitledPowerQueryEdWindow.UIItemClient.UIMspbipbimicrosoftcomDocument.UIRecordPane">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="16" Y="6" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="Clickrecord1">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <LaunchApplicationAction>
+      <ParameterName />
+      <FileName>C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe</FileName>
+      <AlternateFileName>%ProgramW6432%\Microsoft Power BI Desktop\bin\PBIDesktop.exe</AlternateFileName>
+    </LaunchApplicationAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="LaunchPowerBI">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+    <MouseAction UIObjectName="UIMap.UIUntitledPowerQueryEdWindow.UIItemWindow.UIRibbonClient.UIHomeTabPage">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="34" Y="13" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <MouseAction UIObjectName="UIMap.UIUntitledPowerQueryEdWindow.UIItemWindow.UIRefreshPreviewGroup.UIRefreshPreviewSplitButton">
+      <ParameterName />
+      <ModifierKeys>None</ModifierKeys>
+      <IsGlobalHotkey>false</IsGlobalHotkey>
+      <Location X="20" Y="22" />
+      <WheelDirection>0</WheelDirection>
+      <ActionType>Click</ActionType>
+      <MouseButton>Left</MouseButton>
+    </MouseAction>
+    <TestStepMarkerAction Comment="" MarkerInformation="refresh">
+      <ParameterName />
+      <StepId>-1</StepId>
+      <Direction>Start</Direction>
+      <Outcome />
+      <Disabled>false</Disabled>
+      <WorkItemId>0</WorkItemId>
+      <MarkerRegionType>Action</MarkerRegionType>
+    </TestStepMarkerAction>
+  </ExecuteActions>
+  <CleanupActions />
+  <OnErrorActions />
+  <Maps>
+    <UIMap Id="UIMap">
+      <TopLevelWindows>
+        <TopLevelWindow ControlType="Window" Id="UIStartWindow" FriendlyName="Start" SpecialControlType="None" SessionId="262916">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Start</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Start</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Start</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Document" Id="UIMspbipbimicrosoftcomDocument" FriendlyName="ms-pbi://pbi.microsoft.com/Views/KoForm.htm" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Start</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="AbsolutePath">/Views/KoForm.htm</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">ms-pbi://pbi.microsoft.com/Views/KoForm.htm</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Pane" Id="UIModalDialogPane" FriendlyName="modalDialog" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Start</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id">modalDialog</PropertyCondition>
+                          <PropertyCondition Name="Name" />
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">Power BI Desktop
+
+
+Power BI has recov</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">modal-frame js-auto-size</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">class="modal-frame js-auto-size" id="modalDialog" style="width: 1099px;"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants>
+                        <UIObject ControlType="Pane" Id="UIGetdataPane" FriendlyName="Get data" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Start</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">Get data</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">o-group-menuAction</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="o-group-menuAction"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">10</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIItemPane" FriendlyName="" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Start</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText" />
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">o-action-button role-close</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="o-action-button role-close" role="button" aria-label="Close" data-bind="button: { &amp;#10;             click: function () { Host.instance.onDismiss() }, &amp;#10;             tabbable: false }, &amp;#10;             attr: {'aria-label': StringResources.close }"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">19</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIRecentsourcesPane" FriendlyName="Recent sources" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Start</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">Recent sources</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">o-group-menuAction</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="o-group-menuAction"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">12</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                      </Descendants>
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIGetDataWindow" FriendlyName="Get Data" SpecialControlType="None" SessionId="263014">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Get Data</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Get Data</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Get Data</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Document" Id="UIMspbipbimicrosoftcomDocument" FriendlyName="ms-pbi://pbi.microsoft.com/Views/KoForm.htm" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Get Data</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="AbsolutePath">/Views/KoForm.htm</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">ms-pbi://pbi.microsoft.com/Views/KoForm.htm</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Pane" Id="UIModalDialogPane" FriendlyName="modalDialog" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Get Data</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id">modalDialog</PropertyCondition>
+                          <PropertyCondition Name="Name" />
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">Get Data
+
+
+
+
+ 
+ 
+
+  
+
+
+All
+</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">modal-frame js-auto-size</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">class="modal-frame js-auto-size" id="modalDialog" role="dialog" aria-label="Get Data" data-bind="css: {&amp;#10;         'role-noHeader': !hasHeader()&amp;#10;     },&amp;#10;     attr: {&amp;#10;         'aria-label': dialogTitle&amp;#10;     }"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants>
+                        <UIObject ControlType="Pane" Id="UIIBMDb2databasePane" FriendlyName="IBM Db2 database" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Get Data</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">IBM Db2 database  </PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">o-dataSource-label</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="o-dataSource-label"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">59</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Edit" Id="UIItemEdit" FriendlyName="" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Get Data</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                              <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                              <PropertyCondition Name="LabeledBy" />
+                              <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">js-searchDataSource o-action-search role-cancelable o-action-text</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="js-searchDataSource o-action-sear</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIOSIsoftCloudServicesPane" FriendlyName="OSIsoft Cloud Services Sample (Beta)" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Get Data</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">SPAN</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">OSIsoft Cloud Services Sample (Beta)</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class" />
+                              <PropertyCondition Name="ControlDefinition">style="overflow: hidden; white-space: nowrap; -ms-text-overflow: ellipsis;" data-bind="&amp;#10;            text: name,&amp;#10;            smartTip: name"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">2</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIOSIsoftCloudServicesPane1" FriendlyName="OSIsoft Cloud Services Sample (Beta)" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Get Data</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">OSIsoft Cloud Services Sample (Beta)  </PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">o-dataSource-label</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="o-dataSource-label"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">26</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIOSIsoftCloudServicesPane2" FriendlyName="OSIsoft Cloud Services Sample (Beta)" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Get Data</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">OSIsoft Cloud Services Sample (Beta)  </PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">o-group-dataSources</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="o-group-dataSources" role="list" aria-label="" data-bind="&amp;#10;         attr: { 'aria-label': name },&amp;#10;         foreach: { data: filteredDataSources, as: 'dataSource' },&amp;#10;         event {&amp;#10;             keydown: function(viewModel, event) { return $root.onDataSourceKeyDown(event); }&amp;#10;         }"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">23</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIAllFileDatabasePowerPane" FriendlyName="All File Database Power Platfor" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Get Data</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">All
+
+File
+
+Database
+
+Power Platfor</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">grid-dataSources</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="grid-dataSources"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">9</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                      </Descendants>
+                    </UIObject>
+                    <UIObject ControlType="Pane" Id="UIConnectPane" FriendlyName="Connect" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Get Data</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name">Default</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">Connect</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">o-action-button role-default</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">tabindex="0" title="" class="o-action-button role-default" role="button" aria-labelledby="ariaLabel_2" data-bind="&amp;#10;    attr: { name: button.name, role: button.isLink() ? 'link' : undefined, title: button.tooltip },&amp;#10;    css: { 'role-default': button.isDefault, 'o-action-link': button.isLink },&amp;#10;    button: {&amp;#10;        click: function(args) { button.onClick.call(button, args); } ,&amp;#10;        enabled: button.enabled,&amp;#10;        ariaLabel: button.ariaLabel&amp;#10;    },&amp;#10;    text: button.label,&amp;#10;    visible: button.visible" name="Default"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">32</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIFromOCSConnector_SamWindow" FriendlyName="From OCSConnector_Sample.Contents" SpecialControlType="None" SessionId="328534">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>From OCSConnector_Sample.Contents</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">From OCSConnector_Sample.Contents</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>From OCSConnector_Sample.Contents</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Document" Id="UIMspbipbimicrosoftcomDocument" FriendlyName="ms-pbi://pbi.microsoft.com/Views/FloatingDialog/Fl..." SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>From OCSConnector_Sample.Contents</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="AbsolutePath">/Views/FloatingDialog/FloatingDialog.htm</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">ms-pbi://pbi.microsoft.com/Views/FloatingDialog/FloatingDialog.htm</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Edit" Id="UIUrlEdit" FriendlyName="url" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>From OCSConnector_Sample.Contents</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                          <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name">url</PropertyCondition>
+                          <PropertyCondition Name="LabeledBy" />
+                          <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">o-action-text js-inputField role-inputField</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">name="url" class="o-action-text js-input</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                    <UIObject ControlType="Pane" Id="UIOKPane" FriendlyName="OK" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>From OCSConnector_Sample.Contents</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name">Default</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">OK</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">o-action-button role-default</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">tabindex="0" title="" class="o-action-button role-default" role="button" aria-labelledby="ariaLabel_1" data-bind="&amp;#10;    attr: { name: button.name, role: button.isLink() ? 'link' : undefined, title: button.tooltip },&amp;#10;    css: { 'role-default': button.isDefault, 'o-action-link': button.isLink },&amp;#10;    button: {&amp;#10;        click: function(args) { button.onClick.call(button, args); } ,&amp;#10;        enabled: button.enabled,&amp;#10;        ariaLabel: button.ariaLabel&amp;#10;    },&amp;#10;    text: button.label,&amp;#10;    visible: button.visible" name="Default"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">47</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None" SessionId="4063970">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles />
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+            <PropertyCondition Name="ControlType">Client</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Document" Id="UIMspbipbimicrosoftcomDocument" FriendlyName="ms-pbi://pbi.microsoft.com/Views/FloatingDialog/Fl..." SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles />
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id" />
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title" />
+                  <PropertyCondition Name="AbsolutePath">/Views/FloatingDialog/FloatingDialog.htm</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">ms-pbi://pbi.microsoft.com/Views/FloatingDialog/FloatingDialog.htm</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Pane" Id="UISigninPane" FriendlyName="Sign in" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles />
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                      <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                      <PropertyCondition Name="Id">msonlinesigninbutton</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="InnerText">Sign in </PropertyCondition>
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class">o-action-button</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">tabindex="0" class="o-action-button" id="msonlinesigninbutton" role="button" aria-disabled="false"</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">23</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+                <UIObject ControlType="Custom" Id="UIChallengeModalFormCustom" FriendlyName="challengeModalForm" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles />
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Custom</PropertyCondition>
+                      <PropertyCondition Name="TagName">FORM</PropertyCondition>
+                      <PropertyCondition Name="Id">challengeModalForm</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Class">o-group-challenge</PropertyCondition>
+                      <PropertyCondition Name="ControlDefinition">class="o-group-challenge" id="challengeM</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Pane" Id="UIConnectPane" FriendlyName="Connect" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles />
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">Connect</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">ng-challenge-ok o-action-button role-default</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">tabindex="0" class="ng-challenge-ok o-action-button role-default" role="button"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">26</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIHttpsstagingosipicomWindow" FriendlyName="https://staging.osipi.com/identity/connect/authori..." SpecialControlType="None" SessionId="1703962">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>https://staging.osipi.com/identity/connect/authorize</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">https://staging.osipi.com/identity/connect/authorize</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>https://staging.osipi.com/identity/connect/authorize</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Document" Id="UIOSIsoftIdentityServeDocument" FriendlyName="OSIsoft Identity Server" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>https://staging.osipi.com/identity/connect/authorize</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title">OSIsoft Identity Server</PropertyCondition>
+                      <PropertyCondition Name="AbsolutePath">/identity/Account/Login</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">https://staging.osipi.com/identity/Account/Login?ReturnUrl=%2Fidentity%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3D25810574-6c2a-4cfe-98f9-e4dec7993d44%26redirect_uri%3Dhttps%253A%252F%252Foauth.powerbi.com%252Fviews%252Foauthredirect.html%26scope%3Docsapi%26response_type%3Dcode%26code_challenge%3DOQxz78WwH6EXD1EliD-Owq3vecUS4pm7ekYNkdskLno%26code_challenge_method%3DS256%26acr_values%3Dtenant%253Aefe27258-f6d5-4ea6-a001-3e4a82777710</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Hyperlink" Id="UIPersonalAccountHyperlink" FriendlyName=" Personal Account " SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>https://staging.osipi.com/identity/connect/authorize</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Hyperlink</PropertyCondition>
+                          <PropertyCondition Name="TagName">A</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="Target" />
+                          <PropertyCondition Name="InnerText"> Personal Account </PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="AbsolutePath">/identity/Account/ExternalLogin</PropertyCondition>
+                          <PropertyCondition Name="Title">Personal Account</PropertyCondition>
+                          <PropertyCondition Name="Href">https://staging.osipi.com/identity/Account/ExternalLogin?provider=Microsoft&amp;returnUrl=%2Fidentity%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3D25810574-6c2a-4cfe-98f9-e4dec7993d44%26redirect_uri%3Dhttps%253A%252F%252Foauth.powerbi.com%252Fviews%252Foauthredirect.html%26scope%3Docsapi%26response_type%3Dcode%26code_challenge%3DOQxz78WwH6EXD1EliD-Owq3vecUS4pm7ekYNkdskLno%26code_challenge_method%3DS256%26acr_values%3Dtenant%253Aefe27258-f6d5-4ea6-a001-3e4a82777710</PropertyCondition>
+                          <PropertyCondition Name="Class">osi-provider</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">title="Personal Account" class="osi-prov</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIScriptErrorWindow" FriendlyName="Script Error" SpecialControlType="BrowserWindow" SessionId="394018">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Script Error</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Script Error</PropertyCondition>
+            <PropertyCondition Name="ClassName">Internet Explorer_TridentDlgFrame</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Document" Id="UIScriptErrorDocument" FriendlyName="Script Error" SpecialControlType="None">
+              <TechnologyName>Web</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Script Error</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <AndCondition Id="Primary">
+                  <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                  <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                  <PropertyCondition Name="Id">bdy</PropertyCondition>
+                  <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                  <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                </AndCondition>
+                <FilterCondition Id="Secondary">
+                  <PropertyCondition Name="Title">Script Error</PropertyCondition>
+                  <PropertyCondition Name="AbsolutePath">/error.dlg</PropertyCondition>
+                  <PropertyCondition Name="PageUrl">res://ieframe.dll/error.dlg</PropertyCondition>
+                </FilterCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Button" Id="UIYesButton" FriendlyName="Yes" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Script Error</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                      <PropertyCondition Name="TagName">BUTTON</PropertyCondition>
+                      <PropertyCondition Name="Id">btnYes</PropertyCondition>
+                      <PropertyCondition Name="Name" />
+                      <PropertyCondition Name="DisplayText">Yes</PropertyCondition>
+                      <PropertyCondition Name="Type">submit</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="Class" />
+                      <PropertyCondition Name="ControlDefinition">id=btnYes style="FONT-SIZE: 8pt; HEIGHT:</PropertyCondition>
+                      <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants />
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIHttpsloginlivecomMehWindow" FriendlyName="https://login.live.com/Me.htm" SpecialControlType="None" SessionId="1703962">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">https://login.live.com/Me.htm</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Document" Id="UISignintoyouraccountDocument" FriendlyName="Sign in to your account" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title">Sign in to your account</PropertyCondition>
+                      <PropertyCondition Name="AbsolutePath">/common/oauth2/v2.0/authorize</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=3b418bdd-fa34-4439-bbcf-8ebdcfa09e5c&amp;response_type=code&amp;redirect_uri=https%3A%2F%2Fstaging.osipi.com%2Fidentity%2Fsignin-microsoft&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2Fuser.read&amp;prompt=select_account&amp;code_challenge=F9g2N5ph1t1JSaZ_8fqJpwog48xuDxfNmJnsYI9-_S8&amp;code_challenge_method=S256&amp;state=CfDJ8OKlBUzYI_1Kq7q9C1AiIu1tCOZMfBlPZmI1EVQ_R5FKOrFYot10LKfO0Fs6wa06SHSB6aM62am7wutAlTmdtk4rBoqWfHvbN7xS8azyPY_42-nqT5D9C_vLD71cysRcmjeMti5GjbJjqiD49VGdLQijN742g-e6JgFOwgIdc3tYZQD7aylKSmpjkoEjgtzNbt2cqitICyXfFDwbWA8RmO6qriy6MQhCmMzP98HXEQXN-JZhw3qOFvLABxrqEgGQuWpKs-71SNfDV3OzqrjIdbbzU3OaiLMJLESrqb6cZ0SBuwagiokZUr7rM9mQ9pnvXxfi828NpjBZb5dRYl5nB7UGiAHWlnl-29BaKj5uIWs-HAOtrPi4kv2T4cCnoDnaQDu4SeSgybOxD7iky6tn20LWEjJ7u-XtJnT4IFseh9FtogEklZR9AnzQCZxNBPn9M_Uw_oJuzko3jQtzwI9YVZXDd485DjeOg4CEa_h1Uq7668pSHkTUZV364ZwuPeJECHEA331NxdJsrs7JsCpqElhVSjqpFd5IXP0k0vBP08FyU3SSJfuq1nNCelcJ1EWzZTD1TQJvqDvBS-REwE0InGp1MFDRNRDIXa-FNyub1kr0pdwPLNxK6foylibP8NlYYyZLbtIZ5AvNmBLYpcwKr2v6I390OKjI6ehRkUJpq9uELEda5oEjGCY05btJN-VkBfj_HWxIcD9uKSiyI1aAFqFbrTpTTI-hoJnK1PlzJdAV9jiFW-zH8uFr8HdLXoafNPUw-uIl9iGfbWpyN4VBu4-j5hxsaQvdd5yVPm3sLVXnjZc4WOIGv_2xKYlFF0FPR4t4kgDsiBoFrktkf3gsBtw</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Pane" Id="UIUseanotheraccountPane" FriendlyName="Use another account" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id">otherTileText</PropertyCondition>
+                          <PropertyCondition Name="Name" />
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">Use another account</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class" />
+                          <PropertyCondition Name="ControlDefinition">id="otherTileText" data-bind="text: otherTileText"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">36</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                    <UIObject ControlType="Custom" Id="UIF1Custom" FriendlyName="f1" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Custom</PropertyCondition>
+                          <PropertyCondition Name="TagName">FORM</PropertyCondition>
+                          <PropertyCondition Name="Id">i0281</PropertyCondition>
+                          <PropertyCondition Name="Name">f1</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="Class" />
+                          <PropertyCondition Name="ControlDefinition">name="f1" id="i0281" spellcheck="false" </PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants>
+                        <UIObject ControlType="Pane" Id="UIEmailphoneorSkypePane" FriendlyName="Email, phone, or Skype" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">Email, phone, or Skype</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">placeholder</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="placeholder" aria-hidden="true" data-bind="text: hintText, css: hintCss"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">24</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIEmailphoneorSkypePane1" FriendlyName="Email, phone, or Skype" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">Email, phone, or Skype</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">placeholder</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">class="placeholder" aria-hidden="true" data-bind="text: hintText, css: hintCss"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">25</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                      </Descendants>
+                    </UIObject>
+                    <UIObject ControlType="Edit" Id="UILoginfmtEdit" FriendlyName="loginfmt" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                          <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                          <PropertyCondition Name="Id">i0116</PropertyCondition>
+                          <PropertyCondition Name="Name">loginfmt</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="LabeledBy" />
+                          <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">form-control ltr_override</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">name="loginfmt" class="form-control ltr_</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                    <UIObject ControlType="Button" Id="UINextButton" FriendlyName="Next" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Button</PropertyCondition>
+                          <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                          <PropertyCondition Name="Id">idSIButton9</PropertyCondition>
+                          <PropertyCondition Name="Name" />
+                          <PropertyCondition Name="DisplayText">Next</PropertyCondition>
+                          <PropertyCondition Name="Type">submit</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">btn btn-block btn-primary</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">class="btn btn-block btn-primary" id="id</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">4</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                    <UIObject ControlType="Edit" Id="UILoginfmtEdit1" FriendlyName="loginfmt" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Edit</PropertyCondition>
+                          <PropertyCondition Name="TagName">INPUT</PropertyCondition>
+                          <PropertyCondition Name="Id">i0116</PropertyCondition>
+                          <PropertyCondition Name="Name">loginfmt</PropertyCondition>
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="LabeledBy" />
+                          <PropertyCondition Name="Type">SINGLELINE</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">form-control ltr_override has-error</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">name="loginfmt" class="form-control ltr_</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+                <UIObject ControlType="Document" Id="UISignintoyouraccountDocument1" FriendlyName="Sign in to your account" SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title">Sign in to your account</PropertyCondition>
+                      <PropertyCondition Name="AbsolutePath">/common/oauth2/v2.0/authorize</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=3b418bdd-fa34-4439-bbcf-8ebdcfa09e5c&amp;response_type=code&amp;redirect_uri=https%3A%2F%2Fstaging.osipi.com%2Fidentity%2Fsignin-microsoft&amp;scope=https%3A%2F%2Fgraph.microsoft.com%2Fuser.read&amp;prompt=select_account&amp;code_challenge=eg2fabNrHmwwVFT-i0vKCkUo-aQkIQQNo3wQL5LkvvU&amp;code_challenge_method=S256&amp;state=CfDJ8OKlBUzYI_1Kq7q9C1AiIu1jpnCaIxAQQ26mKajsjpRAGVZPapNw0fmb9lJdavXZXJ84FL0cgo-TJNoZ6-tMMKaA2fWuOdVDmxmVPQjRTnTiMM6zYGR-TphBNE4cKtq08kRTE3EPq3i7MtnR1DgyISjYhxmhHXuqK2p5uhtmEqv2VHH03-Y3LQt0wii_FBMZ92nSC7-qDLqKxZsklT_PB-r0TWTbCbkWSzM6BTHT0uudERrpVlSPo3W8tI_jqttzqmX_qQYQ8Aq_FYuRHVYBvnomAgaWeTxUogft4OpJ55xk__UnpLSLFnFuyRtFVGKUUk1NT_C5HwXIJS_VktU9m0OBdQkGTO8H8mT1ebglUW0FM2q3k_hq-jP5dhVfWa2U1R9upfAOWiNuFDLoHwEsoksMYpEHkK78of2rJVVSQPMDc3zdZU0W7UKQPfzECzl3BjEKfMr_qrzciU0xp72e46gypn6cljxeISqL3kbvZjEyQm2inuEFJll2iDoTc5LustB_MWX94vOJ81lkzYU9NirlzaR3KkUJCWuvLO-XvdO71ejj1vVt6WhnAvPaBY-GVGp98iJV535brdY85TLbKVFopdOkQAVZL4Uxm94NVlf5nkePRb6WNwKoyKc8I_TXoXzWxatgCWiXEfqZwTChil4BbvXzqjIC4yIdOYVtGBGJVLn38oFMJECbtbyd3xWDqJt70s_zuNxuIIWk1l14aJ3kz9_tyIxzvDSJvDYTQ3ZoQQI_tpfg32HHNgeX1ThbRTenf-xh8mIns8hK-GKmIlCrbZ6RqnWUqvVRSqUoHW1h3Mv46-04QOFGqRiR0KTzPmjeyY_84VDI7vPRG2K8BKU</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Pane" Id="UITilesHolderPane" FriendlyName="tilesHolder" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id">tilesHolder</PropertyCondition>
+                          <PropertyCondition Name="Name" />
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">dendres@osisoft.com
+  
+
+   
+ 
+ 
+
+</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">form-group</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">class="form-group" id="tilesHolder" role="listbox" data-bind="attr: { 'data-test-asynctilesloaded': !isTileRequestPending() }" data-test-asynctilesloaded="true"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">21</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants>
+                        <UIObject ControlType="Pane" Id="UIOcs_samplesoutlookcoPane" FriendlyName="ocs_samples@outlook.com" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>https://login.live.com/Me.htm</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">ocs_samples@outlook.com</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class" />
+                              <PropertyCondition Name="ControlDefinition" />
+                              <PropertyCondition Name="TagInstance">38</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                      </Descendants>
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIUntitledPowerBIDesktWindow" FriendlyName="Untitled - Power BI Desktop" SpecialControlType="None" SessionId="852940">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Untitled - Power BI Desktop</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Untitled - Power BI Desktop</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Window" Id="UIItemWindow" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Untitled - Power BI Desktop</WindowTitle>
+              </WindowTitles>
+              <SearchConfigurations>
+                <SearchConfiguration>VisibleOnly</SearchConfiguration>
+              </SearchConfigurations>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="AccessibleName">Ribbon</PropertyCondition>
+                <PropertyCondition Name="ClassName">NetUIHWND</PropertyCondition>
+                <PropertyCondition Name="ControlType">Window</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="ToolBar" Id="UIExternaldataToolBar" FriendlyName="External data" SpecialControlType="None">
+                  <TechnologyName>MSAA</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Untitled - Power BI Desktop</WindowTitle>
+                  </WindowTitles>
+                  <SearchConfigurations>
+                    <SearchConfiguration>VisibleOnly</SearchConfiguration>
+                  </SearchConfigurations>
+                  <AndCondition Id="SearchCondition">
+                    <PropertyCondition Name="Name">External data</PropertyCondition>
+                    <PropertyCondition Name="ControlType">ToolBar</PropertyCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="DropDownButton" Id="UIRecentSourcesDropDownButton" FriendlyName="Recent Sources" SpecialControlType="None">
+                      <TechnologyName>MSAA</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Untitled - Power BI Desktop</WindowTitle>
+                      </WindowTitles>
+                      <SearchConfigurations>
+                        <SearchConfiguration>VisibleOnly</SearchConfiguration>
+                      </SearchConfigurations>
+                      <AndCondition Id="SearchCondition">
+                        <PropertyCondition Name="Name">Recent Sources</PropertyCondition>
+                        <PropertyCondition Name="ControlType">DropDownButton</PropertyCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Client" Id="UIRecentSourcesClient" FriendlyName="Recent Sources" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles />
+              <SearchConfigurations>
+                <SearchConfiguration>VisibleOnly</SearchConfiguration>
+              </SearchConfigurations>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Group" Id="UIMostRecentGroup" FriendlyName="Most Recent" SpecialControlType="None">
+                  <TechnologyName>MSAA</TechnologyName>
+                  <WindowTitles />
+                  <SearchConfigurations>
+                    <SearchConfiguration>VisibleOnly</SearchConfiguration>
+                  </SearchConfigurations>
+                  <AndCondition Id="SearchCondition">
+                    <PropertyCondition Name="Name">Most Recent</PropertyCondition>
+                    <PropertyCondition Name="ControlType">Group</PropertyCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="MenuItem" Id="UIHttpsstagingosipicomMenuItem" FriendlyName="https://staging.osipi.com/api/v1/Tenants/efe27258-..." SpecialControlType="None">
+                      <TechnologyName>MSAA</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Untitled - Power BI Desktop</WindowTitle>
+                      </WindowTitles>
+                      <SearchConfigurations>
+                        <SearchConfiguration>Expand</SearchConfiguration>
+                      </SearchConfigurations>
+                      <AndCondition Id="SearchCondition">
+                        <PropertyCondition Name="Name">https://staging.osipi.com/api/v1/Tenants/efe27258-...</PropertyCondition>
+                        <PropertyCondition Name="ControlType">MenuItem</PropertyCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIUntitledPowerQueryEdWindow" FriendlyName="Untitled - Power Query Editor" SpecialControlType="None" SessionId="1049496">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Untitled - Power Query Editor</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Window" Id="UIItemWindow" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+              </WindowTitles>
+              <SearchConfigurations>
+                <SearchConfiguration>VisibleOnly</SearchConfiguration>
+              </SearchConfigurations>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="AccessibleName">Ribbon</PropertyCondition>
+                <PropertyCondition Name="ClassName">NetUIHWND</PropertyCondition>
+                <PropertyCondition Name="ControlType">Window</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Client" Id="UIRibbonClient" FriendlyName="Ribbon" SpecialControlType="None">
+                  <TechnologyName>MSAA</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+                  </WindowTitles>
+                  <SearchConfigurations>
+                    <SearchConfiguration>VisibleOnly</SearchConfiguration>
+                  </SearchConfigurations>
+                  <AndCondition Id="SearchCondition">
+                    <PropertyCondition Name="ControlType">Client</PropertyCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="TabPage" Id="UIHomeTabPage" FriendlyName="Home" SpecialControlType="None">
+                      <TechnologyName>MSAA</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+                      </WindowTitles>
+                      <SearchConfigurations>
+                        <SearchConfiguration>VisibleOnly</SearchConfiguration>
+                      </SearchConfigurations>
+                      <AndCondition Id="SearchCondition">
+                        <PropertyCondition Name="Name">Home</PropertyCondition>
+                        <PropertyCondition Name="ControlType">TabPage</PropertyCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+                <UIObject ControlType="Group" Id="UIRefreshPreviewGroup" FriendlyName="Refresh Preview" SpecialControlType="None">
+                  <TechnologyName>MSAA</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+                  </WindowTitles>
+                  <SearchConfigurations>
+                    <SearchConfiguration>VisibleOnly</SearchConfiguration>
+                  </SearchConfigurations>
+                  <AndCondition Id="SearchCondition">
+                    <PropertyCondition Name="Name">Refresh Preview</PropertyCondition>
+                    <PropertyCondition Name="ControlType">Group</PropertyCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="SplitButton" Id="UIRefreshPreviewSplitButton" FriendlyName="Refresh Preview" SpecialControlType="None">
+                      <TechnologyName>MSAA</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+                      </WindowTitles>
+                      <SearchConfigurations>
+                        <SearchConfiguration>VisibleOnly</SearchConfiguration>
+                      </SearchConfigurations>
+                      <AndCondition Id="SearchCondition">
+                        <PropertyCondition Name="Name">Refresh Preview</PropertyCondition>
+                        <PropertyCondition Name="ControlType">SplitButton</PropertyCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+            <UIObject ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Document" Id="UIMspbipbimicrosoftcomDocument" FriendlyName="ms-pbi://pbi.microsoft.com/Views/QueriesEditorWind..." SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="AbsolutePath">/Views/QueriesEditorWindow.htm</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">ms-pbi://pbi.microsoft.com/Views/QueriesEditorWindow.htm</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Pane" Id="UIRecordPane" FriendlyName="Record" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Untitled - Power Query Editor</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">SPAN</PropertyCondition>
+                          <PropertyCondition Name="Id" />
+                          <PropertyCondition Name="Name" />
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">Record</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">role-link role-enabled</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">class="role-link role-enabled"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">9</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants />
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+        <TopLevelWindow ControlType="Window" Id="UIRecentSourcesWindow" FriendlyName="Recent Sources" SpecialControlType="None" SessionId="394624">
+          <TechnologyName>MSAA</TechnologyName>
+          <WindowTitles>
+            <WindowTitle>Recent Sources</WindowTitle>
+          </WindowTitles>
+          <SearchConfigurations>
+            <SearchConfiguration>VisibleOnly</SearchConfiguration>
+          </SearchConfigurations>
+          <AndCondition Id="SearchCondition">
+            <PropertyCondition Name="Name">Recent Sources</PropertyCondition>
+            <PropertyCondition Name="ClassName" Operator="Contains">WindowsForms10.Window</PropertyCondition>
+            <PropertyCondition Name="ControlType">Window</PropertyCondition>
+          </AndCondition>
+          <SupportLevel>0</SupportLevel>
+          <Descendants>
+            <UIObject ControlType="Client" Id="UIItemClient" FriendlyName="" SpecialControlType="None">
+              <TechnologyName>MSAA</TechnologyName>
+              <WindowTitles>
+                <WindowTitle>Recent Sources</WindowTitle>
+              </WindowTitles>
+              <AndCondition Id="SearchCondition">
+                <PropertyCondition Name="ClassName">Internet Explorer_Server</PropertyCondition>
+                <PropertyCondition Name="ControlType">Client</PropertyCondition>
+              </AndCondition>
+              <SupportLevel>0</SupportLevel>
+              <Descendants>
+                <UIObject ControlType="Document" Id="UIMspbipbimicrosoftcomDocument" FriendlyName="ms-pbi://pbi.microsoft.com/Views/FloatingDialog/Fl..." SpecialControlType="None">
+                  <TechnologyName>Web</TechnologyName>
+                  <WindowTitles>
+                    <WindowTitle>Recent Sources</WindowTitle>
+                  </WindowTitles>
+                  <AndCondition Id="SearchCondition">
+                    <AndCondition Id="Primary">
+                      <PropertyCondition Name="ControlType">Document</PropertyCondition>
+                      <PropertyCondition Name="TagName">BODY</PropertyCondition>
+                      <PropertyCondition Name="Id" />
+                      <PropertyCondition Name="RedirectingPage">False</PropertyCondition>
+                      <PropertyCondition Name="FrameDocument">False</PropertyCondition>
+                    </AndCondition>
+                    <FilterCondition Id="Secondary">
+                      <PropertyCondition Name="Title" />
+                      <PropertyCondition Name="AbsolutePath">/Views/FloatingDialog/FloatingDialog.htm</PropertyCondition>
+                      <PropertyCondition Name="PageUrl">ms-pbi://pbi.microsoft.com/Views/FloatingDialog/FloatingDialog.htm</PropertyCondition>
+                    </FilterCondition>
+                  </AndCondition>
+                  <SupportLevel>0</SupportLevel>
+                  <Descendants>
+                    <UIObject ControlType="Pane" Id="UIModalDialogPane" FriendlyName="modalDialog" SpecialControlType="None">
+                      <TechnologyName>Web</TechnologyName>
+                      <WindowTitles>
+                        <WindowTitle>Recent Sources</WindowTitle>
+                      </WindowTitles>
+                      <AndCondition Id="SearchCondition">
+                        <AndCondition Id="Primary">
+                          <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                          <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                          <PropertyCondition Name="Id">modalDialog</PropertyCondition>
+                          <PropertyCondition Name="Name" />
+                        </AndCondition>
+                        <FilterCondition Id="Secondary">
+                          <PropertyCondition Name="InnerText">&lt;li class="o-content-entry" role="tab" d</PropertyCondition>
+                          <PropertyCondition Name="Title" />
+                          <PropertyCondition Name="Class">modal-frame js-auto-size</PropertyCondition>
+                          <PropertyCondition Name="ControlDefinition">class="modal-frame js-auto-size" id="modalDialog" role="dialog" style="width: 500px;"</PropertyCondition>
+                          <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                        </FilterCondition>
+                      </AndCondition>
+                      <SupportLevel>0</SupportLevel>
+                      <Descendants>
+                        <UIObject ControlType="Pane" Id="UIHttpsstagingosipicomPane" FriendlyName="https://staging.osipi.com/api/v1/Tenants/efe27258-..." SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Recent Sources</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">SPAN</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">https://staging.osipi.com/api/v1/Tenants</PropertyCondition>
+                              <PropertyCondition Name="Title">https://staging.osipi.com/api/v1/Tenants/efe27258-f6d5-4ea6-a001-3e4a82777710/Namespaces</PropertyCondition>
+                              <PropertyCondition Name="Class">o-content-entryLabel o-content-h5</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">title="https://staging.osipi.com/api/v1/Tenants/efe27258-f6d5-4ea6-a001-3e4a82777710/Namespaces" class="o-content-entryLabel o-content-h5" data-bind="html: title, attr: { 'title': description }"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">1</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                        <UIObject ControlType="Pane" Id="UIConnectPane" FriendlyName="Connect" SpecialControlType="None">
+                          <TechnologyName>Web</TechnologyName>
+                          <WindowTitles>
+                            <WindowTitle>Recent Sources</WindowTitle>
+                          </WindowTitles>
+                          <AndCondition Id="SearchCondition">
+                            <AndCondition Id="Primary">
+                              <PropertyCondition Name="ControlType">Pane</PropertyCondition>
+                              <PropertyCondition Name="TagName">DIV</PropertyCondition>
+                              <PropertyCondition Name="Id" />
+                              <PropertyCondition Name="Name" />
+                            </AndCondition>
+                            <FilterCondition Id="Secondary">
+                              <PropertyCondition Name="InnerText">Connect</PropertyCondition>
+                              <PropertyCondition Name="Title" />
+                              <PropertyCondition Name="Class">o-action-button js-ok role-default</PropertyCondition>
+                              <PropertyCondition Name="ControlDefinition">tabindex="0" class="o-action-button js-ok role-default" role="button" data-bind="&amp;#10;            text: openEntryButtonLabel,&amp;#10;            button: { click: ManageRecentSourcesDialog.onDefault, enabled: selectedId }"</PropertyCondition>
+                              <PropertyCondition Name="TagInstance">13</PropertyCondition>
+                            </FilterCondition>
+                          </AndCondition>
+                          <SupportLevel>0</SupportLevel>
+                          <Descendants />
+                        </UIObject>
+                      </Descendants>
+                    </UIObject>
+                  </Descendants>
+                </UIObject>
+              </Descendants>
+            </UIObject>
+          </Descendants>
+        </TopLevelWindow>
+      </TopLevelWindows>
+    </UIMap>
+  </Maps>
+  <ValueMap>
+    <ParameterList />
+  </ValueMap>
+</UITest>
