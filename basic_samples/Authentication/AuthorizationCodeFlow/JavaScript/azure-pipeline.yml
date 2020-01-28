@@ -58,10 +58,16 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
-      - script: |
-          echo NPM CI
-          call npm ci
-        workingDirectory:
+      - script: call npm ci
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Install dependencies'
+
+      - bash: npm start &
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Run app'
+
+      - script: call npm test
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
