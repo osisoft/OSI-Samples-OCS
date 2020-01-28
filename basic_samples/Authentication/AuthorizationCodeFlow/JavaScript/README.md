@@ -1,12 +1,12 @@
-# Authorization Code Flow + PKCE Sample and Test
+# Authorization Code Flow + PKCE JavaScript Sample and Test
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=863&branchName=master)
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_JavaScript?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1203&branchName=master)
 
 This client uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an access token. See the root folder [README](../../../README.md) for more information about this flow.
 
 ## Requirements
 
-- .NET Core 2.2.1 or later
+- Node.js 12.6.0+
 - Web Browser with Javascript enabled
   - You will need Google Chrome if you want to run the automated test
 
@@ -19,51 +19,40 @@ This client uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an acc
 
 You can learn more about the config options [here](https://github.com/IdentityModel/oidc-client-js/wiki#other-optional-settings).
 
-### Using Visual Studio
+### Running the Sample from the Command Line
 
-- Load the .csproj in this directory
-- Rebuild project
-- Click Start to run it
-- Pres the _login_ button in the browser
-- Follow the prompts in the web browser to log in
-  - Keep in mind that if you are already logged in with the same account in the browser, you will not have to log in again.
-
-### Using Command Line
-
-- Make sure you have the install location of dotnet added to your path
-- Run the following command from the location of this project:
+1. Make sure Node.js is installed, installation instructions are available at [node.js](https://nodejs.org/en/)
+2. Clone the git repository
+3. Open a command prompt and navigate to this folder (basic_samples/Authentication/AuthorizationCodeFlow/JavaScript)
+4. Install dependencies, using the command line:
 
 ```shell
-dotnet run
+npm ci
 ```
 
-- Follow the prompts in the web browser to log in
-- Return to the application after having been authenticated in the browser
+5. Start the http server to host the sample, using:
+
+```shell
+npm start
+```
+
+6. Open a browser and navigate to `http://localhost:5004`
+7. Click on `Login` and follow the prompts to log in to OCS
 
 ## Running the automated test
 
 ### Prerequisites
 
-- Make sure the sample client in the previous section above is running.
-- Make sure Google Chrome is the default browser on your test system.
-- Download the ChromeDriver version from `http://chromedriver.storage.googleapis.com/index.html` corresponding to the version of Google Chrome that is installed. Set the environmental variable ChromeWebDriver to the directory containing the Chrome Driver executable).
-- Update the [appsettings.json](../AuthorizationCodeFlowTest/appsettings.json) with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the url location.
+1. Make sure the sample client in the section above is running.
+1. Make sure Google Chrome is installed on your test system.
+1. Update the [config.js](../src/config.js) file with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the url location.
 
-### Using Visual Studio
+### Running the test from the Command Line
 
-- Load the .csproj from the AuthorizationCodeFlowTest directory above this in Visual Studio
-- Update the appsettings.json to the appropriate url for the location the AuthorizationCodeFlow app will run, as well as username and password for the Microsoft account that will be used to log in.
-- Rebuild project
-- Open Test Explorer and make sure there is one test called Test1 showing
-- Run the test
-
-### Using Command Line
-
-- Make sure you have the install location of dotnet added to your path
-- Run the following command from the location of the AuthorizationCodeFlowTest project (you may need to run as Administrator for the test to use the Chrome Driver):
+Run the command:
 
 ```shell
-dotnet test
+npm test
 ```
 
 ---
