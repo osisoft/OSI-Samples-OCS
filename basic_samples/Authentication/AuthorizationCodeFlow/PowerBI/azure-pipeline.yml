@@ -74,8 +74,8 @@ jobs:
           echo obj\Debug\client_id
           type obj\Debug\client_id
           echo obj\Debug\client_id
-          echo "$(Build.SourcesDirectory)\basic_samples\Authentication\AuthorizationCodeFlow\PowerBI\OCSConnector\obj\Debug\"
-          call xcopy "$(Build.SourcesDirectory)\basic_samples\Authentication\AuthorizationCodeFlow\PowerBI\OCSConnector\obj\Debug\" "C:\Users\$(username)\Documents\temp"
+          
+          call xcopy ".\obj\Debug\." "C:\Users\$(username)\Documents\temp"
 
           call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"          
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
