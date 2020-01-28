@@ -77,6 +77,10 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
+      - powershell: |
+          (Get-Item "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe").VersionInfo
+        displayName: 'Print Chrome Version'
+
       - script: |
           echo Install Angular CLI
           call npm install -g @angular/cli
