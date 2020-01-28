@@ -6,10 +6,13 @@ const config = require('./config');
 const wait = 5000;
 
 describe('Sample App', () => {
+  console.log(' > Sample App');
   let driver;
 
   before(async function() {
+    console.log(' > Sample App > before');
     driver = await new Builder().forBrowser('chrome').build();
+    console.log(' > Sample App > before > complete');
   });
 
   after(() => driver && driver.quit());
