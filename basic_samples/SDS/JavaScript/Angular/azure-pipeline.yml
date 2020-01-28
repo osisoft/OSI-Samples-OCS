@@ -87,7 +87,7 @@ jobs:
           echo NPM CI
           call npm ci
           echo NPX Webdriver-Manager
-          call npx webdriver-manager update --versions.chrome 77.0.3945.36
+          call npx webdriver-manager update --versions.chrome 79.0.3945.36
           echo Run e2e tests
           call ng e2e --webdriver-update=false
           echo Complete
