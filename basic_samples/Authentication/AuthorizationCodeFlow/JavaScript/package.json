@@ -8,7 +8,7 @@
   "author": "OSIsoft, LLC",
   "scripts": {
     "start": "http-server -a localhost -p 5004 -c-1 ./src",
-    "test": "mocha --recursive --timeout 10000 src/test.spec.js"
+    "test": "mocha --recursive --timeout 60000 src/test.spec.js"
   },
   "devDependencies": {
     "chromedriver": "^79.0.2",
