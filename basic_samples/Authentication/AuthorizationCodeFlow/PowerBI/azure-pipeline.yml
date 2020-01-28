@@ -74,6 +74,7 @@ jobs:
           echo obj\Debug\client_id
           type obj\Debug\client_id
           echo obj\Debug\client_id
+          echo "$(Build.SourcesDirectory)$(projPath)\obj\Debug\"
           call xcopy "$(Build.SourcesDirectory)$(projPath)\obj\Debug\" "C:\Users\$(username)\Documents\temp"
 
           call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"          
