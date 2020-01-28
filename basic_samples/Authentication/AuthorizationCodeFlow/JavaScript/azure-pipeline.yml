@@ -67,7 +67,7 @@ jobs:
         displayName: 'Run app'
 
       - script: call npm test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
