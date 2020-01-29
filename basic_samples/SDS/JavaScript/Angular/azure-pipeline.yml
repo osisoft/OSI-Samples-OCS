@@ -77,13 +77,17 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
+      - powershell: |
+          (Get-Item "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe").VersionInfo
+        displayName: 'Print Chrome Version'
+
       - script: |
           echo Install Angular CLI
           call npm install -g @angular/cli
           echo NPM CI
           call npm ci
           echo NPX Webdriver-Manager
-          call npx webdriver-manager update --versions.chrome 77.0.3865.40
+          call npx webdriver-manager update --versions.chrome 79.0.3945.36
           echo Run e2e tests
           call ng e2e --webdriver-update=false
           echo Complete
