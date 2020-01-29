@@ -85,7 +85,9 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Build test'
 
-      - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
+      - script: 
+          '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
+        call xcopy ".\TestResults\." "C:\Users\$(username)\Documents\TestResults"
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
         displayName: 'Run coded UI'
 
