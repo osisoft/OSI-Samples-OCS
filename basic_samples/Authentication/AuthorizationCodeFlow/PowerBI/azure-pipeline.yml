@@ -93,6 +93,7 @@ jobs:
           call xcopy ".\TestResults\." "C:\Users\$(username)\Documents\TestResults"
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
         displayName: 'copytest results'
+        condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
