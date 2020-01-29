@@ -95,6 +95,12 @@ jobs:
         displayName: 'copytest results'
         condition: always()
 
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: 'VSTest'
+          testResultsFiles: '**/TEST-*.trx'
+          searchFolder: '$(Build.SourcesDirectory)$(testPath)/bin/debug/TestResults'
+
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
       language: powerbi
