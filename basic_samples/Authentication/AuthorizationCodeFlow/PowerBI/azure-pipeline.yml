@@ -98,7 +98,7 @@ jobs:
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'VSTest'
-          testResultsFiles: '**/TEST-*.trx'
+          testResultsFiles: '*.trx'
           searchFolder: '$(Build.SourcesDirectory)$(testPath)/bin/debug/TestResults'
         condition: always()
 
