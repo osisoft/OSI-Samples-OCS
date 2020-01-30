@@ -65,6 +65,10 @@ jobs:
           call pip install twine
           echo Build library
           call python setup.py install
+          echo pip list
+          call pip list
+          echo pip-inspector.py
+          call python .\pip-inspector.py --projectname=ocs-sample-library-preview
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Python Library)'
