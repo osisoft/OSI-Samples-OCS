@@ -1,0 +1,19 @@
+{
+  "name": "ocs-pkce-javascript",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A sample that performs Auth+PKCE OAuth flow against OCS",
+  "repository": "",
+  "license": "Apache 2.0",
+  "author": "OSIsoft, LLC",
+  "scripts": {
+    "start": "http-server -a localhost -p 5004 -c-1 ./src",
+    "test": "mocha --recursive --timeout 60000 src/test.spec.js"
+  },
+  "devDependencies": {
+    "chromedriver": "^79.0.2",
+    "http-server": "^0.12.1",
+    "mocha": "^7.0.1",
+    "selenium-webdriver": "^3.6.0"
+  }
+}

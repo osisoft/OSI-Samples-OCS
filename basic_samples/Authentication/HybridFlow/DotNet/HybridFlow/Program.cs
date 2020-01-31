@@ -37,13 +37,12 @@ namespace HybridFlow
                 var tenantId = GetConfigValue("TenantId");
                 var clientId = GetConfigValue("ClientId");
                 var clientSecret = GetConfigValue("ClientKey");
-                var scope = GetConfigValue("Scope");
                 var ocsUrl = GetConfigValue("Resource");
                 var apiVersion = GetConfigValue("ApiVersion");
 
                 // Get access token and refresh token.
                 var (accessToken, refreshToken, expiration) =
-                    HybridFlow.GetHybridFlowAccessToken(clientId, clientSecret, scope, tenantId);
+                    HybridFlow.GetHybridFlowAccessToken(clientId, clientSecret, tenantId);
                 Console.WriteLine("Access Token: " + accessToken);
                 Console.WriteLine("Refresh Token: " + refreshToken);
                 Console.WriteLine("Expires: " + expiration);
