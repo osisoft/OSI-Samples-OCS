@@ -29,7 +29,7 @@ namespace OCSConnectorTest
             this.UIMap.LaunchPowerBI();
             this.UIMap.Clickrecent();
             this.UIMap.Clickrecenturl();
-            // this.UIMap.refresh();
+            this.UIMap.refresh();
             this.UIMap.Clickrecord1();
 
         }
