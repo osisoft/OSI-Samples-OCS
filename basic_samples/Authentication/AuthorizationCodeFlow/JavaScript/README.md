@@ -45,6 +45,8 @@ npm start
 
 1. Make sure the sample client in the section above is running.
 1. Make sure Google Chrome is installed on your test system.
+1. Make sure the version of Chrome matches the version defined for the `chromedriver` dependency in [package.json](package.json).
+   - If the dependency needs to be updated in `package.json`, after saving, run `npm i` in a command prompt inside this folder to update the package.
 1. Update the [config.js](../src/config.js) file with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the url location.
 
 ### Running the test from the Command Line
