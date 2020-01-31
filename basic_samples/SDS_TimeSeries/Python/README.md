@@ -51,6 +51,8 @@ ClientSecret = REPLACE_WITH_APPLICATION_SECRET
 
 Automated test uses Python 3.6.8 x64
 
+Complete dependencies listed in [DEPENDENCIES.md](DEPENDENCIES.md)
+
 For the general steps or switch languages see the Task [ReadMe](../../../)  
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

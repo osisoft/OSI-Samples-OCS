@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/basic_samples/Authentication/AuthorizationCodeFlow/DotNet'
+      - '/basic_samples/Authentication/AuthorizationCodeFlow/JavaScript'
 
 pr:
   branches:
@@ -13,7 +13,7 @@ pr:
       - master
   paths:
     include:
-      - '/basic_samples/Authentication/AuthorizationCodeFlow/DotNet'
+      - '/basic_samples/Authentication/AuthorizationCodeFlow/JavaScript'
 
 schedules:
   - cron: '0 0 * * 0'
@@ -25,17 +25,15 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/DotNet/AuthorizationCodeFlow'
-  - name: testPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/DotNet/AuthorizationCodeFlowTest'
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/JavaScript'
   - name: CredFile
-    value: appsettings.json
+    value: config.js
   - name: CredFileLibrary
-    value: product-readiness.auth_pkce_dotnet.json
+    value: product-readiness.auth_pkce_javascript.js
   - name: covStream
-    value: Auth_PKCE_DotNet
+    value: Auth_PKCE_JavaScript
   - name: bdProject
-    value: Auth_PKCE_DotNet
+    value: Auth_PKCE_JavaScript
 
 jobs:
   - job: Tests
@@ -53,20 +51,26 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/src
 
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
+      - task: NodeTool@0
+        inputs:
+          versionSpec: '10.x'
+        displayName: 'Specify Node version'
+
+      - script: call npm ci
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Install dependencies'
+
+      - bash: npm start &
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Run app'
+
+      - script: call npm test
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Build app'
-
-      - script: |
-          dotnet restore
-          dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
-      language: dotnet
+      language: nodejs
+      web: true

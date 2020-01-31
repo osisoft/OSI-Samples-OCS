@@ -7,6 +7,11 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. Visual Studio 2019+
 1. [Power Query SDK](https://marketplace.visualstudio.com/items?itemName=Dakahn.PowerQuerySDK)
 1. [Power BI Desktop](https://powerbi.microsoft.com/en-us/desktop/)
+1. Register an Authorization Code Client in OCS and ensure that the registered client:
+   - Contains `https://oauth.powerbi.com/views/oauthredirect.html` in the list of Allowed Redirect URLs
+   - Contains `https://login.microsoftonline.com/logout.srf` in the list of Allowed Logout Redirect URLs
+   - Contains `https://oauth.powerbi.com` in the list of Allowed CORS Origins
+   - Use this Client ID when configuring the project in the [Setup](#Setup) section of this guide.
 
 ## Setup
 
@@ -15,6 +20,7 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. Click OK, acknowledge any warnings, then close Power BI Desktop
 1. Once prerequisites are installed, open `OCSConnector.sln` in Visual Studio
 1. Update the files url, tenant_id, and client_id with your respective values
+   - Note: URL may not need to be modified from the default of `https://dat-b.osisoft.com/`
 1. Build the project
 1. In your user's `Documents` folder, create a folder `Power BI Desktop` with a subfolder `Custom Connectors`
 1. Copy the `.mez` file from either `/bin/Debug` or `/bin/Release` (depending on settings) into the new `Custom Connectors` folder
@@ -65,9 +71,9 @@ This test simply checks to make sure the recent source works with a refresh and 
 
 To run the test from the command line on the machine with PowerBI Desktop:
 
-1. Build the test project using ``` msbuild ``` from the folder with the test .csproj (see all steps and prerequisites above need to do that)
+1. Build the test project using `msbuild` from the folder with the test .csproj (see all steps and prerequisites above need to do that)
 1. Navigate to the sub-directoy \bin\Debug
-1. Run ``` mstest /testcontainer:OCSConnectorTest.dll ```
+1. Run `mstest /testcontainer:OCSConnectorTest.dll`
 
 **Note:** When running a CodedUI test you should not move the mouse on that computer, or have anything else that can change the mouse movement or window focus during the test. Doing so can cause the test to fail.
 
