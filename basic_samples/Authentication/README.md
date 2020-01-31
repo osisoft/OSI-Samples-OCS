@@ -43,7 +43,7 @@ Currently OCS supports a number of authentication flows. Based on your requireme
 
 If you are writing software (client) to communicate with OCS without the presence of a user, then this is authentication flow you should follow. This flow was created for machine to machine communication.
 
-A client is any software that a resource owner uses to access his resources on a remote server. In this case the client itself is the resource owner, and there is no actual user to perform the authentication process. The client uses his Client Id and Client Secret to authenitcate against OCS and is awarded an Access Token. It is assumed that the client stores the Client Secret in a safe location, and uses cryptographically secure channels -read https- to communicate with OCS. OCS only support communication over https. No Refresh Token is awarded.
+A client is any software that a resource owner uses to access his resources on a remote server. In this case the client itself is the resource owner, and there is no actual user to perform the authentication process. The client uses his Client Id and Client Secret to authenticate against OCS and is awarded an Access Token. It is assumed that the client stores the Client Secret in a safe location, and uses cryptographically secure channels -read https- to communicate with OCS. OCS only support communication over https. No Refresh Token is awarded.
 
 The sample for this authentication flow can be found [here](./ClientCredentialFlow/DotNet/ClientCredentialFlow).
 

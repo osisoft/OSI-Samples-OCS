@@ -1,7 +1,8 @@
 var config = {
+  client_id: 'REPLACE_WITH_CLIENT_ID',
+  acr_values: 'tenant:' + 'REPLACE_WITH_TENANT_ID',
   authority: 'https://dat-b.osisoft.com/identity',
   ApiVersion: 'v1',
-  client_id: 'REPLACE_WITH_CLIENT_ID',
   redirect_uri: 'http://localhost:5004/callback.html',
   response_type: 'code',
   scope: 'openid ocsapi',
@@ -12,7 +13,6 @@ var config = {
   accessTokenExpiringNotificationTime: 60,
   automaticSilentRenew: true,
   silent_redirect_uri: 'http://localhost:5004/silent-refresh.html',
-  acr_values: 'tenant:' + 'REPLACE_WITH_TENANT_ID',
   userName: 'TESTONLY_REPLACE_WITH_USERNAME',
   password: 'TESTONLY_REPLACE_WITH_PASSWORD'
 };

@@ -39,7 +39,7 @@ namespace AuthorizationCodeFlow
         /// </summary>
         private const string IdentityResourceSuffix = "/identity";
 
-        public static (string, DateTime) GetAuthorizationCodeFlowAccessToken(string clientId, string scope, string tenantId)
+        public static (string, DateTime) GetAuthorizationCodeFlowAccessToken(string clientId, string tenantId)
         {
             Console.WriteLine("+-----------------------+");
             Console.WriteLine("|  Sign in with OIDC    |");
@@ -56,6 +56,7 @@ namespace AuthorizationCodeFlow
                 }
 
                 Console.WriteLine("Prompting for login via a browser...");
+                var scope = "openid ocsapi";
                 loginResult = SignIn(clientId, scope, tenantId).Result;
             } while (loginResult.IsError);
 

@@ -36,13 +36,12 @@ namespace AuthorizationCodeFlow
 
                 var tenantId = GetConfigValue("TenantId");
                 var clientId = GetConfigValue("ClientId");
-                var scope = GetConfigValue("Scope");
                 var ocsUrl = GetConfigValue("Resource");
                 var apiVersion = GetConfigValue("ApiVersion");
 
                 // Get access token.
                 var (accessToken, expiration) =
-                    AuthorizationCodeFlow.GetAuthorizationCodeFlowAccessToken(clientId, scope, tenantId);
+                    AuthorizationCodeFlow.GetAuthorizationCodeFlowAccessToken(clientId, tenantId);
                 Console.WriteLine("Access Token: " + accessToken);
                 Console.WriteLine("Expires: " + expiration);
 

@@ -40,7 +40,7 @@ namespace HybridFlow
         private const string IdentityResourceSuffix = "/identity";
 
         public static (string, string, DateTime) GetHybridFlowAccessToken(string clientId, string clientSecret,
-            string scope, string tenantId)
+            string tenantId)
         {
             Console.WriteLine("+-----------------------+");
             Console.WriteLine("|  Sign in with OIDC    |");
@@ -57,6 +57,7 @@ namespace HybridFlow
                 }
 
                 Console.WriteLine("Prompting for login via a browser...");
+                var scope = "openid ocsapi offline_access";
                 loginResult = SignIn(clientId, clientSecret, scope, tenantId).Result;
             } while (loginResult.IsError);
 
