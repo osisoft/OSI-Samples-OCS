@@ -64,11 +64,7 @@ jobs:
           call pip install wheel
           call pip install twine
           echo Build library
-          call python setup.py install
-          echo pip list
-          call pip list
-          echo pip-inspector.py
-          call python .\pip-inspector.py --projectname=ocs-sample-library-preview
+          call python setup.py sdist bdist_wheel
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Python Library)'
