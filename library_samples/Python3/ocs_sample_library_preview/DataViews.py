@@ -1,7 +1,8 @@
 import json
 
-from .DataView.DataView import DataView
-from .DataView.DataGroup import DataGroup
+from .Dataview.DataView import DataView
+from .Dataview.DataItems import DataItems
+from .Dataview.FieldSets import FieldSets
 
 import requests
 
@@ -156,80 +157,98 @@ class DataViews(object):
             results.append(DataView.fromJson(t))
         return results
 
-    def getDataGroups(
-        self, namespace_id, dataView_id, skip=0, count=100, returnAsDynamicObject=False
+    def getResolvedDataItems(
+        self, namespace_id, dataView_id, query_id
     ):
         """
         Retrieves all of the DataGroups from the specified DataView from
             Sds Service
         :param namespace_id: namespace to work against
         :param dataView_id: DataView to work against
-        :param skip: Number of DataGroups to skip
-        :param count: Number of DataGroups to return
-        :param returnAsDynamicObject: returns the collection as dynamic object
-                rather than a list of DataViews.  Added because the automated
-                tests were failing.  Boolean
+        :param query_id: Query to see data items of
         :return:
         """
         if namespace_id is None:
             raise TypeError
 
         response = requests.get(
-            self.__dataGroupPath.format(
+            self.__dataViewResolvedDataItems.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id,
+                query_id=query_id,
             ),
-            params={"skip": skip, "count": count},
             headers=self.__baseClient.sdsHeaders(),
         )
 
         self.__baseClient.checkResponse(
-            response, f"Failed to get DataGroups for DataView, {dataView_id}."
+            response, f"Failed to get ResolvedDataitems for DataView, {dataView_id}."
         )
-
-        dataGroups = json.loads(response.content)
-
-        if returnAsDynamicObject:
-            return dataGroups
-
-        results = []
-        for dataGroup in dataGroups["DataGroups"]:
-            results.append(DataGroup.fromJson(dataGroup))
+        results = DataItems.fromJson(response.json())
 
         return results
-
-    def getDataGroup(self, namespace_id, dataView_id, dataGroup_id):
+        
+    def getResolvedIneligibleDataItems(
+        self, namespace_id, dataView_id, query_id
+    ):
         """
-        Retrieves a DataGroup by 'dataGroup_id' from the specified
-            DataView from Sds Service
+        Retrieves all of the DataGroups from the specified DataView from
+            Sds Service
         :param namespace_id: namespace to work against
         :param dataView_id: DataView to work against
-        :param dataGroup_id: DataGroup to retrieve
-        :return: the asked for DataGroup
+        :param query_id: Query to see data items of
+        :return:
         """
         if namespace_id is None:
             raise TypeError
 
         response = requests.get(
-            self.__getDataGroup.format(
+            self.__dataViewResolvedIneligibleDataItems.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id,
-                dataGroup_id=dataGroup_id,
+                query_id=query_id,
             ),
             headers=self.__baseClient.sdsHeaders(),
         )
 
         self.__baseClient.checkResponse(
-            response,
-            f"Failed to get DataGroup, {dataGroup_id}," " for DataView, {dataView_id}.",
+            response, f"Failed to get ResolvedIneligibleDataitems for DataView, {dataView_id}."
+        )
+        results = DataItems.fromJson(response.json())
+
+        return results
+         
+    def getResolvedAvailableFieldSets(
+        self, namespace_id, dataView_id,query_id
+    ):
+        """
+        Retrieves all of the DataGroups from the specified DataView from
+            Sds Service
+        :param namespace_id: namespace to work against
+        :param dataView_id: DataView to work against
+        :param query_id: Query to see data items of
+        :return:
+        """
+        if namespace_id is None:
+            raise TypeError
+
+        response = requests.get(
+            self.__dataViewResolvedAvailableFieldSets.format(
+                tenant_id=self.__baseClient.tenant,
+                namespace_id=namespace_id,
+                dataView_id=dataView_id,
+                query_id=query_id
+            ),
+            headers=self.__baseClient.sdsHeaders(),
         )
 
-        dataGroup = DataGroup.fromJson(response.json())
-        return dataGroup
+        self.__baseClient.checkResponse(
+            response, f"Failed to get ResolvedAvailableFieldSetsfor DataView, {dataView_id}."
+        )
+        results = FieldSets.fromJson(response.json())
 
-        # needs other parameters with smart
+        return results
 
     def getDataInterpolated(
         self,
@@ -273,7 +292,7 @@ class DataViews(object):
             "interval": interval,
         }
         response = requests.get(
-            self.__getDataInterpolated.format(
+            self.__dataViewDataInterpolated.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id,
@@ -286,21 +305,10 @@ class DataViews(object):
             response,
             f"Failed to get DataView data interpolated for DataView, {dataView_id}.",
         )
-
-        continuation_token = None
-        next_page = response.headers.get("NextPage", None)
-        if next_page:
-            token_param = "&continuationToken="
-            token_position = next_page.find(token_param)
-            assert token_position > 0, "Could not find continuationToken in NextPage"
-            end_position = next_page.find("&", token_position+1)
-            end_position = None if end_position == -1 else end_position
-            continuation_token = next_page[token_position +
-                                           len(token_param):end_position]
-
+        continuation_token = 1 # holder for the actual stuff
         if form is not None:
             return response.text, continuation_token
-
+            
         content = response.json()
 
         if value_class is None:
@@ -313,12 +321,15 @@ class DataViews(object):
         :return:
         """
         self.__basePath = (
-            self.__baseClient.uri_API +
+            self.__baseClient.uri_API + "-preview"
             "/Tenants/{tenant_id}/Namespaces/{namespace_id}"
         )
 
         self.__dataViewsPath = self.__basePath + "/dataviews"
         self.__dataViewPath = self.__dataViewsPath + "/{dataView_id}"
-        self.__dataGroupPath = self.__dataViewPath + "/datagroups"
-        self.__getDataGroup = self.__dataGroupPath + "/{dataGroup_id}"
-        self.__getDataInterpolated = self.__dataViewPath + "/data/interpolated"
+        self.__dataViewResolved = self.__dataViewPath + "/Resolved"
+        self.__dataViewResolvedDataItems = self.__dataViewResolved + "/DataItems/{query_id}"
+        self.__dataViewResolvedIneligibleDataItems = self.__dataViewResolved + "/IneligibleDataItems/{query_id}"
+        self.__dataViewResolvedAvailableFieldSets =self.__dataViewResolved + "/AvailableFieldSets"
+        self.__dataViewData = self.__dataViewPath + "/data"
+        self.__dataViewDataInterpolated = self.__dataViewData + "/interpolated"
