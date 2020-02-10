@@ -69,6 +69,7 @@ jobs:
           python -m pytest ./program.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        failOnStderr: true
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
