@@ -256,11 +256,11 @@ class DataViews(object):
         dataView_id,
         count=None,
         form=None,
-        continuationToken=None,
         startIndex=None,
         endIndex=None,
         interval=None,
         value_class=None,
+        url=None
     ):
         """
         Retrieves the interpolated data of the 'dataView_id' from Sds Service
@@ -286,34 +286,46 @@ class DataViews(object):
         params = {
             "count": count,
             "form": form,
-            "continuationToken": continuationToken,
             "startIndex": startIndex,
             "endIndex": endIndex,
-            "interval": interval,
+            "interval": interval
         }
-        response = requests.get(
-            self.__dataViewDataInterpolated.format(
-                tenant_id=self.__baseClient.tenant,
-                namespace_id=namespace_id,
-                dataView_id=dataView_id,
-            ),
-            headers=self.__baseClient.sdsHeaders(),
-            params=params,
-        )
+        response = {}
+        if url:            
+            response = requests.get(url)
+        else:
+            response = requests.get(
+                self.__dataViewDataInterpolated.format(
+                    tenant_id=self.__baseClient.tenant,
+                    namespace_id=namespace_id,
+                    dataView_id=dataView_id,
+                ),
+                headers=self.__baseClient.sdsHeaders(),
+                params=params,
+            )
 
         self.__baseClient.checkResponse(
             response,
             f"Failed to get DataView data interpolated for DataView, {dataView_id}.",
         )
-        continuation_token = 1 # holder for the actual stuff
+
+        nextPage = None
+        firstPage = None
+
+        if hasattr(response.headers,"NextPage")
+            nextPage = response.headers["NextPage"]
+            
+        if hasattr(response.headers,"FirstPage")
+            firstPage = response.headers["FirstPage"]
+
         if form is not None:
-            return response.text, continuation_token
+            return response.text, nextPage, firstPage
             
         content = response.json()
 
         if value_class is None:
-            return content, continuation_token
-        return value_class.fromJson(content), continuation_token
+            return content, nextPage, firstPage
+        return value_class.fromJson(content), nextPage, firstPage
 
     def __setPathAndQueryTemplates(self):
         """
