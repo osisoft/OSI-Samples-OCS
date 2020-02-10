@@ -57,23 +57,16 @@ jobs:
           architecture: 'x64'
         displayName: 'Specify Python version'
 
-      - script: python -m pip install --upgrade pip
-        displayName: 'Install & Upgrade pip'
-
-      - script: |
+      - bash: |
           echo Install tools
-          call pip install setuptools wheel
-          call pip install unittest-xml-reporting    
-          call pip install pytest
-          call pip install pytest-cov
+          pip install setuptools wheel
+          pip install unittest-xml-reporting    
+          pip install pytest
+          pip install pytest-cov
           echo Install requirements
-          call pip install -r requirements.txt
-          echo Install requirements 2
           pip install -r requirements.txt
-          echo Install requirements 3
-          pip3 install -r requirements.txt
           echo Run tests
-          call python -m pytest ./program.py
+          python -m pytest ./program.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
