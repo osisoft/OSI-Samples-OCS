@@ -44,6 +44,8 @@ jobs:
           imageName: 'ubuntu-16.04'
         windows:
           imageName: 'vs2017-win2016'
+    pool:
+      vmImage: $(imageName)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
@@ -66,11 +68,18 @@ jobs:
           echo Install requirements
           pip install -r requirements.txt
           echo Run tests
-          python -m pytest ./program.py
+          python -m pytest --junitxml=junit/test-results.xml ./program.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        failOnStderr: true
         displayName: 'Run tests'
+        
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+        displayName: 'Publish test results'
+
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
