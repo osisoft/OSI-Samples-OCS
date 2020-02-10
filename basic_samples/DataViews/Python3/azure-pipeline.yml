@@ -66,11 +66,18 @@ jobs:
           echo Install requirements
           pip install -r requirements.txt
           echo Run tests
-          python -m pytest ./program.py
+          python -m pytest --junitxml=junit/test-results.xml ./program.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         failOnStderr: true
         displayName: 'Run tests'
+        
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          testRunTitle: 'Publish test results'
+
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
