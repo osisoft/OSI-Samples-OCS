@@ -76,7 +76,8 @@ jobs:
         condition: succeededOrFailed()
         inputs:
           testResultsFiles: '**/test-*.xml'
-          testRunTitle: 'Publish test results'
+          failTaskOnFailedTests: true
+        displayName: 'Publish test results'
 
 
   - template: '/miscellaneous/build_templates/analysis.yml'
