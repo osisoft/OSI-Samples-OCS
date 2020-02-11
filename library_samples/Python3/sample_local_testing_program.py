@@ -218,6 +218,9 @@ def main(test=False):
         dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         print(dv.toJson())
         
+        assert len(dv.Queries) > 0, "Error getting back Dataview with queries"
+
+        
         # Step 4
         print
         print("Getting ResolvedDataItems")
@@ -259,6 +262,7 @@ def main(test=False):
             namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
             endIndex = endTime, interval = interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         
         # Step 7
@@ -275,6 +279,7 @@ def main(test=False):
             namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
             endIndex = endTime, interval = interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         # Step 8
         
@@ -287,6 +292,7 @@ def main(test=False):
         dvDataItemFieldSet = find_FieldSet(dv.FieldSets, FieldSetSourceType.DataItem)
         field = find_Field(dvDataItemFieldSet.Fields,fieldSourceForSectioner)
         dvDataItemFieldSet.Fields.remove(field)
+        # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
 
@@ -307,6 +313,7 @@ def main(test=False):
             namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
             endIndex = endTime, interval = interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         # Step 10
         print
@@ -329,6 +336,7 @@ def main(test=False):
             namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
             endIndex = endTime, interval = interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
 
 
