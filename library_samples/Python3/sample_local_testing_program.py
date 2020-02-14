@@ -49,8 +49,8 @@ interval = "00:20:00"
 queryID = "stream"
 fieldSourceForSectioner = FieldSource.Id
 queryString = "dvTank*"
-fieldToConsildateTo = "temperature"
-fieldToConsildate = "ambient_temp"
+fieldToConsolidateTo = "temperature"
+fieldToConsolidate = "ambient_temp"
 
 
 def suppressError(sdsCall):
@@ -68,9 +68,9 @@ def createData(ocsClient):
     dateTimeType = SdsType(id="dateTimeType", sdsTypeCode=SdsTypeCode.DateTime)
 
     pressureDoubleProperty = SdsTypeProperty(id="pressure", sdsType=doubleType)
-    temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsildateTo,
+    temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidateTo,
                                                 sdsType=doubleType)
-    ambient_temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsildate,
+    ambient_temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidate,
                                                         sdsType=doubleType)
     timeDateTimeProperty = SdsTypeProperty(id="time", sdsType=dateTimeType,
                                            isKey=True)
@@ -125,9 +125,9 @@ def createData(ocsClient):
         timestamp = (start + datetime.timedelta(minutes=i * 2)
                      ).isoformat(timespec='seconds')
         pVal = valueWithTime(timestamp, random.uniform(
-            0, 100), fieldToConsildateTo, random.uniform(50, 70))
+            0, 100), fieldToConsolidateTo, random.uniform(50, 70))
         pVal2 = valueWithTime(timestamp, random.uniform(
-            0, 100), fieldToConsildate, random.uniform(50, 70))
+            0, 100), fieldToConsolidate, random.uniform(50, 70))
 
         pressureValues.append(pVal)
         pressureValues2.append(pVal2)
@@ -299,13 +299,13 @@ def main(test=False):
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
         # Step 9
-        print("Setting up distinquisher")
+        print("Setting up distinguisher")
 
         field = find_FieldSet(dv.FieldSets, FieldSetSourceType.DataItem)
         field.Distinguisher = dv.Sectioners[0]
         dv.Sectioners = []
 
-        print("Updating DataView with distinquisher")
+        print("Updating DataView with distinguisher")
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
@@ -322,12 +322,12 @@ def main(test=False):
         print("Consolidating data")
 
         field1 = find_Field_Key(dvDataItemFieldSet.Fields,
-                                FieldSource.PropertyId, fieldToConsildateTo)
+                                FieldSource.PropertyId, fieldToConsolidateTo)
         field2 = find_Field_Key(dvDataItemFieldSet.Fields,
-                                FieldSource.PropertyId, fieldToConsildate)
+                                FieldSource.PropertyId, fieldToConsolidate)
         print(field1.toJson())
         print(field2.toJson())
-        field1.Keys.append(fieldToConsildate)
+        field1.Keys.append(fieldToConsolidate)
         dvDataItemFieldSet.Fields.remove(field2)
 
         print("Updating DataView with consildation")

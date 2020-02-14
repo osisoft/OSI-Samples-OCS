@@ -8,7 +8,7 @@ from .DataViewShapes import DataViewShapes
 
 class DataView(object):
     """
-    DataView definition
+    Data View definition
     """
 
     def __init__(
@@ -154,7 +154,7 @@ class DataView(object):
     def Sectioners(self, sectioners):
         """
         DataViewindexConfig   not required
-        :param indexConfig:
+        :param sectioners:
         :return:
         """
         self.__sectioners = sectioners
@@ -169,7 +169,7 @@ class DataView(object):
     @IndexTypeCode.setter
     def IndexTypeCode(self, indextypecode):
         """
-        Currently limited to "DateTime"   required
+        Currently limited to "DateTime" string  required
         :param indexDataType:
         :return:
         """
@@ -178,7 +178,7 @@ class DataView(object):
     @property
     def DefaultStartIndex(self):
         """
-        Array of DataViewGroupRule   not required
+        DefaultStartIndex   not required
         :return:
         """
         return self.__defaultstartindex
@@ -186,8 +186,8 @@ class DataView(object):
     @DefaultStartIndex.setter
     def DefaultStartIndex(self, defaultstartindex):
         """DefaultStartIndex
-        Array of DataViewGroupRule   not required
-        :param groupRules:
+        DefaultStartIndex string  not required
+        :param defaultstartindex:
         :return:
         """
         self.__defaultstartindex = defaultstartindex
@@ -195,16 +195,16 @@ class DataView(object):
     @property
     def DefaultEndIndex(self):
         """
-        Array of DataViewGroupRule   not required
+        DefaultEndIndex string  not required
         :return:
         """
         return self.__defaultendindex
 
     @DefaultEndIndex.setter
     def DefaultEndIndex(self, defaultendindex):
-        """DefaultStartIndex
-        Array of DataViewGroupRule   not required
-        :param groupRules:
+        """DefaultEndIndex
+        DefaultEndIndex  string not required
+        :param defaultendindex:
         :return:
         """
         self.__defaultendindex = defaultendindex
@@ -212,7 +212,7 @@ class DataView(object):
     @property
     def DefaultInterval(self):
         """
-        Array of DataViewGroupRule   not required
+        DefaultInterval string not required
         :return:
         """
         return self.__defaultinterval
@@ -220,7 +220,7 @@ class DataView(object):
     @DefaultInterval.setter
     def DefaultInterval(self, defaultinterval):
         """DefaultStartIndex
-        Array of DataViewGroupRule   not required
+        DefaultInterval string not required
         :param groupRules:
         :return:
         """
@@ -229,7 +229,7 @@ class DataView(object):
     @property
     def Shape(self):
         """
-        Array of DataViewGroupRule   not required
+        Shape string  not required
         :return:
         """
         return self.__shape
@@ -237,7 +237,7 @@ class DataView(object):
     @Shape.setter
     def Shape(self, shape):
         """DefaultStartIndex
-        Array of DataViewGroupRule   not required
+        Shape string  not required
         :param groupRules:
         :return:
         """

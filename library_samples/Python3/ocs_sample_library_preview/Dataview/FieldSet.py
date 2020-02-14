@@ -10,7 +10,7 @@ class FieldSet(object):
         sourcetype=None,
         queryId=None,
         fields=None,
-        distinquisher=None
+        distinguisher=None
     ):
         """
 
@@ -18,7 +18,7 @@ class FieldSet(object):
         :param name: not required
         :param queryId: not required
         :param fields: not required
-        :param distinquisher: not required
+        :param distinguisher: not required
         """
         self.__sourcetype = sourcetype
         self.__queryId = queryId
@@ -26,7 +26,7 @@ class FieldSet(object):
             self.__fields = fields
         else:
             self.__fields = []
-        self.__distinquisher = distinquisher
+        self.__distinguisher = distinguisher
 
     @property
     def SourceType(self):
