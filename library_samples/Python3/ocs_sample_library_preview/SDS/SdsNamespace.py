@@ -1,6 +1,3 @@
-# SdsNamespace.py
-#
-
 import json
 
 

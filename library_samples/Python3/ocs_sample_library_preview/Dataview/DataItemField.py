@@ -1,8 +1,8 @@
 import json
 
+
 class DataItemField(object):
 
-    
     def __init__(
         self,
         id=None,
@@ -16,7 +16,7 @@ class DataItemField(object):
         self.__id = id
         self.__name = name
         self.__typeCode = typeCode
-        self.__iskey= iskey
+        self.__iskey = iskey
 
     @property
     def Id(self):
@@ -85,6 +85,7 @@ class DataItemField(object):
         :return:
         """
         self.__iskey = iskey
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
@@ -94,19 +95,19 @@ class DataItemField(object):
 
         # optional properties
         if hasattr(self, 'ResourceType'):
-            dictionary['ResourceType'] = self.ResourceType   
+            dictionary['ResourceType'] = self.ResourceType
 
         if hasattr(self, 'Id'):
-            dictionary['Id'] = self.Id    
+            dictionary['Id'] = self.Id
 
         if hasattr(self, 'Name'):
-            dictionary['Name'] = self.Name      
+            dictionary['Name'] = self.Name
 
         if hasattr(self, 'TypeCode'):
-            dictionary['TypeCode'] = self.TypeCode      
+            dictionary['TypeCode'] = self.TypeCode
 
         if hasattr(self, 'IsKey'):
-            dictionary['IsKey'] = self.IsKey  
+            dictionary['IsKey'] = self.IsKey
 
         return dictionary
 
@@ -131,6 +132,6 @@ class DataItemField(object):
             dataItem.TypeCode = content['TypeCode']
 
         if 'IsKey' in content:
-            dataItem.IsKey = content['IsKey'] 
-            
+            dataItem.IsKey = content['IsKey']
+
         return dataItem

@@ -1,6 +1,3 @@
-# SdsStreamMode.py
-#
-
 from enum import Enum
 
 

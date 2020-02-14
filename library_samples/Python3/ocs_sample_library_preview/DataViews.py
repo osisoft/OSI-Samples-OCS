@@ -187,7 +187,7 @@ class DataViews(object):
         results = DataItems.fromJson(response.json())
 
         return results
-        
+
     def getResolvedIneligibleDataItems(
         self, namespace_id, dataView_id, query_id
     ):
@@ -218,9 +218,9 @@ class DataViews(object):
         results = DataItems.fromJson(response.json())
 
         return results
-         
+
     def getResolvedAvailableFieldSets(
-        self, namespace_id, dataView_id,query_id
+        self, namespace_id, dataView_id, query_id
     ):
         """
         Retrieves all of the DataGroups from the specified DataView from
@@ -291,7 +291,7 @@ class DataViews(object):
             "interval": interval
         }
         response = {}
-        if url:            
+        if url:
             response = requests.get(url)
         else:
             response = requests.get(
@@ -312,15 +312,15 @@ class DataViews(object):
         nextPage = None
         firstPage = None
 
-        if hasattr(response.headers,"NextPage")
+        if hasattr(response.headers, "NextPage"):
             nextPage = response.headers["NextPage"]
-            
-        if hasattr(response.headers,"FirstPage")
+
+        if hasattr(response.headers, "FirstPage"):
             firstPage = response.headers["FirstPage"]
 
         if form is not None:
             return response.text, nextPage, firstPage
-            
+
         content = response.json()
 
         if value_class is None:
@@ -340,8 +340,10 @@ class DataViews(object):
         self.__dataViewsPath = self.__basePath + "/dataviews"
         self.__dataViewPath = self.__dataViewsPath + "/{dataView_id}"
         self.__dataViewResolved = self.__dataViewPath + "/Resolved"
-        self.__dataViewResolvedDataItems = self.__dataViewResolved + "/DataItems/{query_id}"
-        self.__dataViewResolvedIneligibleDataItems = self.__dataViewResolved + "/IneligibleDataItems/{query_id}"
-        self.__dataViewResolvedAvailableFieldSets =self.__dataViewResolved + "/AvailableFieldSets"
+        self.__dataViewResolvedDataItems = self.__dataViewResolved + \
+            "/DataItems/{query_id}"
+        self.__dataViewResolvedIneligibleDataItems = self.__dataViewResolved + \
+            "/IneligibleDataItems/{query_id}"
+        self.__dataViewResolvedAvailableFieldSets = self.__dataViewResolved + "/AvailableFieldSets"
         self.__dataViewData = self.__dataViewPath + "/data"
         self.__dataViewDataInterpolated = self.__dataViewData + "/interpolated"

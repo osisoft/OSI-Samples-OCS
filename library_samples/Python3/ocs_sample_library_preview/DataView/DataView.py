@@ -5,6 +5,7 @@ from .FieldSet import FieldSet
 from .Field import Field
 from .DataViewShapes import DataViewShapes
 
+
 class DataView(object):
     """
     DataView definition
@@ -44,18 +45,18 @@ class DataView(object):
         if sectioners:
             self.__sectioners = __sectioners
         else:
-            self.__sectioners= []
+            self.__sectioners = []
         if indextypecode:
             self.__indextypecode = indextypecode
         else:
-            self.indextypecode= SdsTypeCode.DateTime
+            self.indextypecode = SdsTypeCode.DateTime
         self.__defaultstartindex = defaultstartindex
-        self.__defaultendindex= defaultendindex
-        self.__defaultinterval= defaultinterval
+        self.__defaultendindex = defaultendindex
+        self.__defaultinterval = defaultinterval
         if shape:
             self.__shape = shape
         else:
-            self.shape= DataViewShapes.Standard
+            self.shape = DataViewShapes.Standard
 
     @property
     def Id(self):
@@ -128,7 +129,7 @@ class DataView(object):
     @property
     def FieldSets(self):
         """
-        
+
         :return:
         """
         return self.__fieldsets
@@ -206,8 +207,8 @@ class DataView(object):
         :param groupRules:
         :return:
         """
-        self.__defaultendindex= defaultendindex
-        
+        self.__defaultendindex = defaultendindex
+
     @property
     def DefaultInterval(self):
         """
@@ -223,8 +224,8 @@ class DataView(object):
         :param groupRules:
         :return:
         """
-        self.__defaultinterval= defaultinterval
-        
+        self.__defaultinterval = defaultinterval
+
     @property
     def Shape(self):
         """
@@ -240,7 +241,7 @@ class DataView(object):
         :param groupRules:
         :return:
         """
-        self.__shape= shape
+        self.__shape = shape
 
     def toJson(self):
         return json.dumps(self.toDictionary())
@@ -272,7 +273,7 @@ class DataView(object):
                 dictionary["Sectioners"].append(value.toDictionary())
 
         if hasattr(self, "IndexTypeCode"):
-            dictionary["IndexTypeCode"] = self.IndexTypeCode.name           
+            dictionary["IndexTypeCode"] = self.IndexTypeCode.name
 
         if hasattr(self, "DefaultStartIndex"):
             dictionary["DefaultStartIndex"] = self.DefaultStartIndex
@@ -333,7 +334,8 @@ class DataView(object):
                         Field.fromDictionary(value))
 
         if "IndexTypeCode" in content:
-            dataView.IndexTypeCode = SdsTypeCode[content['IndexTypeCode']]#SdsTypeCode(content['IndexTypeCode'])
+            # SdsTypeCode(content['IndexTypeCode'])
+            dataView.IndexTypeCode = SdsTypeCode[content['IndexTypeCode']]
 
         if "DefaultStartIndex" in content:
             dataView.DefaultStartIndex = content["DefaultStartIndex"]
@@ -345,6 +347,6 @@ class DataView(object):
             dataView.DefaultInterval = content["DefaultInterval"]
 
         if "Shape" in content:
-            dataView.Shape = DataViewShapes[content['Shape']]#DataViewShapes(content['Shape'])
+            dataView.Shape = DataViewShapes[content['Shape']]
 
         return dataView

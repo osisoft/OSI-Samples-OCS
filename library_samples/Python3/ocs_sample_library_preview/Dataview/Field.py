@@ -1,9 +1,9 @@
 import json
 from .FieldSource import FieldSource
 
+
 class Field(object):
 
-    
     def __init__(
         self,
         source=None,
@@ -73,7 +73,7 @@ class Field(object):
         :return:
         """
         self.__label = label
-        
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
@@ -84,7 +84,7 @@ class Field(object):
         # optional properties
         if hasattr(self, 'Source'):
             if hasattr(self.Source, 'name'):
-                dictionary['Source'] = self.Source.name   
+                dictionary['Source'] = self.Source.name
             else:
                 dictionary['Source'] = self.Source
 

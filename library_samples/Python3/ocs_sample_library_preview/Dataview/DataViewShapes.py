@@ -1,6 +1,3 @@
-# DataViewShapes.py
-#
-
 from enum import Enum
 
 

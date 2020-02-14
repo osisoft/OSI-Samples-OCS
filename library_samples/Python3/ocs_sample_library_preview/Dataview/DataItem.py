@@ -1,9 +1,9 @@
 import json
 from .DataItemField import DataItemField
 
+
 class DataItem(object):
 
-    
     def __init__(
         self,
         resourceType=None,
@@ -27,12 +27,12 @@ class DataItem(object):
         else:
             self.__tags = []
 
-        self.__metadata= metadata
+        self.__metadata = metadata
 
         if dataItemFields:
             self.__dataItemFields = dataItemFields
         else:
-            self.__dataItemFields= []
+            self.__dataItemFields = []
 
     @property
     def ResourceType(self):
@@ -162,16 +162,16 @@ class DataItem(object):
 
         # optional properties
         if hasattr(self, 'ResourceType'):
-            dictionary['ResourceType'] = self.ResourceType   
+            dictionary['ResourceType'] = self.ResourceType
 
         if hasattr(self, 'Id'):
-            dictionary['Id'] = self.Id    
+            dictionary['Id'] = self.Id
 
         if hasattr(self, 'Name'):
-            dictionary['Name'] = self.Name      
+            dictionary['Name'] = self.Name
 
         if hasattr(self, 'TypeId'):
-            dictionary['TypeId'] = self.TypeId      
+            dictionary['TypeId'] = self.TypeId
 
         if hasattr(self, "Tags"):
             dictionary["Tags"] = []
@@ -179,13 +179,13 @@ class DataItem(object):
                 dictionary["Tags"].append(value)
 
         if hasattr(self, 'Metadata'):
-            dictionary['Metadata'] = self.Metadata  #this is an object of some form we need to deal with better #fixit
+            # this is an object of some form we need to deal with better #fixit
+            dictionary['Metadata'] = self.Metadata
 
         if hasattr(self, "DataItemFields"):
             dictionary["DataItemFields"] = []
             for value in self.DataItemFields:
                 dictionary["DataItemFields"].append(value.toDictionary())
-
 
         return dictionary
 
@@ -220,7 +220,8 @@ class DataItem(object):
                     dataItem.Tags.append(value)
 
         if 'Metadata' in content:
-            dataItem.Metadata = content['Metadata'] #this is an object of some form we need to deal with better #fixit
+            # this is an object of some form we need to deal with better #fixit
+            dataItem.Metadata = content['Metadata']
 
         if "DataItemFields" in content:
             DataItemFields = content["DataItemFields"]

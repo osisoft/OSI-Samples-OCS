@@ -1,9 +1,9 @@
 import json
 from .FieldSet import FieldSet
 
+
 class FieldSets(object):
 
-    
     def __init__(
         self,
         timeOfResolution=None,
@@ -63,7 +63,7 @@ class FieldSets(object):
 
         # optional properties
         if hasattr(self, 'TimeOfResolution'):
-            dictionary['TimeOfResolution'] = self.TimeOfResolution      
+            dictionary['TimeOfResolution'] = self.TimeOfResolution
 
         if hasattr(self, "Items"):
             dictionary["Items"] = []

@@ -1,9 +1,9 @@
 import json
 from .DataItem import DataItem
 
+
 class DataItems(object):
 
-    
     def __init__(
         self,
         timeOfResolution=None,
@@ -63,7 +63,7 @@ class DataItems(object):
 
         # optional properties
         if hasattr(self, 'TimeOfResolution'):
-            dictionary['TimeOfResolution'] = self.TimeOfResolution      
+            dictionary['TimeOfResolution'] = self.TimeOfResolution
 
         if hasattr(self, "Items"):
             dictionary["Items"] = []

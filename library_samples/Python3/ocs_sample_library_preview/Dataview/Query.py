@@ -1,7 +1,8 @@
 import json
+
+
 class Query(object):
 
-    
     def __init__(
         self,
         id=None,
@@ -48,7 +49,7 @@ class Query(object):
         :return:
         """
         self.__value = value
-        
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 

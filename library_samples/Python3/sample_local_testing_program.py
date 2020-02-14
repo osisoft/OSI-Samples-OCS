@@ -71,7 +71,7 @@ def createData(ocsClient):
     temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsildateTo,
                                                 sdsType=doubleType)
     ambient_temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsildate,
-                                                sdsType=doubleType)
+                                                        sdsType=doubleType)
     timeDateTimeProperty = SdsTypeProperty(id="time", sdsType=dateTimeType,
                                            isKey=True)
 
@@ -80,15 +80,14 @@ def createData(ocsClient):
         description="This is a sample Sds type for storing Pressure type "
                     "events for DataViews",
         sdsTypeCode=SdsTypeCode.Object,
-        properties=[pressureDoubleProperty,temperatureDoubleProperty, timeDateTimeProperty])
-        
+        properties=[pressureDoubleProperty, temperatureDoubleProperty, timeDateTimeProperty])
 
     pressure_SDSType2 = SdsType(
         id=samplePressureTypeId2,
         description="This is a new sample Sds type for storing Pressure type "
                     "events for DataViews",
         sdsTypeCode=SdsTypeCode.Object,
-        properties=[pressureDoubleProperty,ambient_temperatureDoubleProperty, timeDateTimeProperty])
+        properties=[pressureDoubleProperty, ambient_temperatureDoubleProperty, timeDateTimeProperty])
 
     print('Creating SDS Type')
     ocsClient.Types.getOrCreateType(namespaceId, pressure_SDSType)
@@ -99,7 +98,6 @@ def createData(ocsClient):
         name=samplePressureStreamName,
         description="A Stream to store the sample Pressure events",
         typeId=samplePressureTypeId)
-        
 
     pressureStream2 = SdsStream(
         id=samplePressureStreamId2,
@@ -126,8 +124,10 @@ def createData(ocsClient):
         tv = str(random.uniform(50, 70))
         timestamp = (start + datetime.timedelta(minutes=i * 2)
                      ).isoformat(timespec='seconds')
-        pVal = valueWithTime(timestamp, random.uniform(0, 100),fieldToConsildateTo, random.uniform(50, 70))
-        pVal2 = valueWithTime(timestamp, random.uniform(0, 100),fieldToConsildate, random.uniform(50, 70))
+        pVal = valueWithTime(timestamp, random.uniform(
+            0, 100), fieldToConsildateTo, random.uniform(50, 70))
+        pVal2 = valueWithTime(timestamp, random.uniform(
+            0, 100), fieldToConsildate, random.uniform(50, 70))
 
         pressureValues.append(pVal)
         pressureValues2.append(pVal2)
@@ -143,20 +143,24 @@ def createData(ocsClient):
         str(pressureValues2).replace("'", ""))
     startTime = start
 
+
 def find_Field(fieldSetFields, fieldSource):
     for field in fieldSetFields:
         if field.Source == fieldSource:
             return field
+
 
 def find_FieldSet(fieldSets, fieldSetSourceType):
     for fieldSet in fieldSets:
         if fieldSet.SourceType == fieldSetSourceType:
             return fieldSet
 
+
 def find_Field_Key(fieldSetFields, fieldSource, key):
     for field in fieldSetFields:
         if field.Source == fieldSource and any(key in s for s in field.Keys):
             return field
+
 
 def main(test=False):
     global namespaceId
@@ -191,7 +195,7 @@ def main(test=False):
             createData(ocsClient)
 
         # Step 1
-        
+
         dataView = DataView(id=sampleDataViewId)
         print
         print("Creating DataView")
@@ -203,24 +207,22 @@ def main(test=False):
         dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         print(dv.toJson())
 
-        
         # Step 3
         print
         print("Updating DataView")
 
         dv.Description = sampleDataViewDescription_modified
-        query =  Query(id = queryID,value =queryString)
+        query = Query(id=queryID, value=queryString)
         dv.Queries.append(query)
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
-        
+
         print("Getting updated DataView")
         dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         print(dv.toJson())
-        
+
         assert len(dv.Queries) > 0, "Error getting back Dataview with queries"
 
-        
         # Step 4
         print
         print("Getting ResolvedDataItems")
@@ -228,14 +230,14 @@ def main(test=False):
         dataItems = ocsClient.DataViews.getResolvedDataItems(
             namespaceId, sampleDataViewId, queryID)
         print(dataItems.toJson())
-        
+
         print
         print("Getting ResolvedIneligibleDataItems")
         dataItems = ocsClient.DataViews.getResolvedIneligibleDataItems(
             namespaceId, sampleDataViewId, queryID)
         print(dataItems.toJson())
-        
-        #Step 5
+
+        # Step 5
         print
         print("Getting AvailableFieldSets")
 
@@ -243,14 +245,14 @@ def main(test=False):
             namespaceId, sampleDataViewId, queryID)
         print(availablefields.toJson())
 
-        #Step 6
+        # Step 6
         fields = availablefields.Items
 
         dv.FieldSets = fields
-        
+
         print("Updating DataView")
         ocsClient.DataViews.putDataView(namespaceId, dv)
-        
+
         print("Now AvailableFieldSets")
         availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
             namespaceId, sampleDataViewId, queryID)
@@ -259,16 +261,16 @@ def main(test=False):
         print
         print("Retrieving data from the DataView")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
-            namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
-            endIndex = endTime, interval = interval)
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
         assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
-        
         # Step 7
-        section = Field(source = fieldSourceForSectioner, label="{DistinguisherValue} {FirstKey}")
+        section = Field(source=fieldSourceForSectioner,
+                        label="{DistinguisherValue} {FirstKey}")
         dv.Sectioners.append(section)
-        
+
         print("Updating DataView with sectioner")
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
@@ -276,25 +278,25 @@ def main(test=False):
         print
         print("Retrieving data from the DataView")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
-            namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
-            endIndex = endTime, interval = interval)
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
         assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         # Step 8
-        
+
         print
         print("Now AvailableFieldSets")
         availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
             namespaceId, sampleDataViewId, queryID)
         print(availablefields.toJson())
 
-        dvDataItemFieldSet = find_FieldSet(dv.FieldSets, FieldSetSourceType.DataItem)
-        field = find_Field(dvDataItemFieldSet.Fields,fieldSourceForSectioner)
+        dvDataItemFieldSet = find_FieldSet(
+            dv.FieldSets, FieldSetSourceType.DataItem)
+        field = find_Field(dvDataItemFieldSet.Fields, fieldSourceForSectioner)
         dvDataItemFieldSet.Fields.remove(field)
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
-
 
         # Step 9
         print("Setting up distinquisher")
@@ -302,7 +304,7 @@ def main(test=False):
         field = find_FieldSet(dv.FieldSets, FieldSetSourceType.DataItem)
         field.Distinguisher = dv.Sectioners[0]
         dv.Sectioners = []
-        
+
         print("Updating DataView with distinquisher")
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
@@ -310,8 +312,8 @@ def main(test=False):
         print
         print("Retrieving data from the DataView")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
-            namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
-            endIndex = endTime, interval = interval)
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
         assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
@@ -319,8 +321,10 @@ def main(test=False):
         print
         print("Consolidating data")
 
-        field1 = find_Field_Key(dvDataItemFieldSet.Fields,FieldSource.PropertyId, fieldToConsildateTo)
-        field2 = find_Field_Key(dvDataItemFieldSet.Fields,FieldSource.PropertyId, fieldToConsildate)
+        field1 = find_Field_Key(dvDataItemFieldSet.Fields,
+                                FieldSource.PropertyId, fieldToConsildateTo)
+        field2 = find_Field_Key(dvDataItemFieldSet.Fields,
+                                FieldSource.PropertyId, fieldToConsildate)
         print(field1.toJson())
         print(field2.toJson())
         field1.Keys.append(fieldToConsildate)
@@ -329,16 +333,14 @@ def main(test=False):
         print("Updating DataView with consildation")
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
-        
+
         print
         print("Retrieving data from the DataView")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
-            namespace_id = namespaceId, dataView_id = sampleDataViewId, startIndex = startTime,
-            endIndex = endTime, interval = interval)
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
         assert len(dataViewDataPreview1) == 0, "Error getting back data"
-
-
 
     except Exception as ex:
         print((f"Encountered Error: {ex}"))
@@ -348,8 +350,8 @@ def main(test=False):
         success = False
         exception = ex
 
-    finally:      
-        
+    finally:
+
         #######################################################################
         # DataView deletion
         #######################################################################

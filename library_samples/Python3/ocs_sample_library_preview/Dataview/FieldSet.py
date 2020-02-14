@@ -2,9 +2,9 @@ import json
 from .FieldSetSourceType import FieldSetSourceType
 from .Field import Field
 
+
 class FieldSet(object):
 
-    
     def __init__(
         self,
         sourcetype=None,
@@ -95,7 +95,7 @@ class FieldSet(object):
         :return:
         """
         self.__distinguisher = distinguisher
-        
+
     def toJson(self):
         return json.dumps(self.toDictionary())
 
@@ -105,7 +105,7 @@ class FieldSet(object):
 
         # optional properties
         if hasattr(self, 'QueryId'):
-            dictionary['QueryId'] = self.QueryId            
+            dictionary['QueryId'] = self.QueryId
 
         if hasattr(self, "Fields"):
             dictionary["Fields"] = []
@@ -127,7 +127,7 @@ class FieldSet(object):
 
         if not content:
             return fieldSet
-        
+
         fieldSet.SourceType = FieldSetSourceType[content['SourceType']]
 
         if 'QueryId' in content:
@@ -142,6 +142,7 @@ class FieldSet(object):
                         Field.fromDictionary(value))
 
         if 'Distinguisher' in content:
-            fieldSet.Distinguisher = Field.fromDictionary(content['Distinguisher'])
+            fieldSet.Distinguisher = Field.fromDictionary(
+                content['Distinguisher'])
 
         return fieldSet

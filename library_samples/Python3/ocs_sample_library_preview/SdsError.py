@@ -6,6 +6,7 @@ class SdsError(Exception):
     """
     Helper class to hold exceptions
     """
+
     def __init__(self, value):
         """
         Set thee exception value

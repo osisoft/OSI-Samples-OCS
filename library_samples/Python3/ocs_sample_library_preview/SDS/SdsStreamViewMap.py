@@ -1,6 +1,3 @@
-# SdsStreamViewMap.py
-#
-
 import json
 from .SdsStreamViewProperty import SdsStreamViewProperty
 
@@ -83,7 +80,7 @@ class SdsStreamViewMap(object):
 
     @staticmethod
     def fromDictionary(content):
-        streamViewMap = SdsStreamViewMap() 
+        streamViewMap = SdsStreamViewMap()
 
         if not content:
             return streamViewMap

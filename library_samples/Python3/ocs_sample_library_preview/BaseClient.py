@@ -83,7 +83,7 @@ class BaseClient(object):
         """
         if ((self.__expiration - time.time()) > 5 * 60):
             return self.__token
-      
+
         tokenEndpoint = self.__url + "/identity/connect/token"
 
         tokenInformation = requests.post(
@@ -143,7 +143,7 @@ class BaseClient(object):
 
             message = main_message + errorToWrite
             raise SdsError(message)
-        
+
     def request(self, method, url, params=None, headers=None, **kwargs):
         if not headers:
             headers = self.sdsHeaders()
