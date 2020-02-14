@@ -1,10 +1,5 @@
 Copyright 2020
 
-[product-readiness.DataViews_Python : merge]
-
-Phase: DEVELOPMENT
-Distribution: EXTERNAL
-
 Components: 
 
 chardet 3.0.4 : GNU Lesser General Public License v2.1 only
