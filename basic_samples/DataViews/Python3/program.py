@@ -21,12 +21,12 @@ sampleDataViewDescription_modified = "A longer sample description that "\
                                      "used for our sample and this part shows"\
                                      " a put."
 
-samplePressureTypeId = "Time_Pressure_SampleType"
-samplePressureTypeId2 = "Time_Pressure_SampleType_old"
-samplePressureStreamId = "dvTank2"
-samplePressureStreamName = "Tank2"
-samplePressureStreamId2 = "dvTank100"
-samplePressureStreamName2 = "Tank100"
+sampleTypeId = "Time_SampleType"
+samplePressureId2 = "Time_SampleType_old"
+sampleStreamId = "dvTank2"
+sampleStreamName = "Tank2"
+sampleStreamId2 = "dvTank100"
+sampleStreamName2 = "Tank100"
 
 # In this example we will keep the SDS code in its own function.
 # The variable needData is used in the main program to decide if we need to do
@@ -70,50 +70,50 @@ def createData(ocsClient):
     pressureDoubleProperty = SdsTypeProperty(id="pressure", sdsType=doubleType)
     temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidateTo,
                                                 sdsType=doubleType)
-    ambient_temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidate,
+    ambientTemperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidate,
                                                         sdsType=doubleType)
     timeDateTimeProperty = SdsTypeProperty(id="time", sdsType=dateTimeType,
                                            isKey=True)
 
-    pressure_SDSType = SdsType(
-        id=samplePressureTypeId,
+    sDSType1 = SdsType(
+        id=sampleTypeId,
         description="This is a sample Sds type for storing Pressure type "
                     "events for DataViews",
         sdsTypeCode=SdsTypeCode.Object,
         properties=[pressureDoubleProperty, temperatureDoubleProperty, timeDateTimeProperty])
 
-    pressure_SDSType2 = SdsType(
-        id=samplePressureTypeId2,
+    sDSType2 = SdsType(
+        id=samplePressureId2,
         description="This is a new sample Sds type for storing Pressure type "
                     "events for DataViews",
         sdsTypeCode=SdsTypeCode.Object,
-        properties=[pressureDoubleProperty, ambient_temperatureDoubleProperty, timeDateTimeProperty])
+        properties=[pressureDoubleProperty, ambientTemperatureDoubleProperty, timeDateTimeProperty])
 
     print('Creating SDS Type')
-    ocsClient.Types.getOrCreateType(namespaceId, pressure_SDSType)
-    ocsClient.Types.getOrCreateType(namespaceId, pressure_SDSType2)
+    ocsClient.Types.getOrCreateType(namespaceId, sDSType1)
+    ocsClient.Types.getOrCreateType(namespaceId, sDSType2)
 
-    pressureStream = SdsStream(
-        id=samplePressureStreamId,
-        name=samplePressureStreamName,
+    stream1 = SdsStream(
+        id=sampleStreamId,
+        name=sampleStreamName,
         description="A Stream to store the sample Pressure events",
-        typeId=samplePressureTypeId)
+        typeId=sampleTypeId)
 
-    pressureStream2 = SdsStream(
-        id=samplePressureStreamId2,
-        name=samplePressureStreamName2,
+    stream2 = SdsStream(
+        id=sampleStreamId2,
+        name=sampleStreamName2,
         description="A Stream to store the sample Pressure events",
-        typeId=samplePressureTypeId2)
+        typeId=samplePressureId2)
 
     print('Creating SDS Streams')
-    ocsClient.Streams.createOrUpdateStream(namespaceId, pressureStream)
-    ocsClient.Streams.createOrUpdateStream(namespaceId, pressureStream2)
+    ocsClient.Streams.createOrUpdateStream(namespaceId, stream1)
+    ocsClient.Streams.createOrUpdateStream(namespaceId, stream2)
 
     start = datetime.datetime.now() - datetime.timedelta(hours=1)
     endTime = datetime.datetime.now()
 
-    pressureValues = []
-    pressureValues2 = []
+    values = []
+    values2 = []
 
     def valueWithTime(timestamp, value, fieldName, value2):
         return f'{{"time": "{timestamp}", "pressure": {str(value)}, "{fieldName}": {str(value2)}}}'
@@ -129,18 +129,18 @@ def createData(ocsClient):
         pVal2 = valueWithTime(timestamp, random.uniform(
             0, 100), fieldToConsolidate, random.uniform(50, 70))
 
-        pressureValues.append(pVal)
-        pressureValues2.append(pVal2)
+        values.append(pVal)
+        values2.append(pVal2)
 
-    print('Sending Pressure Values')
+    print('Sending Values')
     ocsClient.Streams.insertValues(
         namespaceId,
-        samplePressureStreamId,
-        str(pressureValues).replace("'", ""))
+        sampleStreamId,
+        str(values).replace("'", ""))
     ocsClient.Streams.insertValues(
         namespaceId,
-        samplePressureStreamId2,
-        str(pressureValues2).replace("'", ""))
+        sampleStreamId2,
+        str(values2).replace("'", ""))
     startTime = start
 
 
@@ -221,6 +221,8 @@ def main(test=False):
         dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         print(dv.toJson())
 
+        assert len(dv.Queries) > 0, "Error getting back Dataview with queries"
+
         # Step 4
         print
         print("Getting ResolvedDataItems")
@@ -262,6 +264,7 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         # Step 7
         section = Field(source=fieldSourceForSectioner,
@@ -278,6 +281,7 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         # Step 8
 
@@ -291,6 +295,7 @@ def main(test=False):
             dv.FieldSets, FieldSetSourceType.DataItem)
         field = find_Field(dvDataItemFieldSet.Fields, fieldSourceForSectioner)
         dvDataItemFieldSet.Fields.remove(field)
+        # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
         # Step 9
@@ -310,6 +315,7 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         # Step 10
         print
@@ -334,6 +340,7 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
     except Exception as ex:
         print((f"Encountered Error: {ex}"))
@@ -371,15 +378,15 @@ def main(test=False):
         if needData:
             print("Deleting added Streams")
             suppressError(lambda: ocsClient.Streams.deleteStream(
-                namespaceId, samplePressureStreamId))
+                namespaceId, sampleStreamId))
             suppressError(lambda: ocsClient.Streams.deleteStream(
-                namespaceId, samplePressureStreamId2))
+                namespaceId, sampleStreamId2))
 
             print("Deleting added Types")
             suppressError(lambda: ocsClient.Types.deleteType(
-                namespaceId, samplePressureTypeId))
+                namespaceId, sampleTypeId))
             suppressError(lambda: ocsClient.Types.deleteType(
-                namespaceId, samplePressureTypeId2))
+                namespaceId, samplePressureId2))
         if test and not success:
             raise exception
 
