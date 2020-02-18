@@ -330,7 +330,7 @@ def main(test=False):
         field1.Keys.append(fieldToConsolidate)
         dvDataItemFieldSet.Fields.remove(field2)
 
-        print("Updating Data View with consildation")
+        print("Updating Data View with consolidation")
         # No Data View returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 

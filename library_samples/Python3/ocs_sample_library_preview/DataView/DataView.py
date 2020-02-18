@@ -334,7 +334,6 @@ class DataView(object):
                         Field.fromDictionary(value))
 
         if "IndexTypeCode" in content:
-            # SdsTypeCode(content['IndexTypeCode'])
             dataView.IndexTypeCode = SdsTypeCode[content['IndexTypeCode']]
 
         if "DefaultStartIndex" in content:
