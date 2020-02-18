@@ -15,9 +15,9 @@ import traceback
 sampleDataViewId = "DataView_Sample"
 sampleDataViewName = "DataView_Sample_Name"
 sampleDataViewDescription = "A Sample Description that describes that this "\
-                            "DataView is just used for our sample."
+                            "Data View is just used for our sample."
 sampleDataViewDescription_modified = "A longer sample description that "\
-                                     "describes that this DataView is just "\
+                                     "describes that this Data View is just "\
                                      "used for our sample and this part shows"\
                                      " a put."
 
@@ -36,7 +36,7 @@ sampleStreamName2 = "Tank100"
 # For more details on the creating SDS objects see the SDS python example.
 
 # This is kept seperate because chances are your data collection will occur at
-# a different time then your creation of DataViews, but for a complete
+# a different time then your creation of Data Views, but for a complete
 # example we assume a blank start.
 
 needData = True
@@ -78,14 +78,14 @@ def createData(ocsClient):
     sDSType1 = SdsType(
         id=sampleTypeId,
         description="This is a sample Sds type for storing Pressure type "
-                    "events for DataViews",
+                    "events for Data Views",
         sdsTypeCode=SdsTypeCode.Object,
         properties=[pressureDoubleProperty, temperatureDoubleProperty, timeDateTimeProperty])
 
     sDSType2 = SdsType(
         id=samplePressureId2,
         description="This is a new sample Sds type for storing Pressure type "
-                    "events for DataViews",
+                    "events for Data Views",
         sdsTypeCode=SdsTypeCode.Object,
         properties=[pressureDoubleProperty, ambientTemperatureDoubleProperty, timeDateTimeProperty])
 
@@ -198,26 +198,26 @@ def main(test=False):
 
         dataView = DataView(id=sampleDataViewId)
         print
-        print("Creating DataView")
+        print("Creating Data View")
         dataViews = ocsClient.DataViews.postDataView(namespaceId, dataView)
 
         # Step 2
         print
-        print("Getting DataView")
+        print("Getting Data View")
         dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         print(dv.toJson())
 
         # Step 3
         print
-        print("Updating DataView")
+        print("Updating Data View")
 
         dv.Description = sampleDataViewDescription_modified
         query = Query(id=queryID, value=queryString)
         dv.Queries.append(query)
-        # No DataView returned, success is 204
+        # No Data View returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        print("Getting updated DataView")
+        print("Getting updated Data View")
         dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         print(dv.toJson())
 
@@ -250,7 +250,7 @@ def main(test=False):
 
         dv.FieldSets = fields
 
-        print("Updating DataView")
+        print("Updating Data View")
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
         print("Now AvailableFieldSets")
@@ -259,7 +259,7 @@ def main(test=False):
         print(availablefields.toJson())
 
         print
-        print("Retrieving data from the DataView")
+        print("Retrieving data from the Data View")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
@@ -271,12 +271,12 @@ def main(test=False):
                         label="{DistinguisherValue} {FirstKey}")
         dv.Sectioners.append(section)
 
-        print("Updating DataView with sectioner")
+        print("Updating Data View with sectioner")
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
         print
-        print("Retrieving data from the DataView")
+        print("Retrieving data from the Data View")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
@@ -295,7 +295,7 @@ def main(test=False):
             dv.FieldSets, FieldSetSourceType.DataItem)
         field = find_Field(dvDataItemFieldSet.Fields, fieldSourceForSectioner)
         dvDataItemFieldSet.Fields.remove(field)
-        # No DataView returned, success is 204
+        # No Data View returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
         # Step 9
@@ -305,12 +305,12 @@ def main(test=False):
         field.Distinguisher = dv.Sectioners[0]
         dv.Sectioners = []
 
-        print("Updating DataView with distinguisher")
-        # No DataView returned, success is 204
+        print("Updating Data View with distinguisher")
+        # No Data View returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
         print
-        print("Retrieving data from the DataView")
+        print("Retrieving data from the Data View")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
@@ -330,12 +330,12 @@ def main(test=False):
         field1.Keys.append(fieldToConsolidate)
         dvDataItemFieldSet.Fields.remove(field2)
 
-        print("Updating DataView with consildation")
-        # No DataView returned, success is 204
+        print("Updating Data View with consildation")
+        # No Data View returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
         print
-        print("Retrieving data from the DataView")
+        print("Retrieving data from the Data View")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
@@ -353,12 +353,12 @@ def main(test=False):
     finally:
 
         #######################################################################
-        # DataView deletion
+        # Data View deletion
         #######################################################################
 
         print
         print
-        print("Deleting DataView")
+        print("Deleting Data View")
 
         # Step 11
         suppressError(lambda: ocsClient.DataViews.deleteDataView(
@@ -369,11 +369,11 @@ def main(test=False):
         try:
             dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         except Exception as ex:
-            # Exception is expected here since DataView has been deleted
+            # Exception is expected here since Data View has been deleted
             dv = None
         finally:
             assert dv is None, 'Delete failed'
-            print("Verification OK: DataView deleted")
+            print("Verification OK: Data View deleted")
 
         if needData:
             print("Deleting added Streams")
