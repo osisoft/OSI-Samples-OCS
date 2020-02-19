@@ -5,4 +5,4 @@ from .Streams import Streams
 from .DataViews import DataViews
 from .SdsError import SdsError
 from .SDS import *
-from .Dataview import *
+from .DataView import *

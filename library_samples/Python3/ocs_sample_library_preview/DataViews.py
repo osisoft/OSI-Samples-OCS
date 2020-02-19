@@ -1,8 +1,8 @@
 import json
 
-from .Dataview.DataView import DataView
-from .Dataview.DataItems import DataItems
-from .Dataview.FieldSets import FieldSets
+from .DataView.DataView import DataView
+from .DataView.DataItems import DataItems
+from .DataView.FieldSets import FieldSets
 
 import requests
 
