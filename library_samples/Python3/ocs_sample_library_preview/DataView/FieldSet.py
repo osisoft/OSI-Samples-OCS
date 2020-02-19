@@ -113,7 +113,8 @@ class FieldSet(object):
                 dictionary["Fields"].append(value.toDictionary())
 
         if hasattr(self, 'Distinguisher'):
-            dictionary['Distinguisher'] = self.Distinguisher.toDictionary()
+            if self.Distinguisher is not None:
+                dictionary['Distinguisher'] = self.Distinguisher.toDictionary()
 
         return dictionary
 

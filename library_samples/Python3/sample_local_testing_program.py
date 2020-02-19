@@ -264,7 +264,8 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
-        assert len(dataViewDataPreview1) == 0, "Error getting back data"
+        print(len(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) > 0, "Error getting back data"
 
         # Step 7
         section = Field(source=fieldSourceForSectioner,
@@ -281,7 +282,7 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
-        assert len(dataViewDataPreview1) == 0, "Error getting back data"
+        assert len(dataViewDataPreview1) > 0, "Error getting back data"
 
         # Step 8
 
@@ -315,7 +316,7 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
-        assert len(dataViewDataPreview1) == 0, "Error getting back data"
+        assert len(dataViewDataPreview1) > 0, "Error getting back data"
 
         # Step 10
         print
@@ -340,7 +341,7 @@ def main(test=False):
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
         print(str(dataViewDataPreview1))
-        assert len(dataViewDataPreview1) == 0, "Error getting back data"
+        assert len(dataViewDataPreview1) > 0, "Error getting back data"
 
     except Exception as ex:
         print((f"Encountered Error: {ex}"))
