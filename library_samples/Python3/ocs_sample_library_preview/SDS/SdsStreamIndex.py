@@ -1,6 +1,3 @@
-# SdsStreamIndex.py
-#
-
 import json
 
 

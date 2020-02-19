@@ -14,14 +14,14 @@ jobs:
           architecture: 'x64'
         displayName: 'Specify Python version'
 
-      - script: |
+      - bash: |
           echo Install tools
-          call pip install wheel
-          call pip install twine
+          pip install wheel
+          pip install twine
           echo Build library
-          call python setup.py sdist bdist_wheel
+          python setup.py sdist bdist_wheel
           echo Upload library
-          call python -m twine upload dist/* -u $(username) -p $(password)
+          python -m twine upload dist/* -u $(username) -p $(password)
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Publish library'

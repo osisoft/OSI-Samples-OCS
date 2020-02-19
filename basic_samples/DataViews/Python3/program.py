@@ -1,9 +1,11 @@
-from ocs_sample_library_preview import (
-    SdsTypeCode, SdsType, SdsTypeProperty, SdsStream, OCSClient, DataView,
-    DataViewQuery, DataViewGroupRule, DataViewMappings, DataViewIndexConfig)
+
+from ocs_sample_library_preview import *
 import configparser
 import datetime
 import time
+import math
+import inspect
+import collections
 import traceback
 
 ###############################################################################
@@ -13,19 +15,18 @@ import traceback
 sampleDataViewId = "DataView_Sample"
 sampleDataViewName = "DataView_Sample_Name"
 sampleDataViewDescription = "A Sample Description that describes that this "\
-                            "DataView is just used for our sample."
+                            "Data View is just used for our sample."
 sampleDataViewDescription_modified = "A longer sample description that "\
-                                     "describes that this DataView is just "\
+                                     "describes that this Data View is just "\
                                      "used for our sample and this part shows"\
                                      " a put."
 
-samplePressureTypeId = "Time_Pressure_SampleType"
-samplePressureStreamId = "Tank_Pressure_SampleStream"
-samplePressureStreamName = "Tank Pressure SampleStream"
-
-sampleTemperatureTypeId = "Time_Temperature_SampleType"
-sampleTemperatureStreamId = "Tank_Temperature_SampleStream"
-sampleTemperatureStreamName = "Tank Temperature SampleStream"
+sampleTypeId = "Time_SampleType"
+samplePressureId2 = "Time_SampleType_old"
+sampleStreamId = "dvTank2"
+sampleStreamName = "Tank2"
+sampleStreamId2 = "dvTank100"
+sampleStreamName2 = "Tank100"
 
 # In this example we will keep the SDS code in its own function.
 # The variable needData is used in the main program to decide if we need to do
@@ -35,7 +36,7 @@ sampleTemperatureStreamName = "Tank Temperature SampleStream"
 # For more details on the creating SDS objects see the SDS python example.
 
 # This is kept seperate because chances are your data collection will occur at
-# a different time then your creation of DataViews, but for a complete
+# a different time then your creation of Data Views, but for a complete
 # example we assume a blank start.
 
 needData = True
@@ -43,6 +44,13 @@ namespaceId = ''
 config = configparser.ConfigParser()
 config.read('config.ini')
 startTime = None
+endTime = None
+interval = "00:20:00"
+queryID = "stream"
+fieldSourceForSectioner = FieldSource.Id
+queryString = "dvTank*"
+fieldToConsolidateTo = "temperature"
+fieldToConsolidate = "ambient_temp"
 
 
 def suppressError(sdsCall):
@@ -54,57 +62,61 @@ def suppressError(sdsCall):
 
 def createData(ocsClient):
     import random
-    global namespaceId, startTime
+    global namespaceId, startTime, endTime
 
     doubleType = SdsType(id="doubleType", sdsTypeCode=SdsTypeCode.Double)
     dateTimeType = SdsType(id="dateTimeType", sdsTypeCode=SdsTypeCode.DateTime)
 
     pressureDoubleProperty = SdsTypeProperty(id="pressure", sdsType=doubleType)
-    temperatureDoubleProperty = SdsTypeProperty(id="temperature",
+    temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidateTo,
                                                 sdsType=doubleType)
+    ambientTemperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidate,
+                                                        sdsType=doubleType)
     timeDateTimeProperty = SdsTypeProperty(id="time", sdsType=dateTimeType,
                                            isKey=True)
 
-    pressure_SDSType = SdsType(
-        id=samplePressureTypeId,
+    sDSType1 = SdsType(
+        id=sampleTypeId,
         description="This is a sample Sds type for storing Pressure type "
-                    "events for DataViews",
+                    "events for Data Views",
         sdsTypeCode=SdsTypeCode.Object,
-        properties=[pressureDoubleProperty, timeDateTimeProperty])
-    temperature_SDSType = SdsType(
-        id=sampleTemperatureTypeId,
-        description="This is a sample Sds type for storing Temperature type "
-                    "events for DataViews",
+        properties=[pressureDoubleProperty, temperatureDoubleProperty, timeDateTimeProperty])
+
+    sDSType2 = SdsType(
+        id=samplePressureId2,
+        description="This is a new sample Sds type for storing Pressure type "
+                    "events for Data Views",
         sdsTypeCode=SdsTypeCode.Object,
-        properties=[temperatureDoubleProperty, timeDateTimeProperty])
+        properties=[pressureDoubleProperty, ambientTemperatureDoubleProperty, timeDateTimeProperty])
 
     print('Creating SDS Type')
-    ocsClient.Types.getOrCreateType(namespaceId, pressure_SDSType)
-    ocsClient.Types.getOrCreateType(namespaceId, temperature_SDSType)
+    ocsClient.Types.getOrCreateType(namespaceId, sDSType1)
+    ocsClient.Types.getOrCreateType(namespaceId, sDSType2)
 
-    pressureStream = SdsStream(
-        id=samplePressureStreamId,
-        name=samplePressureStreamName,
+    stream1 = SdsStream(
+        id=sampleStreamId,
+        name=sampleStreamName,
         description="A Stream to store the sample Pressure events",
-        typeId=samplePressureTypeId)
+        typeId=sampleTypeId)
 
-    temperatureStream = SdsStream(
-        id=sampleTemperatureStreamId,
-        name=sampleTemperatureStreamName,
-        description="A Stream to store the sample Temperature events",
-        typeId=sampleTemperatureTypeId)
+    stream2 = SdsStream(
+        id=sampleStreamId2,
+        name=sampleStreamName2,
+        description="A Stream to store the sample Pressure events",
+        typeId=samplePressureId2)
 
     print('Creating SDS Streams')
-    ocsClient.Streams.createOrUpdateStream(namespaceId, pressureStream)
-    ocsClient.Streams.createOrUpdateStream(namespaceId, temperatureStream)
+    ocsClient.Streams.createOrUpdateStream(namespaceId, stream1)
+    ocsClient.Streams.createOrUpdateStream(namespaceId, stream2)
 
     start = datetime.datetime.now() - datetime.timedelta(hours=1)
+    endTime = datetime.datetime.now()
 
-    pressureValues = []
-    temperatureValues = []
+    values = []
+    values2 = []
 
-    def valueWithTime(timestamp, sensor, value):
-        return f'{{"time": "{timestamp}", "{sensor}": {str(value)} }}'
+    def valueWithTime(timestamp, value, fieldName, value2):
+        return f'{{"time": "{timestamp}", "pressure": {str(value)}, "{fieldName}": {str(value2)}}}'
 
     print('Generating Values')
     for i in range(1, 30, 1):
@@ -112,23 +124,42 @@ def createData(ocsClient):
         tv = str(random.uniform(50, 70))
         timestamp = (start + datetime.timedelta(minutes=i * 2)
                      ).isoformat(timespec='seconds')
-        pVal = valueWithTime(timestamp, "pressure", random.uniform(0, 100))
-        tVAl = valueWithTime(timestamp, "temperature", random.uniform(50, 70))
+        pVal = valueWithTime(timestamp, random.uniform(
+            0, 100), fieldToConsolidateTo, random.uniform(50, 70))
+        pVal2 = valueWithTime(timestamp, random.uniform(
+            0, 100), fieldToConsolidate, random.uniform(50, 70))
 
-        pressureValues.append(pVal)
-        temperatureValues.append(tVAl)
+        values.append(pVal)
+        values2.append(pVal2)
 
-    print('Sending Pressure Values')
+    print('Sending Values')
     ocsClient.Streams.insertValues(
         namespaceId,
-        samplePressureStreamId,
-        str(pressureValues).replace("'", ""))
-    print('Sending Temperature Values')
+        sampleStreamId,
+        str(values).replace("'", ""))
     ocsClient.Streams.insertValues(
         namespaceId,
-        sampleTemperatureStreamId,
-        str(temperatureValues).replace("'", ""))
+        sampleStreamId2,
+        str(values2).replace("'", ""))
     startTime = start
+
+
+def find_Field(fieldSetFields, fieldSource):
+    for field in fieldSetFields:
+        if field.Source == fieldSource:
+            return field
+
+
+def find_FieldSet(fieldSets, fieldSetSourceType):
+    for fieldSet in fieldSets:
+        if fieldSet.SourceType == fieldSetSourceType:
+            return fieldSet
+
+
+def find_Field_Key(fieldSetFields, fieldSource, key):
+    for field in fieldSetFields:
+        if field.Source == fieldSource and any(key in s for s in field.Keys):
+            return field
 
 
 def main(test=False):
@@ -147,7 +178,7 @@ def main(test=False):
         print(" ######  #    #   #   #    #   ##   # ###### #    # #          #    ")
         print("--------------------------------------------------------------------")
 
-        # Step 1
+        # Step 0
         ocsClient = OCSClient(config.get('Access', 'ApiVersion'),
                               config.get('Access', 'Tenant'),
                               config.get('Access', 'Resource'),
@@ -159,145 +190,157 @@ def main(test=False):
         print(namespaceId)
         print(ocsClient.uri)
 
-        # Step 2
+        # Step 0.5
         if needData:
             createData(ocsClient)
 
-        sampleStreamId = "SampleStream"
+        # Step 1
 
-        #######################################################################
-        # DataViews
-        #######################################################################
+        dataView = DataView(id=sampleDataViewId)
+        print
+        print("Creating Data View")
+        dataViews = ocsClient.DataViews.postDataView(namespaceId, dataView)
 
-        # We need to create the DataView.
-        # For our DataView we are going to combine the two streams that were
-        # created, using a search to find the streams,
-        # using common part of their name.
-
-        # We are using the default mappings.
-        # This means our columns will keep their original names.
-        # Another typical use of columns is to change what stream properties
-        # get mapped to which column.
-
-        # Mappings allow you to rename a column in the results to something
-        # different.  So if we want to we could rename Pressure to press.
-
-        # We then define the IndexDataType.  Currently only
-        # datetime is supported.
-
-        # Next we need to define IndexConfig.  It holds the default
-        # startIndex and endIndex to define a time period, mode (interpolated),
-        # and interpolation interval.
-
-        # Our results when looking at it like a table looks like:
-        #
-        # time,pressure,temperature
-        # 2019-06-27T12:23:00Z,36.3668286389033,60.614978497887
-        # 2019-06-27T12:24:00Z,36.3668286389033,60.614978497887
-        # 2019-06-27T12:25:00Z,36.3668286389033,60.614978497887
-        # 2019-06-27T12:26:00Z,40.5653155047711,59.4181700259214
-        # 2019-06-27T12:27:00Z,54.5602717243303,55.4288084527031
-        # ...
+        # Step 2
+        print
+        print("Getting Data View")
+        dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
+        print(dv.toJson())
 
         # Step 3
-        queryObj = DataViewQuery(sampleDataViewId, f"name:*{sampleStreamId}*")
-        if startTime:
-            indexConfigObj = DataViewIndexConfig(startIndex=startTime.isoformat(timespec='minutes'),
-                                                 endIndex=(
-                                                     startTime + datetime.timedelta(minutes=40)).isoformat(timespec='minutes'),
-                                                 mode="Interpolated",
-                                                 interval="00:01:00")
-        else:
-            indexConfigObj = None
-        dataView = DataView(id=sampleDataViewId, queries=queryObj,
-                            indexDataType="datetime",
-                            name=sampleDataViewName,
-                            indexConfig=indexConfigObj,
-                            description=sampleDataViewDescription)
         print
-        print("Creating DataView")
-        print(dataView.toJson())
-        dataViews = ocsClient.DataViews.postDataView(namespaceId, dataView)
+        print("Updating Data View")
+
+        dv.Description = sampleDataViewDescription_modified
+        query = Query(id=queryID, value=queryString)
+        dv.Queries.append(query)
+        # No Data View returned, success is 204
+        ocsClient.DataViews.putDataView(namespaceId, dv)
+
+        print("Getting updated Data View")
+        dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
+        print(dv.toJson())
+
+        assert len(dv.Queries) > 0, "Error getting back Dataview with queries"
 
         # Step 4
         print
-        print("Getting DataView")
-        dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
-        # assert is added to make sure we get back what we are expecting
-        expectedJSON = '{"Id": "DataView_Sample", "Queries": [{"Id": "DataView_Sample", "Query": "name:*SampleStream*"}], "Name": "DataView_Sample_Name", "Description": "A Sample Description that describes that this DataView is just used for our sample.", "IndexConfig": {"StartIndex": "2019-09-03T14:10:00.0000000Z", "EndIndex": "2019-09-03T14:50:00.0000000Z", "Mode": "Interpolated", "Interval": "00:01:00"}, "IndexDataType": "DateTime", "GroupRules": []}'
+        print("Getting ResolvedDataItems")
 
-        dv.Description = sampleDataViewDescription_modified
+        dataItems = ocsClient.DataViews.getResolvedDataItems(
+            namespaceId, sampleDataViewId, queryID)
+        print(dataItems.toJson())
+
+        print
+        print("Getting ResolvedIneligibleDataItems")
+        dataItems = ocsClient.DataViews.getResolvedIneligibleDataItems(
+            namespaceId, sampleDataViewId, queryID)
+        print(dataItems.toJson())
 
         # Step 5
         print
-        print("Updating DataView")
+        print("Getting AvailableFieldSets")
+
+        availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
+            namespaceId, sampleDataViewId, queryID)
+        print(availablefields.toJson())
+
+        # Step 6
+        fields = availablefields.Items
+
+        dv.FieldSets = fields
+
+        print("Updating Data View")
+        ocsClient.DataViews.putDataView(namespaceId, dv)
+
+        print("Now AvailableFieldSets")
+        availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
+            namespaceId, sampleDataViewId, queryID)
+        print(availablefields.toJson())
+
+        print
+        print("Retrieving data from the Data View")
+        dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
+        print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
+
+        # Step 7
+        section = Field(source=fieldSourceForSectioner,
+                        label="{DistinguisherValue} {FirstKey}")
+        dv.Sectioners.append(section)
+
+        print("Updating Data View with sectioner")
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        # Step 6
-        # Getting the complete set of DataViews to make sure it is there
         print
-        print("Getting DataViews")
-        dataViews = ocsClient.DataViews.getDataViews(namespaceId)
-        for dataView1 in dataViews:
-            if hasattr(dataView1, "Id"):
-                print(dataView1.toJson())
-
-        # Getting the DataGroups of the defined DataView.
-        # The datgroup lets you see what is returned by the DataView Query.
-        print
-        print("Getting DataGroups")
-
-        # Step 7
-        # This works for the automated test.  You can use this or the below.
-        dataGroups = ocsClient.DataViews.getDataGroups(
-            namespaceId, sampleDataViewId, 0, 100, True)
-        print('DataGroups')
-        print(dataGroups)
-
-        # By default the preview get interpolated values every minute over the
-        # last hour, which lines up with our data that we sent in.
-
-        # Beyond the normal API options, this function does have the option
-        # to return the data in a class if you have created a Type for the
-        # data you are retrieving.
+        print("Retrieving data from the Data View")
+        dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
+        print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
         # Step 8
+
         print
-        print("Retrieving data preview from the DataView")
-        dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
-            namespaceId, sampleDataViewId)
-        print(str(dataViewDataPreview1[0]))
+        print("Now AvailableFieldSets")
+        availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
+            namespaceId, sampleDataViewId, queryID)
+        print(availablefields.toJson())
+
+        dvDataItemFieldSet = find_FieldSet(
+            dv.FieldSets, FieldSetSourceType.DataItem)
+        field = find_Field(dvDataItemFieldSet.Fields, fieldSourceForSectioner)
+        dvDataItemFieldSet.Fields.remove(field)
+        # No Data View returned, success is 204
+        ocsClient.DataViews.putDataView(namespaceId, dv)
 
         # Step 9
-        print()
-        print("Getting data as a table, separated by commas, with headers")
-        # Get the first 20 rows, keep token for next 20 rows
-        dataViewDataTable1, token = ocsClient.DataViews.getDataInterpolated(
-            namespaceId, sampleDataViewId, form="csvh", count=20)
+        print("Setting up distinguisher")
 
-        # Display received 20 lines showing:
-        #   * First lines with extrapolation (first value replicated of each stream)
-        #   * Interpolated values at 1 minute interval, stream recorded at 2 minutes interval
-        print(dataViewDataTable1)
-        print()
+        field = find_FieldSet(dv.FieldSets, FieldSetSourceType.DataItem)
+        field.Distinguisher = dv.Sectioners[0]
+        dv.Sectioners = []
 
-        # Get the last 20 rows using token, then display (without row header)
-        dataViewDataTable2, token = ocsClient.DataViews.getDataInterpolated(
-            namespaceId, sampleDataViewId, form="csv", count=20, continuationToken=token)
-        print(dataViewDataTable2, "\n\n")
+        print("Updating Data View with distinguisher")
+        # No Data View returned, success is 204
+        ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        # Now override startIndex/endIndex/interval of previous DataView
-        # Ask for last 5 minutes of data, aligned on the seconds, interpolated at 30 seconds
-        startIndex = (startTime + datetime.timedelta(minutes=55)
-                      ).isoformat(timespec='seconds')
-        endIndex = (startTime + datetime.timedelta(minutes=60)
-                    ).isoformat(timespec='seconds')
-        dataViewDataTable3, token2 = ocsClient.DataViews.getDataInterpolated(
-            namespaceId, sampleDataViewId, form="csvh", count=11, continuationToken=None,
-            startIndex=startIndex, endIndex=endIndex, interval="00:00:30")
-        print(dataViewDataTable3)
-        assert token2 is None, "Continuation token is not None"
+        print
+        print("Retrieving data from the Data View")
+        dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
+        print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
+
+        # Step 10
+        print
+        print("Consolidating data")
+
+        field1 = find_Field_Key(dvDataItemFieldSet.Fields,
+                                FieldSource.PropertyId, fieldToConsolidateTo)
+        field2 = find_Field_Key(dvDataItemFieldSet.Fields,
+                                FieldSource.PropertyId, fieldToConsolidate)
+        print(field1.toJson())
+        print(field2.toJson())
+        field1.Keys.append(fieldToConsolidate)
+        dvDataItemFieldSet.Fields.remove(field2)
+
+        print("Updating Data View with consolidation")
+        # No Data View returned, success is 204
+        ocsClient.DataViews.putDataView(namespaceId, dv)
+
+        print
+        print("Retrieving data from the Data View")
+        dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
+        print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) == 0, "Error getting back data"
 
     except Exception as ex:
         print((f"Encountered Error: {ex}"))
@@ -308,15 +351,16 @@ def main(test=False):
         exception = ex
 
     finally:
+
         #######################################################################
-        # DataView deletion
+        # Data View deletion
         #######################################################################
 
         print
         print
-        print("Deleting DataView")
+        print("Deleting Data View")
 
-        # Step 10
+        # Step 11
         suppressError(lambda: ocsClient.DataViews.deleteDataView(
             namespaceId, sampleDataViewId))
 
@@ -325,24 +369,24 @@ def main(test=False):
         try:
             dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         except Exception as ex:
-            # Exception is expected here since DataView has been deleted
+            # Exception is expected here since Data View has been deleted
             dv = None
         finally:
             assert dv is None, 'Delete failed'
-            print("Verification OK: DataView deleted")
+            print("Verification OK: Data View deleted")
 
         if needData:
             print("Deleting added Streams")
             suppressError(lambda: ocsClient.Streams.deleteStream(
-                namespaceId, samplePressureStreamId))
+                namespaceId, sampleStreamId))
             suppressError(lambda: ocsClient.Streams.deleteStream(
-                namespaceId, sampleTemperatureStreamId))
+                namespaceId, sampleStreamId2))
 
             print("Deleting added Types")
             suppressError(lambda: ocsClient.Types.deleteType(
-                namespaceId, samplePressureTypeId))
+                namespaceId, sampleTypeId))
             suppressError(lambda: ocsClient.Types.deleteType(
-                namespaceId, sampleTemperatureTypeId))
+                namespaceId, samplePressureId2))
         if test and not success:
             raise exception
 

@@ -1,6 +1,3 @@
-# SdsStreamView.py
-#
-
 import json
 from .SdsStreamViewProperty import SdsStreamViewProperty
 

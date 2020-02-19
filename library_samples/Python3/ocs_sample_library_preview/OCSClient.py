@@ -66,7 +66,7 @@ class OCSClient:
     @property
     def DataViews(self):
         """
-        :return: A client for interacting with DataViews
+        :return: A client for interacting with Data Views
         """
         return self.__DataViews
 

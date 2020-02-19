@@ -1,6 +1,3 @@
-# SdsTypeCode.py
-#
-
 from enum import Enum
 
 

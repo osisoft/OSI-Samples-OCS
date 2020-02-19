@@ -1,6 +1,3 @@
-# SdsSearchMode.py
-#
-
 from enum import Enum
 
 

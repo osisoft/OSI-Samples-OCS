@@ -84,18 +84,7 @@ class BaseClient(object):
         if ((self.__expiration - time.time()) > 5 * 60):
             return self.__token
 
-        discoveryUrl = requests.get(
-            self.__url + "/identity/.well-known/openid-configuration",
-            headers={"Accept": "application/json"})
-
-        if discoveryUrl.status_code < 200 or discoveryUrl.status_code >= 300:
-            discoveryUrl.close()
-            status = discoveryUrl.status_code
-            reason = discoveryUrl.text
-            raise SdsError(f"Failed to get access token endpoint "
-                           f"from discovery URL: {status}:{reason}")
-
-        tokenEndpoint = json.loads(discoveryUrl.content)["token_endpoint"]
+        tokenEndpoint = self.__url + "/identity/connect/token"
 
         tokenInformation = requests.post(
             tokenEndpoint,
@@ -154,3 +143,8 @@ class BaseClient(object):
 
             message = main_message + errorToWrite
             raise SdsError(message)
+
+    def request(self, method, url, params=None, headers=None, **kwargs):
+        if not headers:
+            headers = self.sdsHeaders()
+        return requests.request(method, url, params=params, headers=headers, **kwargs)

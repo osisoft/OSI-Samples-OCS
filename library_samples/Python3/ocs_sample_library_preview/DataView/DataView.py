@@ -1,13 +1,14 @@
 import json
-from .DataViewQuery import DataViewQuery
-from .DataViewMappings import DataViewMappings
-from .DataViewIndexConfig import DataViewIndexConfig
-from .DataViewGroupRule import DataViewGroupRule
+from ..SDS.SdsTypeCode import SdsTypeCode
+from .Query import Query
+from .FieldSet import FieldSet
+from .Field import Field
+from .DataViewShapes import DataViewShapes
 
 
 class DataView(object):
     """
-    DataView definition
+    Data View definition
     """
 
     def __init__(
@@ -16,21 +17,19 @@ class DataView(object):
         name=None,
         description=None,
         queries=None,
-        mappings=None,
-        indexConfig=None,
-        indexDataType=None,
-        groupRules=[],
+        fieldsets=None,
+        sectioners=None,
+        indextypecode=None,
+        defaultstartindex=None,
+        defaultendindex=None,
+        defaultinterval=None,
+        shape=None
     ):
         """
 
         :param id: required
         :param name: not required
         :param description:  not required
-        :param queries: query string  required
-        :param mappings: array of DataViewmapping   not required
-        :param indexConfig:  DataViewindexConfig   not required
-        :param indexDataType: Currently limited to "DateTime"   required
-        :param groupRules:  Array of DataViewGroupRule   not required
         """
         self.__id = id
         self.__name = name
@@ -38,12 +37,26 @@ class DataView(object):
         if queries:
             self.__queries = queries
         else:
-            self.__queries = DataViewQuery()
-        if mappings:
-            self.__mappings = mappings
-        self.__indexConfig = indexConfig
-        self.__indexDataType = indexDataType
-        self.__groupRules = groupRules
+            self.__queries = []
+        if fieldsets:
+            self.__fieldsets = fieldsets
+        else:
+            self.__fieldsets = []
+        if sectioners:
+            self.__sectioners = __sectioners
+        else:
+            self.__sectioners = []
+        if indextypecode:
+            self.__indextypecode = indextypecode
+        else:
+            self.indextypecode = SdsTypeCode.DateTime
+        self.__defaultstartindex = defaultstartindex
+        self.__defaultendindex = defaultendindex
+        self.__defaultinterval = defaultinterval
+        if shape:
+            self.__shape = shape
+        else:
+            self.shape = DataViewShapes.Standard
 
     @property
     def Id(self):
@@ -114,72 +127,121 @@ class DataView(object):
         self.__queries = queries
 
     @property
-    def Mappings(self):
+    def FieldSets(self):
         """
-        array of DataViewmapping   not required
-        :return:
-        """
-        return self.__mappings
 
-    @Mappings.setter
-    def Mappings(self, mappings):
-        """
-        array of DataViewmapping   not required
-        :param mappings:
         :return:
         """
-        self.__mappings = mappings
+        return self.__fieldsets
 
-    @property
-    def IndexConfig(self):
+    @FieldSets.setter
+    def FieldSets(self, fieldsets):
         """
-        DataViewindexConfig   not required
+        :param fieldsets:
         :return:
         """
-        return self.__indexConfig
-
-    @IndexConfig.setter
-    def IndexConfig(self, indexConfig):
-        """
-        DataViewindexConfig   not required
-        :param indexConfig:
-        :return:
-        """
-        self.__indexConfig = indexConfig
+        self.__fieldsets = fieldsets
 
     @property
-    def IndexDataType(self):
+    def Sectioners(self):
         """
-        Currently limited to "DateTime"   required
+           not required
         :return:
         """
-        return self.__indexDataType
+        return self.__sectioners
 
-    @IndexDataType.setter
-    def IndexDataType(self, indexDataType):
+    @Sectioners.setter
+    def Sectioners(self, sectioners):
         """
-        Currently limited to "DateTime"   required
+        DataViewindexConfig   not required
+        :param sectioners:
+        :return:
+        """
+        self.__sectioners = sectioners
+
+    @property
+    def IndexTypeCode(self):
+        """
+        :return:
+        """
+        return self.__indextypecode
+
+    @IndexTypeCode.setter
+    def IndexTypeCode(self, indextypecode):
+        """
+        Currently limited to "DateTime" string  required
         :param indexDataType:
         :return:
         """
-        self.__indexDataType = indexDataType
+        self.__indextypecode = indextypecode
 
     @property
-    def GroupRules(self):
+    def DefaultStartIndex(self):
         """
-        Array of DataViewGroupRule   not required
+        DefaultStartIndex   not required
         :return:
         """
-        return self.__groupRules
+        return self.__defaultstartindex
 
-    @GroupRules.setter
-    def GroupRules(self, groupRules):
+    @DefaultStartIndex.setter
+    def DefaultStartIndex(self, defaultstartindex):
+        """DefaultStartIndex
+        DefaultStartIndex string  not required
+        :param defaultstartindex:
+        :return:
         """
-        Array of DataViewGroupRule   not required
+        self.__defaultstartindex = defaultstartindex
+
+    @property
+    def DefaultEndIndex(self):
+        """
+        DefaultEndIndex string  not required
+        :return:
+        """
+        return self.__defaultendindex
+
+    @DefaultEndIndex.setter
+    def DefaultEndIndex(self, defaultendindex):
+        """DefaultEndIndex
+        DefaultEndIndex  string not required
+        :param defaultendindex:
+        :return:
+        """
+        self.__defaultendindex = defaultendindex
+
+    @property
+    def DefaultInterval(self):
+        """
+        DefaultInterval string not required
+        :return:
+        """
+        return self.__defaultinterval
+
+    @DefaultInterval.setter
+    def DefaultInterval(self, defaultinterval):
+        """DefaultStartIndex
+        DefaultInterval string not required
         :param groupRules:
         :return:
         """
-        self.__groupRules = groupRules
+        self.__defaultinterval = defaultinterval
+
+    @property
+    def Shape(self):
+        """
+        Shape string  not required
+        :return:
+        """
+        return self.__shape
+
+    @Shape.setter
+    def Shape(self, shape):
+        """DefaultStartIndex
+        Shape string  not required
+        :param groupRules:
+        :return:
+        """
+        self.__shape = shape
 
     def toJson(self):
         return json.dumps(self.toDictionary())
@@ -187,7 +249,6 @@ class DataView(object):
     def toDictionary(self):
         # required properties
         dictionary = {"Id": self.Id}
-        dictionary["Queries"] = self.Queries.toDictionary()
 
         # optional properties
         if hasattr(self, "Name"):
@@ -196,19 +257,35 @@ class DataView(object):
         if hasattr(self, "Description"):
             dictionary["Description"] = self.Description
 
-        if hasattr(self, "Mappings") and self.Mappings is not None:
-            dictionary["Mappings"] = self.Mappings.toDictionary()
+        if hasattr(self, "Queries"):
+            dictionary["Queries"] = []
+            for value in self.Queries:
+                dictionary["Queries"].append(value.toDictionary())
 
-        if hasattr(self, "IndexConfig") and self.IndexConfig is not None:
-            dictionary["IndexConfig"] = self.IndexConfig.toDictionary()
+        if hasattr(self, "FieldSets"):
+            dictionary["FieldSets"] = []
+            for value in self.FieldSets:
+                dictionary["FieldSets"].append(value.toDictionary())
 
-        if hasattr(self, "IndexDataType"):
-            dictionary["IndexDataType"] = self.IndexDataType
+        if hasattr(self, "Sectioners"):
+            dictionary["Sectioners"] = []
+            for value in self.Sectioners:
+                dictionary["Sectioners"].append(value.toDictionary())
 
-        if hasattr(self, "GroupRules"):
-            dictionary["GroupRules"] = []
-            for value in self.GroupRules:
-                dictionary["GroupRules"].append(value.toDictionary())
+        if hasattr(self, "IndexTypeCode"):
+            dictionary["IndexTypeCode"] = self.IndexTypeCode.name
+
+        if hasattr(self, "DefaultStartIndex"):
+            dictionary["DefaultStartIndex"] = self.DefaultStartIndex
+
+        if hasattr(self, "DefaultEndIndex"):
+            dictionary["DefaultEndIndex"] = self.DefaultEndIndex
+
+        if hasattr(self, "DefaultInterval"):
+            dictionary["DefaultInterval"] = self.DefaultInterval
+
+        if hasattr(self, "Shape"):
+            dictionary["Shape"] = self.Shape.name
 
         return dictionary
 
@@ -233,26 +310,42 @@ class DataView(object):
             dataView.Description = content["Description"]
 
         if "Queries" in content:
-            dataView.Queries = DataViewQuery.fromDictionary(content["Queries"])
+            Queries = content["Queries"]
+            if Queries is not None and len(Queries) > 0:
+                dataView.Queries = []
+                for value in Queries:
+                    dataView.Queries.append(
+                        Query.fromDictionary(value))
 
-        if "Mappings" in content:
-            dataView.Mappings = DataViewMappings.fromDictionary(
-                content["Mappings"])
+        if "FieldSets" in content:
+            FieldSets = content["FieldSets"]
+            if FieldSets is not None and len(FieldSets) > 0:
+                dataView.FieldSets = []
+                for value in FieldSets:
+                    dataView.FieldSets.append(
+                        FieldSet.fromDictionary(value))
 
-        if "IndexConfig" in content:
-            dataView.IndexConfig = DataViewIndexConfig.fromDictionary(
-                content["IndexConfig"]
-            )
+        if "Sectioners" in content:
+            Sectioners = content["Sectioners"]
+            if Sectioners is not None and len(Sectioners) > 0:
+                dataView.Sectioners = []
+                for value in Sectioners:
+                    dataView.Sectioners.append(
+                        Field.fromDictionary(value))
 
-        if "IndexDataType" in content:
-            dataView.IndexDataType = content["IndexDataType"]
+        if "IndexTypeCode" in content:
+            dataView.IndexTypeCode = SdsTypeCode[content['IndexTypeCode']]
 
-        if "GroupRules" in content:
-            groupRules = content["GroupRules"]
-            if groupRules is not None and len(groupRules) > 0:
-                dataView.GroupRules = []
-                for value in groupRules:
-                    dataView.GroupRules.append(
-                        DataViewGroupRule.fromDictionary(value))
+        if "DefaultStartIndex" in content:
+            dataView.DefaultStartIndex = content["DefaultStartIndex"]
+
+        if "DefaultEndIndex" in content:
+            dataView.DefaultEndIndex = content["DefaultEndIndex"]
+
+        if "DefaultInterval" in content:
+            dataView.DefaultInterval = content["DefaultInterval"]
+
+        if "Shape" in content:
+            dataView.Shape = DataViewShapes[content['Shape']]
 
         return dataView

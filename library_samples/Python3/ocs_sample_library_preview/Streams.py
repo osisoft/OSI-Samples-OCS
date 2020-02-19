@@ -845,14 +845,14 @@ class Streams(object):
                 stream_id=stream_id)
 
         response = requests.get(
-                _path,
-                params={"startIndex": start,
-                        "endIndex": end,
-                        "sampleBy": sample_by,
-                        "intervals": intervals,
-                        "filter": filter,
-                        "stream_view_id": stream_view_id},
-                headers=self.__baseClient.sdsHeaders())
+            _path,
+            params={"startIndex": start,
+                    "endIndex": end,
+                    "sampleBy": sample_by,
+                    "intervals": intervals,
+                    "filter": filter,
+                    "stream_view_id": stream_view_id},
+            headers=self.__baseClient.sdsHeaders())
 
         self.__baseClient.checkResponse(
             response, f"Failed to get sampled values for"
@@ -907,27 +907,27 @@ class Streams(object):
             _path = self.__getSummaries.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=stream_id)   
-                         
-            paramsToUse={"startIndex": start,
-                    "endIndex": end,
-                    "count": count,
-                    "filter": filter}
+                stream_id=stream_id)
+
+            paramsToUse = {"startIndex": start,
+                           "endIndex": end,
+                           "count": count,
+                           "filter": filter}
         else:
             _path = self.__getSummariesT.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id)
-            
-            paramsToUse={"startIndex": start,
-                    "endIndex": end,
-                    "count": count,
-                    "filter": filter,
-                    "streamViewId": stream_view_id}
+
+            paramsToUse = {"startIndex": start,
+                           "endIndex": end,
+                           "count": count,
+                           "filter": filter,
+                           "streamViewId": stream_view_id}
 
         response = requests.get(
-                _path,paramsToUse,
-                headers=self.__baseClient.sdsHeaders())
+            _path, paramsToUse,
+            headers=self.__baseClient.sdsHeaders())
 
         self.__baseClient.checkResponse(
             response, f"Failed to get summaries for SdsStream: {stream_id}.")
@@ -1007,11 +1007,11 @@ class Streams(object):
             payload = values
 
         response = requests.put(self.__updateValuesPath.format(
-                                    tenant_id=self.__tenant,
-                                    namespace_id=namespace_id,
-                                    stream_id=stream_id),
-                                data=payload,
-                                headers=self.__baseClient.sdsHeaders())
+            tenant_id=self.__tenant,
+            namespace_id=namespace_id,
+            stream_id=stream_id),
+            data=payload,
+            headers=self.__baseClient.sdsHeaders())
 
         self.__baseClient.checkResponse(
             response,  f"Failed to update all values "

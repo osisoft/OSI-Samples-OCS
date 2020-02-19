@@ -1,6 +1,3 @@
-# SdsTypeProperty.py
-#
-
 from enum import Enum
 
 

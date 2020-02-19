@@ -1,6 +1,3 @@
-# SdsStreamExtrapolation.py
-#
-
 from enum import Enum
 
 

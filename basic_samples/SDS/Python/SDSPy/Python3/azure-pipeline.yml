@@ -59,19 +59,26 @@ jobs:
           architecture: 'x64'
         displayName: 'Specify Python version'
 
-      - script: |
+      - bash: |
           echo Install tools
-          call pip install setuptools wheel
-          call pip install unittest-xml-reporting    
-          call pip install pytest
-          call pip install pytest-cov
+          pip install setuptools wheel
+          pip install unittest-xml-reporting    
+          pip install pytest
+          pip install pytest-cov
           echo Install requirements
-          call pip install -r requirements.txt
+          pip install -r requirements.txt
           echo Run tests
-          call python -m pytest ./program.py
+          python -m pytest --junitxml=junit/test-results.xml  ./program.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
+        
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+        displayName: 'Publish test results'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

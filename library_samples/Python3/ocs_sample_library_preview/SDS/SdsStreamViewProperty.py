@@ -1,6 +1,3 @@
-# SdsStreamViewProperty.py
-#
-
 import json.decoder
 
 
@@ -91,7 +88,7 @@ class SdsStreamViewProperty(object):
     @staticmethod
     def fromDictionary(content):
         streamViewProperty = SdsStreamViewProperty()
-        
+
         if not content:
             return streamViewProperty
 

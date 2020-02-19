@@ -1,6 +1,3 @@
-# SdsStreamPropertyOverride.py
-#
-
 import json
 
 

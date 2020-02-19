@@ -1,6 +1,3 @@
-# SdsBoundaryType.py
-#
-
 from enum import Enum
 
 
