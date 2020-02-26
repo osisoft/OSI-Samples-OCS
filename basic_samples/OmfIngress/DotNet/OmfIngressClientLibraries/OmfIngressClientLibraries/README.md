@@ -85,7 +85,7 @@ A Topic is used to aggregate data received from clients and make it available fo
 Then use the Ingress client to create the Topic in OCS:
 
 ```
-    Topic createdTopic = await omfIngressService.CreateOrUpdateTopicAsync(topic);
+    Topic createdTopic = await omfIngressService.CreateTopicAsync(topic);
 ```
 
 ## Subscriptions
@@ -95,11 +95,8 @@ A Subscription is used to consume data from a Topic and relay it to the Sequenti
 ```
     Subscription subscription = new Subscription()
     {
-        TenantId = tenantId,
-        NamespaceId = namespaceId,
         Name = "REPLACE_WITH_SUBSCRIPTION_NAME",
         Description = "This is a sample OCS Data Store Subscription",
-        Type = SubscriptionType.Sds,
         TopicId = createdTopic.Id,
         TopicTenantId = "REPLACE_WITH_TOPIC_TENANT_ID",
         TopicNamespaceId = "REPLACE_WITH_TOPIC_NAMESPACE_ID"
@@ -109,7 +106,7 @@ A Subscription is used to consume data from a Topic and relay it to the Sequenti
 Then use the Ingress client to create the Subscription in OCS:
 
 ```
-    Subscription createdSubscription = await omfIngressService.CreateOrUpdateSubscriptionAsync(subscription);
+    Subscription createdSubscription = await omfIngressService.CreateSubscriptionAsync(subscription);
 ```
 
 ## Send OMF Messages

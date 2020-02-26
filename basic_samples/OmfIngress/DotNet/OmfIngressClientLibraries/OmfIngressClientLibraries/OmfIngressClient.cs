@@ -5,7 +5,6 @@ using OSIsoft.OmfIngress.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static OSIsoft.OmfIngress.Models.SubscriptionTypeEnum;
 
 namespace OmfIngressClientLibraries
 {
@@ -45,11 +44,8 @@ namespace OmfIngressClientLibraries
             Console.WriteLine();
             Subscription subscription = new Subscription()
             {
-                TenantId = _tenantId,
-                NamespaceId = destinationNamespaceId,
                 Name = $"{connectionName}-{destinationNamespaceId}",
                 Description = "This is a sample Subscription",
-                Type = SubscriptionType.Sds,
                 TopicId = createdTopic.Id,
                 TopicTenantId = _tenantId,
                 TopicNamespaceId = _namespaceId
