@@ -2,6 +2,10 @@
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/OMF_Ing_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=886&branchName=master)
 
+## Scope of Sample 
+
+This sample is intended to show how to build out the OMF Ingress connection in OCS programmatically using the DotNet NuGet library.  The starting point of this sample assumes your OMF Ingress is not configured.  It does show sending OMF data, but that is to show that the programmatic OMF configuration works.  A typical OMF app would assume that the OMF ingress is already configured (as this is a one time configuration action).  To learn about OMF application development and see samples of typcial OMF applications please go to our [OMF Repository](https://github.com/osisoft/OSI-Samples-OMF).
+
 ## Building a Client with the Ingress Client Libraries
 
 The sample described in this section makes use of the OSIsoft Ingress Client Libraries. When working in .NET, it is recommended that you use these libraries. The libraries are available as NuGet packages. The packages used are:
@@ -67,7 +71,7 @@ An OMF Connection is made up of three components: one or more Clients, a Topic, 
 
 ## Clients
 
-Devices sending OMF messages each need their own unique clientId and clientSecret. The clientId and secret are used to authenticate the requests, and the clientId is used route messages to the proper topic(s). ClientIds may be mapped to at most one topic per namespace. For more details on Clients see the [Client Credential Client Documentation](https://ocs-docs.osisoft.com/Documentation/Identity/Identity_ClientCredentialClient.html).
+Devices sending OMF messages each need a clientId and clientSecret. The clientId is used route messages to the proper topic(s). ClientIds may be mapped to at most one topic per namespace. For more details on Clients see the [Client Credential Client Documentation](https://ocs-docs.osisoft.com/Documentation/Identity/Identity_ClientCredentialClient.html).
 
 ## Topics
 
