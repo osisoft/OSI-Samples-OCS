@@ -252,8 +252,8 @@ class DataViews(object):
 
     def getDataInterpolated(
         self,
-        namespace_id,
-        dataView_id,
+        namespace_id=None,
+        dataView_id=None,
         count=None,
         form=None,
         startIndex=None,
@@ -278,10 +278,11 @@ class DataViews(object):
           Otherwise you get a dynamic object
         :return:
         """
-        if namespace_id is None:
-            raise TypeError
-        if dataView_id is None:
-            raise TypeError
+        if url is None:
+            if namespace_id is None:
+                raise TypeError
+            if dataView_id is None:
+                raise TypeError
 
         params = {
             "count": count,
@@ -313,10 +314,10 @@ class DataViews(object):
         nextPage = None
         firstPage = None
 
-        if hasattr(response.headers, "NextPage"):
+        if "NextPage" in response.headers:
             nextPage = response.headers["NextPage"]
 
-        if hasattr(response.headers, "FirstPage"):
+        if "FirstPage" in response.headers:
             firstPage = response.headers["FirstPage"]
 
         if form is not None:
