@@ -17,7 +17,8 @@ class DataView(object):
         name=None,
         description=None,
         queries=None,
-        fieldsets=None,
+        indexfield=None,
+        datafieldsets=None,
         sectioners=None,
         indextypecode=None,
         defaultstartindex=None,
@@ -38,10 +39,11 @@ class DataView(object):
             self.__queries = queries
         else:
             self.__queries = []
-        if fieldsets:
-            self.__fieldsets = fieldsets
+        self.__indexfield = indexfield
+        if datafieldsets:
+            self.__datafieldsets = datafieldsets
         else:
-            self.__fieldsets = []
+            self.__datafieldsets = []
         if sectioners:
             self.__sectioners = __sectioners
         else:
@@ -127,20 +129,37 @@ class DataView(object):
         self.__queries = queries
 
     @property
-    def FieldSets(self):
+    def IndexField (self):
+        """
+        IndexField  field  required
+        :return:
+        """
+        return self.__indexfield
+
+    @IndexField.setter
+    def IndexField(self, indexfield):
+        """
+        Field indexfield  required
+        :param indexfield:
+        :return:
+        """
+        self.__indexfield = indexfield
+
+    @property
+    def DataFieldSets(self):
         """
 
         :return:
         """
-        return self.__fieldsets
+        return self.__datafieldsets
 
     @FieldSets.setter
-    def FieldSets(self, fieldsets):
+    def DataFieldSets(self, datafieldsets):
         """
-        :param fieldsets:
+        :param datafieldsets:
         :return:
         """
-        self.__fieldsets = fieldsets
+        self.__datafieldsets = datafieldsets
 
     @property
     def Sectioners(self):
@@ -151,7 +170,7 @@ class DataView(object):
         return self.__sectioners
 
     @Sectioners.setter
-    def Sectioners(self, sectioners):
+    def GroupingFields(self, sectioners):
         """
         DataViewindexConfig   not required
         :param sectioners:
@@ -262,15 +281,15 @@ class DataView(object):
             for value in self.Queries:
                 dictionary["Queries"].append(value.toDictionary())
 
-        if hasattr(self, "FieldSets"):
-            dictionary["FieldSets"] = []
-            for value in self.FieldSets:
-                dictionary["FieldSets"].append(value.toDictionary())
+        if hasattr(self, "DataFieldSets"):
+            dictionary["DataFieldSets"] = []
+            for value in self.DataFieldSets:
+                dictionary["DataFieldSets"].append(value.toDictionary())
 
-        if hasattr(self, "Sectioners"):
-            dictionary["Sectioners"] = []
-            for value in self.Sectioners:
-                dictionary["Sectioners"].append(value.toDictionary())
+        if hasattr(self, "GroupingFields"):
+            dictionary["GroupingFields"] = []
+            for value in self.GroupingFields:
+                dictionary["GroupingFields"].append(value.toDictionary())
 
         if hasattr(self, "IndexTypeCode"):
             dictionary["IndexTypeCode"] = self.IndexTypeCode.name
@@ -317,20 +336,20 @@ class DataView(object):
                     dataView.Queries.append(
                         Query.fromDictionary(value))
 
-        if "FieldSets" in content:
-            FieldSets = content["FieldSets"]
-            if FieldSets is not None and len(FieldSets) > 0:
-                dataView.FieldSets = []
-                for value in FieldSets:
-                    dataView.FieldSets.append(
+        if "DataFieldSets" in content:
+            DataFieldSets = content["DataFieldSets"]
+            if DataFieldSets is not None and len(DataFieldSets) > 0:
+                dataView.DataFieldSets = []
+                for value in DataFieldSets:
+                    dataView.DataFieldSets.append(
                         FieldSet.fromDictionary(value))
 
-        if "Sectioners" in content:
-            Sectioners = content["Sectioners"]
-            if Sectioners is not None and len(Sectioners) > 0:
-                dataView.Sectioners = []
-                for value in Sectioners:
-                    dataView.Sectioners.append(
+        if "GroupingFields" in content:
+            GroupingFields = content["GroupingFields"]
+            if GroupingFields is not None and len(GroupingFields) > 0:
+                dataView.GroupingFields = []
+                for value in GroupingFields:
+                    dataView.GroupingFields.append(
                         Field.fromDictionary(value))
 
         if "IndexTypeCode" in content:
