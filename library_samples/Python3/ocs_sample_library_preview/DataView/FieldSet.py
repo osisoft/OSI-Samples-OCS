@@ -48,7 +48,7 @@ class FieldSet(object):
         """
         return self.__datafields
 
-    @Fields.setter
+    @DataFields.setter
     def DataFields(self, datafields):
         """
         Set the fields  required

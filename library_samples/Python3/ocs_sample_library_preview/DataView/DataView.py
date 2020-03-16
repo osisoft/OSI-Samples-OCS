@@ -19,7 +19,7 @@ class DataView(object):
         queries=None,
         indexfield=None,
         datafieldsets=None,
-        sectioners=None,
+        groupingfields=None,
         indextypecode=None,
         defaultstartindex=None,
         defaultendindex=None,
@@ -44,10 +44,10 @@ class DataView(object):
             self.__datafieldsets = datafieldsets
         else:
             self.__datafieldsets = []
-        if sectioners:
-            self.__sectioners = __sectioners
+        if groupingfields:
+            self.__groupingfields = __groupingfields
         else:
-            self.__sectioners = []
+            self.__groupingfields = []
         if indextypecode:
             self.__indextypecode = indextypecode
         else:
@@ -153,7 +153,7 @@ class DataView(object):
         """
         return self.__datafieldsets
 
-    @FieldSets.setter
+    @DataFieldSets.setter
     def DataFieldSets(self, datafieldsets):
         """
         :param datafieldsets:
@@ -162,21 +162,21 @@ class DataView(object):
         self.__datafieldsets = datafieldsets
 
     @property
-    def Sectioners(self):
+    def GroupingFields(self):
         """
            not required
         :return:
         """
-        return self.__sectioners
+        return self.__groupingfields
 
-    @Sectioners.setter
-    def GroupingFields(self, sectioners):
+    @GroupingFields.setter
+    def GroupingFields(self, groupingfields):
         """
-        DataViewindexConfig   not required
-        :param sectioners:
+        Array of fields   not required
+        :param GroupingFields:
         :return:
         """
-        self.__sectioners = sectioners
+        self.__groupingfields = groupingfields
 
     @property
     def IndexTypeCode(self):

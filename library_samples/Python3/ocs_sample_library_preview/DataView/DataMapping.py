@@ -28,7 +28,7 @@ class DataMapping(object):
         """
         return self.__targetId
 
-    @QueryId.setter
+    @TargetId.setter
     def TargetId(self, targetId):
         """
         Set the __targetId  required
