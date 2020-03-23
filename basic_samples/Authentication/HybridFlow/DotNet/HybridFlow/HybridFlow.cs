@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
@@ -131,7 +132,7 @@ namespace HybridFlow
                 _oidcClient = new OidcClient(options);
                 var loginRequest = new LoginRequest
                 {
-                    FrontChannelExtraParameters = new {acr_values = $"tenant:{tenantId}"}
+                    FrontChannelExtraParameters = new Dictionary<string, string>{{"acr_values", $"tenant:{tenantId}"}}
                 };
 
                 // Login with the client. This call will open a new tab in your default browser

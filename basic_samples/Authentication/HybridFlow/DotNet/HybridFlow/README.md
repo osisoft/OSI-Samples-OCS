@@ -6,7 +6,7 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 
 ## Requirements
 
-- .NET Core 2.2.1 or later
+- .NET Core 3.1 or later
 - Web Browser with Javascript enabled
 
   - You will need Google Chrome if you want to run the automated test
@@ -80,7 +80,7 @@ dotnet test
 
 ---
 
-Tested against DotNet 2.2.105.
+Tested against DotNet 3.1.
 
 For the general steps or switch languages see the Task [ReadMe](../../../)  
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
