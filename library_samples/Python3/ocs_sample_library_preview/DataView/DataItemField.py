@@ -94,9 +94,6 @@ class DataItemField(object):
         dictionary = {}
 
         # optional properties
-        if hasattr(self, 'ResourceType'):
-            dictionary['ResourceType'] = self.ResourceType
-
         if hasattr(self, 'Id'):
             dictionary['Id'] = self.Id
 

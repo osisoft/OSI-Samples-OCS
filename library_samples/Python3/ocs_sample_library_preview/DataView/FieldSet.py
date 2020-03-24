@@ -8,20 +8,20 @@ class FieldSet(object):
         self,
         queryId=None,
         datafields=None,
-        distinguisher=None
+        identifyingfield=None
     ):
         """
 
         :param queryId: not required
-        :param fields: not required
-        :param distinguisher: not required
+        :param datafields: not required
+        :param identifyingfield: not required
         """
         self.__queryId = queryId
         if datafields:
             self.__datafields = datafields
         else:
             self.__datafields = []
-        self.__distinguisher = distinguisher
+        self.__identifyingfield = identifyingfield
 
     @property
     def QueryId(self):
@@ -58,21 +58,21 @@ class FieldSet(object):
         self.__datafields = datafields
 
     @property
-    def Distinguisher(self):
+    def IdentifyingField(self):
         """
-        Get the distinguisher  required
+        Get the identifyingfield  required
         :return:
         """
-        return self.__distinguisher
+        return self.__identifyingfield
 
-    @Distinguisher.setter
-    def Distinguisher(self, distinguisher):
+    @IdentifyingField.setter
+    def IdentifyingField(self, identifyingfield):
         """
-        Set the distinguisher  required
-        :param distinguisher:
+        Set the identifyingfield  required
+        :param identifyingfield:
         :return:
         """
-        self.__distinguisher = distinguisher
+        self.__identifyingfield = identifyingfield
 
     def toJson(self):
         return json.dumps(self.toDictionary())
@@ -90,9 +90,9 @@ class FieldSet(object):
             for value in self.DataFields:
                 dictionary["DataFields"].append(value.toDictionary())
 
-        if hasattr(self, 'Distinguisher'):
-            if self.Distinguisher is not None:
-                dictionary['Distinguisher'] = self.Distinguisher.toDictionary()
+        if hasattr(self, 'IdentifyingField'):
+            if self.IdentifyingField is not None:
+                dictionary['IdentifyingField'] = self.IdentifyingField.toDictionary()
 
         return dictionary
 
@@ -118,8 +118,8 @@ class FieldSet(object):
                     fieldSet.DataFields.append(
                         Field.fromDictionary(value))
 
-        if 'Distinguisher' in content:
-            fieldSet.Distinguisher = Field.fromDictionary(
-                content['Distinguisher'])
+        if 'IdentifyingField' in content:
+            fieldSet.IdentifyingField = Field.fromDictionary(
+                content['IdentifyingField'])
 
         return fieldSet
