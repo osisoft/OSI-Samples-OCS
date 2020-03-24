@@ -237,8 +237,7 @@ class DataViews(object):
             self.__dataViewResolvedAvailableFieldSets.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
-                dataView_id=dataView_id,
-                query_id=query_id
+                dataView_id=dataView_id
             ),
             headers=self.__baseClient.sdsHeaders(),
         )
