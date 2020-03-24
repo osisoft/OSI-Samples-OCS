@@ -17,17 +17,16 @@ class DataView(object):
         name=None,
         description=None,
         queries=None,
-        indexfield=None,
-        datafieldsets=None,
-        groupingfields=None,
-        indextypecode=None,
-        defaultstartindex=None,
-        defaultendindex=None,
-        defaultinterval=None,
+        indexField=None,
+        dataFieldSets=None,
+        groupingFields=None,
+        indexTypeCode=None,
+        defaultStartIndex=None,
+        defaultEndIndex=None,
+        defaultInterval=None,
         shape=None
     ):
         """
-
         :param id: required
         :param name: not required
         :param description:  not required
@@ -39,22 +38,22 @@ class DataView(object):
             self.__queries = queries
         else:
             self.__queries = []
-        self.__indexfield = indexfield
-        if datafieldsets:
-            self.__datafieldsets = datafieldsets
+        self.__indexField = indexField
+        if dataFieldSets:
+            self.__dataFieldSets = dataFieldSets
         else:
-            self.__datafieldsets = []
-        if groupingfields:
-            self.__groupingfields = __groupingfields
+            self.__dataFieldSets = []
+        if groupingFields:
+            self.__groupingFields = groupingFields
         else:
-            self.__groupingfields = []
-        if indextypecode:
-            self.__indextypecode = indextypecode
+            self.__groupingFields = []
+        if indexTypeCode:
+            self.__indexTypeCode = indexTypeCode
         else:
-            self.indextypecode = SdsTypeCode.DateTime
-        self.__defaultstartindex = defaultstartindex
-        self.__defaultendindex = defaultendindex
-        self.__defaultinterval = defaultinterval
+            self.indexTypeCode = SdsTypeCode.DateTime
+        self.__defaultStartIndex = defaultStartIndex
+        self.__defaultEndIndex = defaultEndIndex
+        self.__defaultInterval = defaultInterval
         if shape:
             self.__shape = shape
         else:
@@ -97,7 +96,7 @@ class DataView(object):
     @property
     def Description(self):
         """
-        Add an esy to understand description not required
+        Add an easy to understand description not required
         :return:
         """
         return self.__description
@@ -105,7 +104,7 @@ class DataView(object):
     @Description.setter
     def Description(self, description):
         """
-        Add an esy to understand description not required
+        Add an easy to understand description not required
         :param description:
         :return:
         """
@@ -122,7 +121,7 @@ class DataView(object):
     @Queries.setter
     def Queries(self, queries):
         """
-        Array of dataviequery  required
+        Array of queries  required
         :param queries:
         :return:
         """
@@ -131,68 +130,66 @@ class DataView(object):
     @property
     def IndexField (self):
         """
-        IndexField  field  required
+        IndexField field  required
         :return:
         """
-        return self.__indexfield
+        return self.__indexField
 
     @IndexField.setter
-    def IndexField(self, indexfield):
+    def IndexField(self, indexField):
         """
-        Field indexfield  required
-        :param indexfield:
+        Field indexField  required
+        :param indexField:
         :return:
         """
-        self.__indexfield = indexfield
+        self.__indexField = indexField
 
     @property
     def DataFieldSets(self):
         """
-
         :return:
         """
-        return self.__datafieldsets
+        return self.__dataFieldSets
 
     @DataFieldSets.setter
-    def DataFieldSets(self, datafieldsets):
+    def DataFieldSets(self, dataFieldSets):
         """
-        :param datafieldsets:
+        :param dataFieldSets:
         :return:
         """
-        self.__datafieldsets = datafieldsets
+        self.__dataFieldSets = dataFieldSets
 
     @property
     def GroupingFields(self):
         """
-           not required
         :return:
         """
-        return self.__groupingfields
+        return self.__groupingFields
 
     @GroupingFields.setter
-    def GroupingFields(self, groupingfields):
+    def GroupingFields(self, groupingFields):
         """
         Array of fields   not required
-        :param GroupingFields:
+        :param groupingFields:
         :return:
         """
-        self.__groupingfields = groupingfields
+        self.__groupingFields = groupingFields
 
     @property
     def IndexTypeCode(self):
         """
         :return:
         """
-        return self.__indextypecode
+        return self.__indexTypeCode
 
     @IndexTypeCode.setter
-    def IndexTypeCode(self, indextypecode):
+    def IndexTypeCode(self, indexTypeCode):
         """
         Currently limited to "DateTime" string  required
-        :param indexDataType:
+        :param indexTypeCode:
         :return:
         """
-        self.__indextypecode = indextypecode
+        self.__indexTypeCode = indexTypeCode
 
     @property
     def DefaultStartIndex(self):
@@ -200,16 +197,16 @@ class DataView(object):
         DefaultStartIndex   not required
         :return:
         """
-        return self.__defaultstartindex
+        return self.__defaultStartIndex
 
     @DefaultStartIndex.setter
-    def DefaultStartIndex(self, defaultstartindex):
+    def DefaultStartIndex(self, defaultStartIndex):
         """DefaultStartIndex
         DefaultStartIndex string  not required
-        :param defaultstartindex:
+        :param defaultStartIndex:
         :return:
         """
-        self.__defaultstartindex = defaultstartindex
+        self.__defaultStartIndex = defaultStartIndex
 
     @property
     def DefaultEndIndex(self):
@@ -217,16 +214,16 @@ class DataView(object):
         DefaultEndIndex string  not required
         :return:
         """
-        return self.__defaultendindex
+        return self.__defaultEndIndex
 
     @DefaultEndIndex.setter
-    def DefaultEndIndex(self, defaultendindex):
+    def DefaultEndIndex(self, defaultEndIndex):
         """DefaultEndIndex
         DefaultEndIndex  string not required
-        :param defaultendindex:
+        :param defaultEndIndex:
         :return:
         """
-        self.__defaultendindex = defaultendindex
+        self.__defaultEndIndex = defaultEndIndex
 
     @property
     def DefaultInterval(self):
@@ -234,16 +231,16 @@ class DataView(object):
         DefaultInterval string not required
         :return:
         """
-        return self.__defaultinterval
+        return self.__defaultInterval
 
     @DefaultInterval.setter
-    def DefaultInterval(self, defaultinterval):
+    def DefaultInterval(self, defaultInterval):
         """DefaultStartIndex
         DefaultInterval string not required
-        :param groupRules:
+        :param defaultInterval:
         :return:
         """
-        self.__defaultinterval = defaultinterval
+        self.__defaultInterval = defaultInterval
 
     @property
     def Shape(self):
@@ -255,9 +252,9 @@ class DataView(object):
 
     @Shape.setter
     def Shape(self, shape):
-        """DefaultStartIndex
+        """
         Shape string  not required
-        :param groupRules:
+        :param shape:
         :return:
         """
         self.__shape = shape

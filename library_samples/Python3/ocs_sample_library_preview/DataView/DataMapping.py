@@ -11,8 +11,7 @@ class DataMapping(object):
         typeCode=None
     ):
         """
-
-        :param queryId: not required
+        :param targetId: not required
         :param targetFieldKey: not required
         :param typeCode: not required
         """
@@ -40,7 +39,7 @@ class DataMapping(object):
     @property
     def TargetFieldKey(self):
         """
-        Get the fields  required
+        Get the targetFieldKey  required
         :return:
         """
         return self.__targetFieldKey

@@ -7,72 +7,71 @@ class FieldSet(object):
     def __init__(
         self,
         queryId=None,
-        datafields=None,
-        identifyingfield=None
+        dataFields=None,
+        identifyingField=None
     ):
         """
-
         :param queryId: not required
-        :param datafields: not required
-        :param identifyingfield: not required
+        :param dataFields: not required
+        :param identifyingField: not required
         """
         self.__queryId = queryId
-        if datafields:
-            self.__datafields = datafields
+        if dataFields:
+            self.__dataFields = dataFields
         else:
-            self.__datafields = []
-        self.__identifyingfield = identifyingfield
+            self.__dataFields = []
+        self.__identifyingField = identifyingField
 
     @property
     def QueryId(self):
         """
-        Get the queryid  required
+        Get the queryId  required
         :return:
         """
-        return self.__queryid
+        return self.__queryId
 
     @QueryId.setter
-    def QueryId(self, queryid):
+    def QueryId(self, queryId):
         """
-        Set the queryid  required
-        :param queryid:
+        Set the queryId  required
+        :param queryId:
         :return:
         """
-        self.__queryid = queryid
+        self.__queryId = queryId
 
     @property
     def DataFields(self):
         """
-        Get the fields  required
+        Get the dataFields  required
         :return:
         """
-        return self.__datafields
+        return self.__dataFields
 
     @DataFields.setter
-    def DataFields(self, datafields):
+    def DataFields(self, dataFields):
         """
-        Set the fields  required
-        :param fields:
+        Set the dataFields  required
+        :param dataFields:
         :return:
         """
-        self.__datafields = datafields
+        self.__dataFields = dataFields
 
     @property
     def IdentifyingField(self):
         """
-        Get the identifyingfield  required
+        Get the identifyingField  required
         :return:
         """
-        return self.__identifyingfield
+        return self.__identifyingField
 
     @IdentifyingField.setter
-    def IdentifyingField(self, identifyingfield):
+    def IdentifyingField(self, identifyingField):
         """
-        Set the identifyingfield  required
-        :param identifyingfield:
+        Set the identifyingField  required
+        :param identifyingField:
         :return:
         """
-        self.__identifyingfield = identifyingfield
+        self.__identifyingField = identifyingField
 
     def toJson(self):
         return json.dumps(self.toDictionary())

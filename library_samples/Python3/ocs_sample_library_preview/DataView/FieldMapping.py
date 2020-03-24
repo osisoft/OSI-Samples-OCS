@@ -36,7 +36,7 @@ class FieldMapping(object):
     @property
     def Id(self):
         """
-        Get the queryid  required
+        Get the id  required
         :return:
         """
         return self.__id
@@ -53,7 +53,7 @@ class FieldMapping(object):
     @property
     def Label(self):
         """
-        Get the queryid  required
+        Get the label  required
         :return:
         """
         return self.__label
@@ -121,19 +121,19 @@ class FieldMapping(object):
     @property
     def DataMappings(self):
         """
-        Get the fields  required
+        Get the dataMappings  required
         :return:
         """
-        return self.__datamappings
+        return self.__dataMappings
 
     @DataMappings.setter
-    def DataMappings(self, datamappings):
+    def DataMappings(self, dataMappings):
         """
-        Set the datamappings  required
-        :param datamappings:
+        Set the dataMappings  required
+        :param dataMappings:
         :return:
         """
-        self.__datamappings = datamappings
+        self.__dataMappings = dataMappings
 
     def toJson(self):
         return json.dumps(self.toDictionary())
