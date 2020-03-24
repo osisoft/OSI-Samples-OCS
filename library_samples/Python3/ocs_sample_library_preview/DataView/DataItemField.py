@@ -8,7 +8,7 @@ class DataItemField(object):
         id=None,
         name=None,
         typeCode=None,
-        iskey=None,
+        isKey=None,
     ):
         """
 
@@ -16,7 +16,7 @@ class DataItemField(object):
         self.__id = id
         self.__name = name
         self.__typeCode = typeCode
-        self.__iskey = iskey
+        self.__isKey = isKey
 
     @property
     def Id(self):
@@ -72,19 +72,19 @@ class DataItemField(object):
     @property
     def IsKey(self):
         """
-        Get the iskey  required
+        Get the isKey  required
         :return:
         """
-        return self.__iskey
+        return self.__isKey
 
     @IsKey.setter
-    def IsKey(self, iskey):
+    def IsKey(self, isKey):
         """
-        Set the iskey  required
-        :param iskey:
+        Set the isKey  required
+        :param isKey:
         :return:
         """
-        self.__iskey = iskey
+        self.__isKey = isKey
 
     def toJson(self):
         return json.dumps(self.toDictionary())
@@ -94,9 +94,6 @@ class DataItemField(object):
         dictionary = {}
 
         # optional properties
-        if hasattr(self, 'ResourceType'):
-            dictionary['ResourceType'] = self.ResourceType
-
         if hasattr(self, 'Id'):
             dictionary['Id'] = self.Id
 
