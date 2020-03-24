@@ -6,11 +6,11 @@ This client uses the OAuth2/OIDC Client Credential Flow to obtain an access toke
 
 ## Requirements
 
-- .NET Core 2.2.1 or later
+- .NET Core 3.1 or later
 
 Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id and Client Secret, and the current Api Version. There is no need to replace the Namespace Id for this sample.
 
-Developed against DotNet 2.2.105.
+Developed against DotNet 3.1.
 
 ## Running the sample
 
@@ -55,7 +55,7 @@ dotnet test
 
 ---
 
-Tested against DotNet 2.2.105.
+Tested against DotNet 3.1.
 
 For the general steps or switch languages see the Task [ReadMe](../../../)  
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
