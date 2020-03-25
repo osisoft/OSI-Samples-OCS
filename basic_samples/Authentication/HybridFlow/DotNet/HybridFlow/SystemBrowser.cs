@@ -43,7 +43,7 @@ namespace HybridFlow
             return port;
         }
 
-        public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<BrowserResult> InvokeAsync(BrowserOptions options)
         {
             using (var listener = new LoopbackHttpListener(Port, _path))
             {
