@@ -1,5 +1,4 @@
 import json
-from .FieldSetSourceType import FieldSetSourceType
 from .Field import Field
 
 
@@ -7,114 +6,92 @@ class FieldSet(object):
 
     def __init__(
         self,
-        sourcetype=None,
         queryId=None,
-        fields=None,
-        distinguisher=None
+        dataFields=None,
+        identifyingField=None
     ):
         """
-
-        :param sourcetype: required
-        :param name: not required
         :param queryId: not required
-        :param fields: not required
-        :param distinguisher: not required
+        :param dataFields: not required
+        :param identifyingField: not required
         """
-        self.__sourcetype = sourcetype
         self.__queryId = queryId
-        if fields:
-            self.__fields = fields
+        if dataFields:
+            self.__dataFields = dataFields
         else:
-            self.__fields = []
-        self.__distinguisher = distinguisher
-
-    @property
-    def SourceType(self):
-        """
-        Get the sourcetype  required
-        :return:
-        """
-        return self.__sourcetype
-
-    @SourceType.setter
-    def SourceType(self, sourcetype):
-        """
-        Set the sourcetype  required
-        :param sourcetype:
-        :return:
-        """
-        self.__sourcetype = sourcetype
+            self.__dataFields = []
+        self.__identifyingField = identifyingField
 
     @property
     def QueryId(self):
         """
-        Get the queryid  required
+        Get the queryId  required
         :return:
         """
-        return self.__queryid
+        return self.__queryId
 
     @QueryId.setter
-    def QueryId(self, queryid):
+    def QueryId(self, queryId):
         """
-        Set the queryid  required
-        :param queryid:
+        Set the queryId  required
+        :param queryId:
         :return:
         """
-        self.__queryid = queryid
+        self.__queryId = queryId
 
     @property
-    def Fields(self):
+    def DataFields(self):
         """
-        Get the fields  required
+        Get the dataFields  required
         :return:
         """
-        return self.__fields
+        return self.__dataFields
 
-    @Fields.setter
-    def Fields(self, fields):
+    @DataFields.setter
+    def DataFields(self, dataFields):
         """
-        Set the fields  required
-        :param fields:
+        Set the dataFields  required
+        :param dataFields:
         :return:
         """
-        self.__fields = fields
+        self.__dataFields = dataFields
 
     @property
-    def Distinguisher(self):
+    def IdentifyingField(self):
         """
-        Get the distinguisher  required
+        Get the identifyingField  required
         :return:
         """
-        return self.__distinguisher
+        return self.__identifyingField
 
-    @Distinguisher.setter
-    def Distinguisher(self, distinguisher):
+    @IdentifyingField.setter
+    def IdentifyingField(self, identifyingField):
         """
-        Set the distinguisher  required
-        :param distinguisher:
+        Set the identifyingField  required
+        :param identifyingField:
         :return:
         """
-        self.__distinguisher = distinguisher
+        self.__identifyingField = identifyingField
 
     def toJson(self):
         return json.dumps(self.toDictionary())
 
     def toDictionary(self):
         # required properties
-        dictionary = {'SourceType': self.SourceType.name}
+        dictionary = {}
 
         # optional properties
         if hasattr(self, 'QueryId'):
             dictionary['QueryId'] = self.QueryId
 
-        if hasattr(self, "Fields"):
-            dictionary["Fields"] = []
-            for value in self.Fields:
-                dictionary["Fields"].append(value.toDictionary())
+        if hasattr(self, "DataFields"):
+            dictionary["DataFields"] = []
+            for value in self.DataFields:
+                dictionary["DataFields"].append(value.toDictionary())
 
-        if hasattr(self, 'Distinguisher'):
-            if self.Distinguisher is not None:
-                dictionary['Distinguisher'] = self.Distinguisher.toDictionary()
+        if hasattr(self, 'IdentifyingField'):
+            if self.IdentifyingField is not None:
+                dictionary['IdentifyingField'] = self.IdentifyingField.toDictionary()
 
         return dictionary
 
@@ -129,21 +106,19 @@ class FieldSet(object):
         if not content:
             return fieldSet
 
-        fieldSet.SourceType = FieldSetSourceType[content['SourceType']]
-
         if 'QueryId' in content:
             fieldSet.QueryId = content['QueryId']
 
-        if "Fields" in content:
-            Fields = content["Fields"]
-            if Fields is not None and len(Fields) > 0:
-                fieldSet.Fields = []
-                for value in Fields:
-                    fieldSet.Fields.append(
+        if "DataFields" in content:
+            DataFields = content["DataFields"]
+            if DataFields is not None and len(DataFields) > 0:
+                fieldSet.DataFields = []
+                for value in DataFields:
+                    fieldSet.DataFields.append(
                         Field.fromDictionary(value))
 
-        if 'Distinguisher' in content:
-            fieldSet.Distinguisher = Field.fromDictionary(
-                content['Distinguisher'])
+        if 'IdentifyingField' in content:
+            fieldSet.IdentifyingField = Field.fromDictionary(
+                content['IdentifyingField'])
 
         return fieldSet

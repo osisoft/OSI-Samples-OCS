@@ -9,7 +9,6 @@ class Query(object):
         value=None
     ):
         """
-
         :param id: required
         :param value: not required
         """

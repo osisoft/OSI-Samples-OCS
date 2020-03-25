@@ -10,7 +10,6 @@ class DataItems(object):
         items=None
     ):
         """
-
         :param timeOfResolution: not required
         :param items: not required
         """

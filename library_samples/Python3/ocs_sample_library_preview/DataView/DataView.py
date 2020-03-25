@@ -17,16 +17,16 @@ class DataView(object):
         name=None,
         description=None,
         queries=None,
-        fieldsets=None,
-        sectioners=None,
-        indextypecode=None,
-        defaultstartindex=None,
-        defaultendindex=None,
-        defaultinterval=None,
+        indexField=None,
+        dataFieldSets=None,
+        groupingFields=None,
+        indexTypeCode=None,
+        defaultStartIndex=None,
+        defaultEndIndex=None,
+        defaultInterval=None,
         shape=None
     ):
         """
-
         :param id: required
         :param name: not required
         :param description:  not required
@@ -38,21 +38,22 @@ class DataView(object):
             self.__queries = queries
         else:
             self.__queries = []
-        if fieldsets:
-            self.__fieldsets = fieldsets
+        self.__indexField = indexField
+        if dataFieldSets:
+            self.__dataFieldSets = dataFieldSets
         else:
-            self.__fieldsets = []
-        if sectioners:
-            self.__sectioners = __sectioners
+            self.__dataFieldSets = []
+        if groupingFields:
+            self.__groupingFields = groupingFields
         else:
-            self.__sectioners = []
-        if indextypecode:
-            self.__indextypecode = indextypecode
+            self.__groupingFields = []
+        if indexTypeCode:
+            self.__indexTypeCode = indexTypeCode
         else:
-            self.indextypecode = SdsTypeCode.DateTime
-        self.__defaultstartindex = defaultstartindex
-        self.__defaultendindex = defaultendindex
-        self.__defaultinterval = defaultinterval
+            self.indexTypeCode = SdsTypeCode.DateTime
+        self.__defaultStartIndex = defaultStartIndex
+        self.__defaultEndIndex = defaultEndIndex
+        self.__defaultInterval = defaultInterval
         if shape:
             self.__shape = shape
         else:
@@ -95,7 +96,7 @@ class DataView(object):
     @property
     def Description(self):
         """
-        Add an esy to understand description not required
+        Add an easy to understand description not required
         :return:
         """
         return self.__description
@@ -103,7 +104,7 @@ class DataView(object):
     @Description.setter
     def Description(self, description):
         """
-        Add an esy to understand description not required
+        Add an easy to understand description not required
         :param description:
         :return:
         """
@@ -120,60 +121,75 @@ class DataView(object):
     @Queries.setter
     def Queries(self, queries):
         """
-        Array of dataviequery  required
+        Array of queries  required
         :param queries:
         :return:
         """
         self.__queries = queries
 
     @property
-    def FieldSets(self):
+    def IndexField (self):
         """
-
+        IndexField field  required
         :return:
         """
-        return self.__fieldsets
+        return self.__indexField
 
-    @FieldSets.setter
-    def FieldSets(self, fieldsets):
+    @IndexField.setter
+    def IndexField(self, indexField):
         """
-        :param fieldsets:
+        Field indexField  required
+        :param indexField:
         :return:
         """
-        self.__fieldsets = fieldsets
+        self.__indexField = indexField
 
     @property
-    def Sectioners(self):
+    def DataFieldSets(self):
         """
-           not required
         :return:
         """
-        return self.__sectioners
+        return self.__dataFieldSets
 
-    @Sectioners.setter
-    def Sectioners(self, sectioners):
+    @DataFieldSets.setter
+    def DataFieldSets(self, dataFieldSets):
         """
-        DataViewindexConfig   not required
-        :param sectioners:
+        :param dataFieldSets:
         :return:
         """
-        self.__sectioners = sectioners
+        self.__dataFieldSets = dataFieldSets
+
+    @property
+    def GroupingFields(self):
+        """
+        :return:
+        """
+        return self.__groupingFields
+
+    @GroupingFields.setter
+    def GroupingFields(self, groupingFields):
+        """
+        Array of fields   not required
+        :param groupingFields:
+        :return:
+        """
+        self.__groupingFields = groupingFields
 
     @property
     def IndexTypeCode(self):
         """
         :return:
         """
-        return self.__indextypecode
+        return self.__indexTypeCode
 
     @IndexTypeCode.setter
-    def IndexTypeCode(self, indextypecode):
+    def IndexTypeCode(self, indexTypeCode):
         """
         Currently limited to "DateTime" string  required
-        :param indexDataType:
+        :param indexTypeCode:
         :return:
         """
-        self.__indextypecode = indextypecode
+        self.__indexTypeCode = indexTypeCode
 
     @property
     def DefaultStartIndex(self):
@@ -181,16 +197,16 @@ class DataView(object):
         DefaultStartIndex   not required
         :return:
         """
-        return self.__defaultstartindex
+        return self.__defaultStartIndex
 
     @DefaultStartIndex.setter
-    def DefaultStartIndex(self, defaultstartindex):
+    def DefaultStartIndex(self, defaultStartIndex):
         """DefaultStartIndex
         DefaultStartIndex string  not required
-        :param defaultstartindex:
+        :param defaultStartIndex:
         :return:
         """
-        self.__defaultstartindex = defaultstartindex
+        self.__defaultStartIndex = defaultStartIndex
 
     @property
     def DefaultEndIndex(self):
@@ -198,16 +214,16 @@ class DataView(object):
         DefaultEndIndex string  not required
         :return:
         """
-        return self.__defaultendindex
+        return self.__defaultEndIndex
 
     @DefaultEndIndex.setter
-    def DefaultEndIndex(self, defaultendindex):
+    def DefaultEndIndex(self, defaultEndIndex):
         """DefaultEndIndex
         DefaultEndIndex  string not required
-        :param defaultendindex:
+        :param defaultEndIndex:
         :return:
         """
-        self.__defaultendindex = defaultendindex
+        self.__defaultEndIndex = defaultEndIndex
 
     @property
     def DefaultInterval(self):
@@ -215,16 +231,16 @@ class DataView(object):
         DefaultInterval string not required
         :return:
         """
-        return self.__defaultinterval
+        return self.__defaultInterval
 
     @DefaultInterval.setter
-    def DefaultInterval(self, defaultinterval):
+    def DefaultInterval(self, defaultInterval):
         """DefaultStartIndex
         DefaultInterval string not required
-        :param groupRules:
+        :param defaultInterval:
         :return:
         """
-        self.__defaultinterval = defaultinterval
+        self.__defaultInterval = defaultInterval
 
     @property
     def Shape(self):
@@ -236,9 +252,9 @@ class DataView(object):
 
     @Shape.setter
     def Shape(self, shape):
-        """DefaultStartIndex
+        """
         Shape string  not required
-        :param groupRules:
+        :param shape:
         :return:
         """
         self.__shape = shape
@@ -262,15 +278,15 @@ class DataView(object):
             for value in self.Queries:
                 dictionary["Queries"].append(value.toDictionary())
 
-        if hasattr(self, "FieldSets"):
-            dictionary["FieldSets"] = []
-            for value in self.FieldSets:
-                dictionary["FieldSets"].append(value.toDictionary())
+        if hasattr(self, "DataFieldSets"):
+            dictionary["DataFieldSets"] = []
+            for value in self.DataFieldSets:
+                dictionary["DataFieldSets"].append(value.toDictionary())
 
-        if hasattr(self, "Sectioners"):
-            dictionary["Sectioners"] = []
-            for value in self.Sectioners:
-                dictionary["Sectioners"].append(value.toDictionary())
+        if hasattr(self, "GroupingFields"):
+            dictionary["GroupingFields"] = []
+            for value in self.GroupingFields:
+                dictionary["GroupingFields"].append(value.toDictionary())
 
         if hasattr(self, "IndexTypeCode"):
             dictionary["IndexTypeCode"] = self.IndexTypeCode.name
@@ -317,20 +333,20 @@ class DataView(object):
                     dataView.Queries.append(
                         Query.fromDictionary(value))
 
-        if "FieldSets" in content:
-            FieldSets = content["FieldSets"]
-            if FieldSets is not None and len(FieldSets) > 0:
-                dataView.FieldSets = []
-                for value in FieldSets:
-                    dataView.FieldSets.append(
+        if "DataFieldSets" in content:
+            DataFieldSets = content["DataFieldSets"]
+            if DataFieldSets is not None and len(DataFieldSets) > 0:
+                dataView.DataFieldSets = []
+                for value in DataFieldSets:
+                    dataView.DataFieldSets.append(
                         FieldSet.fromDictionary(value))
 
-        if "Sectioners" in content:
-            Sectioners = content["Sectioners"]
-            if Sectioners is not None and len(Sectioners) > 0:
-                dataView.Sectioners = []
-                for value in Sectioners:
-                    dataView.Sectioners.append(
+        if "GroupingFields" in content:
+            GroupingFields = content["GroupingFields"]
+            if GroupingFields is not None and len(GroupingFields) > 0:
+                dataView.GroupingFields = []
+                for value in GroupingFields:
+                    dataView.GroupingFields.append(
                         Field.fromDictionary(value))
 
         if "IndexTypeCode" in content:

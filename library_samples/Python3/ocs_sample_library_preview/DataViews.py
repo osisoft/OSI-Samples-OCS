@@ -220,14 +220,13 @@ class DataViews(object):
         return results
 
     def getResolvedAvailableFieldSets(
-        self, namespace_id, dataView_id, query_id
+        self, namespace_id, dataView_id
     ):
         """
         Retrieves all of the available field sets from the specified Data View from
             Sds Service
         :param namespace_id: namespace to work against
         :param dataView_id: Data View to work against
-        :param query_id: Query to see data items of
         :return:
         """
         if namespace_id is None:
@@ -237,8 +236,7 @@ class DataViews(object):
             self.__dataViewResolvedAvailableFieldSets.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
-                dataView_id=dataView_id,
-                query_id=query_id
+                dataView_id=dataView_id
             ),
             headers=self.__baseClient.sdsHeaders(),
         )

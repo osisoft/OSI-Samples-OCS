@@ -1,5 +1,5 @@
 
-from ocs_sample_library_preview import *
+from ocs_sample_library_preview import DataView, Field, FieldSource, OCSClient, Query, SdsStream, SdsType, SdsTypeCode, SdsTypeProperty
 import configparser
 import datetime
 import time
@@ -16,11 +16,6 @@ sampleDataViewId = "DataView_Sample"
 sampleDataViewName = "DataView_Sample_Name"
 sampleDataViewDescription = "A Sample Description that describes that this "\
                             "Data View is just used for our sample."
-sampleDataViewDescription_modified = "A longer sample description that "\
-                                     "describes that this Data View is just "\
-                                     "used for our sample and this part shows"\
-                                     " a put."
-
 sampleTypeId = "Time_SampleType"
 samplePressureId2 = "Time_SampleType_old"
 sampleStreamId = "dvTank2"
@@ -47,7 +42,7 @@ startTime = None
 endTime = None
 interval = "00:20:00"
 queryID = "stream"
-fieldSourceForSectioner = FieldSource.Id
+fieldSourceForGrouping = FieldSource.Id
 queryString = "dvTank*"
 fieldToConsolidateTo = "temperature"
 fieldToConsolidate = "ambient_temp"
@@ -71,7 +66,7 @@ def createData(ocsClient):
     temperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidateTo,
                                                 sdsType=doubleType)
     ambientTemperatureDoubleProperty = SdsTypeProperty(id=fieldToConsolidate,
-                                                        sdsType=doubleType)
+                                                       sdsType=doubleType)
     timeDateTimeProperty = SdsTypeProperty(id="time", sdsType=dateTimeType,
                                            isKey=True)
 
@@ -120,8 +115,6 @@ def createData(ocsClient):
 
     print('Generating Values')
     for i in range(1, 30, 1):
-        pv = str(random.uniform(0, 100))
-        tv = str(random.uniform(50, 70))
         timestamp = (start + datetime.timedelta(minutes=i * 2)
                      ).isoformat(timespec='seconds')
         pVal = valueWithTime(timestamp, random.uniform(
@@ -150,9 +143,9 @@ def find_Field(fieldSetFields, fieldSource):
             return field
 
 
-def find_FieldSet(fieldSets, fieldSetSourceType):
+def find_FieldSet(fieldSets, fieldSetQueryId):
     for fieldSet in fieldSets:
-        if fieldSet.SourceType == fieldSetSourceType:
+        if fieldSet.QueryId == fieldSetQueryId:
             return fieldSet
 
 
@@ -178,7 +171,9 @@ def main(test=False):
         print(" ######  #    #   #   #    #   ##   # ###### #    # #          #    ")
         print("--------------------------------------------------------------------")
 
-        # Step 0
+        # Step 1
+        print()
+        print("Step 1: Authenticate against OCS")
         ocsClient = OCSClient(config.get('Access', 'ApiVersion'),
                               config.get('Access', 'Tenant'),
                               config.get('Access', 'Resource'),
@@ -190,76 +185,64 @@ def main(test=False):
         print(namespaceId)
         print(ocsClient.uri)
 
-        # Step 0.5
+        # Step 2
+        print()
+        print ("Step 2: Create types, streams, and data")
         if needData:
             createData(ocsClient)
 
-        # Step 1
-
-        dataView = DataView(id=sampleDataViewId)
-        print
-        print("Creating Data View")
+        # Step 3
+        print()
+        print("Step 3: Create a data view")
+        dataView = DataView(id=sampleDataViewId,name=sampleDataViewName,description=sampleDataViewDescription)
         dataViews = ocsClient.DataViews.postDataView(namespaceId, dataView)
 
-        # Step 2
-        print
-        print("Getting Data View")
+        # Step 4
+        print()
+        print("Step 4: Retrieve the data view")
         dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
         print(dv.toJson())
 
-        # Step 3
-        print
-        print("Updating Data View")
-
-        dv.Description = sampleDataViewDescription_modified
+        # Step 5
+        print()
+        print("Step 5: Add a query for data items")
         query = Query(id=queryID, value=queryString)
         dv.Queries.append(query)
         # No Data View returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        print("Getting updated Data View")
-        dv = ocsClient.DataViews.getDataView(namespaceId, sampleDataViewId)
-        print(dv.toJson())
-
-        assert len(dv.Queries) > 0, "Error getting back Dataview with queries"
-
-        # Step 4
-        print
-        print("Getting ResolvedDataItems")
-
+        # Step 6
+        print()
+        print("Step 6: View items found by the query")
+        print("List data items found by the query:")
         dataItems = ocsClient.DataViews.getResolvedDataItems(
             namespaceId, sampleDataViewId, queryID)
         print(dataItems.toJson())
 
-        print
-        print("Getting ResolvedIneligibleDataItems")
+        print("List ineligible data items found by the query:")
         dataItems = ocsClient.DataViews.getResolvedIneligibleDataItems(
             namespaceId, sampleDataViewId, queryID)
         print(dataItems.toJson())
 
-        # Step 5
-        print
-        print("Getting AvailableFieldSets")
-
+        # Step 7
+        print()
+        print("Step 7: View fields available to include in the data view")
         availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
-            namespaceId, sampleDataViewId, queryID)
+            namespaceId, sampleDataViewId)
         print(availablefields.toJson())
 
-        # Step 6
-        fields = availablefields.Items
-
-        dv.FieldSets = fields
-
-        print("Updating Data View")
+        # Step 8
+        print()
+        print("Step 8: Include some of the available fields")
+        dv.DataFieldSets = availablefields.Items
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        print("Now AvailableFieldSets")
+        print("List available field sets:")
         availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
-            namespaceId, sampleDataViewId, queryID)
+            namespaceId, sampleDataViewId)
         print(availablefields.toJson())
 
-        print
-        print("Retrieving data from the Data View")
+        print("Retrieving data from the data view:")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
@@ -267,51 +250,16 @@ def main(test=False):
         print(len(dataViewDataPreview1))
         assert len(dataViewDataPreview1) > 0, "Error getting back data"
 
-        # Step 7
-        section = Field(source=fieldSourceForSectioner,
+        # Step 9
+        print()
+        print("Step 9: Group the data view")
+        grouping = Field(source=fieldSourceForGrouping,
                         label="{DistinguisherValue} {FirstKey}")
-        dv.Sectioners.append(section)
-
-        print("Updating Data View with sectioner")
+        dv.GroupingFields.append(grouping)
         # No DataView returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        print
-        print("Retrieving data from the Data View")
-        dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
-            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
-            endIndex=endTime, interval=interval)
-        print(str(dataViewDataPreview1))
-        assert len(dataViewDataPreview1) > 0, "Error getting back data"
-
-        # Step 8
-
-        print
-        print("Now AvailableFieldSets")
-        availablefields = ocsClient.DataViews.getResolvedAvailableFieldSets(
-            namespaceId, sampleDataViewId, queryID)
-        print(availablefields.toJson())
-
-        dvDataItemFieldSet = find_FieldSet(
-            dv.FieldSets, FieldSetSourceType.DataItem)
-        field = find_Field(dvDataItemFieldSet.Fields, fieldSourceForSectioner)
-        dvDataItemFieldSet.Fields.remove(field)
-        # No Data View returned, success is 204
-        ocsClient.DataViews.putDataView(namespaceId, dv)
-
-        # Step 9
-        print("Setting up distinguisher")
-
-        field = find_FieldSet(dv.FieldSets, FieldSetSourceType.DataItem)
-        field.Distinguisher = dv.Sectioners[0]
-        dv.Sectioners = []
-
-        print("Updating Data View with distinguisher")
-        # No Data View returned, success is 204
-        ocsClient.DataViews.putDataView(namespaceId, dv)
-
-        print
-        print("Retrieving data from the Data View")
+        print("Retrieving data from the data view:")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
@@ -319,24 +267,36 @@ def main(test=False):
         assert len(dataViewDataPreview1) > 0, "Error getting back data"
 
         # Step 10
-        print
-        print("Consolidating data")
+        print()
+        print("Step 10: Identify data items")
+        identify = dv.GroupingFields.pop()
+        dvDataItemFieldSet = find_FieldSet(dv.DataFieldSets, queryID)
+        dvDataItemFieldSet.IdentifyingField = identify
+        # No Data View returned, success is 204
+        ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        field1 = find_Field_Key(dvDataItemFieldSet.Fields,
+        print("Retrieving data from the data view:")
+        dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
+            namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
+            endIndex=endTime, interval=interval)
+        print(str(dataViewDataPreview1))
+        assert len(dataViewDataPreview1) > 0, "Error getting back data"
+
+        # Step 11
+        print()
+        print("Step 11: Consolidate data fields")
+        field1 = find_Field_Key(dvDataItemFieldSet.DataFields,
                                 FieldSource.PropertyId, fieldToConsolidateTo)
-        field2 = find_Field_Key(dvDataItemFieldSet.Fields,
+        field2 = find_Field_Key(dvDataItemFieldSet.DataFields,
                                 FieldSource.PropertyId, fieldToConsolidate)
         print(field1.toJson())
         print(field2.toJson())
         field1.Keys.append(fieldToConsolidate)
-        dvDataItemFieldSet.Fields.remove(field2)
-
-        print("Updating Data View with consolidation")
+        dvDataItemFieldSet.DataFields.remove(field2)
         # No Data View returned, success is 204
         ocsClient.DataViews.putDataView(namespaceId, dv)
 
-        print
-        print("Retrieving data from the Data View")
+        print("Retrieving data from the data view:")
         dataViewDataPreview1 = ocsClient.DataViews.getDataInterpolated(
             namespace_id=namespaceId, dataView_id=sampleDataViewId, startIndex=startTime,
             endIndex=endTime, interval=interval)
@@ -357,11 +317,11 @@ def main(test=False):
         # Data View deletion
         #######################################################################
 
-        print
-        print
-        print("Deleting Data View")
+        # Step 12
+        print()
+        print("Step 12: Delete sample objects from OCS")
+        print("Deleting data view...")
 
-        # Step 11
         suppressError(lambda: ocsClient.DataViews.deleteDataView(
             namespaceId, sampleDataViewId))
 
@@ -377,13 +337,13 @@ def main(test=False):
             print("Verification OK: Data View deleted")
 
         if needData:
-            print("Deleting added Streams")
+            print("Deleting sample streams...")
             suppressError(lambda: ocsClient.Streams.deleteStream(
                 namespaceId, sampleStreamId))
             suppressError(lambda: ocsClient.Streams.deleteStream(
                 namespaceId, sampleStreamId2))
 
-            print("Deleting added Types")
+            print("Deleting sample types...")
             suppressError(lambda: ocsClient.Types.deleteType(
                 namespaceId, sampleTypeId))
             suppressError(lambda: ocsClient.Types.deleteType(
@@ -393,7 +353,7 @@ def main(test=False):
 
 
 main()
-print("done")
+print("Complete!")
 
 # Straightforward test to make sure program is working using asserts in
 # program.  Can run it yourself with pytest program.py
