@@ -163,6 +163,7 @@ public class App {
             System.out.println();
             System.out.println("Step 10: Identify data items");
             FieldSet dvDataItemFieldSet = findFieldSet(dataView.getDataFieldSets(), sampleQueryId);
+            assert dvDataItemFieldSet != null : "Error finding field set";
             dvDataItemFieldSet.setIdentifyingField(dataView.getGroupingFields()[0]);
             dataView.setGroupingFields(new Field[0]);
             ocsClient.DataViews.createOrUpdateDataView(namespaceId, dataView);
@@ -180,6 +181,8 @@ public class App {
                     sampleFieldToConsolidateTo);
             Field field2 = findField(dvDataItemFieldSet.getDataFields(), FieldSource.PropertyId,
                     sampleFieldToConsolidate);
+            assert field1 != null : "Error finding data field";
+            assert field2 != null : "Error finding data field";
             System.out.println(ocsClient.mGson.toJson(field1));
             System.out.println(ocsClient.mGson.toJson(field2));
             ArrayList<String> keys = new ArrayList<String>(Arrays.asList(field1.getKeys()));
