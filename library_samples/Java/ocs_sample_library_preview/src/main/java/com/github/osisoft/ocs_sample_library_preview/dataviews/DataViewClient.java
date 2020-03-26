@@ -14,29 +14,28 @@ import com.github.osisoft.ocs_sample_library_preview.*;
  * This client handles calls against the Data View API on OCS
  */
 public class DataViewClient {
+    private String TenantId;
     private String baseUrl = null;
     private String apiVersion = null;
     private Gson mGson = null;
     private BaseClient baseClient;
     // REST API url strings
     // base of all requests
-    private String requestBase = "api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}";
+    private String requestBase;
 
-    // Data View path
-    private String dataViewBase = requestBase + "/DataViews";
-    private String dataViewPath = dataViewBase + "/{dataViewId}";
-    private String getDataViews = dataViewBase + "?skip={skip}&count={count}";
-    private String resolvedPath = dataViewPath + "/Resolved";
-    private String getDataItems = resolvedPath + "/DataItems/{queryId}?cache={cache}&skip={skip}&count={count}";
-    private String getIneligibleDataItems = resolvedPath
-            + "/IneligibleDataItems/{queryId}?cache={cache}&skip={skip}&count={count}";
-    private String getGroups = resolvedPath + "/Groups?cache={cache}&skip={skip}&count={count}";
-    private String getAvailableFieldSets = resolvedPath + "/AvailableFieldSets?cache={cache}";
-    private String getFieldMappings = resolvedPath + "/FieldMappings?cache={cache}";
-    private String getStatistics = resolvedPath + "/Statistics?cache={cache}";
-    private String dataInterpolatedPath = dataViewPath + "/Data/Interpolated";
-    private String getDataInterpolated = dataInterpolatedPath
-            + "?startIndex={startIndex}&endIndex={endIndex}&interval={interval}&form={form}&cache={cache}&count={count}";
+    // Data View paths
+    private String dataViewBase;
+    private String dataViewPath;
+    private String getDataViews;
+    private String resolvedPath;
+    private String getDataItems;
+    private String getIneligibleDataItems;
+    private String getGroups;
+    private String getAvailableFieldSets;
+    private String getFieldMappings;
+    private String getStatistics;
+    private String dataInterpolatedPath;
+    private String getDataInterpolated;
 
     /**
      * Constructor
@@ -48,9 +47,25 @@ public class DataViewClient {
         this.baseUrl = base.baseUrl;
         this.apiVersion = base.apiVersion;
         this.mGson = base.mGson;
+        this.TenantId = base.getTenantId();
+        this.requestBase = "api/" + apiVersion + "-preview/Tenants/" + TenantId + "/Namespaces/{namespaceId}";
+        this.dataViewBase = requestBase + "/DataViews";
+        this.dataViewPath = dataViewBase + "/{dataViewId}";
+        this.getDataViews = dataViewBase + "?skip={skip}&count={count}";
+        this.resolvedPath = dataViewPath + "/Resolved";
+        this.getDataItems = resolvedPath + "/DataItems/{queryId}?cache={cache}&skip={skip}&count={count}";
+        this.getIneligibleDataItems = resolvedPath
+                + "/IneligibleDataItems/{queryId}?cache={cache}&skip={skip}&count={count}";
+        this.getGroups = resolvedPath + "/Groups?cache={cache}&skip={skip}&count={count}";
+        this.getAvailableFieldSets = resolvedPath + "/AvailableFieldSets?cache={cache}";
+        this.getFieldMappings = resolvedPath + "/FieldMappings?cache={cache}";
+        this.getStatistics = resolvedPath + "/Statistics?cache={cache}";
+        this.dataInterpolatedPath = dataViewPath + "/Data/Interpolated";
+        this.getDataInterpolated = dataInterpolatedPath
+                + "?startIndex={startIndex}&endIndex={endIndex}&interval={interval}&form={form}&cache={cache}&count={count}";
     }
 
-    private <T> T getRequestResponse(URL url, String method, String body) throws SdsError {
+    private String getRequestResponse(URL url, String method, String body) throws SdsError {
         HttpURLConnection urlConnection = null;
         String response = "";
 
@@ -81,45 +96,40 @@ public class DataViewClient {
             e.printStackTrace();
         }
 
-        T results = mGson.fromJson(response, new TypeToken<T>() {
-        }.getType());
-        return results;
+        return response;
     }
 
     /**
      * Returns the specified data view.
      * 
-     * @param tenantId    The tenant identifier
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @return The requested data view
      * @throws SdsError Error response
      */
-    public DataView getDataView(String tenantId, String namespaceId, String dataViewId)
-            throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + dataViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId));
-        return getRequestResponse(url, "GET", null);
+    public DataView getDataView(String namespaceId, String dataViewId) throws SdsError, MalformedURLException {
+        URL url = new URL(
+                baseUrl + dataViewPath.replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId));
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<DataView>() {
+        }.getType());
     }
 
     /**
      * Returns a list of data views.
      * 
-     * @param tenantId    The tenant identifier
      * @param namespaceId The namespace identifier
      * @return A page of data views. A response header, Total-Count, indicates the
      *         total size of the collection.
      * @throws SdsError Error response
      */
-    public ArrayList<DataView> getDataViews(String tenantId, String namespaceId)
-            throws SdsError, MalformedURLException {
-        return getDataViews(tenantId, namespaceId, 0, 100);
+    public ArrayList<DataView> getDataViews(String namespaceId) throws SdsError, MalformedURLException {
+        return getDataViews(namespaceId, 0, 100);
     }
 
     /**
      * Returns a list of data views.
      * 
-     * @param tenantId    The tenant identifier
      * @param namespaceId The namespace identifier
      * @param skip        An optional parameter representing the zero-based offset
      *                    of the first data view to retrieve. If not specified, a
@@ -130,30 +140,30 @@ public class DataViewClient {
      * @return arraylist of DataViews
      * @throws SdsError any error that occurs
      */
-    public ArrayList<DataView> getDataViews(String tenantId, String namespaceId, Integer skip, Integer count)
+    public ArrayList<DataView> getDataViews(String namespaceId, Integer skip, Integer count)
             throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getDataViews.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{skip}", skip.toString())
-                .replace("{count}", count.toString()));
-        return getRequestResponse(url, "GET", null);
+        URL url = new URL(baseUrl + getDataViews.replace("{namespaceId}", namespaceId)
+                .replace("{skip}", skip.toString()).replace("{count}", count.toString()));
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<ArrayList<DataView>>() {
+        }.getType());
     }
 
     /**
      * Create a new data view with a system-generated identifier.
      * 
-     * @param tenantId    The tenant identifier
      * @param namespaceId The namespace identifier
      * @param dataView    A DataView object whose Id is null or unspecified
      * @return The data view as persisted, including values for optional parameters
      *         that were omitted in the request.
      * @throws SdsError Error response
      */
-    public DataView createDataView(String tenantId, String namespaceId, DataView dataView)
-            throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + dataViewBase.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId));
+    public DataView createDataView(String namespaceId, DataView dataView) throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl + dataViewBase.replace("{namespaceId}", namespaceId));
         String body = mGson.toJson(dataView);
-        return getRequestResponse(url, "POST", body);
+        String response = getRequestResponse(url, "POST", body);
+        return mGson.fromJson(response, new TypeToken<DataView>() {
+        }.getType());
     }
 
     /**
@@ -164,26 +174,25 @@ public class DataViewClient {
      * using a Get function. If the data views do not match, the request fails with
      * 409 Conflict.
      * 
-     * @param tenantId    The tenant identifier
      * @param namespaceId The namespace identifier
      * @param dataView    A DataView object whose Id will be used in the URL path
      * @return The data view as persisted, including values for optional parameters
      *         that were omitted in the request.
      * @throws SdsError Error response
      */
-    public DataView getOrCreateDataView(String tenantId, String namespaceId, DataView dataView)
-            throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + dataViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataView.getId()));
+    public DataView getOrCreateDataView(String namespaceId, DataView dataView) throws SdsError, MalformedURLException {
+        URL url = new URL(
+                baseUrl + dataViewPath.replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataView.getId()));
         String body = mGson.toJson(dataView);
-        return getRequestResponse(url, "POST", body);
+        String response = getRequestResponse(url, "POST", body);
+        return mGson.fromJson(response, new TypeToken<DataView>() {
+        }.getType());
     }
 
     /**
      * If a data view with the same id already exists, it is updated to the
      * specified value. Otherwise, a new data view is created.
      * 
-     * @param tenantId    The tenant identifier
      * @param namespaceId The namespace identifier
      * @param dataView    A DataView object whose Id will be used in the URL path
      * @return If data view with the same id exists, null. Otherwise, the data view
@@ -191,26 +200,26 @@ public class DataViewClient {
      *         omitted in the request.
      * @throws SdsError Error response
      */
-    public DataView createOrUpdateDataView(String tenantId, String namespaceId, DataView dataView)
+    public DataView createOrUpdateDataView(String namespaceId, DataView dataView)
             throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + dataViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataView.getId()));
+        URL url = new URL(
+                baseUrl + dataViewPath.replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataView.getId()));
         String body = mGson.toJson(dataView);
-        return getRequestResponse(url, "POST", body);
+        String response = getRequestResponse(url, "PUT", body);
+        return mGson.fromJson(response, new TypeToken<DataView>() {
+        }.getType());
     }
 
     /**
      * Delete the data view with the specified id.
      * 
-     * @param tenantId    The tenant identifier
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @throws SdsError Error response
      */
-    public void deleteDataView(String tenantId, String namespaceId, String dataViewId)
-            throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + dataViewPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId));
+    public void deleteDataView(String namespaceId, String dataViewId) throws SdsError, MalformedURLException {
+        URL url = new URL(
+                baseUrl + dataViewPath.replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId));
         getRequestResponse(url, "DELETE", null);
     }
 
@@ -219,8 +228,7 @@ public class DataViewClient {
      * query, and which are eligible for use in the current data view. A data view
      * has a collection of zero or more queries. Each query has an identifier. Those
      * identifiers are used here as part of the request path.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param queryId     The Query identifier
@@ -228,9 +236,9 @@ public class DataViewClient {
      *         DataItems that resolved.
      * @throws SdsError Error response
      */
-    public ResolvedItems<DataItem> getDataItemsByQuery(String tenantId, String namespaceId, String dataViewId,
-            String queryId) throws SdsError, MalformedURLException {
-        return getDataItemsByQuery(tenantId, namespaceId, dataViewId, queryId, "Preserve", 0, 100);
+    public ResolvedItems<DataItem> getDataItemsByQuery(String namespaceId, String dataViewId, String queryId)
+            throws SdsError, MalformedURLException {
+        return getDataItemsByQuery(namespaceId, dataViewId, queryId, "Preserve", 0, 100);
     }
 
     /**
@@ -238,8 +246,7 @@ public class DataViewClient {
      * query, and which are eligible for use in the current data view. A data view
      * has a collection of zero or more queries. Each query has an identifier. Those
      * identifiers are used here as part of the request path.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param queryId     The Query identifier
@@ -256,88 +263,87 @@ public class DataViewClient {
      *         DataItems that resolved.
      * @throws SdsError Error response
      */
-    public ResolvedItems<DataItem> getDataItemsByQuery(String tenantId, String namespaceId, String dataViewId,
-            String queryId, String cache, Integer skip, Integer count) throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getDataItems.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId).replace("{queryId}", queryId)
-                .replace("{cache}", cache).replace("{skip}", skip.toString()).replace("{count}", count.toString()));
-        return getRequestResponse(url, "GET", null);
-    }
-
-    /**
-     * Gets the paged collection of data items that are the results of an individual
-     * query, but which are not eligible for use in the current data view. A common
-     * reason for ineligibility is that the item's index property is of a different
-     * type than the data view expects. A data view has a collection of zero or more
-     * queries. Each query has an identifier. Those identifiers are used here as
-     * part of the request path.
-     * 
-     * @param tenantId    The tenant identifier
-     * @param namespaceId The namespace identifier
-     * @param dataViewId  The data view identifier
-     * @param queryId     The Query identifier
-     * @return An object with a "TimeOfResolution" and a collection of "Items", the
-     *         DataItems that resolved.
-     * @throws SdsError Error response
-     */
-    public ResolvedItems<DataItem> getIneligibleDataItemsByQuery(String tenantId, String namespaceId, String dataViewId,
-            String queryId) throws SdsError, MalformedURLException {
-        return getIneligibleDataItemsByQuery(tenantId, namespaceId, dataViewId, queryId, "Preserve", 0, 100);
-    }
-
-    /**
-     * Gets the paged collection of data items that are the results of an individual
-     * query, but which are not eligible for use in the current data view. A common
-     * reason for ineligibility is that the item's index property is of a different
-     * type than the data view expects. A data view has a collection of zero or more
-     * queries. Each query has an identifier. Those identifiers are used here as
-     * part of the request path.
-     * 
-     * @param tenantId    The tenant identifier
-     * @param namespaceId The namespace identifier
-     * @param dataViewId  The data view identifier
-     * @param queryId     The Query identifier
-     * @param cache       "Refresh" to force the resource to re-resolve. "Preserve"
-     *                    to use cached information, if available. "Preserve" is the
-     *                    default value.
-     * @param skip        An optional parameter representing the zero-based offset
-     *                    of the first data item to retrieve. If not specified, a
-     *                    default value of 0 is used.
-     * @param count       An optional parameter representing the maximum number of
-     *                    data items to retrieve. If not specified, a default value
-     *                    of 100 is used.
-     * @return An object with a "TimeOfResolution" and a collection of "Items", the
-     *         DataItems that resolved.
-     * @throws SdsError Error response
-     */
-    public ResolvedItems<DataItem> getIneligibleDataItemsByQuery(String tenantId, String namespaceId, String dataViewId,
-            String queryId, String cache, Integer skip, Integer count) throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getIneligibleDataItems.replace("{apiVersion}", apiVersion)
-                .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+    public ResolvedItems<DataItem> getDataItemsByQuery(String namespaceId, String dataViewId, String queryId,
+            String cache, Integer skip, Integer count) throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl + getDataItems.replace("{namespaceId}", namespaceId)
                 .replace("{dataViewId}", dataViewId).replace("{queryId}", queryId).replace("{cache}", cache)
                 .replace("{skip}", skip.toString()).replace("{count}", count.toString()));
-        return getRequestResponse(url, "GET", null);
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<ResolvedItems<DataItem>>() {
+        }.getType());
+    }
+
+    /**
+     * Gets the paged collection of data items that are the results of an individual
+     * query, but which are not eligible for use in the current data view. A common
+     * reason for ineligibility is that the item's index property is of a different
+     * type than the data view expects. A data view has a collection of zero or more
+     * queries. Each query has an identifier. Those identifiers are used here as
+     * part of the request path.
+     *
+     * @param namespaceId The namespace identifier
+     * @param dataViewId  The data view identifier
+     * @param queryId     The Query identifier
+     * @return An object with a "TimeOfResolution" and a collection of "Items", the
+     *         DataItems that resolved.
+     * @throws SdsError Error response
+     */
+    public ResolvedItems<DataItem> getIneligibleDataItemsByQuery(String namespaceId, String dataViewId, String queryId)
+            throws SdsError, MalformedURLException {
+        return getIneligibleDataItemsByQuery(namespaceId, dataViewId, queryId, "Preserve", 0, 100);
+    }
+
+    /**
+     * Gets the paged collection of data items that are the results of an individual
+     * query, but which are not eligible for use in the current data view. A common
+     * reason for ineligibility is that the item's index property is of a different
+     * type than the data view expects. A data view has a collection of zero or more
+     * queries. Each query has an identifier. Those identifiers are used here as
+     * part of the request path.
+     *
+     * @param namespaceId The namespace identifier
+     * @param dataViewId  The data view identifier
+     * @param queryId     The Query identifier
+     * @param cache       "Refresh" to force the resource to re-resolve. "Preserve"
+     *                    to use cached information, if available. "Preserve" is the
+     *                    default value.
+     * @param skip        An optional parameter representing the zero-based offset
+     *                    of the first data item to retrieve. If not specified, a
+     *                    default value of 0 is used.
+     * @param count       An optional parameter representing the maximum number of
+     *                    data items to retrieve. If not specified, a default value
+     *                    of 100 is used.
+     * @return An object with a "TimeOfResolution" and a collection of "Items", the
+     *         DataItems that resolved.
+     * @throws SdsError Error response
+     */
+    public ResolvedItems<DataItem> getIneligibleDataItemsByQuery(String namespaceId, String dataViewId, String queryId,
+            String cache, Integer skip, Integer count) throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl + getIneligibleDataItems.replace("{namespaceId}", namespaceId)
+                .replace("{dataViewId}", dataViewId).replace("{queryId}", queryId).replace("{cache}", cache)
+                .replace("{skip}", skip.toString()).replace("{count}", count.toString()));
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<ResolvedItems<DataItem>>() {
+        }.getType());
     }
 
     /**
      * Gets the collection of Groups that resolved for a data view.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @return An object with a "TimeOfResolution" and a collection of "Items", the
      *         Groups that resolved.
      * @throws SdsError Error response
      */
-    public ResolvedItems<Group> getGroups(String tenantId, String namespaceId, String dataViewId)
+    public ResolvedItems<Group> getGroups(String namespaceId, String dataViewId)
             throws SdsError, MalformedURLException {
-        return getGroups(tenantId, namespaceId, dataViewId, "Preserve", 0, 100);
+        return getGroups(namespaceId, dataViewId, "Preserve", 0, 100);
     }
 
     /**
      * Gets the collection of Groups that resolved for a data view.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param cache       "Refresh" to force the resource to re-resolve. "Preserve"
@@ -353,35 +359,34 @@ public class DataViewClient {
      *         Groups that resolved.
      * @throws SdsError Error response
      */
-    public ResolvedItems<Group> getGroups(String tenantId, String namespaceId, String dataViewId, String cache,
-            Integer skip, Integer count) throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getGroups.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId).replace("{cache}", cache)
-                .replace("{skip}", skip.toString()).replace("{count}", count.toString()));
-        return getRequestResponse(url, "GET", null);
+    public ResolvedItems<Group> getGroups(String namespaceId, String dataViewId, String cache, Integer skip,
+            Integer count) throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl + getGroups.replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId)
+                .replace("{cache}", cache).replace("{skip}", skip.toString()).replace("{count}", count.toString()));
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<ResolvedItems<Group>>() {
+        }.getType());
     }
 
     /**
      * Gets the collection of field sets that are available for use in the data
      * view, and which are not already included in the data view.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @return An object with a "TimeOfResolution" and a collection of "Items", the
      *         FieldSets that resolved and which are still available
      * @throws SdsError Error response
      */
-    public ResolvedItems<FieldSet> getAvailableFieldSets(String tenantId, String namespaceId, String dataViewId)
+    public ResolvedItems<FieldSet> getAvailableFieldSets(String namespaceId, String dataViewId)
             throws SdsError, MalformedURLException {
-        return getAvailableFieldSets(tenantId, namespaceId, dataViewId, "Preserve");
+        return getAvailableFieldSets(namespaceId, dataViewId, "Preserve");
     }
 
     /**
      * Gets the collection of field sets that are available for use in the data
      * view, and which are not already included in the data view.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param cache       "Refresh" to force the resource to re-resolve. "Preserve"
@@ -391,35 +396,34 @@ public class DataViewClient {
      *         FieldSets that resolved and which are still available
      * @throws SdsError Error response
      */
-    public ResolvedItems<FieldSet> getAvailableFieldSets(String tenantId, String namespaceId, String dataViewId,
-            String cache) throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getAvailableFieldSets.replace("{apiVersion}", apiVersion)
-                .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+    public ResolvedItems<FieldSet> getAvailableFieldSets(String namespaceId, String dataViewId, String cache)
+            throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl + getAvailableFieldSets.replace("{namespaceId}", namespaceId)
                 .replace("{dataViewId}", dataViewId).replace("{cache}", cache));
-        return getRequestResponse(url, "GET", null);
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<ResolvedItems<FieldSet>>() {
+        }.getType());
     }
 
     /**
      * Gets the collection of field mappings resolved for the data view. These show
      * the exact data behind every field, for each data item, for each group.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @return An object with a "TimeOfResolution" and a collection of "Items", the
      *         FieldMappings that resolved and which are still available
      * @throws SdsError Error response
      */
-    public ResolvedItems<FieldMapping> getFieldMappings(String tenantId, String namespaceId, String dataViewId)
+    public ResolvedItems<FieldMapping> getFieldMappings(String namespaceId, String dataViewId)
             throws SdsError, MalformedURLException {
-        return getFieldMappings(tenantId, namespaceId, dataViewId, "Preserve");
+        return getFieldMappings(namespaceId, dataViewId, "Preserve");
     }
 
     /**
      * Gets the collection of field mappings resolved for the data view. These show
      * the exact data behind every field, for each data item, for each group.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param cache       "Refresh" to force the resource to re-resolve. "Preserve"
@@ -429,32 +433,32 @@ public class DataViewClient {
      *         FieldMappings that resolved and which are still available
      * @throws SdsError Error response
      */
-    public ResolvedItems<FieldMapping> getFieldMappings(String tenantId, String namespaceId, String dataViewId,
-            String cache) throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getFieldMappings.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId).replace("{cache}", cache));
-        return getRequestResponse(url, "GET", null);
+    public ResolvedItems<FieldMapping> getFieldMappings(String namespaceId, String dataViewId, String cache)
+            throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl + getFieldMappings.replace("{namespaceId}", namespaceId)
+                .replace("{dataViewId}", dataViewId).replace("{cache}", cache));
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<ResolvedItems<FieldMapping>>() {
+        }.getType());
     }
 
     /**
      * Gets statistics about the size and shape on how the data view resolved.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @return An object with a "TimeOfResolution" and an "Item", the Statistics
      *         that were retrieved
      * @throws SdsError Error response
      */
-    public ResolvedItem<Statistics> getStatistics(String tenantId, String namespaceId, String dataViewId)
+    public ResolvedItem<Statistics> getStatistics(String namespaceId, String dataViewId)
             throws SdsError, MalformedURLException {
-        return getStatistics(tenantId, namespaceId, dataViewId, "Preserve");
+        return getStatistics(namespaceId, dataViewId, "Preserve");
     }
 
     /**
      * Gets statistics about the size and shape on how the data view resolved.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param cache       "Refresh" to force the resource to re-resolve. "Preserve"
@@ -464,36 +468,34 @@ public class DataViewClient {
      *         that were retrieved
      * @throws SdsError Error response
      */
-    public ResolvedItem<Statistics> getStatistics(String tenantId, String namespaceId, String dataViewId, String cache)
+    public ResolvedItem<Statistics> getStatistics(String namespaceId, String dataViewId, String cache)
             throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getStatistics.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId).replace("{cache}", cache));
-        return getRequestResponse(url, "GET", null);
+        URL url = new URL(baseUrl + getStatistics.replace("{namespaceId}", namespaceId)
+                .replace("{dataViewId}", dataViewId).replace("{cache}", cache));
+        String response = getRequestResponse(url, "GET", null);
+        return mGson.fromJson(response, new TypeToken<ResolvedItem<Statistics>>() {
+        }.getType());
     }
 
     /**
      * Get data for the provided index parameters with paging. See documentation on
      * paging for further information.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @return String of data in the requested format
      * @throws SdsError Error response
      */
-    public String getDataViewData(String tenantId, String namespaceId, String dataViewId)
-            throws SdsError, MalformedURLException {
-        URL url = new URL(
-                baseUrl + dataInterpolatedPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                        .replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId));
+    public String getDataViewData(String namespaceId, String dataViewId) throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl
+                + dataInterpolatedPath.replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId));
         return getRequestResponse(url, "GET", null);
     }
 
     /**
      * Get data for the provided index parameters with paging. See documentation on
      * paging for further information.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param startIndex  The requested start index, inclusive. The default value is
@@ -508,17 +510,15 @@ public class DataViewClient {
      * @return String of data in the requested format
      * @throws SdsError Error response
      */
-    public String getDataViewData(String tenantId, String namespaceId, String dataViewId, String startIndex,
-            String endIndex, String interval) throws SdsError, MalformedURLException {
-        return getDataViewData(tenantId, namespaceId, dataViewId, startIndex, endIndex, interval, "default", "Refresh",
-                1000);
+    public String getDataViewData(String namespaceId, String dataViewId, String startIndex, String endIndex,
+            String interval) throws SdsError, MalformedURLException {
+        return getDataViewData(namespaceId, dataViewId, startIndex, endIndex, interval, "default", "Refresh", 1000);
     }
 
     /**
      * Get data for the provided index parameters with paging. See documentation on
      * paging for further information.
-     * 
-     * @param tenantId    The tenant identifier
+     *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
      * @param startIndex  The requested start index, inclusive. The default value is
@@ -540,11 +540,9 @@ public class DataViewClient {
      * @return String of data in the requested format
      * @throws SdsError Error response
      */
-    public String getDataViewData(String tenantId, String namespaceId, String dataViewId, String startIndex,
-            String endIndex, String interval, String form, String cache, Integer count)
-            throws SdsError, MalformedURLException {
-        URL url = new URL(baseUrl + getDataInterpolated.replace("{apiVersion}", apiVersion)
-                .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
+    public String getDataViewData(String namespaceId, String dataViewId, String startIndex, String endIndex,
+            String interval, String form, String cache, Integer count) throws SdsError, MalformedURLException {
+        URL url = new URL(baseUrl + getDataInterpolated.replace("{namespaceId}", namespaceId)
                 .replace("{dataViewId}", dataViewId).replace("{startIndex}", startIndex).replace("{endIndex}", endIndex)
                 .replace("{interval}", interval).replace("{form}", form).replace("{cache}", cache)
                 .replace("{count}", count.toString()));

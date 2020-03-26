@@ -16,6 +16,12 @@ public class DataView {
     private String DefaultInterval;
     private DataViewShape Shape;
 
+    public DataView(String id, String name, String description) {
+        this.Id = id;
+        this.Name = name;
+        this.Description = description;
+    }
+
     public String getId() {
         return Id;
     }

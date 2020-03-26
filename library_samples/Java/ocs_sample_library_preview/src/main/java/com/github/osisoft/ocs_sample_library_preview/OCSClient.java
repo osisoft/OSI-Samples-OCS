@@ -46,12 +46,13 @@ public class OCSClient {
      * running at base program's folder.
      * 
      * @param apiVersion   APIversion of OCS
+     * @param tenantId     The tenant identifier
      * @param clientId     Client id to login with
      * @param clientSecret client secret to login with
      * @param resource     OCS url
      */
-    public OCSClient(String apiVersion, String clientId, String clientSecret, String resource) {
-        baseClient = new BaseClient(apiVersion, clientId, clientSecret, resource);
+    public OCSClient(String apiVersion, String tenantId, String clientId, String clientSecret, String resource) {
+        baseClient = new BaseClient(apiVersion, tenantId, clientId, clientSecret, resource);
         init();
     }
 
