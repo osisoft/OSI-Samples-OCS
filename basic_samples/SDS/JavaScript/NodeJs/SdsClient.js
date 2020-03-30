@@ -1,6 +1,3 @@
-// SdsClient.js
-//
-
 var restCall = require('request-promise');
 
 var logError = function(err) {
