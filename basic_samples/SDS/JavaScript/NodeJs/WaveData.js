@@ -1,6 +1,3 @@
-// WaveData.js
-//
-
 module.exports = {
   // Wave Data Object
   WaveData: function() {
