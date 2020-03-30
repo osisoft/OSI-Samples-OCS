@@ -1,5 +1,4 @@
 var http = require('http');
-var restCall = require('request-promise');
 var config = require('./config.js');
 
 // retrieve configuration
@@ -130,33 +129,20 @@ var app = function(request1, response) {
     }
     response.writeHead(200, { 'Content-Type': 'text/plain' });
 
-    response.write(
-      '------------------------------------------------------------------------------------\n'
-    );
-    response.write(
-      '  _________    .___      _______             .___               __        \n'
-    );
-    response.write(
-      ' /   _____/  __| _/______\\      \\   ____   __| _/____          |__| ______\n'
-    );
-    response.write(
-      ' \\_____  \\  / __ |/  ___//   |   \\ /  _ \\ / __ |/ __ \\         |  |/  ___/\n'
-    );
-    response.write(
-      ' /        \\/ /_/ |\\___ \\/    |    (  <_> ) /_/ \\  ___/         |  |\\___ \\ \n'
-    );
-    response.write(
-      '/_______  /\\____ /____  >____|__  /\\____/\\____ |\\___  > /\\ /\\__|  /____  >\n'
-    );
-    response.write(
-      '        \\/      \\/    \\/        \\/            \\/    \\/  \\/ \\______|    \\/ \n'
-    );
-    response.write(
-      '------------------------------------------------------------------------------------\n'
-    );
     response.write('Sds Service Operations Begun!\n');
     response.write('Check the console for updates');
   }
+
+  console.log(
+    '------------------------------------------------------------------------------------\n' +
+      '  _________    .___      _______             .___               __        \n' +
+      ' /   _____/  __| _/______\\      \\   ____   __| _/____          |__| ______\n' +
+      ' \\_____  \\  / __ |/  ___//   |   \\ /  _ \\ / __ |/ __ \\         |  |/  ___/\n' +
+      ' /        \\/ /_/ |\\___ \\/    |    (  <_> ) /_/ \\  ___/         |  |\\___ \\ \n' +
+      '/_______  /\\____ /____  >____|__  /\\____/\\____ |\\___  > /\\ /\\__|  /____  >\n' +
+      '        \\/      \\/    \\/        \\/            \\/    \\/  \\/ \\______|    \\/ \n' +
+      '------------------------------------------------------------------------------------\n'
+  );
 
   var sdsObjs = require('./SdsObjects.js');
   var clientObj = require('./SdsClient.js');
@@ -2638,7 +2624,7 @@ var app = function(request1, response) {
     throw errorCap;
   }
 
-  return getClientToken;
+  return cleanup;
 };
 
 //if you want to run a server
@@ -2647,6 +2633,9 @@ var toRun = function() {
   http.createServer(app).listen(8080);
 };
 
-app();
-//console.log("Server is listening at http://localhost:8080/");
-//console.log("Sds endpoint at " + resource);
+process.argv = process.argv.slice(2);
+if (require.main === module) {
+  app.apply(process.argv);
+}
+
+module.exports = app;
