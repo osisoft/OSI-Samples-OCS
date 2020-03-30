@@ -1,12 +1,11 @@
-import app from '../Sample';
-
 describe('Sds', function() {
+  var Sample = require('../Sample');
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 
   beforeEach(function() {});
 
   it('should be able to complete the main method', function(done) {
-    sample = app(null, null)
+    sample = Sample(null, null)
       .catch(function(err) {
         console.log(err);
       })
