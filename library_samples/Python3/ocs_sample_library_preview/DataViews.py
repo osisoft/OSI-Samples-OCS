@@ -192,7 +192,7 @@ class DataViews(object):
         self, namespace_id, dataView_id, query_id
     ):
         """
-        Retrieves all of the resolved inelgible data items from the specified Data View from
+        Retrieves all of the resolved ineligible data items from the specified Data View from
             Sds Service
         :param namespace_id: namespace to work against
         :param dataView_id: Data View to work against
@@ -292,7 +292,7 @@ class DataViews(object):
         response = {}
         if url:
             response = requests.get(url,
-                headers=self.__baseClient.sdsHeaders())
+                                    headers=self.__baseClient.sdsHeaders())
         else:
             response = requests.get(
                 self.__dataViewDataInterpolated.format(
