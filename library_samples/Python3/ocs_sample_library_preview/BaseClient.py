@@ -141,7 +141,7 @@ class BaseClient(object):
             message = main_message + errorToWrite
             raise SdsError(message)
 
-    def request(self, method, url, params=None, data=None, headers=self.sdsHeaders(), **kwargs):
+    def request(self, method, url, params=None, data=None, headers=None, **kwargs):
         if not headers:
             headers = self.sdsHeaders()
         return requests.request(method, url, params=params, data=data, headers=headers, **kwargs)
