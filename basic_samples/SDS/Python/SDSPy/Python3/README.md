@@ -443,8 +443,6 @@ _Note: Types and Stream Views cannot be deleted until any streams referencing th
 
 Automated test uses Python 3.6.8 x64
 
-Complete dependencies listed in [DEPENDENCIES.md](DEPENDENCIES.md)
-
 For the general steps or switch languages see the Task [ReadMe](../../../)  
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
