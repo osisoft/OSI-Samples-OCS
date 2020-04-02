@@ -1,14 +1,11 @@
-# Streams.py
-#
-
 import json
 
+from .BaseClient import BaseClient
 from .SDS.SdsStream import SdsStream
 from .SDS.SdsType import SdsType
 from .SDS.SdsStreamView import SdsStreamView
 from .SDS.SdsStreamViewMap import SdsStreamViewMap
 from .SDS.SdsBoundaryType import SdsBoundaryType
-import requests
 
 
 class Streams(object):
@@ -16,7 +13,7 @@ class Streams(object):
     Client for interacting with Streams
     """
 
-    def __init__(self, client):
+    def __init__(self, client: BaseClient):
         """
         :param client: base client that handles auth and base routing
         """
@@ -39,12 +36,12 @@ class Streams(object):
         if streamView_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__streamViewsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                streamView_id=streamView_id),
-            headers=self.__baseClient.sdsHeaders())
+                streamView_id=streamView_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to get SdsStreamView, {streamView_id}.")
@@ -66,12 +63,12 @@ class Streams(object):
         if streamView_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__streamViewsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                streamView_id=streamView_id) + "/Map",
-            headers=self.__baseClient.sdsHeaders())
+                streamView_id=streamView_id) + "/Map")
 
         self.__baseClient.checkResponse(
             response, f"Failed to get SdsStreamViewMap, {streamView_id}.")
@@ -92,12 +89,12 @@ class Streams(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__getStreamViewsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id),
-            params={"skip": skip, "count": count},
-            headers=self.__baseClient.sdsHeaders())
+            params={"skip": skip, "count": count})
         self.__baseClient.checkResponse(
             response, "Failed to get all SdsStreamViews.")
 
@@ -121,13 +118,13 @@ class Streams(object):
         if streamView is None or not isinstance(streamView, SdsStreamView):
             raise TypeError
 
-        response = requests.post(
+        response = self.__baseClient.request(
+            "post",
             self.__streamViewsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 streamView_id=streamView.Id),
-            data=streamView.toJson(),
-            headers=self.__baseClient.sdsHeaders())
+            data=streamView.toJson())
 
         self.__baseClient.checkResponse(
             response, f"Failed to create SdsStreamView, {streamView.Id}.")
@@ -149,13 +146,13 @@ class Streams(object):
         if streamView is None or not isinstance(streamView, SdsStreamView):
             raise TypeError
 
-        response = requests.put(
+        response = self.__baseClient.request(
+            "put",
             self.__streamViewsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 streamView_id=streamView.Id),
-            data=streamView.toJson(),
-            headers=self.__baseClient.sdsHeaders())
+            data=streamView.toJson())
         self.__baseClient.checkResponse(
             response, f"Failed to create SdsStreamView, {streamView.Id}.")
 
@@ -174,12 +171,12 @@ class Streams(object):
         if streamView_id is None:
             raise TypeError
 
-        response = requests.delete(
+        response = self.__baseClient.request(
+            "delete",
             self.__streamViewsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                streamView_id=streamView_id),
-            headers=self.__baseClient.sdsHeaders())
+                streamView_id=streamView_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to delete SdsStreamView, {streamView_id}.")
@@ -198,12 +195,12 @@ class Streams(object):
         if stream_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=stream_id),
-            headers=self.__baseClient.sdsHeaders())
+                stream_id=stream_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to get SdsStream, {stream_id}.")
@@ -224,12 +221,12 @@ class Streams(object):
         if stream_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=stream_id) + "/Type",
-            headers=self.__baseClient.sdsHeaders())
+                stream_id=stream_id) + "/Type")
 
         self.__baseClient.checkResponse(
             response, f"Failed to get SdsStream type,  {stream_id}.")
@@ -253,12 +250,12 @@ class Streams(object):
         if query is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__getStreamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id),
-            params={"query": query, "skip": skip, "count": count},
-            headers=self.__baseClient.sdsHeaders())
+            params={"query": query, "skip": skip, "count": count})
 
         self.__baseClient.checkResponse(
             response, "Failed to get all SdsStreams.")
@@ -282,13 +279,13 @@ class Streams(object):
             raise TypeError
         if stream is None or not isinstance(stream, SdsStream):
             raise TypeError
-        response = requests.post(
+        response = self.__baseClient.request(
+            "post",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream.Id),
-            data=stream.toJson(),
-            headers=self.__baseClient.sdsHeaders())
+            data=stream.toJson())
 
         self.__baseClient.checkResponse(
             response, f"Failed to create SdsStream, {stream.Id}.")
@@ -310,13 +307,13 @@ class Streams(object):
         if stream is None or not isinstance(stream, SdsStream):
             raise TypeError
 
-        response = requests.put(
+        response = self.__baseClient.request(
+            "put",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream.Id),
-            data=stream.toJson(),
-            headers=self.__baseClient.sdsHeaders())
+            data=stream.toJson())
 
         self.__baseClient.checkResponse(
             response, f"Failed to create SdsStream, {stream.Id}.")
@@ -339,13 +336,13 @@ class Streams(object):
         if streamViewId is None:
             raise TypeError
 
-        response = requests.put(
+        response = self.__baseClient.request(
+            "put",
             self.__updateStreamTypePath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=streamId),
-            params={"streamViewId": streamViewId},
-            headers=self.__baseClient.sdsHeaders())
+            params={"streamViewId": streamViewId})
 
         self.__baseClient.checkResponse(
             response, f"Failed to update SdsStream type, {streamId}.")
@@ -364,12 +361,12 @@ class Streams(object):
         if stream_id is None:
             raise TypeError
 
-        response = requests.delete(
+        response = self.__baseClient.request(
+            "delete",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=stream_id),
-            headers=self.__baseClient.sdsHeaders())
+                stream_id=stream_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to delete SdsStream, {stream_id}.")
@@ -389,13 +386,13 @@ class Streams(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.put(
+        response = self.__baseClient.request(
+            "put",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=streamId) + "/Tags",
-            data=json.dumps(tags),
-            headers=self.__baseClient.sdsHeaders())
+            data=json.dumps(tags))
 
         self.__baseClient.checkResponse(
             response, f"Failed to create tags for Stream: {streamId}.")
@@ -413,13 +410,13 @@ class Streams(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.put(
+        response = self.__baseClient.request(
+            "put",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=streamId) + "/Metadata",
-            data=json.dumps(metadata),
-            headers=self.__baseClient.sdsHeaders())
+            data=json.dumps(metadata))
 
         self.__baseClient.checkResponse(
             response, f"Failed to create metadata for Stream: {streamId}.")
@@ -434,12 +431,12 @@ class Streams(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=streamId) + "/Tags",
-            headers=self.__baseClient.sdsHeaders())
+                stream_id=streamId) + "/Tags")
 
         self.__baseClient.checkResponse(
             response, f"Failed to get tags for Stream: {streamId}.")
@@ -460,12 +457,12 @@ class Streams(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__streamsPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=streamId) + "/Metadata/" + key,
-            headers=self.__baseClient.sdsHeaders())
+                stream_id=streamId) + "/Metadata/" + key)
 
         self.__baseClient.checkResponse(
             response, f"Failed to get metadata for Stream: {streamId}.")
@@ -498,13 +495,13 @@ class Streams(object):
         if index is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            params={"index": index},
-            headers=self.__baseClient.sdsHeaders())
+            params={"index": index})
 
         self.__baseClient.checkResponse(
             response, f"Failed to get value for SdsStream: {stream_id}.")
@@ -533,12 +530,12 @@ class Streams(object):
         if stream_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__getFirstValue.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=stream_id),
-            headers=self.__baseClient.sdsHeaders())
+                stream_id=stream_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to get first value for SdsStream: {stream_id}.")
@@ -566,12 +563,12 @@ class Streams(object):
         if stream_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__getLastValue.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                stream_id=stream_id),
-            headers=self.__baseClient.sdsHeaders())
+                stream_id=stream_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to get last value for SdsStream: {stream_id}.")
@@ -608,13 +605,13 @@ class Streams(object):
         if end is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            params={"startIndex": start, "endIndex": end, "filter": filter},
-            headers=self.__baseClient.sdsHeaders())
+            params={"startIndex": start, "endIndex": end, "filter": filter})
 
         self.__baseClient.checkResponse(
             response, f"Failed to get window values"
@@ -656,13 +653,13 @@ class Streams(object):
         if end is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            params={"startIndex": start, "endIndex": end, "form": form},
-            headers=self.__baseClient.sdsHeaders())
+            params={"startIndex": start, "endIndex": end, "form": form})
 
         self.__baseClient.checkResponse(
             response, f"Failed to get window values for SdsStream, "
@@ -718,15 +715,15 @@ class Streams(object):
         if isinstance(boundary_type, SdsBoundaryType):
             boundary = boundary_type.value
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__transform.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
             params={"startIndex": start, "skip": skip, "count": count,
                     "reverse": reverse, "boundary_type": boundary,
-                    "streamView_id": streamView_id},
-            headers=self.__baseClient.sdsHeaders())
+                    "streamView_id": streamView_id})
 
         self.__baseClient.checkResponse(
             response, f"Failed to get range values for"
@@ -769,13 +766,13 @@ class Streams(object):
         if count is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__getRangeInterpolatedQuery.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            params={"startIndex": start, "endIndex": end, "count": count},
-            headers=self.__baseClient.sdsHeaders())
+            params={"startIndex": start, "endIndex": end, "count": count})
 
         self.__baseClient.checkResponse(
             response, f"Failed to get range values for"
@@ -844,15 +841,15 @@ class Streams(object):
                 namespace_id=namespace_id,
                 stream_id=stream_id)
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             _path,
             params={"startIndex": start,
                     "endIndex": end,
                     "sampleBy": sample_by,
                     "intervals": intervals,
                     "filter": filter,
-                    "stream_view_id": stream_view_id},
-            headers=self.__baseClient.sdsHeaders())
+                    "stream_view_id": stream_view_id})
 
         self.__baseClient.checkResponse(
             response, f"Failed to get sampled values for"
@@ -925,9 +922,9 @@ class Streams(object):
                            "filter": filter,
                            "streamViewId": stream_view_id}
 
-        response = requests.get(
-            _path, paramsToUse,
-            headers=self.__baseClient.sdsHeaders())
+        response = self.__baseClient.request(
+            "get",
+            _path, paramsToUse)
 
         self.__baseClient.checkResponse(
             response, f"Failed to get summaries for SdsStream: {stream_id}.")
@@ -968,13 +965,13 @@ class Streams(object):
         else:
             payload = values
 
-        response = requests.post(
+        response = self.__baseClient.request(
+            "post",
             self.__insertValuesPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            data=payload,
-            headers=self.__baseClient.sdsHeaders())
+            data=payload)
 
         self.__baseClient.checkResponse(
             response, f"Failed to insert multiple values for "
@@ -1006,12 +1003,13 @@ class Streams(object):
         else:
             payload = values
 
-        response = requests.put(self.__updateValuesPath.format(
-            tenant_id=self.__tenant,
-            namespace_id=namespace_id,
-            stream_id=stream_id),
-            data=payload,
-            headers=self.__baseClient.sdsHeaders())
+        response = self.__baseClient.request(
+            "put",
+            self.__updateValuesPath.format(
+                tenant_id=self.__tenant,
+                namespace_id=namespace_id,
+                stream_id=stream_id),
+            data=payload)
 
         self.__baseClient.checkResponse(
             response,  f"Failed to update all values "
@@ -1044,13 +1042,13 @@ class Streams(object):
         else:
             payload = values
 
-        response = requests.put(
+        response = self.__baseClient.request(
+            "put",
             self.__replaceValuesPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            data=payload,
-            headers=self.__baseClient.sdsHeaders())
+            data=payload)
 
         self.__baseClient.checkResponse(
             response, f"Failed to replace values for SdsStream: {stream_id}.")
@@ -1073,13 +1071,13 @@ class Streams(object):
         if key is None:
             raise TypeError
 
-        response = requests.delete(
+        response = self.__baseClient.request(
+            "delete",
             self.__dataPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            params={"index": key},
-            headers=self.__baseClient.sdsHeaders())
+            params={"index": key})
 
         self.__baseClient.checkResponse(
             response, f"Failed to remove value for SdsStream: {stream_id}.")
@@ -1105,13 +1103,13 @@ class Streams(object):
         if end is None:
             raise TypeError
 
-        response = requests.delete(
+        response = self.__baseClient.request(
+            "delete",
             self.__dataPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 stream_id=stream_id),
-            params={"startIndex": start, "endIndex": end},
-            headers=self.__baseClient.sdsHeaders())
+            params={"startIndex": start, "endIndex": end})
 
         self.__baseClient.checkResponse(
             response, f"Failed to remove all values for "
@@ -1150,15 +1148,15 @@ class Streams(object):
         if joinMode is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__bulkStreams.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id),
             params={"streams": ','.join(stream_ids),
                     "startIndex": start,
                     "endIndex": end,
-                    "joinMode": joinMode},
-            headers=self.__baseClient.sdsHeaders())
+                    "joinMode": joinMode})
 
         self.__baseClient.checkResponse(
             response, f"Failed to get bulk values for"

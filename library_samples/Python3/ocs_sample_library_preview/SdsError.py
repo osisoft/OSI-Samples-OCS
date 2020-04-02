@@ -1,7 +1,3 @@
-# SdsError.py
-#
-
-
 class SdsError(Exception):
     """
     Helper class to hold exceptions
