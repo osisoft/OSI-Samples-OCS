@@ -1,10 +1,9 @@
 import json
 
+from .BaseClient import BaseClient
 from .DataView.DataView import DataView
 from .DataView.DataItems import DataItems
 from .DataView.FieldSets import FieldSets
-
-import requests
 
 
 class DataViews(object):
@@ -12,7 +11,7 @@ class DataViews(object):
     Client for interacting with Data Views
     """
 
-    def __init__(self, client):
+    def __init__(self, client: BaseClient):
         """
         Initiliizes the Data View client
         :param client: This is the base client that is used to make the calls
@@ -32,14 +31,14 @@ class DataViews(object):
         if dataView is None or not isinstance(dataView, DataView):
             raise TypeError
 
-        response = requests.post(
+        response = self.__baseClient.request(
+            "post",
             self.__dataViewPath.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView.Id,
             ),
-            data=dataView.toJson(),
-            headers=self.__baseClient.sdsHeaders(),
+            data=dataView.toJson()
         )
 
         self.__baseClient.checkResponse(
@@ -59,14 +58,15 @@ class DataViews(object):
             raise TypeError
         if dataView is None or not isinstance(dataView, DataView):
             raise TypeError
-        response = requests.put(
+
+        response = self.__baseClient.request(
+            "put",
             self.__dataViewPath.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView.Id,
             ),
-            data=dataView.toJson(),
-            headers=self.__baseClient.sdsHeaders(),
+            data=dataView.toJson()
         )
 
         self.__baseClient.checkResponse(
@@ -86,13 +86,13 @@ class DataViews(object):
         if dataView_id is None:
             raise TypeError
 
-        response = requests.delete(
+        response = self.__baseClient.request(
+            "delete",
             self.__dataViewPath.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id,
-            ),
-            headers=self.__baseClient.sdsHeaders(),
+            )
         )
 
         self.__baseClient.checkResponse(
@@ -113,13 +113,13 @@ class DataViews(object):
         if dataView_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataViewPath.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id,
-            ),
-            headers=self.__baseClient.sdsHeaders(),
+            )
         )
 
         self.__baseClient.checkResponse(
@@ -140,12 +140,12 @@ class DataViews(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataViewsPath.format(
                 tenant_id=self.__baseClient.tenant, namespace_id=namespace_id
             ),
-            params={"skip": skip, "count": count},
-            headers=self.__baseClient.sdsHeaders(),
+            params={"skip": skip, "count": count}
         )
 
         self.__baseClient.checkResponse(response, "Failed to get Data Views.")
@@ -171,14 +171,14 @@ class DataViews(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataViewResolvedDataItems.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id,
                 query_id=query_id,
-            ),
-            headers=self.__baseClient.sdsHeaders(),
+            )
         )
 
         self.__baseClient.checkResponse(
@@ -202,14 +202,14 @@ class DataViews(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataViewResolvedIneligibleDataItems.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id,
                 query_id=query_id,
-            ),
-            headers=self.__baseClient.sdsHeaders(),
+            )
         )
 
         self.__baseClient.checkResponse(
@@ -232,13 +232,13 @@ class DataViews(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__dataViewResolvedAvailableFieldSets.format(
                 tenant_id=self.__baseClient.tenant,
                 namespace_id=namespace_id,
                 dataView_id=dataView_id
-            ),
-            headers=self.__baseClient.sdsHeaders(),
+            )
         )
 
         self.__baseClient.checkResponse(
@@ -291,17 +291,16 @@ class DataViews(object):
         }
         response = {}
         if url:
-            response = requests.get(url,
-                                    headers=self.__baseClient.sdsHeaders())
+            response = self.__baseClient.request("get", url)
         else:
-            response = requests.get(
+            response = self.__baseClient.request(
+                "get",
                 self.__dataViewDataInterpolated.format(
                     tenant_id=self.__baseClient.tenant,
                     namespace_id=namespace_id,
                     dataView_id=dataView_id,
                 ),
-                headers=self.__baseClient.sdsHeaders(),
-                params=params,
+                params=params
             )
 
         self.__baseClient.checkResponse(

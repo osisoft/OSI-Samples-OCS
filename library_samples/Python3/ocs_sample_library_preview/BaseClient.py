@@ -1,6 +1,3 @@
-# BaseClient.py
-#
-
 import json
 
 from .SdsError import SdsError
@@ -144,7 +141,7 @@ class BaseClient(object):
             message = main_message + errorToWrite
             raise SdsError(message)
 
-    def request(self, method, url, params=None, headers=None, **kwargs):
+    def request(self, method, url, params=None, data=None, headers=None, **kwargs):
         if not headers:
             headers = self.sdsHeaders()
-        return requests.request(method, url, params=params, headers=headers, **kwargs)
+        return requests.request(method, url, params=params, data=data, headers=headers, **kwargs)

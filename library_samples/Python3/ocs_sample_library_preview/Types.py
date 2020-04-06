@@ -1,11 +1,6 @@
-# Types.py
-#
-
-
 import json
 
 from .SDS.SdsType import SdsType
-import requests
 
 
 class Types(object):
@@ -33,12 +28,12 @@ class Types(object):
         if type_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__typePath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                type_id=type_id),
-            headers=self.__baseClient.sdsHeaders())
+                type_id=type_id))
         self.__baseClient.checkResponse(
             response, f"Failed to get SdsType, {type_id}.")
 
@@ -58,12 +53,12 @@ class Types(object):
         if type_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__typeRefCountPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                type_id=type_id),
-            headers=self.__baseClient.sdsHeaders())
+                type_id=type_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to get SdsType reference count, {type_id}.")
@@ -85,12 +80,12 @@ class Types(object):
         if namespace_id is None:
             raise TypeError
 
-        response = requests.get(
+        response = self.__baseClient.request(
+            "get",
             self.__typesPath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id),
-            params={"skip": skip, "count": count, "query": query},
-            headers=self.__baseClient.sdsHeaders())
+            params={"skip": skip, "count": count, "query": query})
         self.__baseClient.checkResponse(
             response, "Failed to get all SdsTypes.")
 
@@ -114,13 +109,13 @@ class Types(object):
             raise TypeError
         if type is None or not isinstance(type, SdsType):
             raise TypeError
-        response = requests.post(
+        response = self.__baseClient.request(
+            "post",
             self.__typePath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
                 type_id=type.Id),
-            data=type.toJson(),
-            headers=self.__baseClient.sdsHeaders())
+            data=type.toJson())
         self.__baseClient.checkResponse(
             response, f"Failed to create type, {type.Id}.")
 
@@ -141,12 +136,12 @@ class Types(object):
         if type_id is None:
             raise TypeError
 
-        response = requests.delete(
+        response = self.__baseClient.request(
+            "delete",
             self.__typePath.format(
                 tenant_id=self.__tenant,
                 namespace_id=namespace_id,
-                type_id=type_id),
-            headers=self.__baseClient.sdsHeaders())
+                type_id=type_id))
 
         self.__baseClient.checkResponse(
             response, f"Failed to delete SdsType, {type_id}.")
