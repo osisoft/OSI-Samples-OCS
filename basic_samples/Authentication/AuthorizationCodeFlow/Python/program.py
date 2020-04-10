@@ -6,6 +6,7 @@ import json
 import requests
 import secrets
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import time
 from urllib.parse import urlparse, parse_qs
 import webbrowser
@@ -78,7 +79,10 @@ def main(test=False):
             # Open Chrome Webdriver, go to Auth page
             print()
             print('Selenium 1: Open Chrome WebDriver')
-            browser = webdriver.Chrome()
+            chrome_options = Options()
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--no-sandbox")
+            browser = webdriver.Chrome(options=chrome_options)
             browser.get(authUrl)
             time.sleep(2)
 
