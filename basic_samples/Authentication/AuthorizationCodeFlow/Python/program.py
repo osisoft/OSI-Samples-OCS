@@ -1,27 +1,43 @@
+"""This script performs Authorization Code + PKCE Authentication against OSIsoft Cloud Services"""
+
+# Disable pylint warnings:
+# Allow catching general exception Exception (broad-except)
+# pylint: disable=W0703
+# Allow more than 15 local variables (too-many-locals)
+# pylint: disable=R0914
+# Allow more than 50 statements (too-many-statements)
+# pylint: disable=R0915
+
 import base64
 import configparser
 import hashlib
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
-import requests
 import secrets
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import time
 from urllib.parse import urlparse, parse_qs
 import webbrowser
 
+import requests
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
 
 def main(test=False):
+    """Main sample script
+    Performs Authorization Code + PKCE Authentication against OSIsoft Cloud Services.
+    If test=True, will use Selenium to perform browser authentication automatically.
+    """
+
     try:
         config = configparser.ConfigParser()
         config.read('config.ini')
 
         resource = config.get('Configuration', 'Resource')
-        tenantId = config.get('Configuration', 'TenantId')
-        clientId = config.get('Configuration', 'ClientId')
+        tenant_id = config.get('Configuration', 'TenantId')
+        client_id = config.get('Configuration', 'ClientId')
 
-        redirectUri = 'http://localhost:5004/callback.html'
+        redirect_uri = 'http://localhost:5004/callback.html'
         scope = 'openid ocsapi'
 
         # Set up PKCE Verifier and Code Challenge
@@ -35,17 +51,20 @@ def main(test=False):
         print('Step 1: Get OAuth endpoint configuration...')
         endpoint = json.loads(requests.get(
             resource + '/identity/.well-known/openid-configuration').content)
-        authEndpoint = endpoint.get('authorization_endpoint')
-        tokenEndpoint = endpoint.get('token_endpoint')
+        auth_endpoint = endpoint.get('authorization_endpoint')
+        token_endpoint = endpoint.get('token_endpoint')
 
         # Set up request handler for web browser login
         print()
         print('Step 2: Set up server to process authorization response...')
 
         class RequestHandler(BaseHTTPRequestHandler):
+            """Handles authentication redirect uri and extracts authorization code from URL"""
             code = ''
 
+            # pylint: disable=C0103
             def do_GET(self):
+                """Handles GET request against this temporary local server"""
                 # Parse out authorization code from query string in request
                 RequestHandler.code = parse_qs(
                     urlparse(self.path).query)['code'][0]
@@ -56,7 +75,6 @@ def main(test=False):
                 self.end_headers()
                 self.wfile.write(
                     '<h1>You can now return to the application.</h1>'.encode())
-                return
 
         # Set up server for web browser login
         server = HTTPServer(('', 5004), RequestHandler)
@@ -64,14 +82,14 @@ def main(test=False):
         # Open web browser against authorization endpoint
         print()
         print('Step 3: Authorize the user...')
-        authUrl = authEndpoint + \
+        auth_url = auth_endpoint + \
             '?response_type=code&code_challenge=' + challenge.decode() + \
-            '&code_challenge_method=S256&client_id=' + clientId + \
-            '&redirect_uri=' + redirectUri + \
+            '&code_challenge_method=S256&client_id=' + client_id + \
+            '&redirect_uri=' + redirect_uri + \
             '&scope=' + scope + \
-            '&acr_values=tenant:' + tenantId
+            '&acr_values=tenant:' + tenant_id
 
-        if test == True:
+        if test:
             # Get Config
             username = config.get('Test', 'Username')
             password = config.get('Test', 'Password')
@@ -83,7 +101,7 @@ def main(test=False):
             chrome_options.add_argument("--headless")
             chrome_options.add_argument("--no-sandbox")
             browser = webdriver.Chrome(options=chrome_options)
-            browser.get(authUrl)
+            browser.get(auth_url)
             time.sleep(2)
 
             # Use Personal Account (Must be enabled on Tenant)
@@ -114,7 +132,7 @@ def main(test=False):
                 print('Ignore time out, start the server...')
         else:
             # Open user default web browser at Auth page
-            webbrowser.open(authUrl)
+            webbrowser.open(auth_url)
 
         # Wait for response in browser
         print()
@@ -124,26 +142,26 @@ def main(test=False):
         # Use authorization code to get bearer token
         print()
         print('Step 5: Get a token using the authorization code...')
-        token = requests.post(tokenEndpoint, [
-                              ('grant_type', 'authorization_code'),
-                              ('client_id', clientId),
-                              ('code_verifier', verifier),
-                              ('code', RequestHandler.code),
-                              ('redirect_uri', redirectUri)])
+        token = requests.post(token_endpoint, [
+            ('grant_type', 'authorization_code'),
+            ('client_id', client_id),
+            ('code_verifier', verifier),
+            ('code', RequestHandler.code),
+            ('redirect_uri', redirect_uri)])
 
         token = json.loads(token.content).get('access_token')
         print()
         print('Step 6: Read the Access Token:')
         print(token)
 
-        if test == True:
+        if test:
             assert token, "Failed to obtain access token"
 
         print()
         print('Complete!')
-    except Exception as e:
+    except Exception as error:
         print()
-        msg = "Encountered Error: {error}".format(error=e)
+        msg = "Encountered Error: {error}".format(error=error)
         print(msg)
         assert False, msg
 
