@@ -125,15 +125,26 @@ jobs:
           BinSkimBreakOn: WarningAbove
         condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
 
+      # Copy Files
+      # Copy files from source folder to target folder using match patterns (The match patterns will only match file paths, not folder paths)
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)\miscellaneous\build_templates\polaris\
+          contents: dotnet.yml
+          targetFolder: $(Build.SourcesDirectory)$(projPath)
+          #cleanTargetFolder: false # Optional
+          overWrite: true # Optional
+          #flattenFolders: false # Optional
+        displayName: 'Polaris Copy YML'
+
       # Synopsys Polaris
       - powershell: |
           # Set up Polaris Access Token
-          New-Item -Path Env:\ -Name POLARIS_PROJECT_PATH -Value '$(Build.SourcesDirectory)$(projPath)'
           New-Item -Path Env:\ -Name POLARIS_PROJECT_NAME -Value 'product-readiness.$(bdProject)'
           New-Item -Path Env:\ -Name POLARIS_ACCESS_TOKEN -Value $(polarisToken)
 
           # Call Polaris, set the configuration file path and run analyze with wait option
-          & 'polaris.exe' -c '$(Build.SourcesDirectory)\miscellaneous\build_templates\polaris\dotnet.yml' analyze -w
+          & 'polaris.exe' -c 'dotnet.yml' analyze -w
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Polaris Analyze (DotNet)'
 

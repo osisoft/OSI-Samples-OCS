@@ -10,7 +10,6 @@ project:
   revision:
     name: ${scm.git.commit}
     date: ${scm.git.commit.date}
-  projectDir: ${env.POLARIS_PROJECT_PATH}
 capture:
   build:
     cleanCommands:
