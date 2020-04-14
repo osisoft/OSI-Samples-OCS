@@ -131,7 +131,7 @@ jobs:
           New-Item -Path Env:\ -Name POLARIS_ACCESS_TOKEN -Value $(polarisToken)
 
           # Call Polaris, set the configuration file path and run analyze with wait option
-          & 'polaris.exe' --configuration-file '$polaris.yml' analyze --wait
+          & 'polaris.exe' --configuration-file polaris.yml analyze --wait
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Call Polaris CLI'
 
