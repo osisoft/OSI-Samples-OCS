@@ -41,5 +41,5 @@ analyze:
   mode: central
 install:
   coverity:
-    version: 2019.12-2
+    version: default
 serverUrl: https://osisoft.polaris.synopsys.com
