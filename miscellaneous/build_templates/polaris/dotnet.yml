@@ -1,0 +1,20 @@
+version: '1'
+serverUrl: https://osisoft.polaris.synopsys.com
+install:
+  coverity:
+    version: default
+project:
+  organization: osisoft
+  name: $(bdProject)
+  branch: ${scm.git.branch}
+  revision:
+    name: ${scm.git.commit}
+    date: ${scm.git.commit.date}
+capture:
+  build:
+    cleanCommands:
+      - shell: [dotnet, 'clean']
+    buildCommands:
+      - shell: [dotnet, 'msbuild', '-p:HIGHENTROPYVA=true']
+analyze:
+  mode: central

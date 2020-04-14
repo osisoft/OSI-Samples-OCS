@@ -128,12 +128,13 @@ jobs:
       # Synopsys Polaris
       - powershell: |
           # Set up Polaris Access Token
+          New-Item -Path Env:\ -Name POLARIS_PROJECT -Value 'product-readiness.$(bdProject)'
           New-Item -Path Env:\ -Name POLARIS_ACCESS_TOKEN -Value $(polarisToken)
 
           # Call Polaris, set the configuration file path and run analyze with wait option
-          & 'polaris.exe' --configuration-file polaris.yml analyze --wait
+          & 'polaris.exe' -c '$(Build.SourcesDirectory)\miscellaneous\build_templates\polaris\dotnet.yml' analyze -w
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Call Polaris CLI'
+        displayName: 'Polaris Analyze (DotNet)'
 
       # Synopsys BlackDuck
       # Needs Pip < 20 due to issue described in https://github.com/blackducksoftware/synopsys-detect/pull/107
