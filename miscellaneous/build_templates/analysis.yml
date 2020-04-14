@@ -159,30 +159,39 @@ jobs:
         displayName: 'Synopsys Detect: BlackDuck (Python Requirements.txt)'
 
       # Synopsys Polaris
-      - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
-        inputs:
-          Products: PS
-          PolarisService: 'engineering.OpsGuild.Polaris-Testing'
-          DetectArguments: |
-            --detect.project.name="product-readiness.$(bdProject)"
-            --detect.project.version.name="$(Build.SourceBranchName)"
-            --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
-            --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
-        condition: and(succeeded(), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
-        displayName: 'Synopsys Detect: Polaris'
+      - powershell: |
+          # Set up Polaris Access Token
+          New-Item -Path Env:\ -Name POLARIS_ACCESS_TOKEN -Value $(polarisToken)
 
-      - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
-        inputs:
-          Products: PS
-          PolarisService: 'engineering.OpsGuild.Polaris-Testing'
-          DetectArguments: |
-            --detect.project.name="product-readiness.$(bdProject)"
-            --detect.project.version.name="$(Build.SourceBranchName)"
-            --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
-            --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
-            --detect.pip.requirements.path=$(Build.SourcesDirectory)$(projPath)/requirements.txt
-        condition: and(succeeded(), and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false)))
-        displayName: 'Synopsys Detect: Polaris (Python Requirements.txt)'
+          # Call Polaris, set the configuration file path and run analyze with wait option
+          & 'polaris.exe' --configuration-file '$polaris.yml' analyze --wait
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Call Polaris CLI'
+
+      # - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
+      #   inputs:
+      #     Products: PS
+      #     PolarisService: 'engineering.OpsGuild.Polaris-Testing'
+      #     DetectArguments: |
+      #       --detect.project.name="product-readiness.$(bdProject)"
+      #       --detect.project.version.name="$(Build.SourceBranchName)"
+      #       --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
+      #       --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
+      #   condition: and(succeeded(), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
+      #   displayName: 'Synopsys Detect: Polaris'
+
+      # - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
+      #   inputs:
+      #     Products: PS
+      #     PolarisService: 'engineering.OpsGuild.Polaris-Testing'
+      #     DetectArguments: |
+      #       --detect.project.name="product-readiness.$(bdProject)"
+      #       --detect.project.version.name="$(Build.SourceBranchName)"
+      #       --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
+      #       --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
+      #       --detect.pip.requirements.path=$(Build.SourcesDirectory)$(projPath)/requirements.txt
+      #   condition: and(succeeded(), and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false)))
+      #   displayName: 'Synopsys Detect: Polaris (Python Requirements.txt)'
 
       # Coverity
       - script: if not exist $(covFolder) mkdir $(covFolder)
