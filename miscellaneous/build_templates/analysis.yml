@@ -27,6 +27,14 @@ jobs:
         condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
+      - script: |
+          echo Install
+          call mvn install -f pom.xml -DskipTests
+          echo Compile
+          call mvn compile
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(libPath)/
+        displayName: 'Build (Java): Library'
         condition: and(eq('${{ parameters.language }}', 'java'), eq(${{ parameters.lib }}, false))
       - script: |
           echo Install
@@ -37,14 +45,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Java)'
         condition: eq('${{ parameters.language }}', 'java')
-      - script: |
-          echo Install
-          call mvn install -f pom.xml -DskipTests
-          echo Compile
-          call mvn compile
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(libPath)/
-        displayName: 'Build (Java): Library'
 
       # - Python
       - script: |
