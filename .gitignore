@@ -317,6 +317,7 @@ typings/
 ocs_samples/library_samples/Java/ocs_sample_library_preview/ocs_sample_library_preview.iml
 *.zip
 cov-int/
+junit/
 *.binlog
 
 # Credential Config Files

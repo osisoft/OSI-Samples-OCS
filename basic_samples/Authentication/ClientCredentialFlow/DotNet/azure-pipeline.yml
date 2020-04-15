@@ -26,16 +26,12 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlow'
-  - name: testPath
-    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet/ClientCredentialFlowTest'
+    value: '/basic_samples/Authentication/ClientCredentialFlow/DotNet'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
-  - name: covStream
-    value: Auth_CC_DotNet
-  - name: bdProject
+  - name: projectName
     value: Auth_CC_DotNet
 
 jobs:
@@ -43,9 +39,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: ubuntu-16.04
+          imageName: ubuntu-latest
         windows:
-          imageName: vs2017-win2016
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -61,10 +57,8 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build app'
 
-      - script: |
-          dotnet restore
-          dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+      - script: dotnet test
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
