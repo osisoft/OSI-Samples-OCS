@@ -109,8 +109,10 @@ jobs:
         condition: eq('${{ parameters.language }}', 'powerbi')
 
       # BinSkim
+      # BinSkim errors if it encounters chromedriver.exe, which is used by many tests
+      # To avoid this issue, delete the file before running BinSkim
       - task: DeleteFiles@1
-        displayName: 'Delete Chromedriver prior to BinSkim'
+        displayName: 'BinSkim: Delete Chromedriver'
         inputs:
           SourceFolder: $(Build.SourcesDirectory)$(projPath)
           Contents: '**/chromedriver.exe'
