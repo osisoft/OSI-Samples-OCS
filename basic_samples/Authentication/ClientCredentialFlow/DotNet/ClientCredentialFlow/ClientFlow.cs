@@ -13,6 +13,7 @@ namespace ClientCredentialFlow
             set => _ocsUrl = value;
         }
 
+        private static AuthenticationHandler AuthenticationHandler { get; set; }
         public static HttpClient AuthenticatedHttpClient { get; private set; }
 
         public static void CreateAuthenticatedHttpClient(string clientId, string clientSecret)
@@ -22,7 +23,8 @@ namespace ClientCredentialFlow
             Console.WriteLine("+-------------------------------------+");
             Console.WriteLine("");
 
-            AuthenticatedHttpClient = new HttpClient(InitiateAuthenticationHandler(clientId, clientSecret))
+            AuthenticationHandler = InitiateAuthenticationHandler(clientId, clientSecret);
+            AuthenticatedHttpClient = new HttpClient(AuthenticationHandler)
             {
                 BaseAddress = new Uri(_ocsUrl)
             };
