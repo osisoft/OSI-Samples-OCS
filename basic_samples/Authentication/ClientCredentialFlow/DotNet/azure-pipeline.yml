@@ -54,7 +54,7 @@ jobs:
       - task: DeleteFiles@1
         inputs:
           SourceFolder: TestResults
-          Contents: *.trx
+          Contents: '*.trx'
         displayName: 'Delete old test results'
 
       - script: |
