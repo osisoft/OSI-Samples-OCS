@@ -112,10 +112,11 @@ jobs:
       # BinSkim errors if it encounters chromedriver.exe, which is used by many tests
       # To avoid this issue, delete the file before running BinSkim
       - task: DeleteFiles@1
-        displayName: 'BinSkim: Delete Chromedriver'
+        displayName: 'BinSkim (DotNet): Delete Chromedriver'
         inputs:
           SourceFolder: $(Build.SourcesDirectory)$(projPath)
           Contents: '**/chromedriver.exe'
+        condition: and(eq('${{ parameters.language }}', 'dotnet'), eq(${{ parameters.skipBinSkim }}, false))
 
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'BinSkim (DotNet): Analyze'
