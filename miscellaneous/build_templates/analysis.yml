@@ -50,7 +50,7 @@ jobs:
       - script: |
           echo Install tools
           call pip install setuptools wheel
-          call pip install unittest-xml-reporting    
+          call pip install unittest-xml-reporting
           call pip install pytest
           call pip install pytest-cov
           echo Requirements
