@@ -12,20 +12,20 @@ namespace ClientCredentialFlow
         {
             InitConfig();
 
-            ClientFlow.OcsUri = new Uri(GetConfigValue("Resource"));
+            ClientCredential.OcsUri = new Uri(GetConfigValue("Resource"));
 
             var tenantId = GetConfigValue("TenantId");
             var clientId = GetConfigValue("ClientId");
             var clientSecret = GetConfigValue("ClientKey");
             var version = GetConfigValue("ApiVersion");
-            ClientFlow.CreateAuthenticatedHttpClient(clientId, clientSecret);
+            ClientCredential.CreateAuthenticatedHttpClient(clientId, clientSecret);
 
             // Make an HTTP request to OCS using the authenticated client - since this is the first request, the AuthenticationHandler will
             // authenticate and acquire an Access Token and cache it.
             try
             {
                 var uri = new Uri($"api/{version}/Tenants/{tenantId}/Users", UriKind.Relative);
-                var response = ClientFlow.AuthenticatedHttpClient.GetAsync(uri).Result;
+                var response = ClientCredential.AuthenticatedHttpClient.GetAsync(uri).Result;
                 response.EnsureSuccessStatusCode();
                 Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine($"HTTP GET api/{version}/Tenants/{tenantId}/Users successful");
@@ -44,7 +44,7 @@ namespace ClientCredentialFlow
             try
             {
                 var uri = new Uri($"api/{version}/Tenants/{tenantId}/Users", UriKind.Relative);
-                var response = ClientFlow.AuthenticatedHttpClient.GetAsync(uri).Result;
+                var response = ClientCredential.AuthenticatedHttpClient.GetAsync(uri).Result;
                 response.EnsureSuccessStatusCode();
                 Console.WriteLine($"HTTP GET api/{version}/Tenants/{tenantId}/Users successful");
             }

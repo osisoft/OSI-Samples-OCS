@@ -4,7 +4,7 @@ using OSIsoft.Identity;
 
 namespace ClientCredentialFlow
 {
-    public static class ClientFlow
+    public static class ClientCredential
     {
         public static Uri OcsUri { get; set; }
 
