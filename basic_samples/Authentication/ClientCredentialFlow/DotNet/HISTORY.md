@@ -5,6 +5,7 @@
 - Moved project-related files to solution level
 - Updated to use Polaris in place of Coverity
 - Resolved Polaris detected issues
+- Log and publish test results
 
 ## 1.0.8 / 2020-03-24
 
