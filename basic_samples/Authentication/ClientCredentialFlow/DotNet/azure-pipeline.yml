@@ -51,29 +51,12 @@ jobs:
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)/ClientCredentialFlow
 
-      - task: DeleteFiles@1
+      - task: DotNetCoreCLI@2
         inputs:
-          SourceFolder: TestResults
-          Contents: '*.trx'
-        displayName: 'Delete old test results'
-
-      - script: |
-          echo Clean
-          dotnet clean
-          echo Build
-          dotnet build
-          echo Test
-          dotnet test --logger trx
+          command: test
+          publishTestResults: true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
-
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFormat: VSTest
-          testResultsFiles: '*.trx'
-          searchFolder: $(Build.SourcesDirectory)$(projPath)/ClientCredentialFlowTest/TestResults
-        condition: always()
-        displayName: 'Publish test results'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
