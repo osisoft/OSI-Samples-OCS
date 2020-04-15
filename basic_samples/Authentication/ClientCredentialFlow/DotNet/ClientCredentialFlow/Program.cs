@@ -85,7 +85,7 @@ namespace ClientCredentialFlow
                     InitConfig();
                 }
 
-                var value = _configuration.GetValue<string>(key);
+                var value = _configuration[key];
 
                 if (value == null)
                 {
