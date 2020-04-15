@@ -51,7 +51,7 @@ jobs:
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)/ClientCredentialFlow
 
-      - script: dotnet msbuild -p:HIGHENTROPYVA=true
+      - script: dotnet build
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build app'
 

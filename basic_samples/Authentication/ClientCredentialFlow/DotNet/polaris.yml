@@ -15,6 +15,6 @@ capture:
     cleanCommands:
       - shell: [dotnet, 'clean']
     buildCommands:
-      - shell: [dotnet, 'msbuild', '-p:HIGHENTROPYVA=true']
+      - shell: [dotnet, 'build']
 analyze:
   mode: central
