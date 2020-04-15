@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 
 namespace ClientCredentialFlowTest
 {
-    public class Tests
+    public class UnitTests
     {
-        [Test]
-        public void Test1()
+        [Fact]
+        public void ClientCredentialFlowTest()
         {
             ClientCredentialFlow.Program.Main();
         }
