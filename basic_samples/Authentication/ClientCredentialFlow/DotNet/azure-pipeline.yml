@@ -71,7 +71,7 @@ jobs:
         inputs:
           testResultsFormat: VSTest
           testResultsFiles: '*.trx'
-          searchFolder: $(Build.SourcesDirectory)$(testPath)/TestResults
+          searchFolder: $(Build.SourcesDirectory)$(projPath)/ClientCredentialFlowTest/TestResults
         condition: always()
         displayName: 'Publish test results'
 
