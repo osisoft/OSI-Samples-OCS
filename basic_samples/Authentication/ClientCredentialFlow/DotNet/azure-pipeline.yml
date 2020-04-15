@@ -52,11 +52,11 @@ jobs:
           filePath: $(projPath)/ClientCredentialFlow
 
       - task: DotNetCoreCLI@2
+        displayName: 'Run tests'
         inputs:
           command: test
           publishTestResults: true
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Run tests'
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
