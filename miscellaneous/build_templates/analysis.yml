@@ -109,6 +109,12 @@ jobs:
         condition: eq('${{ parameters.language }}', 'powerbi')
 
       # BinSkim
+      - task: DeleteFiles@1
+        displayName: 'Delete Chromedriver prior to BinSkim'
+        inputs:
+          SourceFolder: $(Build.SourcesDirectory)$(projPath)
+          Contents: '**/chromedriver.exe'
+
       - task: ms-codeanalysis.vss-microsoft-security-code-analysis-devops.build-task-binskim.BinSkim@3
         displayName: 'BinSkim (DotNet): Analyze'
         inputs:
