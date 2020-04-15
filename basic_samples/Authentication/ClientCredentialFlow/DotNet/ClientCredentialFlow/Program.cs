@@ -8,11 +8,11 @@ namespace ClientCredentialFlow
     {
         private static IConfiguration _configuration;
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             InitConfig();
 
-            ClientFlow.OcsUrl = GetConfigValue("Resource");
+            ClientFlow.OcsUri = new Uri(GetConfigValue("Resource"));
 
             var tenantId = GetConfigValue("TenantId");
             var clientId = GetConfigValue("ClientId");
@@ -24,7 +24,8 @@ namespace ClientCredentialFlow
             // authenticate and acquire an Access Token and cache it.
             try
             {
-                var response = ClientFlow.AuthenticatedHttpClient.GetAsync($"api/{version}/Tenants/{tenantId}/Users").Result;
+                var uri = new Uri($"api/{version}/Tenants/{tenantId}/Users", UriKind.Relative);
+                var response = ClientFlow.AuthenticatedHttpClient.GetAsync(uri).Result;
                 response.EnsureSuccessStatusCode();
                 Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                 Console.WriteLine($"HTTP GET api/{version}/Tenants/{tenantId}/Users successful");
@@ -35,23 +36,26 @@ namespace ClientCredentialFlow
                 {
                     Console.WriteLine($"Authentication failed with the following error: {inEx.Message}");
                 }
-                throw (ex);
+
+                throw;
             }
 
             // Make another request to OCS - this call should use the cached Access Token.
             try
             {
-                var response = ClientFlow.AuthenticatedHttpClient.GetAsync($"api/{version}/Tenants/{tenantId}/Users").Result;
+                var uri = new Uri($"api/{version}/Tenants/{tenantId}/Users", UriKind.Relative);
+                var response = ClientFlow.AuthenticatedHttpClient.GetAsync(uri).Result;
                 response.EnsureSuccessStatusCode();
                 Console.WriteLine($"HTTP GET api/{version}/Tenants/{tenantId}/Users successful");
             }
             catch (AggregateException ex)
             {
-                foreach(var inEx in ex.Flatten().InnerExceptions)
+                foreach (var inEx in ex.Flatten().InnerExceptions)
                 {
                     Console.WriteLine($"Authentication failed with the following error: {inEx.Message}");
                 }
-                throw (ex);
+
+                throw;
             }
         }
 
@@ -66,12 +70,12 @@ namespace ClientCredentialFlow
             catch (FileNotFoundException ex)
             {
                 Console.WriteLine("Config file missing: " + ex);
-                Environment.Exit(1);
+                throw;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error while initiating configuration: " + ex);
-                Environment.Exit(1);
+                throw;
             }
         }
 
@@ -81,7 +85,7 @@ namespace ClientCredentialFlow
             {
                 if (_configuration == null)
                 {
-                    Console.WriteLine("Config Null");
+                    Console.WriteLine(Resources.ConfigNull);
                     InitConfig();
                 }
 
@@ -97,11 +101,9 @@ namespace ClientCredentialFlow
             }
             catch (Exception)
             {
-                Console.WriteLine($"Configuration issue");
-                Environment.Exit(1);
+                Console.WriteLine(Resources.ConfigIssue);
+                throw;
             }
-
-            return "";
         }
     }
 }

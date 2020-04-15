@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Net.Http;
 using OSIsoft.Identity;
 
@@ -6,39 +6,33 @@ namespace ClientCredentialFlow
 {
     public static class ClientFlow
     {
-        private static string _ocsUrl;
+        public static Uri OcsUri { get; set; }
 
-        public static string OcsUrl
-        {
-            set => _ocsUrl = value;
-        }
+        public static HttpClient AuthenticatedHttpClient { get; set; }
 
         private static AuthenticationHandler AuthenticationHandler { get; set; }
-        public static HttpClient AuthenticatedHttpClient { get; private set; }
 
         public static void CreateAuthenticatedHttpClient(string clientId, string clientSecret)
         {
-            Console.WriteLine("+-------------------------------------+");
-            Console.WriteLine("|  Sign in with Client Credentials    |");
-            Console.WriteLine("+-------------------------------------+");
-            Console.WriteLine("");
+            Console.WriteLine(Resources.SignInWithClientCredentials);
+            Console.WriteLine();
 
             AuthenticationHandler = InitiateAuthenticationHandler(clientId, clientSecret);
             AuthenticatedHttpClient = new HttpClient(AuthenticationHandler)
             {
-                BaseAddress = new Uri(_ocsUrl)
+                BaseAddress = OcsUri,
             };
         }
 
         private static AuthenticationHandler InitiateAuthenticationHandler(string clientId, string clientSecret)
         {
             // Create an instance of the AuthenticationHandler.
-            return new AuthenticationHandler(new Uri(_ocsUrl), clientId, clientSecret)
+            return new AuthenticationHandler(OcsUri, clientId, clientSecret)
             {
                 InnerHandler = new HttpClientHandler()
                 {
                     AllowAutoRedirect = false,
-                }
+                },
             };
         }
     }
