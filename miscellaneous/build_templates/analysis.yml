@@ -17,10 +17,8 @@ jobs:
       - script: |
           echo Clean
           call dotnet clean
-          echo Restore
-          call dotnet restore --ignore-failed-sources
           echo Build
-          call dotnet msbuild -p:HIGHENTROPYVA=true
+          call dotnet build
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (DotNet)'
