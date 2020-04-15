@@ -1,14 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.OidcClient.Browser;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 
 namespace AuthorizationCodeFlow
 {
@@ -71,15 +66,6 @@ namespace AuthorizationCodeFlow
                     ResultType = BrowserResultType.Timeout,
                     Error = ex.Message,
                 };
-            }
-            catch (Exception ex)
-            {
-                return new BrowserResult
-                {
-                    ResultType = BrowserResultType.UnknownError,
-                    Error = ex.Message,
-                };
-                throw;
             }
         }
 
