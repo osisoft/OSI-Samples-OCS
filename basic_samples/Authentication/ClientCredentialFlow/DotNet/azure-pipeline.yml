@@ -49,7 +49,7 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/ClientCredentialFlow
 
       - script: |
           dotnet restore
