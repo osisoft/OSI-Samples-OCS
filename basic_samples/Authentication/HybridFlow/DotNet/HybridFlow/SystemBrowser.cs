@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.OidcClient.Browser;
 
@@ -31,7 +30,7 @@ namespace HybridFlow
 
         public int Port { get; }
 
-        public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<BrowserResult> InvokeAsync(BrowserOptions options)
         {
             if (options == null)
             {
