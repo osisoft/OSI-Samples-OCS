@@ -12,6 +12,7 @@ namespace UomsSample
     public static class Program
     {
         private static readonly Random _random = new Random();
+        private static IConfiguration _configuration;
         private static bool _success = true;
         private static Exception _toThrow = null;
 
@@ -27,14 +28,14 @@ namespace UomsSample
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile("appsettings.test.json", optional: true);
-            IConfiguration configuration = builder.Build();
+            _configuration = builder.Build();
 
-            string tenantId = configuration["TenantId"];
-            string namespaceId = configuration["NamespaceId"];
-            string resource = configuration["Resource"];
-            string clientId = configuration["ClientId"];
-            string clientKey = configuration["ClientKey"];
-            string apiVersion = configuration["ApiVersion"];
+            string tenantId = _configuration["TenantId"];
+            string namespaceId = _configuration["NamespaceId"];
+            string resource = _configuration["Resource"];
+            string clientId = _configuration["ClientId"];
+            string clientKey = _configuration["ClientKey"];
+            string apiVersion = _configuration["ApiVersion"];
 
             string resourcePrefix = "UomSample";
             string typeId = $"{resourcePrefix} Uom";
