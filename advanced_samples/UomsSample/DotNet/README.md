@@ -2,7 +2,7 @@
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/UOM_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=928&branchName=master)
 
-Developed against DotNet 2.2.105.
+Developed against DotNet 3.1.
 
 ## Running the sample
 
@@ -10,7 +10,7 @@ Replace the placeholders in the [appsettings](appsettings.json) file with your T
 
 ### Requirements
 
-- .NET Core 2.2.1 or later
+- .NET Core 3.1 or later
 - Reliable internet connection
 
 ### Using Visual Studio
@@ -44,7 +44,7 @@ The UOM sample follows these steps
 
 ---
 
-Tested against DotNet 2.2.105.
+Tested against DotNet 3.1.
 
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

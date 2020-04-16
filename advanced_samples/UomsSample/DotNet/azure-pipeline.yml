@@ -26,16 +26,14 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/advanced_samples/UomsSample/Dotnet/UomsSample/UomsSample'
+    value: '/advanced_samples/UomsSample/Dotnet'
   - name: testPath
-    value: '/advanced_samples/UomsSample/Dotnet/UomsSample/UomsSampleTest'
+    value: '/advanced_samples/UomsSample/Dotnet'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.uom_dotnet.json
-  - name: covStream
-    value: UOM_DotNet
-  - name: bdProject
+  - name: analysisProject
     value: UOM_DotNet
 
 jobs:
@@ -43,9 +41,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: ubuntu-16.04
+          imageName: ubuntu-latest
         windows:
-          imageName: vs2017-win2016
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -53,14 +51,15 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/UomsSample
 
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-          dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+      - task: DotNetCoreCLI@2
         displayName: 'Run tests'
+        inputs:
+          command: test
+          publishTestResults: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

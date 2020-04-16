@@ -3,7 +3,7 @@ using OSIsoft.Data;
 
 namespace UomsSample
 {
-    class Widget
+    public class Widget
     {
         [SdsMember(IsKey = true)]
         public DateTime Time { get; set; }
@@ -13,6 +13,5 @@ namespace UomsSample
 
         [SdsMember(Uom = "mile")]
         public double Distance { get; set; }
-
     }
 }
