@@ -95,7 +95,7 @@ namespace AuthorizationCodeFlow
                 ctx.Response.StatusCode = 200;
                 ctx.Response.ContentType = "text/html";
                 ctx.Response.WriteAsync("<h1>You can now return to the application.</h1>");
-                ctx.Response.Body.Flush();
+                ctx.Response.Body.FlushAsync();
 
                 _source.TrySetResult(value);
             }
@@ -104,7 +104,7 @@ namespace AuthorizationCodeFlow
                 ctx.Response.StatusCode = 400;
                 ctx.Response.ContentType = "text/html";
                 ctx.Response.WriteAsync("<h1>Invalid request.</h1>");
-                ctx.Response.Body.Flush();
+                ctx.Response.Body.FlushAsync();
                 throw;
             }
         }
