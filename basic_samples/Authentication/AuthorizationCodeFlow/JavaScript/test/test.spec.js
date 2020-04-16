@@ -1,20 +1,27 @@
 require('chromedriver');
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
-const config = require('./config');
+const chrome = require('selenium-webdriver/chrome');
+const config = require('../src/config');
 
 const wait = 5000;
 
 describe('Sample App', () => {
   let driver;
 
-  before(async function() {
-    driver = await new Builder().forBrowser('chrome').build();
+  before(async function () {
+    const options = new chrome.Options();
+    options.addArguments('--headless');
+    options.addArguments('--no-sandbox');
+    driver = await new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(options)
+      .build();
   });
 
   after(() => driver && driver.quit());
 
-  it('Should log in to OCS', async function() {
+  it('Should log in to OCS', async function () {
     await driver.get('http://localhost:5004');
 
     // Click to log in
@@ -28,19 +35,19 @@ describe('Sample App', () => {
         ),
         wait
       )
-      .then(e => {
+      .then((e) => {
         e.click();
       });
 
     // Enter user name, and click Next
     await driver
       .wait(until.elementLocated(By.id('i0116')), wait)
-      .then(e => e.sendKeys(config.userName));
+      .then((e) => e.sendKeys(config.userName));
     await driver
       .wait(until.elementLocated(By.id('idSIButton9')), wait)
-      .then(async function(e) {
+      .then(async function (e) {
         await driver.wait(until.elementIsEnabled(e), wait);
-        setTimeout(async function() {
+        setTimeout(async function () {
           await driver.findElement(By.id('idSIButton9')).click();
         }, 500);
       });
@@ -49,12 +56,12 @@ describe('Sample App', () => {
     await driver.wait(until.urlContains('username='), wait);
     await driver
       .findElement(By.id('i0118'))
-      .then(e => e.sendKeys(config.password));
+      .then((e) => e.sendKeys(config.password));
     await driver
       .wait(until.elementLocated(By.id('idSIButton9')), wait)
-      .then(async function(e) {
+      .then(async function (e) {
         await driver.wait(until.elementIsEnabled(e), wait);
-        setTimeout(async function() {
+        setTimeout(async function () {
           await driver.findElement(By.id('idSIButton9')).click();
         }, 500);
       });
@@ -62,7 +69,7 @@ describe('Sample App', () => {
     // Click tenant button, and verify results
     await driver
       .wait(until.elementLocated(By.id('tenant')), wait)
-      .then(async function(e) {
+      .then(async function (e) {
         await driver.wait(until.elementIsEnabled(e), wait);
         await driver.findElement(By.id('tenant')).click();
       });

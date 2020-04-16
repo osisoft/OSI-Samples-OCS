@@ -31,20 +31,18 @@ variables:
     value: config.js
   - name: CredFileLibrary
     value: product-readiness.auth_pkce_javascript.js
-  - name: covStream
-    value: Auth_PKCE_JavaScript
-  - name: bdProject
+  - name: projectName
     value: Auth_PKCE_JavaScript
 
 jobs:
   - job: Tests
     strategy:
+    strategy:
       matrix:
-        # Cannot run on Linux due to missing Selenium Chrome Driver
-        # linux:
-        #   imageName: 'ubuntu-16.04'
+        linux:
+          imageName: ubuntu-latest
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -70,6 +68,15 @@ jobs:
       - script: call npm test
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: '*.xml'
+          searchFolder: '$(Build.SourcesDirectory)$(projPath)/TestResults'
+          failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
