@@ -11,7 +11,7 @@
     "test": "mocha --recursive --timeout 60000 --reporter mocha-junit-reporter --reporter-options mochaFile=./TestResults/test-results.xml"
   },
   "devDependencies": {
-    "chromedriver": "^81.0.0",
+    "chromedriver": "^80.0.1",
     "mocha": "^7.1.1",
     "mocha-junit-reporter": "^1.23.3",
     "selenium-webdriver": "^3.6.0",
