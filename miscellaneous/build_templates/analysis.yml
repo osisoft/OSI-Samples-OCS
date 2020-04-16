@@ -132,7 +132,7 @@ jobs:
       # Synopsys Polaris
       - powershell: |
           # Set up Polaris Project Name, Access Token
-          New-Item -Path Env:\ -Name POLARIS_PROJECT_NAME -Value $(projectName)
+          New-Item -Path Env:\ -Name POLARIS_PROJECT_NAME -Value $(analysisProject)
           New-Item -Path Env:\ -Name POLARIS_ACCESS_TOKEN -Value $(polarisToken)
 
           # Call Polaris, set the configuration file path and run analyze with wait option
@@ -151,11 +151,11 @@ jobs:
           Products: BD
           BlackDuckService: 'product-readiness.BlackDuck'
           DetectArguments: |
-            --detect.project.name="$(projectName)"
+            --detect.project.name="$(analysisProject)"
             --detect.project.version.name="$(Build.SourceBranchName)"
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
-            --detect.code.location.name="code_location_$(projectName)_$(Build.SourceBranchName)"
-            --detect.bom.aggregate.name="bom_$(projectName)_$(Build.SourceBranchName)"
+            --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
+            --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
         condition: and(succeeded(), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
         displayName: 'Synopsys Detect: BlackDuck'
 
@@ -164,11 +164,11 @@ jobs:
           Products: BD
           BlackDuckService: 'product-readiness.BlackDuck'
           DetectArguments: |
-            --detect.project.name="$(projectName)"
+            --detect.project.name="$(analysisProject)"
             --detect.project.version.name="$(Build.SourceBranchName)"
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
-            --detect.code.location.name="code_location_$(projectName)_$(Build.SourceBranchName)"
-            --detect.bom.aggregate.name="bom_$(projectName)_$(Build.SourceBranchName)"
+            --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
+            --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.pip.requirements.path=$(Build.SourcesDirectory)$(projPath)/requirements.txt
         condition: and(succeeded(), and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false)))
         displayName: 'Synopsys Detect: BlackDuck (Python Requirements.txt)'

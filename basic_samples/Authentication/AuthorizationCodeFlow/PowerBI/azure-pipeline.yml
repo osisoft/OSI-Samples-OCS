@@ -31,7 +31,7 @@ variables:
     value: url
   - name: CredFileURLLibrary
     value: product-readiness.url
-  - name: projectName
+  - name: analysisProject
     value: Auth_PKCE_PowerBI
 
 jobs:
@@ -62,8 +62,8 @@ jobs:
           dir
           call vsdevcmd
           call msbuild"
-          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnector
+          call copy /y ".\OCSConnector\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
       - script: 'call mstest /testcontainer:OCSConnectorTest.dll'
