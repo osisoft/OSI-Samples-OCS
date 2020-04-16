@@ -60,8 +60,9 @@ jobs:
         displayName: 'Specify Python version'
 
       - bash: |
-          echo Install tools
+          echo Install test tools
           pip install pytest
+          pip install selenium
           echo Install requirements
           pip install -r requirements.txt
           echo Run tests
