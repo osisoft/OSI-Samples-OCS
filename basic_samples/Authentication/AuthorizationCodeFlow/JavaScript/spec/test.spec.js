@@ -2,14 +2,21 @@ require('chromedriver');
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
+const reporters = require('jasmine-reporters');
 const config = require('../src/config');
+
+var junitReporter = new reporters.JUnitXmlReporter({
+  savePath: 'TestResults',
+});
+jasmine.getEnv().addReporter(junitReporter);
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 
 const wait = 5000;
 
 describe('Sample App', () => {
   let driver;
 
-  before(async function () {
+  beforeEach(async function () {
     const options = new chrome.Options();
     options.addArguments('--headless');
     options.addArguments('--no-sandbox');
@@ -19,7 +26,7 @@ describe('Sample App', () => {
       .build();
   });
 
-  after(() => driver && driver.quit());
+  afterEach(() => driver && driver.quit());
 
   it('Should log in to OCS', async function () {
     await driver.get('http://localhost:5004');

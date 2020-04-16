@@ -8,12 +8,12 @@
   "author": "OSIsoft, LLC",
   "scripts": {
     "start": "serve -l 5004 src",
-    "test": "mocha --recursive --timeout 60000 --reporter mocha-junit-reporter --reporter-options mochaFile=./TestResults/test-results.xml"
+    "test": "jasmine"
   },
   "devDependencies": {
     "chromedriver": "^80.0.1",
-    "mocha": "^7.1.1",
-    "mocha-junit-reporter": "^1.23.3",
+    "jasmine": "^3.5.0",
+    "jasmine-reporters": "^2.3.2",
     "selenium-webdriver": "^3.6.0",
     "serve": "^11.3.0"
   }
