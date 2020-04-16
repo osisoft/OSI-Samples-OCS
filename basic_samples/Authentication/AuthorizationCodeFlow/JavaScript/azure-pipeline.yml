@@ -37,7 +37,6 @@ variables:
 jobs:
   - job: Tests
     strategy:
-    strategy:
       matrix:
         linux:
           imageName: ubuntu-latest
@@ -76,7 +75,6 @@ jobs:
           searchFolder: '$(Build.SourcesDirectory)$(projPath)/TestResults'
           failTaskOnFailedTests: true
           testRunTitle: '$(Agent.JobName) on $(imageName)'
-
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
