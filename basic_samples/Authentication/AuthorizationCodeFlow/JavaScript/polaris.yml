@@ -11,9 +11,10 @@ project:
     name: ${scm.git.commit}
     date: ${scm.git.commit.date}
 capture:
-  buildless:
-    project:
-      languages:
-        - javascript
+  coverity:
+    buildless:
+      project:
+        languages:
+          - javascript
 analyze:
   mode: central

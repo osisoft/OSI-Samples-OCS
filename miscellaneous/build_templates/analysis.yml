@@ -141,7 +141,7 @@ jobs:
           # Call Polaris, set the configuration file path and run analyze with wait option
           & 'polaris.exe' -c polaris.yml analyze -w
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Polaris Analyze (DotNet)'
+        displayName: 'Polaris Analyze'
 
       # Synopsys BlackDuck
       # # Needs Pip < 20 due to issue described in https://github.com/blackducksoftware/synopsys-detect/pull/107
