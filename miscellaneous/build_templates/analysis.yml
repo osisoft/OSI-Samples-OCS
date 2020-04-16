@@ -155,6 +155,8 @@ jobs:
             --detect.project.version.name="$(Build.SourceBranchName)"
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
             --detect.code.location.name="code_location_$(projectName)_$(Build.SourceBranchName)"
+            --detect.cleanup=false 
+            --detect.blackduck.signature.scanner.dry.run=true
             --detect.bom.aggregate.name="bom_$(projectName)_$(Build.SourceBranchName)"
         condition: and(succeeded(), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
         displayName: 'Synopsys Detect: BlackDuck'
