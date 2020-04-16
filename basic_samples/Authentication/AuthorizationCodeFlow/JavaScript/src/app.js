@@ -2,7 +2,6 @@
 
 function log() {
   document.getElementById('results').innerText = '';
-  console;
   Array.prototype.forEach.call(arguments, function (msg) {
     if (msg instanceof Error) {
       msg = 'Error: ' + msg.message;
