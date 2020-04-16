@@ -7,14 +7,14 @@
   "license": "Apache 2.0",
   "author": "OSIsoft, LLC",
   "scripts": {
-    "start": "http-server -a localhost -p 5004 -c-1 ./src",
+    "start": "serve -l 5004 src",
     "test": "mocha --recursive --timeout 60000 --reporter mocha-junit-reporter --reporter-options mochaFile=./TestResults/test-results.xml"
   },
   "devDependencies": {
-    "chromedriver": "^79.0.2",
-    "http-server": "^0.12.1",
-    "mocha": "^7.0.1",
+    "chromedriver": "^81.0.0",
+    "mocha": "^7.1.1",
     "mocha-junit-reporter": "^1.23.3",
-    "selenium-webdriver": "^3.6.0"
+    "selenium-webdriver": "^3.6.0",
+    "serve": "^11.3.0"
   }
 }
