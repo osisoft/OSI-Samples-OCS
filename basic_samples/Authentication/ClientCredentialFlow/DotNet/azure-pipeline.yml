@@ -31,7 +31,7 @@ variables:
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_cc_dotnet.json
-  - name: projectName
+  - name: analysisProject
     value: Auth_CC_DotNet
 
 jobs:

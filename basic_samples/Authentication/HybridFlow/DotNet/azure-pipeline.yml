@@ -31,7 +31,7 @@ variables:
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_hybrid_dotnet.json
-  - name: projectName
+  - name: analysisProject
     value: Auth_Hybrid_DotNet
 
 jobs:

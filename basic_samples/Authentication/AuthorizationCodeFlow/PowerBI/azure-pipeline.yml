@@ -70,11 +70,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
         displayName: 'Run coded UI'
 
-      - script: call xcopy ".\TestResults\." "C:\Users\$(username)\Documents\TestResults"
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
-        displayName: 'Copy test results'
-        condition: always()
-
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'VSTest'

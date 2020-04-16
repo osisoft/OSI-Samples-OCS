@@ -31,7 +31,7 @@ variables:
     value: config.js
   - name: CredFileLibrary
     value: product-readiness.auth_pkce_javascript.js
-  - name: projectName
+  - name: analysisProject
     value: Auth_PKCE_JavaScript
 
 jobs:
