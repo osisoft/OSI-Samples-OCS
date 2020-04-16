@@ -26,27 +26,22 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/Authentication/HybridFlow/DotNet/HybridFlow'
-  - name: testPath
-    value: '/basic_samples/Authentication/HybridFlow/DotNet/HybridFlowTest'
+    value: '/basic_samples/Authentication/HybridFlow/DotNet'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.auth_hybrid_dotnet.json
-  - name: covStream
-    value: Auth_Hybrid_DotNet
-  - name: bdProject
+  - name: projectName
     value: Auth_Hybrid_DotNet
 
 jobs:
   - job: Tests
     strategy:
       matrix:
-        # Cannot run on Linux due to missing Selenium Chrome Driver
-        # linux:
-        #   imageName: 'ubuntu-16.04'
+        linux:
+          imageName: ubuntu-latest
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -54,19 +49,15 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/HybridFlow
 
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Build app'
-
-      - script: |
-          dotnet restore
-          dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+      - task: DotNetCoreCLI@2
         displayName: 'Run tests'
+        inputs:
+          command: test
+          publishTestResults: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

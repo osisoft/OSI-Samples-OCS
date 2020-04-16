@@ -46,26 +46,14 @@ namespace AuthorizationCodeFlow
                 var result = await listener.WaitForCallbackAsync().ConfigureAwait(false);
                 if (string.IsNullOrWhiteSpace(result))
                 {
-                    return new BrowserResult
-                    {
-                        ResultType = BrowserResultType.UnknownError,
-                        Error = "Empty response.",
-                    };
+                    return new BrowserResult { ResultType = BrowserResultType.UnknownError, Error = "Empty response." };
                 }
 
-                return new BrowserResult
-                {
-                    Response = result,
-                    ResultType = BrowserResultType.Success,
-                };
+                return new BrowserResult { Response = result, ResultType = BrowserResultType.Success };
             }
             catch (TaskCanceledException ex)
             {
-                return new BrowserResult
-                {
-                    ResultType = BrowserResultType.Timeout,
-                    Error = ex.Message,
-                };
+                return new BrowserResult { ResultType = BrowserResultType.Timeout, Error = ex.Message };
             }
         }
 

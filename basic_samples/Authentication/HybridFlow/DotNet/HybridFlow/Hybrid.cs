@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using IdentityModel.OidcClient;
 
-namespace AuthorizationCodeFlow
+namespace HybridFlow
 {
-    public static class AuthorizationCode
+    public static class Hybrid
     {
         /// <summary>
         /// Identity resource suffix.
         /// </summary>
         private const string IdentityResourceSuffix = "/identity";
         private static OidcClient _oidcClient;
-
         public static string OcsAddress { get; set; }
 
         public static string RedirectHost { get; set; }
@@ -28,7 +27,8 @@ namespace AuthorizationCodeFlow
             get { return OcsAddress + IdentityResourceSuffix; }
         }
 
-        public static (string, DateTime) GetAuthorizationCodeFlowAccessToken(string clientId, string tenantId)
+        public static (string, string, DateTime) GetHybridFlowAccessToken(string clientId, string clientSecret,
+            string tenantId)
         {
             Console.WriteLine(Resources.SignInWithOidc);
             Console.WriteLine();
@@ -39,16 +39,16 @@ namespace AuthorizationCodeFlow
                 if (loginResult != null)
                 {
                     Console.WriteLine(loginResult.Error);
-                    return (string.Empty, DateTime.Now);
+                    return (string.Empty, string.Empty, DateTime.Now);
                 }
 
                 Console.WriteLine(Resources.PromptingLogin);
-                var scope = "openid ocsapi";
-                loginResult = SignIn(clientId, scope, tenantId).Result;
+                var scope = "openid ocsapi offline_access";
+                loginResult = SignIn(clientId, clientSecret, scope, tenantId).Result;
             }
             while (loginResult.IsError);
 
-            return (loginResult.AccessToken, loginResult.AccessTokenExpiration.ToLocalTime());
+            return (loginResult.AccessToken, loginResult.RefreshToken, loginResult.AccessTokenExpiration.ToLocalTime());
         }
 
         public static async void Logout()
@@ -56,10 +56,20 @@ namespace AuthorizationCodeFlow
             await _oidcClient.LogoutAsync().ConfigureAwait(false);
         }
 
-        public static async Task<ProviderInformation> GetProviderInformation()
+        public static (string, string, DateTime) GetAccessTokenFromRefreshToken(string refreshToken, string clientId,
+            string clientSecret)
+        {
+            Console.WriteLine();
+            Console.WriteLine(Resources.GettingAccessTokenFromRefreshToken);
+            Console.WriteLine();
+
+            return RefreshTokenAsync(refreshToken, clientId, clientSecret).Result;
+        }
+
+        private static async Task<ProviderInformation> GetProviderInformation()
         {
             // Discover endpoints from metadata.
-            using var client = new HttpClient();
+            using HttpClient client = new HttpClient();
 
             // Create a discovery request
             using var discoveryDocumentRequest = new DiscoveryDocumentRequest
@@ -89,7 +99,8 @@ namespace AuthorizationCodeFlow
                 };
         }
 
-        private static async Task<LoginResult> SignIn(string clientId, string scope, string tenantId)
+        private static async Task<LoginResult> SignIn(string clientId, string clientSecret, string scope,
+            string tenantId)
         {
             // create a redirect URI using an available port on the loopback address.
             // requires the OP to allow random ports on 127.0.0.1 - otherwise set a static port
@@ -102,10 +113,11 @@ namespace AuthorizationCodeFlow
                 {
                     Authority = OcsIdentityUrl,
                     ClientId = clientId,
+                    ClientSecret = clientSecret,
                     RedirectUri = redirectUri,
                     Scope = scope,
                     FilterClaims = false,
-                    Flow = OidcClientOptions.AuthenticationFlow.AuthorizationCode,
+                    Flow = OidcClientOptions.AuthenticationFlow.Hybrid,
                     Browser = browser,
                     Policy = new Policy
                     {
@@ -130,6 +142,40 @@ namespace AuthorizationCodeFlow
                 Console.WriteLine($"Error while logging in: {ex}");
                 throw;
             }
+        }
+
+        private static async Task<(string, string, DateTime)> RefreshTokenAsync(string refreshToken, string clientId,
+            string clientSecret)
+        {
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                Console.WriteLine(Resources.NoRefreshToken);
+            }
+
+            Console.WriteLine($"Using refresh token: {refreshToken}");
+
+            // Get provider information manually
+            var provider = await GetProviderInformation().ConfigureAwait(false);
+
+            // Make a refresh token request. This will issue new access and refresh tokens.
+            using var tokenClient = new HttpClient();
+            using var refreshRequest = new RefreshTokenRequest
+            {
+                Address = provider.TokenEndpoint,
+                ClientId = clientId,
+                ClientSecret = clientSecret,
+                RefreshToken = refreshToken,
+            };
+            var response = await tokenClient.RequestRefreshTokenAsync(refreshRequest).ConfigureAwait(false);
+
+            if (response.IsError)
+            {
+                Console.WriteLine("Error while getting the refresh token: " + response.Error);
+                return (string.Empty, string.Empty, DateTime.Now);
+            }
+
+            return (response.AccessToken, response.RefreshToken,
+                DateTime.Now.AddSeconds(response.ExpiresIn).ToLocalTime());
         }
     }
 }

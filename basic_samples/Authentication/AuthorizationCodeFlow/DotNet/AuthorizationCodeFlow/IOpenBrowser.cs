@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AuthorizationCodeFlow
+﻿namespace AuthorizationCodeFlow
 {
     public interface IOpenBrowser
     {
