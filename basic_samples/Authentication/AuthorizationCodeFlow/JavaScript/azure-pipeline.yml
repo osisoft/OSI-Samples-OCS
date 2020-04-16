@@ -73,7 +73,6 @@ jobs:
           testResultsFormat: JUnit
           testResultsFiles: '*.xml'
           searchFolder: '$(Build.SourcesDirectory)$(projPath)/TestResults'
-          failTaskOnFailedTests: true
           testRunTitle: '$(Agent.JobName) on $(imageName)'
 
   - template: '/miscellaneous/build_templates/analysis.yml'

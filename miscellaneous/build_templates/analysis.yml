@@ -99,11 +99,8 @@ jobs:
 
       # - PowerBI
       - script: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
-          dir
-          dir bin
-          dir bin\Debug
-          call copy /y "$(Build.SourcesDirectory)$(projPath)\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+          call vsdevcmd
+          call msbuild
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (PowerBI)'
         condition: eq('${{ parameters.language }}', 'powerbi')
