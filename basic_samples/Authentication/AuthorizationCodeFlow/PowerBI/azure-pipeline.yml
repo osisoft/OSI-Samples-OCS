@@ -75,7 +75,7 @@ jobs:
           testResultsFormat: 'VSTest'
           testResultsFiles: '*.trx'
           searchFolder: '$(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug/TestResults'
-          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
         condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
