@@ -11,10 +11,10 @@ project:
     name: ${scm.git.commit}
     date: ${scm.git.commit.date}
 capture:
-  build:
-    cleanCommands:
-      - shell: [dotnet, 'clean']
-    buildCommands:
-      - shell: [dotnet, 'build']
+  coverity:
+    buildless:
+      project:
+        languages:
+          - cs
 analyze:
   mode: central
