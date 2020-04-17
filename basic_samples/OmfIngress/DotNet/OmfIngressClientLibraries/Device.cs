@@ -76,7 +76,7 @@ namespace OmfIngressClientLibraries
         private async Task SendOmfMessageAsync(OmfMessage omfMessage)
         {
             SerializedOmfMessage serializedOmfMessage = OmfMessageSerializer.Serialize(omfMessage);
-            await _deviceOmfIngressService.SendOMFMessageAsync(serializedOmfMessage).ConfigureAwait(false);
+            await _deviceOmfIngressService.SendOmfMessageAsync(serializedOmfMessage).ConfigureAwait(false);
         }
     }
 }
