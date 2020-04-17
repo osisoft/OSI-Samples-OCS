@@ -13,8 +13,7 @@ namespace OmfIngressClientLibrariesTests
     public class UnitTests
     {
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Used only for retry logic when waiting for values to return from tests.")]
-        public async Task OmfIngressClientLibrariesTest()
+        public void OmfIngressClientLibrariesTest()
         {
             // Setting things up
             Program.Setup();
@@ -25,8 +24,13 @@ namespace OmfIngressClientLibrariesTests
             ISdsDataService sdsDataService = SdsService.GetDataService(new Uri(Program.Address), Program.TenantId, Program.NamespaceId,
                 new AuthenticationHandler(new Uri(Program.Address), Program.ClientId, Program.ClientSecret));
 
-            OmfConnection omfConnection = null;
+            RunTestAsync(sdsMetadataService, sdsDataService).ConfigureAwait(false);
+        }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Used only for retry logic when waiting for values to return from tests.")]
+        private static async Task RunTestAsync(ISdsMetadataService sdsMetadataService, ISdsDataService sdsDataService)
+        {
+            OmfConnection omfConnection = null;
             try
             {
                 // Create the Connection, send OMF
