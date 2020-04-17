@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/basic_samples/DataViews/Python3'
+      - '/basic_samples/DataViews/Python'
 
 pr:
   branches:
@@ -13,7 +13,7 @@ pr:
       - master
   paths:
     include:
-      - '/basic_samples/DataViews/Python3'
+      - '/basic_samples/DataViews/Python'
 
 schedules:
   - cron: '0 0 * * 0'
@@ -26,14 +26,12 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/DataViews/Python3'
+    value: '/basic_samples/DataViews/Python'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
     value: product-readiness.dataviews_python.ini
-  - name: covStream
-    value: DataviewPy
-  - name: bdProject
+  - name: analysisProject
     value: DataViews_Python
 
 jobs:
@@ -41,9 +39,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-16.04'
+          imageName: ubuntu-latest
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -60,26 +58,23 @@ jobs:
         displayName: 'Specify Python version'
 
       - bash: |
-          echo Install tools
-          pip install setuptools wheel
-          pip install unittest-xml-reporting    
+          echo Install test tools  
           pip install pytest
-          pip install pytest-cov
           echo Install requirements
           pip install -r requirements.txt
           echo Run tests
-          python -m pytest --junitxml=junit/test-results.xml ./program.py
+          python -m pytest --junitxml=junit/test-results.xml ./test.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
-        
+
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
           testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on $(vmImage)'
         displayName: 'Publish test results'
-
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
