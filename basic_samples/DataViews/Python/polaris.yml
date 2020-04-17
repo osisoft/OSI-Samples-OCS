@@ -14,5 +14,7 @@ capture:
   fileSystem:
     python:
       extensions: [py]
+      files:
+        - directory: .
 analyze:
   mode: central
