@@ -3,10 +3,14 @@ using OSIsoft.Data;
 
 namespace SdsClientLibraries
 {
-    public class WaveData
+
+    public class WaveDataCompound
     {
-        [SdsMember(IsKey = true)]
+        [SdsMember(IsKey = true, Order = 0)]
         public int Order { get; set; }
+
+        [SdsMember(IsKey = true, Order = 1)]
+        public int Multiplier { get; set; }
 
         public double Tau { get; set; }
 
@@ -28,6 +32,7 @@ namespace SdsClientLibraries
         {
             var builder = new StringBuilder();
             builder.Append($"Order: {Order}");
+            builder.Append($", Multiplier: {Multiplier}");
             builder.Append($", Radians: {Radians}");
             builder.Append($", Tau: {Tau}");
             builder.Append($", Sin: {Sin}");
