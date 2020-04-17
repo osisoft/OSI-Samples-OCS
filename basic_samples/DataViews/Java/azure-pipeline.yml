@@ -26,7 +26,7 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/DataViews/Java/dataviewjava'
+    value: '/basic_samples/DataViews/Java'
   - name: libPath
     value: '/library_samples/Java/ocs_sample_library_preview'
   - name: CredFile
