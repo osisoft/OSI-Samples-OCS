@@ -60,9 +60,10 @@ jobs:
       - task: Maven@3
         inputs:
           mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
-          publishJUnitResults: false
-          testResultsFiles: '**/TEST-*.xml'
           goals: test
+          publishJUnitResults: true
+          testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
