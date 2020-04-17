@@ -3,8 +3,7 @@
 The sample code in the folders below demonstrate how to invoke Data Views REST APIs via the sample client libraries.
 The steps performed in the examples are similar and follow this general flow as shown on [Data View Docs](https://ocs-docs.osisoft.com/Documentation/DataViews/Quick_Start_Define_a_Data_View.html):
 
-
-1. Authenticate against OCS  
+1. Authenticate against OCS
 2. Creating types, streams, and data
 3. Create a data view
 4. Retrieve the data view
@@ -16,8 +15,6 @@ The steps performed in the examples are similar and follow this general flow as 
 10. Identify data items
 11. Consolidate data fields
 12. Delete sample objects from OCS
-
-Note: Currently the JAVA data view library sample does not follow this pattern and doesn't work
 
 | Languages                            | Test Status                                                                                                                                                                                                                        |
 | ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,77 +1,25 @@
 package com.github.osisoft.ocs_sample_library_preview.dataviews;
 
+import com.github.osisoft.ocs_sample_library_preview.sds.SdsTypeCode;
+
 public class DataView {
-    private String Id = "";
-    private String Name = "";
-    private String Description = "";
-    private DataViewQuery[] Queries;
-    private DataViewGroupRule[] GroupRules;
-    private DataViewMappings Mappings;
-    private DataViewIndexConfig IndexConfig;
-    private String IndexDataType = "";
+    private String Id;
+    private String Name;
+    private String Description;
+    private Query[] Queries;
+    private FieldSet[] DataFieldSets;
+    private Field[] GroupingFields;
+    private Field IndexField;
+    private SdsTypeCode IndexTypeCode;
+    private String DefaultStartIndex;
+    private String DefaultEndIndex;
+    private String DefaultInterval;
+    private DataViewShape Shape;
 
-    /** Base constructor */
-    public DataView() {
-        this.Mappings = new DataViewMappings();
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param id            Required
-     * @param queries       DataViewQuery[] Required
-     * @param groupRules    DataViewGroupRule[] Required
-     * @param indexDataType Limited to "DateTime" currently Required
-     */
-    public DataView(String id, DataViewQuery[] queries, DataViewGroupRule[] groupRules, String indexDataType) {
-        this.Id = id;
-        this.Queries = queries;
-        this.GroupRules = groupRules;
-        this.Mappings = new DataViewMappings();
-        this.IndexDataType = indexDataType;
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param id            Required
-     * @param name          not required
-     * @param description   not required
-     * @param queries       DataViewQuery[] Required
-     * @param groupRules    DataViewGroupRule[] Required
-     * @param indexDataType Limited to "DateTime" currently Required
-     */
-    public DataView(String id, String name, String description, DataViewQuery[] queries, DataViewGroupRule[] groupRules,
-            String indexDataType) {
-        this.Id = id;
-        this.Queries = queries;
-        this.GroupRules = groupRules;
-        this.Mappings = new DataViewMappings();
-        this.IndexDataType = indexDataType;
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param id            Required
-     * @param name          not required
-     * @param description   not required
-     * @param queries       DataViewQuery[] Required
-     * @param groupRules    DataViewGroupRule[] Required
-     * @param mappings      DataViewMapping required
-     * @param indexConfig   DataViewIndexConfig not require
-     * @param indexDataType Limited to "DateTime" currently Required
-     */
-    public DataView(String id, String name, String description, DataViewQuery[] queries, DataViewGroupRule[] groupRules,
-            DataViewMappings mappings, DataViewIndexConfig indexConfig, String indexDataType) {
+    public DataView(String id, String name, String description) {
         this.Id = id;
         this.Name = name;
         this.Description = description;
-        this.Queries = queries;
-        this.GroupRules = groupRules;
-        this.Mappings = mappings;
-        this.IndexConfig = indexConfig;
-        this.IndexDataType = indexDataType;
     }
 
     public String getId() {
@@ -98,43 +46,75 @@ public class DataView {
         this.Description = description;
     }
 
-    public DataViewQuery[] getQueries() {
+    public Query[] getQueries() {
         return Queries;
     }
 
-    public void setQueries(DataViewQuery[] queries) {
+    public void setQueries(Query[] queries) {
         this.Queries = queries;
     }
 
-    public DataViewMappings getMappings() {
-        return Mappings;
+    public FieldSet[] getDataFieldSets() {
+        return DataFieldSets;
     }
 
-    public void setMappings(DataViewMappings mappings) {
-        this.Mappings = mappings;
+    public void setDataFieldSets(FieldSet[] dataFieldSets) {
+        this.DataFieldSets = dataFieldSets;
     }
 
-    public DataViewIndexConfig getIndexConfig() {
-        return IndexConfig;
+    public Field[] getGroupingFields() {
+        return GroupingFields;
     }
 
-    public void setIndexConfig(DataViewIndexConfig indexConfig) {
-        this.IndexConfig = indexConfig;
+    public void setGroupingFields(Field[] groupingFields) {
+        this.GroupingFields = groupingFields;
     }
 
-    public String getIndexDataType() {
-        return IndexDataType;
+    public Field setIndexField() {
+        return IndexField;
     }
 
-    public void setIndexDataType(String indexDataType) {
-        this.IndexDataType = indexDataType;
+    public void setIndexField(Field indexField) {
+        this.IndexField = indexField;
     }
 
-    public DataViewGroupRule[] getGroupRules() {
-        return GroupRules;
+    public SdsTypeCode getIndexTypeCode() {
+        return IndexTypeCode;
     }
 
-    public void setGroupRules(DataViewGroupRule[] rules) {
-        this.GroupRules = rules;
+    public void setIndexTypeCode(SdsTypeCode indexTypeCode) {
+        this.IndexTypeCode = indexTypeCode;
+    }
+
+    public String getDefaultStartIndex() {
+        return DefaultStartIndex;
+    }
+
+    public void setDefaultStartIndex(String defaultStartIndex) {
+        this.DefaultStartIndex = defaultStartIndex;
+    }
+
+    public String getDefaultEndIndex() {
+        return DefaultEndIndex;
+    }
+
+    public void setDefaultEndIndex(String defaultEndIndex) {
+        this.DefaultEndIndex = defaultEndIndex;
+    }
+
+    public String getDefaultInterval() {
+        return DefaultInterval;
+    }
+
+    public void setDefaultInterval(String defaultInterval) {
+        this.DefaultInterval = defaultInterval;
+    }
+
+    public DataViewShape getShape() {
+        return Shape;
+    }
+
+    public void setShape(DataViewShape shape) {
+        this.Shape = shape;
     }
 }

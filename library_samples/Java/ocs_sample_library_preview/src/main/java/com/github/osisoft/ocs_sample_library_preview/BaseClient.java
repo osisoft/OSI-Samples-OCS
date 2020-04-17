@@ -37,21 +37,27 @@ public class BaseClient {
     private long FIVE_SECONDS_IN_MILLISECONDS = 5000;
 
     // config parameters
-    private String gclientId = "";
-    private String gclientSecret = "";
-    private String gresource = "";
+    private String TenantId = "";
+    private String ClientId = "";
+    private String ClientSecret = "";
+    private String Resource = "";
+
+    public String getTenantId() {
+        return this.TenantId;
+    }
 
     /**
      * Creates a baseclient. Reading information from the configuration file at the
      * program's running folder
      */
     public BaseClient() {
-        gclientId = getConfiguration("clientId");
-        gclientSecret = getConfiguration("clientSecret");
-        gresource = getConfiguration("resource");
-        gresource = gresource.endsWith("/") ? gresource : gresource + "/";
+        this.TenantId = getConfiguration("tenantId");
+        this.ClientId = getConfiguration("clientId");
+        this.ClientSecret = getConfiguration("clientSecret");
+        this.Resource = getConfiguration("resource");
+        this.Resource = Resource.endsWith("/") ? Resource : Resource + "/";
 
-        this.baseUrl = gresource;
+        this.baseUrl = this.Resource;
         this.apiVersion = getConfiguration("apiVersion");
         this.mGson = new Gson();
     }
@@ -61,17 +67,19 @@ public class BaseClient {
      * configuration settings
      * 
      * @param apiVersion   APIversion of OCS
+     * @param tenantId     The tenant identifier
      * @param clientId     Client id to login with
      * @param clientSecret client secret to login with
      * @param resource     OCS url
      */
-    public BaseClient(String apiVersion, String clientId, String clientSecret, String resource) {
-        gclientId = clientId;
-        gclientSecret = clientSecret;
-        gresource = resource;
-        gresource = gresource.endsWith("/") ? gresource : gresource + "/";
+    public BaseClient(String apiVersion, String tenantId, String clientId, String clientSecret, String resource) {
+        this.TenantId = tenantId;
+        this.ClientId = clientId;
+        this.ClientSecret = clientSecret;
+        this.Resource = resource;
+        this.Resource = this.Resource.endsWith("/") ? this.Resource : this.Resource + "/";
 
-        this.baseUrl = gresource;
+        this.baseUrl = this.Resource;
         this.apiVersion = apiVersion;
         this.mGson = new Gson();
     }
@@ -133,7 +141,7 @@ public class BaseClient {
 
         // get new token
         try {
-            URL discoveryUrl = new URL(gresource + "identity/.well-known/openid-configuration");
+            URL discoveryUrl = new URL(Resource + "identity/.well-known/openid-configuration");
             URLConnection request = discoveryUrl.openConnection();
             request.connect();
             JsonParser jp = new JsonParser();
@@ -150,8 +158,8 @@ public class BaseClient {
             tokenRequest.setDoInput(true);
             tokenRequest.setUseCaches(false);
 
-            String postString = "client_id=" + URLEncoder.encode(gclientId, "UTF-8") + "&client_secret="
-                    + URLEncoder.encode(gclientSecret, "UTF-8") + "&grant_type=client_credentials";
+            String postString = "client_id=" + URLEncoder.encode(ClientId, "UTF-8") + "&client_secret="
+                    + URLEncoder.encode(ClientSecret, "UTF-8") + "&grant_type=client_credentials";
             byte[] postData = postString.getBytes("UTF-8");
             tokenRequest.setRequestProperty("Content-Length", Integer.toString(postData.length));
             tokenRequest.getOutputStream().write(postData);
@@ -182,16 +190,16 @@ public class BaseClient {
      */
     private String getConfiguration(String propertyId) {
 
-        if (propertyId.equals("clientId") && !gclientId.isEmpty()) {
-            return gclientId;
+        if (propertyId.equals("clientId") && !ClientId.isEmpty()) {
+            return ClientId;
         }
 
-        if (propertyId.equals("clientSecret") && !gclientSecret.isEmpty()) {
-            return gclientSecret;
+        if (propertyId.equals("clientSecret") && !ClientSecret.isEmpty()) {
+            return ClientSecret;
         }
 
-        if (propertyId.equals("resource") && !gresource.isEmpty()) {
-            return gresource;
+        if (propertyId.equals("resource") && !Resource.isEmpty()) {
+            return Resource;
         }
 
         String property = "";

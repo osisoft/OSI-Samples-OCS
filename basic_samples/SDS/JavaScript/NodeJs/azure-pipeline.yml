@@ -62,7 +62,11 @@ jobs:
         displayName: 'Install dependencies'
 
       - script: |
-          node Sample.js
+          echo NPM CI
+          call npm ci
+          echo Run tests
+          call npm test
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
 
