@@ -73,7 +73,7 @@ jobs:
         inputs:
           testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
-          testRunTitle: '$(Agent.JobName) on $(vmImage)'
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
         displayName: 'Publish test results'
 
   - template: '/miscellaneous/build_templates/analysis.yml'

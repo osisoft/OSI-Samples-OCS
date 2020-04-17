@@ -63,7 +63,7 @@ jobs:
           goals: test
           publishJUnitResults: true
           testResultsFiles: '**/TEST-*.xml'
-          testRunTitle: '$(Agent.JobName) on $(vmImage)'
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
