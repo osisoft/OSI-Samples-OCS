@@ -24,8 +24,6 @@ SAMPLE_STREAM_ID_2 = 'dvTank100'
 SAMPLE_STREAM_NAME_2 = 'Tank100'
 SAMPLE_FIELD_TO_CONSOLIDATE_TO = 'temperature'
 SAMPLE_FIELD_TO_CONSOLIDATE = 'ambient_temp'
-SAMPLE_START_TIME = None
-SAMPLE_END_TIME = None
 
 # Data View Information
 SAMPLE_DATAVIEW_ID = 'DataView_Sample'
@@ -73,7 +71,6 @@ def main(test=False):
     """This function is the main body of the Data View sample script"""
     success = True
     exception = {}
-    need_data = True
 
     config = configparser.ConfigParser()
     config.read('config.ini')
@@ -107,8 +104,9 @@ def main(test=False):
         # Step 2
         print()
         print('Step 2: Create types, streams, and data')
-        if need_data:
-            create_data(namespace_id, ocs_client)
+        times = create_data(namespace_id, ocs_client)
+        sample_start_time = times[0]
+        sample_end_time = times[1]
 
         # Step 3
         print()
@@ -165,8 +163,8 @@ def main(test=False):
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=SAMPLE_START_TIME,
-            endIndex=SAMPLE_END_TIME, interval=SAMPLE_INTERVAL)
+            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
+            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         print(len(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
@@ -182,8 +180,8 @@ def main(test=False):
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=SAMPLE_START_TIME,
-            endIndex=SAMPLE_END_TIME, interval=SAMPLE_INTERVAL)
+            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
+            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
@@ -199,8 +197,8 @@ def main(test=False):
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=SAMPLE_START_TIME,
-            endIndex=SAMPLE_END_TIME, interval=SAMPLE_INTERVAL)
+            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
+            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
@@ -220,8 +218,8 @@ def main(test=False):
 
         print('Retrieving data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
-            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=SAMPLE_START_TIME,
-            endIndex=SAMPLE_END_TIME, interval=SAMPLE_INTERVAL)
+            namespace_id=namespace_id, dataView_id=SAMPLE_DATAVIEW_ID, startIndex=sample_start_time,
+            endIndex=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
@@ -259,18 +257,18 @@ def main(test=False):
             assert dataview is None, 'Delete failed'
             print('Verification OK: Data View deleted')
 
-        if need_data:
-            print('Deleting sample streams...')
-            suppress_error(lambda: ocs_client.Streams.deleteStream(
-                namespace_id, SAMPLE_STREAM_ID_1))
-            suppress_error(lambda: ocs_client.Streams.deleteStream(
-                namespace_id, SAMPLE_STREAM_ID_2))
+        print('Deleting sample streams...')
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, SAMPLE_STREAM_ID_1))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, SAMPLE_STREAM_ID_2))
 
-            print('Deleting sample types...')
-            suppress_error(lambda: ocs_client.Types.deleteType(
-                namespace_id, SAMPLE_TYPE_ID_1))
-            suppress_error(lambda: ocs_client.Types.deleteType(
-                namespace_id, SAMPLE_TYPE_ID_2))
+        print('Deleting sample types...')
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, SAMPLE_TYPE_ID_1))
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, SAMPLE_TYPE_ID_2))
+
         if test and not success:
             raise exception
     print('Complete!')
@@ -326,6 +324,7 @@ def create_data(namespace_id, ocs_client):
     ocs_client.Streams.createOrUpdateStream(namespace_id, stream2)
 
     sample_start_time = datetime.datetime.now() - datetime.timedelta(hours=1)
+    sample_end_time = datetime.datetime.now()
 
     values1 = []
     values2 = []
@@ -355,6 +354,8 @@ def create_data(namespace_id, ocs_client):
         namespace_id,
         SAMPLE_STREAM_ID_2,
         str(values2).replace("'", ""))
+
+    return (sample_start_time, sample_end_time)
 
 
 if __name__ == '__main__':
