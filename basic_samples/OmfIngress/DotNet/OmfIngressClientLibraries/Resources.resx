@@ -117,33 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddressRequired" xml:space="preserve">
-    <value>Address cannot be null or empty</value>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
   </data>
-  <data name="ConfigIssue" xml:space="preserve">
-    <value>Configuration issue</value>
+  <data name="OmfConnectionRequired" xml:space="preserve">
+    <value>OmfConnection cannot be null</value>
   </data>
-  <data name="ConfigNull" xml:space="preserve">
-    <value>Configuration is null</value>
+  <data name="SendingOmfMessages" xml:space="preserve">
+    <value>Sending 5 OMF Data Messages.</value>
   </data>
-  <data name="MakeRequest" xml:space="preserve">
-    <value>Make request:</value>
-  </data>
-  <data name="OptionsRequired" xml:space="preserve">
-    <value>Options cannot be null</value>
-  </data>
-  <data name="PromptingLogin" xml:space="preserve">
-    <value>Prompting for login via a browser...</value>
-  </data>
-  <data name="RequestFailed" xml:space="preserve">
-    <value>Request failed</value>
-  </data>
-  <data name="RequestSucceeded" xml:space="preserve">
-    <value>Request succeeded</value>
-  </data>
-  <data name="SignInWithOidc" xml:space="preserve">
-    <value>+-----------------------+
-|  Sign in with OIDC    |
-+-----------------------+</value>
+  <data name="ValueRequired" xml:space="preserve">
+    <value>Value cannot be null</value>
   </data>
 </root>

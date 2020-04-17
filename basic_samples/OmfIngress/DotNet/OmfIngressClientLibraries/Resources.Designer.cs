@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AuthorizationCodeFlow {
+namespace OmfIngressClientLibraries {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace AuthorizationCodeFlow {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AuthorizationCodeFlow.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("OmfIngressClientLibraries.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,85 +61,38 @@ namespace AuthorizationCodeFlow {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Address cannot be null or empty.
+        ///   Looks up a localized string similar to Done.
         /// </summary>
-        internal static string AddressRequired {
+        internal static string Done {
             get {
-                return ResourceManager.GetString("AddressRequired", resourceCulture);
+                return ResourceManager.GetString("Done", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configuration issue.
+        ///   Looks up a localized string similar to OmfConnection cannot be null.
         /// </summary>
-        internal static string ConfigIssue {
+        internal static string OmfConnectionRequired {
             get {
-                return ResourceManager.GetString("ConfigIssue", resourceCulture);
+                return ResourceManager.GetString("OmfConnectionRequired", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configuration is null.
+        ///   Looks up a localized string similar to Sending 5 OMF Data Messages..
         /// </summary>
-        internal static string ConfigNull {
+        internal static string SendingOmfMessages {
             get {
-                return ResourceManager.GetString("ConfigNull", resourceCulture);
+                return ResourceManager.GetString("SendingOmfMessages", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Make request:.
+        ///   Looks up a localized string similar to Value cannot be null.
         /// </summary>
-        internal static string MakeRequest {
+        internal static string ValueRequired {
             get {
-                return ResourceManager.GetString("MakeRequest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Options cannot be null.
-        /// </summary>
-        internal static string OptionsRequired {
-            get {
-                return ResourceManager.GetString("OptionsRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Prompting for login via a browser....
-        /// </summary>
-        internal static string PromptingLogin {
-            get {
-                return ResourceManager.GetString("PromptingLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request failed.
-        /// </summary>
-        internal static string RequestFailed {
-            get {
-                return ResourceManager.GetString("RequestFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Request succeeded.
-        /// </summary>
-        internal static string RequestSucceeded {
-            get {
-                return ResourceManager.GetString("RequestSucceeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to +-----------------------+
-        ///|  Sign in with OIDC    |
-        ///+-----------------------+.
-        /// </summary>
-        internal static string SignInWithOidc {
-            get {
-                return ResourceManager.GetString("SignInWithOidc", resourceCulture);
+                return ResourceManager.GetString("ValueRequired", resourceCulture);
             }
         }
     }

@@ -1,9 +1,9 @@
-﻿using OSIsoft.Data.Http;
+﻿using System;
+using System.Threading.Tasks;
+using OSIsoft.Data.Http;
 using OSIsoft.Identity;
 using OSIsoft.Omf;
 using OSIsoft.OmfIngress;
-using System;
-using System.Threading.Tasks;
 
 namespace OmfIngressClientLibraries
 {
@@ -27,7 +27,7 @@ namespace OmfIngressClientLibraries
             Console.WriteLine();
 
             OmfTypeMessage typeMessage = OmfMessageCreator.CreateTypeMessage(typeof(DataPointType));
-            await SendOmfMessageAsync(typeMessage);
+            await SendOmfMessageAsync(typeMessage).ConfigureAwait(false);
         }
 
         public async Task CreateStreamAsync(string streamId)
@@ -37,14 +37,19 @@ namespace OmfIngressClientLibraries
             Console.WriteLine();
 
             OmfContainerMessage containerMessage = OmfMessageCreator.CreateContainerMessage(streamId, typeof(DataPointType));
-            await SendOmfMessageAsync(containerMessage);
+            await SendOmfMessageAsync(containerMessage).ConfigureAwait(false);
         }
 
         public async Task SendValueAsync(string streamId, DataPointType value)
         {
+            if (value == null)
+            {
+                throw new ArgumentException(Resources.ValueRequired, nameof(value));
+            }
+
             // Send DataPointType values
             OmfDataMessage dataMessage = OmfMessageCreator.CreateDataMessage(streamId, value);
-            await SendOmfMessageAsync(dataMessage);
+            await SendOmfMessageAsync(dataMessage).ConfigureAwait(false);
             Console.WriteLine($"Sent data point: Time: {value.Timestamp}, Value: {value.Value}");
         }
 
@@ -55,7 +60,7 @@ namespace OmfIngressClientLibraries
             Console.WriteLine();
             OmfTypeMessage typeMessage = OmfMessageCreator.CreateTypeMessage(typeof(DataPointType));
             typeMessage.ActionType = ActionType.Delete;
-            await SendOmfMessageAsync(typeMessage);
+            await SendOmfMessageAsync(typeMessage).ConfigureAwait(false);
         }
 
         public async Task DeleteStreamAsync(string streamId)
@@ -65,13 +70,13 @@ namespace OmfIngressClientLibraries
             Console.WriteLine();
             OmfContainerMessage containerMessage = OmfMessageCreator.CreateContainerMessage(streamId, typeof(DataPointType));
             containerMessage.ActionType = ActionType.Delete;
-            await SendOmfMessageAsync(containerMessage);  
+            await SendOmfMessageAsync(containerMessage).ConfigureAwait(false);  
         }
         
         private async Task SendOmfMessageAsync(OmfMessage omfMessage)
         {
             SerializedOmfMessage serializedOmfMessage = OmfMessageSerializer.Serialize(omfMessage);
-            await _deviceOmfIngressService.SendOmfMessageAsync(serializedOmfMessage);
+            await _deviceOmfIngressService.SendOmfMessageAsync(serializedOmfMessage).ConfigureAwait(false);
         }
     }
 }

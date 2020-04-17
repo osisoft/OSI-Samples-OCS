@@ -1,6 +1,6 @@
-﻿using OSIsoft.Omf;
+﻿using System;
+using OSIsoft.Omf;
 using OSIsoft.Omf.DefinitionAttributes;
-using System;
 
 namespace OmfIngressClientLibraries
 {

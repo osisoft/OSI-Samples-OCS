@@ -1,10 +1,10 @@
-﻿using OSIsoft.Data.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using OSIsoft.Data.Http;
 using OSIsoft.Identity;
 using OSIsoft.OmfIngress;
 using OSIsoft.OmfIngress.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace OmfIngressClientLibraries
 {
@@ -16,7 +16,7 @@ namespace OmfIngressClientLibraries
 
         public OmfIngressClient(string address, string tenantId, string namespaceId, string clientId, string clientSecret)
         {
-            //Get Ingress Services to communicate with server and handle ingress management
+            // Get Ingress Services to communicate with server and handle ingress management
             AuthenticationHandler authenticationHandler = new AuthenticationHandler(new Uri(address), clientId, clientSecret);
             _tenantId = tenantId;
             _namespaceId = namespaceId;
@@ -33,9 +33,9 @@ namespace OmfIngressClientLibraries
             {
                 Name = connectionName,
                 Description = "This is a sample Topic",
-                ClientIds = new List<string>() { deviceClientId }
+                ClientIds = new List<string>() { deviceClientId },
             };
-            Topic createdTopic = await _omfIngressService.CreateTopicAsync(topic);
+            Topic createdTopic = await _omfIngressService.CreateTopicAsync(topic).ConfigureAwait(false);
             Console.WriteLine($"Created a Topic with Id {createdTopic.Id}");
             Console.WriteLine();
 
@@ -48,27 +48,27 @@ namespace OmfIngressClientLibraries
                 Description = "This is a sample Subscription",
                 TopicId = createdTopic.Id,
                 TopicTenantId = _tenantId,
-                TopicNamespaceId = _namespaceId
+                TopicNamespaceId = _namespaceId,
             };
-            Subscription createdSubscription = await _omfIngressService.CreateSubscriptionAsync(subscription);
+            Subscription createdSubscription = await _omfIngressService.CreateSubscriptionAsync(subscription).ConfigureAwait(false);
             Console.WriteLine($"Created a Subscription with Id {createdSubscription.Id}");
             Console.WriteLine();
-            OmfConnection omfConnection = new OmfConnection()
-            {
-                ClientIds = new string[] { deviceClientId },
-                Topic = createdTopic,
-                Subscription = createdSubscription
-            };
+            OmfConnection omfConnection = new OmfConnection(new List<string> { deviceClientId }, createdTopic, createdSubscription);
             return omfConnection;
         }
 
         public async Task DeleteOmfConnectionAsync(OmfConnection omfConnection)
         {
+            if (omfConnection == null)
+            {
+                throw new ArgumentException(Resources.OmfConnectionRequired, nameof(omfConnection));
+            }
+
             // Delete the Topic and Subscription
             Console.WriteLine($"Deleting the Subscription with Id {omfConnection.Subscription.Id}");
             Console.WriteLine();
 
-            await _omfIngressService.DeleteSubscriptionAsync(omfConnection.Subscription.Id);
+            await _omfIngressService.DeleteSubscriptionAsync(omfConnection.Subscription.Id).ConfigureAwait(false);
 
             Console.WriteLine($"Deleted the Subscription with Id {omfConnection.Subscription.Id}");
             Console.WriteLine();
@@ -77,7 +77,7 @@ namespace OmfIngressClientLibraries
             Console.WriteLine($"Deleting the Topic with Id {omfConnection.Topic.Id}");
             Console.WriteLine();
 
-            await _omfIngressService.DeleteTopicAsync(omfConnection.Topic.Id);
+            await _omfIngressService.DeleteTopicAsync(omfConnection.Topic.Id).ConfigureAwait(false);
 
             Console.WriteLine($"Deleted the Topic with Id {omfConnection.Topic.Id}");
             Console.WriteLine();

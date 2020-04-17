@@ -26,16 +26,12 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/OmfIngress/DotNet/OmfIngressClientLibraries/OmfIngressClientLibraries'
-  - name: testPath
-    value: '/basic_samples/OmfIngress/DotNet/OmfIngressClientLibraries/OmfIngressClientLibrariesTests'
+    value: '/basic_samples/OmfIngress/DotNet'
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.omf_ing_dotnet.json
-  - name: covStream
-    value: OMF_Ing_DotNet
-  - name: bdProject
+  - name: analysisProject
     value: OMF_Ing_DotNet
 
 jobs:
@@ -43,9 +39,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-16.04'
+          imageName: ubuntu-latest
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -53,19 +49,15 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/OmfIngressClientLibraries
 
-      - script: |
-          dotnet restore
-          dotnet msbuild -p:HIGHENTROPYVA=true
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Build app'
-
-      - script: |
-          dotnet restore
-          dotnet test
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+      - task: DotNetCoreCLI@2
         displayName: 'Run tests'
+        inputs:
+          command: test
+          publishTestResults: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
