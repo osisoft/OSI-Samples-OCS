@@ -9,6 +9,7 @@ namespace OmfIngressClientLibraries
     {
         private static OmfIngressClient _omfIngressClient;
         private static Device _omfDevice;
+        private static IConfiguration _config;
 
         public static string Address { get; set; }
         public static string TenantId { get; set; }
@@ -50,15 +51,18 @@ namespace OmfIngressClientLibraries
                     toThrow = ex;
                 }
 
-                // Delete the Connection
-                try
+                if (omfConnection != null)
                 {
-                    DeleteOmfConnectionAsync(omfConnection).GetAwaiter().GetResult();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    toThrow = ex;
+                    // Delete the Connection
+                    try
+                    {
+                        DeleteOmfConnectionAsync(omfConnection).GetAwaiter().GetResult();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        toThrow = ex;
+                    }
                 }
 
                 Console.WriteLine(Resources.Done);
@@ -76,18 +80,18 @@ namespace OmfIngressClientLibraries
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json");
-            IConfiguration configuration = builder.Build();
+            _config = builder.Build();
 
             // ==== Client constants ====
-            TenantId = configuration["TenantId"];
-            NamespaceId = configuration["NamespaceId"];
-            Address = configuration["Address"];
-            ClientId = configuration["ClientId"];
-            ClientSecret = configuration["ClientSecret"];
-            ConnectionName = configuration["ConnectionName"];
-            StreamId = configuration["StreamId"];
-            DeviceClientId = configuration["DeviceClientId"];
-            DeviceClientSecret = configuration["DeviceClientSecret"];
+            TenantId = _config["TenantId"];
+            NamespaceId = _config["NamespaceId"];
+            Address = _config["Address"];
+            ClientId = _config["ClientId"];
+            ClientSecret = _config["ClientSecret"];
+            ConnectionName = _config["ConnectionName"];
+            StreamId = _config["StreamId"];
+            DeviceClientId = _config["DeviceClientId"];
+            DeviceClientSecret = _config["DeviceClientSecret"];
 
             _omfDevice = new Device(Address, TenantId, NamespaceId, DeviceClientId, DeviceClientSecret);
 

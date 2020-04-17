@@ -4,6 +4,7 @@
 - Added StyleCop/FxCop
 - Moved project up in folder hierarchy
 - Updated to use Polaris in place of Coverity
+- Resolved Polaris detected issues
 - Log and publish test results
 
 ## 1.0.9 / 2020-03-02
