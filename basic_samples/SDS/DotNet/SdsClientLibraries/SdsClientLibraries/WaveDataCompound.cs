@@ -3,7 +3,6 @@ using OSIsoft.Data;
 
 namespace SdsClientLibraries
 {
-
     public class WaveDataCompound
     {
         [SdsMember(IsKey = true, Order = 0)]

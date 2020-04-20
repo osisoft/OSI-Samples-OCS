@@ -13,7 +13,6 @@ namespace UomsSample
     {
         private static readonly Random _random = new Random();
         private static IConfiguration _configuration;
-        private static bool _success = true;
         private static Exception _toThrow = null;
 
         public static void Main()
@@ -199,7 +198,6 @@ namespace UomsSample
             }
             catch (Exception ex)
             {
-                _success = false;
                 Console.WriteLine(ex.Message);
                 _toThrow = ex;
             }
@@ -214,9 +212,9 @@ namespace UomsSample
                     Console.ReadLine();
             }
 
-            if (test && !_success)
+            if (test && _toThrow != null)
                 throw _toThrow;
-            return _success;
+            return _toThrow == null;
         }
 
         /// <summary>
@@ -234,7 +232,6 @@ namespace UomsSample
             catch (Exception ex)
             {
                 Console.WriteLine($"Got error in {methodToRun.Method.Name} with value {value} but continued on:" + ex.Message);
-                _success = false;
                 if (_toThrow == null)
                 {
                     _toThrow = ex;

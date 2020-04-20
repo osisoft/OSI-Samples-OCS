@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddingSecondaryIndex" xml:space="preserve">
+    <value>Adding a stream with a secondary index.</value>
+  </data>
+  <data name="AddTagsMetadata" xml:space="preserve">
+    <value>Let's add some Tags and Metadata to our stream:</value>
+  </data>
+  <data name="Banner" xml:space="preserve">
+    <value>-------------------------------------------------------------
+  _________    .___           _______  ______________________
+ /   _____/  __| _/______     \      \ \_   _____/\__    ___/
+ \_____  \  / __ |/  ___/     /   |   \ |    __)_   |    |   
+ /        \/ /_/ |\___ \     /    |    \|        \  |    |   
+/_______  /\____ /____  &gt; /\ \____|__  /_______  /  |____|   
+        \/      \/    \/  \/         \/        \/            
+-------------------------------------------------------------</value>
+  </data>
+  <data name="CleaningUp" xml:space="preserve">
+    <value>Cleaning up</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete!</value>
+  </data>
+  <data name="CreatingCompoundStream" xml:space="preserve">
+    <value>Creating an SdsStream off of type with compound index</value>
+  </data>
+  <data name="CreatingCompoundType" xml:space="preserve">
+    <value>Creating an SdsType with a compound index</value>
+  </data>
+  <data name="CreatingStream" xml:space="preserve">
+    <value>Creating an SdsStream</value>
+  </data>
+  <data name="CreatingType" xml:space="preserve">
+    <value>Creating an SdsType</value>
+  </data>
+  <data name="DefaultContinuous" xml:space="preserve">
+    <value>Default (Continuous) requesting data starting at index location '1', where we have not entered data, SDS will interpolate a value for this property and then return entered values:</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>All values deleted successfully!</value>
+  </data>
+  <data name="DeletingStream" xml:space="preserve">
+    <value>Deleting stream</value>
+  </data>
+  <data name="DeletingStreamViews" xml:space="preserve">
+    <value>Deleting stream views</value>
+  </data>
+  <data name="DeletingTypes" xml:space="preserve">
+    <value>Deleting types</value>
+  </data>
+  <data name="DeletingValues" xml:space="preserve">
+    <value>Deleting values from the SdsStream</value>
+  </data>
+  <data name="GettingAll" xml:space="preserve">
+    <value>Getting all events</value>
+  </data>
+  <data name="GettingLatest" xml:space="preserve">
+    <value>Getting latest event</value>
+  </data>
+  <data name="GettingReplaced" xml:space="preserve">
+    <value>Getting replaced events</value>
+  </data>
+  <data name="GettingSampled" xml:space="preserve">
+    <value>Getting Sampled Values:</value>
+  </data>
+  <data name="GettingTable" xml:space="preserve">
+    <value>Getting table events</value>
+  </data>
+  <data name="GettingUpdated" xml:space="preserve">
+    <value>Getting updated events</value>
+  </data>
+  <data name="HereIsSomeData" xml:space="preserve">
+    <value>Here is some of our data as it is stored on the server:</value>
+  </data>
+  <data name="InsertingData" xml:space="preserve">
+    <value>Inserting data</value>
+  </data>
+  <data name="MetadataAssociatedWith" xml:space="preserve">
+    <value>Metadata associated with: {0}</value>
+  </data>
+  <data name="ModifyingSecondaryIndex" xml:space="preserve">
+    <value>Modifying a stream to have a secondary index.</value>
+  </data>
+  <data name="OverrideRadiansInterpolate" xml:space="preserve">
+    <value>We can override this behavior on a property by property basis, here we override the Radians property instructing Sds not to interpolate.</value>
+  </data>
+  <data name="RemovingSecondaryIndex" xml:space="preserve">
+    <value>Removing a secondary index from a stream.</value>
+  </data>
+  <data name="ReplacingEvents" xml:space="preserve">
+    <value>Replacing events</value>
+  </data>
+  <data name="SdsInterpolate" xml:space="preserve">
+    <value>SDS will interpolate a value for each index asked for (5,14,23,32):</value>
+  </data>
+  <data name="SdsInterpolateOrExtrapolate" xml:space="preserve">
+    <value>SDS can interpolate or extrapolate data at an index location where data does not explicitly exist:</value>
+  </data>
+  <data name="SdsRadiansLessThan50" xml:space="preserve">
+    <value>SDS will only return the values where the radians are less than 50:</value>
+  </data>
+  <data name="SdsReturnDefaultValue" xml:space="preserve">
+    <value>SDS will now return the default value for the data type:</value>
+  </data>
+  <data name="SdsSampleTrends" xml:space="preserve">
+    <value>SDS can return a sample of your data population to show trends.</value>
+  </data>
+  <data name="SdsStreamViews" xml:space="preserve">
+    <value>SdsStreamViews</value>
+  </data>
+  <data name="StreamViewConvertData" xml:space="preserve">
+    <value>SdsStreamViews can also convert certain types of data, here we return integers where the original values were doubles:</value>
+  </data>
+  <data name="StreamViewExplicitMapping" xml:space="preserve">
+    <value>Here is our explicit mapping, note SdsStreamViewMap will return all properties of the Source Type, even those without a corresponding Target property:</value>
+  </data>
+  <data name="StreamViewQuerySds" xml:space="preserve">
+    <value>We can query SDS to return the SdsStreamViewMap for our SdsStreamView, here is the one generated automatically:</value>
+  </data>
+  <data name="StreamViewSameShape" xml:space="preserve">
+    <value>Specifying a StreamView with an SdsType of the same shape returns values that are automatically mapped to the target SdsType's properties:</value>
+  </data>
+  <data name="StreamViewUpdateType" xml:space="preserve">
+    <value>We will now update the stream type based on the streamview</value>
+  </data>
+  <data name="TagsAssociatedWith" xml:space="preserve">
+    <value>Tags associated with: {0}</value>
+  </data>
+  <data name="UpdatingEvents" xml:space="preserve">
+    <value>Updating events</value>
+  </data>
+  <data name="WindowData" xml:space="preserve">
+    <value>Window Data:</value>
+  </data>
+</root>
