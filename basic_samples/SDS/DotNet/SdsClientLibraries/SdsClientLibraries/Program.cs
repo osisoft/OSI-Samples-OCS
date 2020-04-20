@@ -14,6 +14,7 @@ namespace SdsClientLibraries
 {
     public static class Program
     {
+        private static IConfiguration _configuration;
         private static Exception _toThrow = null;
 
         public static void Main() => MainAsync().GetAwaiter().GetResult();
@@ -25,14 +26,14 @@ namespace SdsClientLibraries
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile("appsettings.test.json", optional: true);
-            IConfiguration configuration = builder.Build();
+            _configuration = builder.Build();
 
             // ==== Client constants ====
-            var tenantId = configuration["TenantId"];
-            var namespaceId = configuration["NamespaceId"];
-            var resource = configuration["Resource"];
-            var clientId = configuration["ClientId"];
-            var clientKey = configuration["ClientKey"];
+            var tenantId = _configuration["TenantId"];
+            var namespaceId = _configuration["NamespaceId"];
+            var resource = _configuration["Resource"];
+            var clientId = _configuration["ClientId"];
+            var clientKey = _configuration["ClientKey"];
 
             // ==== Metadata IDs ====
             string streamId = "SampleStream";
