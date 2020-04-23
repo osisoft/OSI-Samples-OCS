@@ -68,7 +68,7 @@ namespace SdsRestApiCore
                 {
                     // Step 2
                     // create a SdsType
-                    Console.WriteLine("Creating a SdsType");
+                    Console.WriteLine("Creating an SdsType");
                     Console.WriteLine(clientId);
                     SdsType waveType = BuildWaveDataType(typeId);
                     HttpResponseMessage response =
@@ -80,7 +80,7 @@ namespace SdsRestApiCore
 
                     // Step 3
                     // create a SdsStream
-                    Console.WriteLine("Creating a SdsStream");
+                    Console.WriteLine("Creating an SdsStream");
                     SdsStream waveStream = new SdsStream
                     {
                         Id = streamId,
@@ -139,7 +139,7 @@ namespace SdsRestApiCore
                     // get all events
                     Console.WriteLine("Getting all events");
                     response = await httpClient.GetAsync(
-                        new Uri("api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}/Data?startIndex=0&endIndex={waves[waves.Count - 1].Order}", UriKind.Relative))
+                        new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}/Data?startIndex=0&endIndex={waves[waves.Count - 1].Order}", UriKind.Relative))
                         .ConfigureAwait(false);
                     CheckIfResponseWasSuccessful(response);
                     List<WaveData> retrievedList =
