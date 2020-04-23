@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SdsRestApiCore
+﻿namespace SdsRestApiCore
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Maps type names from Sequential Data Store")]
     public enum SdsTypeCode
     {
         Empty = 0,

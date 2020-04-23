@@ -3,10 +3,13 @@ using System.Text;
 
 namespace SdsRestApiCore
 {
-    public class WaveData
+    public class WaveDataCompound
     {
         [Key]
         public int Order { get; set; }
+
+        [Key]
+        public int Multiplier { get; set; }
 
         public double Tau { get; set; }
 
@@ -28,6 +31,7 @@ namespace SdsRestApiCore
         {
             var builder = new StringBuilder();
             builder.Append($"Order: {Order}");
+            builder.Append($", Multiplier: {Multiplier}");
             builder.Append($", Radians: {Radians}");
             builder.Append($", Tau: {Tau}");
             builder.Append($", Sin: {Sin}");

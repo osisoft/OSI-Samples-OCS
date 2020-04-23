@@ -1,12 +1,11 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 
 namespace SdsRestApiCoreTest
 {
-    public class UnitTest1
+    public class UnitTests
     {
         [Fact]
-        public void Test1()
+        public void SdsRestApiCoreTest()
         {
             Assert.True(SdsRestApiCore.Program.MainAsync(true).Result);
         }

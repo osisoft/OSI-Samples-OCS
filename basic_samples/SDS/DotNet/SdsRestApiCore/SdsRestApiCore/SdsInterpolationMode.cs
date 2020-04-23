@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SdsRestApiCore
+﻿namespace SdsRestApiCore
 {
     public enum SdsInterpolationMode
     {
@@ -10,6 +6,6 @@ namespace SdsRestApiCore
         Continuous = 0,
         StepwiseContinuousLeading = 1,
         StepwiseContinuousTrailing = 2,
-        Discrete = 3
+        Discrete = 3,
     }
 }
