@@ -29,6 +29,7 @@ Developed against Python 3.8.2
 
 1. Open a command prompt in this folder
 1. Install pytest, using `pip install pytest`
+1. Install selenium, using `pip install selenium`
 1. Set up the `Configuration` section of the [config.ini](config.ini) file, as described above, if you have not already
 1. Set up the `Test` section of the [config.ini](config.ini) file with a username and password for the test to use to log in
 1. Run the test, using `python -m pytest ./test.py`
