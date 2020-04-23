@@ -35,7 +35,7 @@ namespace AuthorizationCodeFlow
         {
             if (options == null)
             {
-                throw new ArgumentException(Resources.OptionsRequired, nameof(options));
+                throw new ArgumentException("Options cannot be null.", nameof(options));
             }
 
             using var listener = new LoopbackHttpListener(Port, _path);

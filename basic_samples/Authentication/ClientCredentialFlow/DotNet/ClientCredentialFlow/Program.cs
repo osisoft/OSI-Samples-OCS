@@ -85,7 +85,7 @@ namespace ClientCredentialFlow
             {
                 if (_configuration == null)
                 {
-                    Console.WriteLine(Resources.ConfigNull);
+                    Console.WriteLine("Config Null");
                     InitConfig();
                 }
 
@@ -101,7 +101,7 @@ namespace ClientCredentialFlow
             }
             catch (Exception)
             {
-                Console.WriteLine(Resources.ConfigIssue);
+                Console.WriteLine($"Configuration issue");
                 throw;
             }
         }

@@ -10,7 +10,7 @@ namespace AuthorizationCodeFlow
         {
             if (string.IsNullOrEmpty(address))
             {
-                throw new ArgumentException(Resources.AddressRequired, nameof(address));
+                throw new ArgumentException("Address cannot be null or empty", nameof(address));
             }
 
             try

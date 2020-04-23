@@ -48,10 +48,10 @@ namespace AuthorizationCodeFlow
                 // Make a request to Get Users endpoint
                 var result1 = GetRequest($"{ocsUrl}/api/{apiVersion}/Tenants/{tenantId}/Users", accessToken).Result;
                 Console.WriteLine(result1
-                    ? Resources.RequestSucceeded
-                    : Resources.RequestFailed);
+                    ? "Request succeeded"
+                    : "request failed");
                 if (!result1)
-                    throw new Exception(Resources.RequestFailed);
+                    throw new Exception("Request failed");
             }
             catch (Exception e)
             {
@@ -66,7 +66,7 @@ namespace AuthorizationCodeFlow
 
         private static async Task<bool> GetRequest(string endpoint, string accessToken)
         {
-            Console.WriteLine(Resources.MakeRequest);
+            Console.WriteLine("Make request:");
             using var request = new HttpRequestMessage()
             {
                 Method = HttpMethod.Get,
@@ -120,7 +120,7 @@ namespace AuthorizationCodeFlow
             {
                 if (_configuration == null)
                 {
-                    Console.WriteLine(Resources.ConfigNull);
+                    Console.WriteLine("Config Null");
                     InitConfig();
                 }
 
@@ -136,7 +136,7 @@ namespace AuthorizationCodeFlow
             }
             catch (Exception)
             {
-                Console.WriteLine(Resources.ConfigIssue);
+                Console.WriteLine($"Configuration issue");
                 throw;
             }
         }

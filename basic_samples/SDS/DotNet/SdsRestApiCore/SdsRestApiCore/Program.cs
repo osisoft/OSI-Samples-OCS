@@ -814,7 +814,7 @@ namespace SdsRestApiCore
                     RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{compoundTypeId}");
                     RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{targetTypeId}");
                     RunInTryCatch(httpClient.DeleteAsync, $"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Types/{targetIntTypeId}");
-                    Console.WriteLine("done");
+                    Console.WriteLine("Complete!");
                 }
             }
 

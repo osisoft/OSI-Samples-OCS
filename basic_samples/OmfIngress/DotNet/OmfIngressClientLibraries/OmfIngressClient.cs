@@ -61,7 +61,7 @@ namespace OmfIngressClientLibraries
         {
             if (omfConnection == null)
             {
-                throw new ArgumentException(Resources.OmfConnectionRequired, nameof(omfConnection));
+                throw new ArgumentException("Omf Connection cannot be null", nameof(omfConnection));
             }
 
             // Delete the Topic and Subscription

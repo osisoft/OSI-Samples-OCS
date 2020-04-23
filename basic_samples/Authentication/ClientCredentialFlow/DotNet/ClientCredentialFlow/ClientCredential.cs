@@ -14,7 +14,9 @@ namespace ClientCredentialFlow
 
         public static void CreateAuthenticatedHttpClient(string clientId, string clientSecret)
         {
-            Console.WriteLine(Resources.SignInWithClientCredentials);
+            Console.WriteLine("+-------------------------------------+");
+            Console.WriteLine("|  Sign in with Client Credentials    |");
+            Console.WriteLine("+-------------------------------------+");
             Console.WriteLine();
 
             AuthenticationHandler = InitiateAuthenticationHandler(clientId, clientSecret);

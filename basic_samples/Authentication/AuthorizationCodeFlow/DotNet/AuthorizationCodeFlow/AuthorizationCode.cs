@@ -30,7 +30,9 @@ namespace AuthorizationCodeFlow
 
         public static (string, DateTime) GetAuthorizationCodeFlowAccessToken(string clientId, string tenantId)
         {
-            Console.WriteLine(Resources.SignInWithOidc);
+            Console.WriteLine("+-----------------------+");
+            Console.WriteLine("|  Sign in with OIDC    |");
+            Console.WriteLine("+-----------------------+");
             Console.WriteLine();
 
             LoginResult loginResult = null;
@@ -42,7 +44,7 @@ namespace AuthorizationCodeFlow
                     return (string.Empty, DateTime.Now);
                 }
 
-                Console.WriteLine(Resources.PromptingLogin);
+                Console.WriteLine("Prompting for login via a browser...");
                 var scope = "openid ocsapi";
                 loginResult = SignIn(clientId, scope, tenantId).Result;
             }

@@ -50,10 +50,10 @@ namespace HybridFlow
                 // Make a request to Get Users endpoint
                 var result1 = GetRequest($"{ocsUrl}/api/{apiVersion}/Tenants/{tenantId}/Users", accessToken).Result;
                 Console.WriteLine(result1
-                    ? Resources.RequestSucceeded
-                    : Resources.RequestFailed);
+                    ? "Request succeeded"
+                    : "request failed");
                 if (!result1)
-                    throw new Exception(Resources.RequestFailed);
+                    throw new Exception("Request failed");
 
                 // Get a new access token from a refresh token. If the previous access token has not expired it can still be used.
                 // This will also reissue a new refresh token. Old refresh token will no longer be valid after use.
@@ -66,10 +66,10 @@ namespace HybridFlow
                 // Make a request to Get Users endpoint
                 var result2 = GetRequest($"{ocsUrl}/api/{apiVersion}/Tenants/{tenantId}/Users", accessToken).Result;
                 Console.WriteLine(result2
-                    ? Resources.RequestSucceeded
-                    : Resources.RequestFailed);
+                    ? "Request succeeded"
+                    : "request failed");
                 if (!result2)
-                    throw new Exception(Resources.RequestFailed);
+                    throw new Exception("Request failed");
             }
             catch (Exception e)
             {
@@ -84,7 +84,7 @@ namespace HybridFlow
 
         private static async Task<bool> GetRequest(string endpoint, string accessToken)
         {
-            Console.WriteLine(Resources.MakeRequest);
+            Console.WriteLine("Make request:");
             using var request = new HttpRequestMessage()
             {
                 Method = HttpMethod.Get,
@@ -138,7 +138,7 @@ namespace HybridFlow
             {
                 if (_configuration == null)
                 {
-                    Console.WriteLine(Resources.ConfigNull);
+                    Console.WriteLine("Config Null");
                     InitConfig();
                 }
 
@@ -154,7 +154,7 @@ namespace HybridFlow
             }
             catch
             {
-                Console.WriteLine(Resources.ConfigIssue);
+                Console.WriteLine($"Configuration issue");
                 throw;
             }
         }

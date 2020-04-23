@@ -204,10 +204,11 @@ namespace UomsSample
             finally
             {
                 // Step 8
-                Console.WriteLine(Resources.Deleting);
+                Console.WriteLine("Deleting");
                 RunInTryCatch(metadataService.DeleteStreamAsync, streamWithPropertyOverridden);
                 RunInTryCatch(metadataService.DeleteStreamAsync, streamWithoutPropertyOverridden);
                 RunInTryCatch(metadataService.DeleteTypeAsync, typeId);
+                Console.WriteLine("Complete!");
                 if (!test)
                     Console.ReadLine();
             }

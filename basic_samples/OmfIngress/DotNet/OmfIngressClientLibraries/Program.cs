@@ -65,7 +65,7 @@ namespace OmfIngressClientLibraries
                     }
                 }
 
-                Console.WriteLine(Resources.Done);
+                Console.WriteLine("Complete!");
                 Console.ReadKey();
             }
 
@@ -117,7 +117,7 @@ namespace OmfIngressClientLibraries
 
             // Send random data points
             Random rand = new Random();
-            Console.WriteLine(Resources.SendingOmfMessages);
+            Console.WriteLine("Sending 5 OMF Data Messages.");
             for (int i = 0; i < 5; i++)
             {
                 DataPointType dataPoint = new DataPointType() { Timestamp = DateTime.UtcNow, Value = rand.NextDouble() };

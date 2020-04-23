@@ -30,7 +30,9 @@ namespace HybridFlow
         public static (string, string, DateTime) GetHybridFlowAccessToken(string clientId, string clientSecret,
             string tenantId)
         {
-            Console.WriteLine(Resources.SignInWithOidc);
+            Console.WriteLine("+-----------------------+");
+            Console.WriteLine("|  Sign in with OIDC    |");
+            Console.WriteLine("+-----------------------+");
             Console.WriteLine();
 
             LoginResult loginResult = null;
@@ -42,7 +44,7 @@ namespace HybridFlow
                     return (string.Empty, string.Empty, DateTime.Now);
                 }
 
-                Console.WriteLine(Resources.PromptingLogin);
+                Console.WriteLine("Prompting for login via a browser...");
                 var scope = "openid ocsapi offline_access";
                 loginResult = SignIn(clientId, clientSecret, scope, tenantId).Result;
             }
@@ -60,7 +62,9 @@ namespace HybridFlow
             string clientSecret)
         {
             Console.WriteLine();
-            Console.WriteLine(Resources.GettingAccessTokenFromRefreshToken);
+            Console.WriteLine("+-----------------------+");
+            Console.WriteLine("|  Getting Access token from Refresh token    |");
+            Console.WriteLine("+-----------------------+");
             Console.WriteLine();
 
             return RefreshTokenAsync(refreshToken, clientId, clientSecret).Result;
@@ -149,7 +153,7 @@ namespace HybridFlow
         {
             if (string.IsNullOrEmpty(refreshToken))
             {
-                Console.WriteLine(Resources.NoRefreshToken);
+                Console.WriteLine("No refresh token provided");
             }
 
             Console.WriteLine($"Using refresh token: {refreshToken}");

@@ -44,7 +44,7 @@ namespace OmfIngressClientLibraries
         {
             if (value == null)
             {
-                throw new ArgumentException(Resources.ValueRequired, nameof(value));
+                throw new ArgumentException("Value cannot be null.", nameof(value));
             }
 
             // Send DataPointType values
