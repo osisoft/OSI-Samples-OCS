@@ -26,16 +26,14 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/SDS/Java/sdsjava'
+    value: '/basic_samples/SDS/Java'
   - name: libPath
     value: '/library_samples/Java/ocs_sample_library_preview'
   - name: CredFile
     value: config.properties
   - name: CredFileLibrary
     value: product-readiness.sds_java.properties
-  - name: covStream
-    value: SDSJava
-  - name: bdProject
+  - name: analysisProject
     value: SDS_Java
 
 jobs:
@@ -43,9 +41,9 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-16.04'
+          imageName: ubuntu-latest
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -57,14 +55,15 @@ jobs:
 
       - script: mvn install -f pom.xml
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
-        displayName: 'Maven install'
+        displayName: 'Maven install library'
 
       - task: Maven@3
         inputs:
           mavenPomFile: '$(Build.SourcesDirectory)$(projPath)/pom.xml'
-          publishJUnitResults: false
-          testResultsFiles: '**/TEST-*.xml'
           goals: 'test'
+          publishJUnitResults: true
+          testResultsFiles: '**/TEST-*.xml'
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
         displayName: 'Run tests'
 
   - template: '/miscellaneous/build_templates/analysis.yml'
