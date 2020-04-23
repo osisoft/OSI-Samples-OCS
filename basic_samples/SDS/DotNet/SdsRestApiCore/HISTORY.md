@@ -6,6 +6,7 @@
 - Added StyleCop/FxCop
 - Added solution file for project & test project
 - Updated to use Polaris in place of Coverity
+- Resolved Polaris detected issues
 - Log and publish test results
 
 ## 1.0.7 / 2020-01-08

@@ -13,6 +13,7 @@ namespace SdsRestApiCore
     public static class Program
     {
         private static IConfiguration _configuration;
+        private static SdsSecurityHandler _securityHandler;
         private static Exception _toThrow = null;
 
         public static void Main() => MainAsync().GetAwaiter().GetResult();
@@ -47,8 +48,8 @@ namespace SdsRestApiCore
             string streamIdCompound = "SampleStream_Compound";
 
             // Step 1
-            SdsSecurityHandler securityHandler = new SdsSecurityHandler(resource, clientId, clientKey);
-            using (HttpClient httpClient = new HttpClient(securityHandler) { BaseAddress = new Uri(resource) })
+            _securityHandler = new SdsSecurityHandler(resource, clientId, clientKey);
+            using (HttpClient httpClient = new HttpClient(_securityHandler) { BaseAddress = new Uri(resource) })
             {
                 httpClient.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
 
@@ -139,7 +140,7 @@ namespace SdsRestApiCore
                     // get all events
                     Console.WriteLine("Getting all events");
                     response = await httpClient.GetAsync(
-                        new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}/Data?startIndex=0&endIndex={waves[waves.Count - 1].Order}", UriKind.Relative))
+                        new Uri($"api/{apiVersion}/Tenants/{tenantId}/Namespaces/{namespaceId}/Streams/{waveStream.Id}/Data?startIndex=0&endIndex={waves[^1].Order}", UriKind.Relative))
                         .ConfigureAwait(false);
                     CheckIfResponseWasSuccessful(response);
                     List<WaveData> retrievedList =
