@@ -26,22 +26,22 @@ You can learn more about the config options [here](https://github.com/IdentityMo
 3. Open a command prompt and navigate to this folder (basic_samples/Authentication/AuthorizationCodeFlow/JavaScript)
 4. Install dependencies, using the command line:
 
-```shell
-npm ci
-```
+   ```shell
+   npm ci
+   ```
 
 5. Start the http server to host the sample, using:
 
-```shell
-npm start
-```
+   ```shell
+   npm start
+   ```
 
 6. Open a browser and navigate to `http://localhost:5004`
 7. Click on `Login` and follow the prompts to log in to OCS
 
 ## Running the automated test
 
-### Prerequisites
+### Test Prerequisites
 
 1. Make sure the sample client in the section above is running.
 1. Make sure Google Chrome is installed on your test system.

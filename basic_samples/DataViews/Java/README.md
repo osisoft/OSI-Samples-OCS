@@ -17,7 +17,7 @@ Using Eclipse or any IDE:
 Using a command line:
 
 1. Clone a local copy of the GitHub repository.
-1. Download `apache-maven-x.x.x.zip` from http://maven.apache.org and extract it.
+1. Download `apache-maven-x.x.x.zip` from [http://maven.apache.org](http://maven.apache.org) and extract it.
 1. Setting environment variables.
    1. For Java JDK  
       Variable name - `JAVA_HOME`  

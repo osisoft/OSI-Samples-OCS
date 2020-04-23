@@ -8,7 +8,7 @@ This example uses the ocs_sample_library_preview library which is also included 
 
 Developed against Python 3.7.2.
 
-## To Run this Sample:
+## Running the Sample
 
 1. Clone the GitHub repository
 1. Install required modules: `pip install -r requirements.txt`

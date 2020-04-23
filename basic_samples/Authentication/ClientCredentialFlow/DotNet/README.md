@@ -37,14 +37,14 @@ dotnet run
 
 ## Running the automated test
 
-### Using Visual Studio
+### Test Using Visual Studio
 
 - Load the .csproj from the ClientCredentialFlowTest directory above this in Visual Studio
 - Rebuild project
 - Open Test Explorer and make sure there is one test called Test1 showing
 - Run the test
 
-### Using Command Line
+### Test Using Command Line
 
 - Make sure you have the install location of dotnet added to your path
 - Run the following command from the location of the ClientCredentialFlowTest project:

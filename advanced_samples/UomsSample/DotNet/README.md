@@ -33,14 +33,14 @@ dotnet run
 
 The UOM sample follows these steps
 
-1.  Instantiate an SDS client and obtain an authentication token
-1.  Create an SdsType with UOMs specified
-1.  Create SdsStream with uom override
-1.  Create SdsStream using default uom
-1.  Generate data and send to both streams
-1.  Retrieve data for both streams using stream default UOM
-1.  Retrieve data for both streams using UOM request override
-1.  Delete objects
+1. Instantiate an SDS client and obtain an authentication token
+1. Create an SdsType with UOMs specified
+1. Create SdsStream with uom override
+1. Create SdsStream using default uom
+1. Generate data and send to both streams
+1. Retrieve data for both streams using stream default UOM
+1. Retrieve data for both streams using UOM request override
+1. Delete objects
 
 ---
 

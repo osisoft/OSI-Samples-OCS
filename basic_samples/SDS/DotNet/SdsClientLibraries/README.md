@@ -4,7 +4,7 @@
 
 ## Building a Client with the OCS Client Libraries
 
-The sample described in this section makes use of the OSIsoft Cloud Services Client Libraries. When working in .NET, it is recommended that you use the OCS Client Libraries metapackage, OSIsoft.OCSClients. The metapackage is a NuGet package available from https://api.nuget.org/v3/index.json. The libraries offer a framework of classes that make client development easier.
+The sample described in this section makes use of the OSIsoft Cloud Services Client Libraries. When working in .NET, it is recommended that you use the OCS Client Libraries metapackage, OSIsoft.OCSClients. The metapackage is a NuGet package available from [https://api.nuget.org/v3/index.json](https://api.nuget.org/v3/index.json). The libraries offer a framework of classes that make client development easier.
 
 [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
 
@@ -16,14 +16,14 @@ In this example we assume that you have the dotnet core CLI.
 
 To run this example from the commandline run
 
-```
+```shell
 dotnet restore
 dotnet run
 ```
 
 to test this program change directories to the test and run
 
-```
+```shell
 dotnet restore
 dotnet test
 ```
@@ -63,23 +63,23 @@ SdsTypes can define simple atomic types, such as integers, floats or strings, or
 
 When working with the SDS Client Libraries, it is strongly recommended that you use SdsTypeBuilder. SdsTypeBuilder uses reflection to build SdsTypes. The SdsTypeBuilder exposes a number of methods for manipulating types. One of the simplest ways to create a type is to use one of its static methods:
 
-```c#
+```C#
 SdsType type = SdsTypeBuilder.CreateSdsType<WaveData>();
 
 // When defining the type, specify the key as follows:
 public class WaveData
 {
-	[SdsMember(IsKey = true)]
-	public int Order { get; set; }
-	public double Tau { get; set; }
-	public double Radians { get; set; }
-	...
+  [SdsMember(IsKey = true)]
+  public int Order { get; set; }
+  public double Tau { get; set; }
+  public double Radians { get; set; }
+  ...
 }
 ```
 
 To define the SdsType in SDS, use the metadata client as follows:
 
-```c#
+```C#
 SdsType type = await metadataService.GetOrCreateTypeAsync(type);
 ```
 
@@ -88,13 +88,13 @@ To Create a type with a compound index we create a new type specifying 2 keys an
 ```C#
 public class WaveDataCompound
 {
-		[SdsMember(IsKey = true, Order = 0)]
-		public int Order { get; set; }
+  [SdsMember(IsKey = true, Order = 0)]
+  public int Order { get; set; }
 
-		[SdsMember(IsKey = true, Order = 1)]
-		public int Multiplier { get; set; }
+  [SdsMember(IsKey = true, Order = 1)]
+  public int Multiplier { get; set; }
 
-		public double Tau { get; set; }
+  public double Tau { get; set; }
 ```
 
 ## Create an SdsStream
@@ -105,10 +105,10 @@ An ordered series of events is stored in an SdsStream. All you have to do is cre
 Console.WriteLine("Creating an SdsStream");
 var stream = new SdsStream
 {
-	Id = streamId,
-	Name = "Wave Data Sample",
-	TypeId = type.Id,
-	Description = "This is a sample SdsStream for storing WaveData type measurements"
+  Id = streamId,
+  Name = "Wave Data Sample",
+  TypeId = type.Id,
+  Description = "This is a sample SdsStream for storing WaveData type measurements"
 };
 ```
 
@@ -123,17 +123,17 @@ To create an SdsStream with a secondary index we define this when creating the s
 ```C#
 SdsStreamIndex measurementIndex = new SdsStreamIndex()
 {
-	SdsTypePropertyId = type.Properties.First(p => p.Id.Equals("Radians")).Id
+  SdsTypePropertyId = type.Properties.First(p => p.Id.Equals("Radians")).Id
 };
 
 SdsStream secondary = new SdsStream()
 {
-	Id = streamIdSecondary,
-	TypeId = type.Id,
-	Indexes = new List<SdsStreamIndex>()
-	{
-		measurementIndex
-	}
+  Id = streamIdSecondary,
+  TypeId = type.Id,
+  Indexes = new List<SdsStreamIndex>()
+  {
+    measurementIndex
+  }
 };
 ```
 
@@ -144,15 +144,15 @@ A single event is a data point in the stream. An event object cannot be empty an
 ```C#
 return new WaveData
 {
-	Order = order,
-	Radians = radians,
-	Tau = radians / (2 * Math.PI),
-	Sin = multiplier * Math.Sin(radians),
-	Cos = multiplier * Math.Cos(radians),
-	Tan = multiplier * Math.Tan(radians),
-	Sinh = multiplier * Math.Sinh(radians),
-	Cosh = multiplier * Math.Cosh(radians),
-	Tanh = multiplier * Math.Tanh(radians)
+  Order = order,
+  Radians = radians,
+  Tau = radians / (2 * Math.PI),
+  Sin = multiplier * Math.Sin(radians),
+  Cos = multiplier * Math.Cos(radians),
+  Tan = multiplier * Math.Tan(radians),
+  Sinh = multiplier * Math.Sinh(radians),
+  Cosh = multiplier * Math.Cosh(radians),
+  Tanh = multiplier * Math.Tanh(radians)
 };
 ```
 
@@ -168,7 +168,7 @@ Similarly, we can build a list of objects and insert them in bulk by calling Ins
 var waves = new List<WaveData>();
 for (var i = 2; i <= 18; i += 2)
 {
-	waves.Add(GetWave(i, 2));
+  waves.Add(GetWave(i, 2));
 }
 await dataService.InsertValuesAsync(stream.Id, waves);
 ```
@@ -179,7 +179,7 @@ There are many methods in the SDS REST API allowing for the retrieval of events 
 
 ```C#
 IEnumerable<WaveData> retrieved =
-		await client.GetWindowValuesAsync<WaveData>(stream.Id, "0", "200");
+  await client.GetWindowValuesAsync<WaveData>(stream.Id, "0", "200");
 ```
 
 SDS can retreive the values in the form of a table (in this case with headers)
@@ -220,7 +220,7 @@ Updates can be made in bulk by passing a collection of WaveData objects:
 var updatedCollection = new List<WaveData>();
 for (int i = 2; i < 40; i = i+2)
 {
-	updatedCollection.Add(GetWave(i, 4));
+ updatedCollection.Add(GetWave(i, 4));
 }
 await dataService.UpdateValuesAsync(stream.Id, updatedCollection);
 ```
@@ -278,10 +278,10 @@ var vp4 = new SdsStreamViewProperty() { SourceId = "Tan", TargetId = "TanInt" };
 
 var manualStreamView = new SdsStreamView()
 {
-	Id = manualStreamViewId,
-	SourceTypeId = typeId,
-	TargetTypeId = targetIntTypeId,
-	Properties = new List<SdsStreamViewProperty>() { vp1, vp2, vp3, vp4 }
+  Id = manualStreamViewId,
+  SourceTypeId = typeId,
+  TargetTypeId = targetIntTypeId,
+  Properties = new List<SdsStreamViewProperty>() { vp1, vp2, vp3, vp4 }
 };
 
 await metadataService.CreateOrUpdateStreamViewAsync(manualStreamView);

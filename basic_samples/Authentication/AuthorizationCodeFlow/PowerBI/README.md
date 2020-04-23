@@ -40,7 +40,7 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 
 The query will look something like:
 
-```
+```C#
 let
     Source = OCSConnector.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/")
 in
@@ -55,7 +55,7 @@ Once the data is expanded, if necessary, right click on column headers and use t
 
 At this point, the data should be consumable in a Power BI Dashboard! The final query will look something like:
 
-```
+```C#
 let
     Source = OCSConnector_Sample.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/"),
     #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
