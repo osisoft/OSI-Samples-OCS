@@ -1,8 +1,10 @@
-﻿# SDS JavaScript Example using NodeJS
+﻿# Sequential Data Store NodeJS Sample
+
+**Version:** 1.0.9
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_NodeJs?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=924&branchName=master)
 
-## Building a Client to make REST API Calls to the SDS Service.
+## Building a Client to make REST API Calls to the SDS Service
 
 This sample demonstrates how SDS REST APIs are invoked using JavaScript. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, obtain an SdsNamespace, create an SdsType and SdsStream, and how to create, read, update, and delete values in SDS. It has the following dependencies:
 
@@ -13,9 +15,7 @@ This sample demonstrates how SDS REST APIs are invoked using JavaScript. By exam
 
 - This application by default will use Port 8080
 
-```
-Note: This application is hosted on HTTP.  This is not secure.  You should use a certificate and HTTPS.
-```
+**Note: This application is hosted on HTTP. This is not secure. You should use a certificate and HTTPS.**
 
 Developed against Node 10.14.1.
 
@@ -25,7 +25,7 @@ Developed against Node 10.14.1.
 1. Install node.js, installation instructions are available at [node.js](https://nodejs.org/en/).
 1. Install dependencies, using the command line:
 
-   ```bash
+   ```shell
    npm ci
    ```
 
@@ -33,7 +33,7 @@ Developed against Node 10.14.1.
 1. Goto folder where js files are located
 1. Type the following command to run the test file in the local server
 
-   ```
+   ```shell
    node Sample.js
    ```
 
@@ -59,15 +59,15 @@ restCall({
   url: authItems['authority'],
   method: 'POST',
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/x-www-form-urlencoded',
   },
   form: {
     grant_type: 'client_credentials',
     client_id: authItems['clientId'],
     client_secret: authItems['clientSecret'],
-    resource: authItems['resource']
+    resource: authItems['resource'],
   },
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -80,7 +80,7 @@ restCall({
 
 `Request-Promise` is used in the current sample in order to execute the REST calls in sequence. It is not mandatory. In fact, the same syntax can be used with `request` module. It adds the Bluebird-powered `.then(...)` method to `request` call objects. This can be used to achieve an `await()` effect. It supports all the features as that of the `request` library, except that callbacks are replaced with promises.
 
-## Configure the Sample:
+## Configure the Sample
 
 Included in the sample there is a configuration file with placeholders that need to be replaced with the proper values. They include information for authentication, connecting to the SDS Service, and pointing to a namespace.
 
@@ -137,11 +137,11 @@ Authentication tokens have an expiration time which can be checked via the `toke
 ```js
 if (client.tokenExpires < nowSeconds) {
   return checkTokenExpired(client)
-    .then(function(res) {
+    .then(function (res) {
       refreshToken(res, client);
       return client.createType(tenantId, sampleNamespaceId, sampleType);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 }
@@ -167,11 +167,11 @@ In the sample code, the SdsType representing WaveData is defined in Sample.js. W
 // define basic SdsTypes
 var doubleType = new sdsObjs.SdsType({
   Id: 'doubleType',
-  SdsTypeCode: sdsObjs.sdsTypeCode.Double
+  SdsTypeCode: sdsObjs.sdsTypeCode.Double,
 });
 var intType = new sdsObjs.SdsType({
   Id: 'intType',
-  SdsTypeCode: sdsObjs.sdsTypeCode.Int32
+  SdsTypeCode: sdsObjs.sdsTypeCode.Int32,
 });
 ```
 
@@ -182,7 +182,7 @@ Next, the WaveData properties are each represented by an SdsTypeProperty. Each S
 var orderProperty = new sdsObjs.SdsTypeProperty({
   Id: 'Order',
   SdsType: intType,
-  IsKey: true
+  IsKey: true,
 });
 ```
 
@@ -195,7 +195,7 @@ restCall({
   method: 'POST',
   headers: this.getHeaders(),
   body: JSON.stringify(type).toString(),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -213,7 +213,7 @@ var sampleStream = new sdsObjs.SdsStream({
   Id: sampleStreamId,
   Name: 'WaveStreamJs',
   Description: 'A Stream to store the WaveDatan Sds types events',
-  TypeId: sampleTypeId
+  TypeId: sampleTypeId,
 });
 ```
 
@@ -229,7 +229,7 @@ restCall({
   method: 'POST',
   headers: this.getHeaders(),
   body: JSON.stringify(stream).toString(),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -250,7 +250,7 @@ restCall({
   method: 'POST',
   headers: this.getHeaders(),
   body: JSON.stringify(events),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -320,7 +320,7 @@ restCall({
     this.getWindowValuesBase.format([streamId, start, end]),
   method: 'GET',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -347,7 +347,7 @@ restCall({
     '&form=tableh',
   method: 'GET',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -383,18 +383,18 @@ restCall({
       count,
       reverse,
       boundaryType,
-      streamView
+      streamView,
     ]),
   method: 'GET',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 ```
 
 - _skip_ is the increment by which the retrieval will happen.
 - _count_ is how many values you wish to have returned.
 - _reverse_ is a boolean that when `true` causes the retrieval to work backwards from the starting point.
-- _boundary_type_ is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- _boundary\_type_ is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown:
 
@@ -427,11 +427,11 @@ restCall({
       intervals,
       sampleBy,
       filter,
-      streamViewId
+      streamViewId,
     ]),
   method: 'GET',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -469,7 +469,7 @@ restCall({
   method: 'PUT',
   headers: this.getHeaders(),
   body: JSON.stringify(events),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -501,7 +501,7 @@ restCall({
   method: 'PUT',
   headers: this.getHeaders(),
   body: JSON.stringify(events),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -525,7 +525,7 @@ In the sample, the InterpolationMode is overridden to a value of Discrete for th
 // Create a Discrete stream PropertyOverride indicating that we do not want SDS to calculate a value for Radians and update our stream
 var propertyOverride = new sdsObjs.SdsPropertyOverride({
   SdsTypePropertyId: 'Radians',
-  InterpolationMode: sdsObjs.sdsStreamMode.Discrete
+  InterpolationMode: sdsObjs.sdsStreamMode.Discrete,
 });
 var propertyOverrides = [propertyOverride];
 
@@ -600,7 +600,7 @@ restCall({
     this.removeSingleValueBase.format([streamId, index]),
   method: 'DELETE',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 
 restCall({
@@ -610,7 +610,7 @@ restCall({
     this.removeMultipleValuesBase.format([streamId, start, end]),
   method: 'DELETE',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -629,7 +629,7 @@ restCall({
     streamId,
   method: 'DELETE',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 ```
 
@@ -638,7 +638,7 @@ restCall({
   url: this.url + this.typesBase.format([tenantId, namespaceId]) + '/' + typeId,
   method: 'DELETE',
   headers: this.getHeaders(),
-  gzip: true
+  gzip: true,
 });
 ```
 

@@ -1,5 +1,7 @@
 # Authorization Code Flow + PKCE Sample and Test for Power BI Desktop
 
+**Version:** 1.0.2
+
 The OCS Connector for Power BI Desktop is used to get data from the OCS API into Power BI Desktop. The connector uses the OAuth Authorization Code with PKCE flow to connect to the API and get an access token.
 
 ## Prerequisites

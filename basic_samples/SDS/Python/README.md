@@ -1,5 +1,7 @@
 ﻿# SDS JavaScript Example using Python
 
+**Version:** 1.0.12
+
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=925&branchName=master)
 
 ## Building a Python client to make REST API calls to the SDS Service
@@ -10,7 +12,7 @@ The sections that follow provide a brief description of the process from beginni
 
 Developed against Python 3.7.2.
 
-## To Run this Sample:
+## To Run this Sample
 
 1. Clone the GitHub repository
 1. Install required modules: `pip install -r requirements.txt`
@@ -47,7 +49,7 @@ Each call to the SDS REST API consists of an HTTP request along with a specific 
 | PUT         | Update         | message body     |
 | DELETE      | Delete         | URL parameters   |
 
-## Configure the Sample:
+## Configure the Sample
 
 Included in the sample there is a configuration file with placeholders that need to be replaced with the proper values. They include information for authentication, connecting to the SDS Service, and pointing to a namespace.
 
@@ -272,7 +274,7 @@ def getRangeValues(self, namespace_id, stream_id, value_class, start, skip, coun
 - _skip_ is the increment by which the retrieval will happen.
 - _count_ is how many values you wish to have returned.
 - _reverse_ is a boolean that when `true` causes the retrieval to work backwards from the starting point.
-- _boundary_type_ is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- _boundary\_type_ is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown :
 

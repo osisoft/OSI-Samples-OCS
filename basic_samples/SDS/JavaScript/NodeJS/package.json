@@ -1,0 +1,21 @@
+{
+  "name": "sds-nodejs",
+  "description": "JavaScript Samples: Building a Client to make REST API Calls to the SDS Service.\r ===============================================================================",
+  "version": "1.0.9",
+  "main": "Sample.js",
+  "keywords": [],
+  "author": "OSIsoft",
+  "license": "Apache 2.0",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "requires": true,
+  "dependencies": {
+    "request-promise": "4.2.4"
+  },
+  "devDependencies": {
+    "jasmine": "3.3.1",
+    "request": "2.88.0",
+    "request-promise": "4.2.4"
+  }
+}

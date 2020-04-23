@@ -1,4 +1,6 @@
-# Building a Java client to make REST API calls to the SDS Service
+# Sequential Data Store Java Sample
+
+**Version:** 1.0.9
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=920&branchName=master)
 
@@ -23,7 +25,7 @@ Using VSCode, Eclipse or any IDE:
 Using a command line:
 
 1. Clone a local copy of the GitHub repository.
-1. Download apache-maven-x.x.x.zip from http://maven.apache.org and extract it.
+1. Download apache-maven-x.x.x.zip from [http://maven.apache.org](http://maven.apache.org) and extract it.
 1. Setting environment variables.
    1. For Java JDK,  
       Variable name - JAVA_HOME  
@@ -76,7 +78,7 @@ public BaseClient() {
 
 The sample library specifies to use `gzip` compression by adding the `Accept-Encoding` header to each request inside the `BaseClient.getConnection()` method, and decompressing the response inside the `BaseClient.getResponse()` method.
 
-## Configure the Sample:
+## Configure the Sample
 
 Included in the sample is a configuration file with placeholders that need to be replaced with the proper values. They include information for authentication, connecting to OCS, and pointing to a namespace.
 
@@ -92,14 +94,14 @@ Finally, a valid namespace ID for the tenant must be given as well. To create a 
 
 The values to be replaced are in `config.properties`:
 
-'''
+```ini
 resource = https://dat-b.osisoft.com
 clientId = REPLACE_WITH_APPLICATION_IDENTIFIER
 clientSecret = REPLACE_WITH_APPLICATION_SECRET
 tenantId = REPLACE_WITH_TENANT_ID
 namespaceId = REPLACE_WITH_NAMESPACE_ID
 apiVersion = v1
-'''
+```
 
 ## Obtain an Authentication Token
 

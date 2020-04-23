@@ -26,14 +26,12 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/SDS/Python/SDSPy/Python3'
+    value: '/basic_samples/SDS/Python'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
     value: product-readiness.sds_python.ini
-  - name: covStream
-    value: SDSPy
-  - name: bdProject
+  - name: analysisProject
     value: SDS_Python
 
 jobs:
@@ -72,7 +70,7 @@ jobs:
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
-        
+
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:

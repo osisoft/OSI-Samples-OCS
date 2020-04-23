@@ -27,10 +27,6 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/SDS/JavaScript/Angular'
-  - name: configPath
-    value: '/basic_samples/SDS/JavaScript/Angular/src/app/config'
-  - name: credPath
-    value: '/basic_samples/SDS/JavaScript/Angular/e2e/src'
   - name: CredFile
     value: cred.json
   - name: CredFileSdsConfig
@@ -43,34 +39,37 @@ variables:
     value: product-readiness.sds_angular.sds.json
   - name: CredFileOidcConfigLibrary
     value: product-readiness.sds_angular.oidc.json
-  - name: covStream
-    value: SDSangJS
-  - name: bdProject
+  - name: analysisProject
     value: SDS_Angular
 
 jobs:
   - job: Tests
-    # Tests run in Chrome, no reason to run on multiple OS
+    strategy:
+      matrix:
+        linux:
+          imageName: ubuntu-latest
+        windows:
+          imageName: windows-latest
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: $(imageName)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(credPath)
+          filePath: $(projPath)/e2e/src
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFileSdsConfig)
           fileLibrary: $(CredFileSdsConfigLibrary)
-          filePath: $(configPath)
+          filePath: $(projPath)/src/app/config
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFileOidcConfig)
           fileLibrary: $(CredFileOidcConfigLibrary)
-          filePath: $(configPath)
+          filePath: $(projPath)/src/app/config
 
       - task: NodeTool@0
         inputs:

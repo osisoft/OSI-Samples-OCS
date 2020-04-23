@@ -1,5 +1,7 @@
 # Authorization Code Flow + PKCE JavaScript Sample and Test
 
+**Version:** 1.1.0
+
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_JavaScript?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1203&branchName=master)
 
 This client uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an access token. See the root folder [README](../../../README.md) for more information about this flow.
