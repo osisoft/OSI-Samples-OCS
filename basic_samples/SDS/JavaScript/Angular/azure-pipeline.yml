@@ -82,12 +82,12 @@ jobs:
 
       - bash: npx webdriver-manager update --versions.chrome 80.0.3987.106
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
-        displayName: 'Ubuntu: Install dependencies'
+        displayName: 'Ubuntu: Update webdriver-manager'
         condition: eq(variables['imageName'],'ubuntu-latest')
 
       - bash: npx webdriver-manager update
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
-        displayName: 'Windows: Install dependencies'
+        displayName: 'Windows: Update webdriver-manager'
         condition: eq(variables['imageName'],'windows-latest')
 
       - bash: npm run e2e
