@@ -20,7 +20,7 @@ describe('workspace-project App', () => {
       done();
   });
 
-  it('should just work...', (done) => {
+  it('Should run the sample', (done) => {
       browser.waitForAngularEnabled(false);
       page.navigateTo()
           .then((res) => {
