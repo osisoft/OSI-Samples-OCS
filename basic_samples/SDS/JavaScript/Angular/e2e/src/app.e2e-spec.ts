@@ -41,6 +41,7 @@ describe('workspace-project App', () => {
     await page.createStreamViewWithProps();
     await page.getEvents2();
     await page.sdsStreamViewMap();
+    await browser.driver.sleep(2000);
     await page.updateStreamType();
     await page.queryTypes();
     await page.createTagsAndMetaData();
