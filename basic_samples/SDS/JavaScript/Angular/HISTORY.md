@@ -5,6 +5,7 @@
 - Updated to use Polaris in place of Coverity
 - Update pipeline to run on Linux
 - Update pipeline to publish test results
+- Updated dependencies, including Angular 8 to 9
 
 ## 1.1.8 / 2020-03-16
 
