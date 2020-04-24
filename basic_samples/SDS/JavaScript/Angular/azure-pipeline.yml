@@ -76,14 +76,21 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
-      - bash: |
-          echo NPM CI
-          npm ci
-          echo Update Webdriver-Manager
-          npx webdriver-manager update --versions.chrome 79.0.3945.36
-          echo Run e2e tests
-          npm run e2e
-          echo Complete
+      - bash: npm ci
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Install dependencies'
+
+      - bash: npx webdriver-manager update --versions.chrome 80.0.3987.106
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Ubuntu: Install dependencies'
+        condition: eq($(imageName),'ubuntu-latest')
+
+      - bash: npx webdriver-manager update
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Windows: Install dependencies'
+        condition: eq($(imageName),'windows-latest')
+
+      - bash: npm run e2e
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
 
