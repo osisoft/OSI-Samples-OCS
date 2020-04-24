@@ -28,7 +28,7 @@ describe('workspace-project App', () => {
     await page.createType();
     await page.createStream();
     await page.writeData();
-    await page.retreiveEvents();
+    await page.retrieveEvents();
     await page.updateValues();
     await page.replaceValues();
     await page.retrieveInterpolatedValues();
@@ -37,7 +37,7 @@ describe('workspace-project App', () => {
     await page.propertyOverride();
     await page.createSdsType2();
     await page.createSdsStream2();
-    await page.retreiveEventsBasedOnSdsView();
+    await page.retrieveEventsBasedOnSdsView();
     await page.createStreamViewWithProps();
     await page.getEvents2();
     await page.sdsStreamViewMap();
@@ -51,7 +51,7 @@ describe('workspace-project App', () => {
     await page.secondaryCreate();
     await page.secondaryUpdate();
     await page.createCompoundTypeandStream();
-    await page.createAndRetreiveCompoundData();
+    await page.createAndRetrieveCompoundData();
     await page.deleteRest();
     done();
   });

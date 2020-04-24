@@ -10,7 +10,7 @@ The first time you press "TestSample >" on the page it might take a few minutes 
 
 ## Narative
 
-For this sample we are someone who wants to store and retreive data from 3 different tanks; vessel, tank1 and tank2. These 3 different tanks have 2 value readings; pressure and temperature. To start we are only concerned with tank1, because we know once we get it setup we can easily scale to get the other data. We are collecting this data ourselves from the sensors directly. In this sample we explore different ways we can store the data in OCS and different ways we can retreive the data.
+For this sample we are someone who wants to store and retrieve data from 3 different tanks; vessel, tank1 and tank2. These 3 different tanks have 2 value readings; pressure and temperature. To start we are only concerned with tank1, because we know once we get it setup we can easily scale to get the other data. We are collecting this data ourselves from the sensors directly. In this sample we explore different ways we can store the data in OCS and different ways we can retrieve the data.
 
 ## Sample
 

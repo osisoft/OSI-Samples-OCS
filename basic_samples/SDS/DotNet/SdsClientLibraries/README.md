@@ -184,13 +184,13 @@ IEnumerable<WaveData> retrieved =
   await client.GetWindowValuesAsync<WaveData>(stream.Id, "0", "200");
 ```
 
-SDS can retreive the values in the form of a table (in this case with headers)
+SDS can retrieve the values in the form of a table (in this case with headers)
 
 ```C#
 SdsTable tableEvents = await tableService.GetWindowValuesAsync(stream.Id, "0", "180");
 ```
 
-SDS can retreive interpolated values. In this case we are asking for values at 5, 14, 23, and 32. We only have values stored at the even numbers, so the odd numbers will be interpolated for.
+SDS can retrieve interpolated values. In this case we are asking for values at 5, 14, 23, and 32. We only have values stored at the even numbers, so the odd numbers will be interpolated for.
 
 ```C#
 IEnumerable<WaveData> retrievedInterpolated = await dataService.GetValuesAsync<WaveData>(stream.Id, "5", "32", 4);

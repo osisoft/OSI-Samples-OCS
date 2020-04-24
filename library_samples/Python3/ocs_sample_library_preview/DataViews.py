@@ -52,7 +52,7 @@ class DataViews(object):
         """Tells Sds Service to update a Data View based on local 'dataView'
         :param namespace_id: namespace to work against
         :param dataView: Data View definition. Data View object expected
-        :return: Retreived Data View as Data View object
+        :return: Retrieved Data View as Data View object
         """
         if namespace_id is None:
             raise TypeError
@@ -106,7 +106,7 @@ class DataViews(object):
         Retrieves the Data View specified by 'dataView_id' from Sds Service
         :param namespace_id: namespace to work against
         :param dataView_id:  id of Data View to get
-        :return: Retreived Data View as Data View object
+        :return: Retrieved Data View as Data View object
         """
         if namespace_id is None:
             raise TypeError

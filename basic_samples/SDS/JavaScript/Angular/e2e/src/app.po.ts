@@ -28,7 +28,7 @@ export class AppPage {
     return this.helper('writeWaveDataEvents', '20');
   }
 
-  retreiveEvents(): any {
+  retrieveEvents(): any {
     return this.helper('retrieveWaveDataEvents', '10 events');
   }
 
@@ -72,7 +72,7 @@ export class AppPage {
     return this.helper('createAutoStreamView', '20');
   }
 
-  retreiveEventsBasedOnSdsView(): any {
+  retrieveEventsBasedOnSdsView(): any {
     return this.helper('retrieveWaveDataEventsAutoStreamView', '');
   }
 
@@ -128,8 +128,8 @@ export class AppPage {
     return this.helper('createCompoundTypeandStream', '');
   }
 
-  createAndRetreiveCompoundData(): any {
-    return this.helper('createAndRetreiveCompoundData', '');
+  createAndRetrieveCompoundData(): any {
+    return this.helper('createAndRetrieveCompoundData', '');
   }
 
   deleteRest(): any {

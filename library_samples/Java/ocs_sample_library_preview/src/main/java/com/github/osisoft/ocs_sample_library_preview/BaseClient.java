@@ -185,8 +185,8 @@ public class BaseClient {
     /**
      * helper to get configuration information for the file
      * 
-     * @param propertyId which property to retreive from the file
-     * @return the value retreived
+     * @param propertyId which property to retrieve from the file
+     * @return the value retrieved
      */
     private String getConfiguration(String propertyId) {
 

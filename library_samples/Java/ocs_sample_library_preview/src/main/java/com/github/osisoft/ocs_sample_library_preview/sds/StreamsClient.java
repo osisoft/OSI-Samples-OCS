@@ -122,7 +122,7 @@ public class StreamsClient {
      * 
      * @param tenantId     tenant to work against
      * @param namespaceId  namespace to work against
-     * @param streamViewId the streamview to retreivemap
+     * @param streamViewId the streamview to retrievemap
      * @return the streamviewmap as a string
      * @throws SdsError any error that occurs
      */

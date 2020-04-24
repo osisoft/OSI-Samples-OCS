@@ -169,10 +169,10 @@ namespace SDS_TS_DotNet
                 {
                     //testing to make sure we get back expected stuff
                     if (String.Compare(JsonConvert.SerializeObject(resultsPressure.First()),"{\"Time\":\"2017-01-11T22:21:23.43Z\",\"Value\":346.0}") !=0)
-                        throw new Exception("Value retreived isn't expected value for pressure of Tank1");
+                        throw new Exception("Value retrieved isn't expected value for pressure of Tank1");
 
                     if (String.Compare(JsonConvert.SerializeObject(resultsTank.First()), "{\"Time\":\"2017-01-11T22:21:23.43Z\",\"Pressure\":346.0,\"Temperature\":91.0}") != 0)
-                        throw new Exception("Value retreived isn't expected value for Temeprature from Tank1");
+                        throw new Exception("Value retrieved isn't expected value for Temeprature from Tank1");
                 }
 
                 // Step 10

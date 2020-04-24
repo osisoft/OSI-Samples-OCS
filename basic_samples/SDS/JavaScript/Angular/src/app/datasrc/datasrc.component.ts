@@ -130,8 +130,8 @@ export class DatasrcComponent {
   secondaryUpdateMessage: string;
   secondaryDeleteMessage: string;
   createCompoundTypeandStreamMessage: string;
-  createAndRetreiveCompoundDataMessage: string;
-  createAndRetreiveCompoundDataMessageData: string;
+  createAndRetrieveCompoundDataMessage: string;
+  createAndRetrieveCompoundDataMessageData: string;
 
   constructor(private sdsService: SdsRestService) {
     this.hasEvents = false;
@@ -710,7 +710,7 @@ export class DatasrcComponent {
     );
   }
 
-  createAndRetreiveCompoundData() {
+  createAndRetrieveCompoundData() {
     const list: Array<WaveDataCompound> = [];
     list.push(this.newWaveDataCompoundEvent(1, 10));
     list.push(this.newWaveDataCompoundEvent(2, 2));
@@ -720,29 +720,29 @@ export class DatasrcComponent {
     list.push(this.newWaveDataCompoundEvent(10, 10));
     this.sdsService.insertValues(streamIdCompound, list).subscribe(
       (res) => {
-        this.createAndRetreiveCompoundDataMessage = this.healthyResponseMessage(
+        this.createAndRetrieveCompoundDataMessage = this.healthyResponseMessage(
           res
         );
         this.sdsService
           .getWindowValues(streamIdCompound, '2|1', '10|8')
           .subscribe(
             (res2) => {
-              this.createAndRetreiveCompoundDataMessage = this.healthyResponseMessage(
+              this.createAndRetrieveCompoundDataMessage = this.healthyResponseMessage(
                 res2
               );
-              this.createAndRetreiveCompoundDataMessageData = JSON.stringify(
+              this.createAndRetrieveCompoundDataMessageData = JSON.stringify(
                 res2.body
               );
             },
             (err) => {
-              this.createAndRetreiveCompoundDataMessage = this.unhealthyResponseMessage(
+              this.createAndRetrieveCompoundDataMessage = this.unhealthyResponseMessage(
                 err
               );
             }
           );
       },
       (err) => {
-        this.createAndRetreiveCompoundDataMessage = this.unhealthyResponseMessage(
+        this.createAndRetrieveCompoundDataMessage = this.unhealthyResponseMessage(
           err
         );
       }

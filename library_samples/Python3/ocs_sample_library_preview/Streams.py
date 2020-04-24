@@ -272,7 +272,7 @@ class Streams(object):
         Tells Sds Service to create a stream based on the local 'stream'
             SdsStream object
         :param namespace_id: namespace to work against
-        :param stream: the stream to Create or retreive, as a SDsStream
+        :param stream: the stream to Create or retrieve, as a SDsStream
         :return: the created Stream as an SdsStream
         """
         if namespace_id is None:
@@ -451,7 +451,7 @@ class Streams(object):
             and key
         :param namespace_id: id of namespace to work against
         :param stream_id: id of the stream to get the metadata value of
-        :param key: specific metadata field to retreive
+        :param key: specific metadata field to retrieve
         :return: value at the key
         """
         if namespace_id is None:
