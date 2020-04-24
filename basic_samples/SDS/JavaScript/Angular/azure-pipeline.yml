@@ -76,11 +76,13 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
-      - script: |
+      - bash: |
           echo NPM CI
-          call npm ci
+          npm ci
+          echo Update Webdriver-Manager
+          npm webdriver-manager update
           echo Run e2e tests
-          call npm run e2e
+          npm run e2e
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
