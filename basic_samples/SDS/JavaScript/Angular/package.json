@@ -23,7 +23,7 @@
     "@angular/platform-browser": "8.2.14",
     "@angular/platform-browser-dynamic": "8.2.14",
     "@angular/router": "8.2.14",
-    "@ng-bootstrap/ng-bootstrap": "4.1.0",
+    "@ng-bootstrap/ng-bootstrap": "6.1.0",
     "bluebird": "3.5.3",
     "core-js": "2.6.5",
     "moment": "2.24.0",
