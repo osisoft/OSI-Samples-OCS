@@ -80,7 +80,7 @@ jobs:
           echo NPM CI
           npm ci
           echo Update Webdriver-Manager
-          npm webdriver-manager update
+          npx webdriver-manager update
           echo Run e2e tests
           npm run e2e
           echo Complete
