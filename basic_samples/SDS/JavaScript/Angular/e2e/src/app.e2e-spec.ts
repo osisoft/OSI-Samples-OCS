@@ -9,7 +9,7 @@ function writeScreenShot(data, filename) {
   stream.end();
 }
 
-describe('workspace-project App', () => {
+describe('SDS Angular Sample', () => {
   let page: AppPage;
   let originalTimeout;
 
@@ -20,7 +20,7 @@ describe('workspace-project App', () => {
     done();
   });
 
-  it('Should run', async (done) => {
+  it('Should run to completion', async (done) => {
     await browser.waitForAngularEnabled(false);
     await page.navigateTo();
     await page.login2();
