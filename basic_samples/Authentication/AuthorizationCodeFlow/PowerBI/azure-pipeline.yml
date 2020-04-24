@@ -68,14 +68,16 @@ jobs:
 
       - script: 'call mstest /testcontainer:OCSConnectorTest.dll'
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
-        displayName: 'Run coded UI'
+        displayName: 'Run tests'
 
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'VSTest'
           testResultsFiles: '*.trx'
+          failTaskOnFailedTests: true
           searchFolder: '$(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug/TestResults'
           testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+        displayName: 'Publish test results'
         condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
