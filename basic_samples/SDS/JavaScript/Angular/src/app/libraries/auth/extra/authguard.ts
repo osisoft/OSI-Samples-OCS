@@ -1,15 +1,20 @@
-// authguard.ts
-//
+import { Injectable } from '@angular/core';
+import {
+  CanActivate,
+  RouterStateSnapshot,
+  ActivatedRouteSnapshot,
+} from '@angular/router';
 
-import { Injectable } from "@angular/core";
-import { CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot } from "@angular/router";
-import { OidcService } from '../ocs-auth'
+import { OidcService } from '../ocs-auth';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-    constructor(private auth: OidcService) { }
+  constructor(private auth: OidcService) {}
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-        return (this.auth.userInfo !== null);
-    }
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    return this.auth.userInfo !== null;
+  }
 }
