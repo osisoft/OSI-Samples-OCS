@@ -1,5 +1,5 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser } from 'protractor';
 
 const fs = require('fs');
 
@@ -118,16 +118,9 @@ describe('workspace-project App', () => {
     afterEach((done) => {
 
         browser.takeScreenshot().then(function (png) {
-            writeScreenShot(png, 'exception2.png');
+            writeScreenShot(png, 'afterEach.png');
         });
-        // page.deleteRest();
-    // Assert that there are no errors emitted from the browser
-    /*
-     * const logs = browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(jasmine.objectContaining({
-      level: logging.Level.SEVERE,
-    } as logging.Entry));
-    */
+
         jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
         done();
     });
@@ -135,7 +128,7 @@ describe('workspace-project App', () => {
     afterAll((done) => {
 
         browser.takeScreenshot().then(function (png) {
-            writeScreenShot(png, 'exception.png');
+            writeScreenShot(png, 'afterAll.png');
         });
         page.deleteRest();
         done();

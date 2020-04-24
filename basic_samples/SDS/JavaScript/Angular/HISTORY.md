@@ -3,6 +3,8 @@
 ## 1.1.9 / 2020-04-23
 
 - Updated to use Polaris in place of Coverity
+- Update pipeline to run on Linux
+- Update pipeline to publish test results
 
 ## 1.1.8 / 2020-03-16
 

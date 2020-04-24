@@ -2,10 +2,10 @@ require('chromedriver');
 const assert = require('assert');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const reporters = require('jasmine-reporters');
+const { JUnitXmlReporter } = require('jasmine-reporters');
 const config = require('../src/config');
 
-var junitReporter = new reporters.JUnitXmlReporter({
+var junitReporter = new JUnitXmlReporter({
   savePath: 'TestResults',
 });
 jasmine.getEnv().addReporter(junitReporter);
