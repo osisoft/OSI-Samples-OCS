@@ -1,11 +1,17 @@
 {
   "name": "sds-nodejs",
-  "description": "JavaScript Samples: Building a Client to make REST API Calls to the SDS Service.\r ===============================================================================",
+  "description": "A sample that uses Sequential Data Store in a NodeJS environment.",
+  "private": true,
   "version": "1.0.9",
+  "author": "OSIsoft, LLC",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osisoft/OSI-Samples-OCS.git",
+    "directory": "basic_samples/SDS/JavaScript/NodeJS"
+  },
   "main": "Sample.js",
   "keywords": [],
-  "author": "OSIsoft",
-  "license": "Apache 2.0",
   "scripts": {
     "test": "jasmine"
   },

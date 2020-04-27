@@ -1,7 +1,15 @@
 {
   "name": "sds-angular",
+  "description": "A sample that uses Sequential Data Store in an Angular-based environment.",
+  "private": true,
   "version": "1.1.9",
-  "license": "Apache2.0",
+  "author": "OSIsoft, LLC",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osisoft/OSI-Samples-OCS.git",
+    "directory": "basic_samples/SDS/JavaScript/Angular"
+  },
   "scripts": {
     "ng": "ng",
     "prestart": "echo WARNING: The web server used in this sample is intended for use in testing or debugging sample applications locally. It has not been reviewed for security issues.",
@@ -11,7 +19,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e --webdriver-update=false"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "9.1.3",
     "@angular/cdk": "9.2.1",
