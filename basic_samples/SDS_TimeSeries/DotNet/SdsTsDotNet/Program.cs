@@ -257,9 +257,9 @@ namespace SdsTsDotNet
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
                 _toThrow = ex;
-                throw ex;
+                throw;
             }
             finally
             {
