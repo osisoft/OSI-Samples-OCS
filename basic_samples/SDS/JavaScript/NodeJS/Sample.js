@@ -10,19 +10,19 @@ var apiVersion = config.apiVersion;
 var success = true;
 var errorCap = {};
 
-var checkTokenExpired = function(client) {
-  return client.getToken(authItems).catch(function(err) {
+var checkTokenExpired = function (client) {
+  return client.getToken(authItems).catch(function (err) {
     throw err;
   });
 };
 
-var refreshToken = function(res, client) {
+var refreshToken = function (res, client) {
   var obj = JSON.parse(res);
   client.token = obj.access_token;
   client.tokenExpires = obj.expires_on;
 };
 
-var dumpEvent = function(elem) {
+var dumpEvent = function (elem) {
   console.log(
     'Order: ' +
       elem.Order +
@@ -45,7 +45,7 @@ var dumpEvent = function(elem) {
   );
 };
 
-var dumpEventTarget = function(elem) {
+var dumpEventTarget = function (elem) {
   console.log(
     'Order: ' +
       elem.Order +
@@ -68,9 +68,9 @@ var dumpEventTarget = function(elem) {
   );
 };
 
-var dumpEvents = function(obj) {
+var dumpEvents = function (obj) {
   console.log('Total events found: ' + obj.length);
-  obj.forEach(function(elem, index) {
+  obj.forEach(function (elem, index) {
     if (!elem.Order) {
       elem.Order = 0;
     }
@@ -97,8 +97,8 @@ var dumpEvents = function(obj) {
   });
 };
 
-var dumpStreamViewMap = function(obj) {
-  obj.Properties.forEach(function(elem, index) {
+var dumpStreamViewMap = function (obj) {
+  obj.Properties.forEach(function (elem, index) {
     if (elem.TargetId) {
       console.log(elem.SourceId + ' => ' + elem.TargetId);
     } else {
@@ -107,7 +107,7 @@ var dumpStreamViewMap = function(obj) {
   });
 };
 
-var logError = function(err) {
+var logError = function (err) {
   success = false;
   errorCap = err;
   if (typeof err.statusCode !== 'undefined' && err.statusCode === 302) {
@@ -122,7 +122,7 @@ var logError = function(err) {
   }
 };
 
-var app = function(request1, response) {
+var app = function (request1, response) {
   if (request1 != null) {
     if (request1.url === '/favicon.ico') {
       return;
@@ -166,63 +166,63 @@ var app = function(request1, response) {
   // define basic SdsTypes
   var doubleType = new sdsObjs.SdsType({
     Id: 'doubleType',
-    SdsTypeCode: sdsObjs.sdsTypeCode.Double
+    SdsTypeCode: sdsObjs.sdsTypeCode.Double,
   });
   var intType = new sdsObjs.SdsType({
     Id: 'intType',
-    SdsTypeCode: sdsObjs.sdsTypeCode.Int32
+    SdsTypeCode: sdsObjs.sdsTypeCode.Int32,
   });
 
   // define properties
   var orderProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Order',
     SdsType: intType,
-    IsKey: true
+    IsKey: true,
   });
   var radiansProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Radians',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var tauProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Tau',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var sinProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Sin',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var cosProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Cos',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var tanProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Tan',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var sinhProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Sinh',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var coshProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Cosh',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var tanhProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Tanh',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
 
-  var orderPropertyCompound = new sdsObjs.SdsTypeProperty({
+  var orderCompoundProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Order',
     SdsType: intType,
     IsKey: true,
-    Order: 1
+    Order: 1,
   });
-  var multiplierProperty = new sdsObjs.SdsTypeProperty({
+  var multiplierCompoundProperty = new sdsObjs.SdsTypeProperty({
     Id: 'Multiplier',
     SdsType: intType,
     IsKey: true,
-    Order: 2
+    Order: 2,
   });
 
   //create an SdsType for WaveData Class
@@ -240,8 +240,8 @@ var app = function(request1, response) {
       tanProperty,
       sinhProperty,
       coshProperty,
-      tanhProperty
-    ]
+      tanhProperty,
+    ],
   });
 
   //create an SdsType for WaveData Class using a compound index
@@ -251,8 +251,8 @@ var app = function(request1, response) {
     Description: 'This is a sample Sds type for storing WaveData type events',
     SdsTypeCode: sdsObjs.sdsTypeCode.Object,
     Properties: [
-      orderPropertyCompound,
-      multiplierProperty,
+      orderCompoundProperty,
+      multiplierCompoundProperty,
       tauProperty,
       radiansProperty,
       sinProperty,
@@ -260,8 +260,8 @@ var app = function(request1, response) {
       tanProperty,
       sinhProperty,
       coshProperty,
-      tanhProperty
-    ]
+      tanhProperty,
+    ],
   });
 
   var client = new clientObj.SdsClient(resource, apiVersion);
@@ -269,11 +269,11 @@ var app = function(request1, response) {
   // Step 1
   var getClientToken = client
     .getToken(clientId, clientSecret, resource)
-    .catch(function(err) {
+    .catch(function (err) {
       throw err;
     });
 
-  var nowSeconds = function() {
+  var nowSeconds = function () {
     return Date.now() / 1000;
   };
 
@@ -281,16 +281,16 @@ var app = function(request1, response) {
   var createType = getClientToken
     .then(
       // Step 2
-      function(res) {
+      function (res) {
         console.log('\nCreating an SdsType');
         refreshToken(res, client);
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.createType(tenantId, sampleNamespaceId, sampleType);
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -298,7 +298,7 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -307,18 +307,18 @@ var app = function(request1, response) {
     Id: sampleStreamId,
     Name: 'WaveStreamJs',
     Description: 'A Stream to store the WaveDatan Sds types events',
-    TypeId: sampleTypeId
+    TypeId: sampleTypeId,
   });
 
   var createStream = createType
     .then(
       // Step 3
-      function(res) {
+      function (res) {
         console.log('Creating an SdsStream');
         // create SdsStream
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.createStream(
                 tenantId,
@@ -326,7 +326,7 @@ var app = function(request1, response) {
                 sampleStream
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -334,7 +334,7 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -346,13 +346,13 @@ var app = function(request1, response) {
   var insertValue = createStream
     .then(
       // Step 4
-      function(res) {
+      function (res) {
         console.log('Inserting data');
         evt = waveDataObj.NextWave(2.0, 0);
         event.push(evt);
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.insertEvents(
                 tenantId,
@@ -361,7 +361,7 @@ var app = function(request1, response) {
                 event
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -374,7 +374,7 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -386,7 +386,7 @@ var app = function(request1, response) {
   var callback = null;
   var totalEvents = 20;
 
-  var buildEvents = function() {
+  var buildEvents = function () {
     if (evtCount < totalEvents) {
       evt1 = waveDataObj.NextWave(mutliplier, evtCount);
       events.push(evt1);
@@ -398,22 +398,22 @@ var app = function(request1, response) {
   };
 
   var createRandomEvents = insertValue
-    .then(function(res) {
-      var prom = new Promise(function(resolve, reject) {
+    .then(function (res) {
+      var prom = new Promise(function (resolve, reject) {
         callback = resolve;
         buildEvents();
       });
       return prom;
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var insertMultipleValues = createRandomEvents
-    .then(function() {
+    .then(function () {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.insertEvents(
               tenantId,
@@ -422,7 +422,7 @@ var app = function(request1, response) {
               events
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -434,16 +434,16 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get last event
   var getLastValue = insertMultipleValues
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             console.log('Getting latest event');
             return client.getLastValue(
@@ -452,23 +452,23 @@ var app = function(request1, response) {
               sampleStreamId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.getLastValue(tenantId, sampleNamespaceId, sampleStreamId);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printLastValue = getLastValue
-    .then(function(res) {
+    .then(function (res) {
       var lastEvent = JSON.parse(res);
       dumpEvent(lastEvent);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -476,10 +476,10 @@ var app = function(request1, response) {
   var getWindowEvents = printLastValue
     .then(
       // Step 5
-      function(res) {
+      function (res) {
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               console.log('\nGetting all events');
               return client.getWindowValues(
@@ -490,7 +490,7 @@ var app = function(request1, response) {
                 180
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -504,17 +504,17 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printWindowEvents = getWindowEvents
-    .then(function(res) {
+    .then(function (res) {
       var allEvents = JSON.parse(res);
       dumpEvents(allEvents);
       return allEvents;
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -522,10 +522,10 @@ var app = function(request1, response) {
   var getWindowEventsTable = printWindowEvents
     .then(
       // Step 6
-      function(res) {
+      function (res) {
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               console.log('\nGetting all events');
               return client.getWindowValuesTable(
@@ -536,7 +536,7 @@ var app = function(request1, response) {
                 180
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -550,18 +550,18 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printWindowEventsTable = getWindowEventsTable
-    .then(function(res) {
+    .then(function (res) {
       var allEvents = JSON.parse(res);
       console.log('\nValues in table format');
       console.log(JSON.stringify(allEvents));
       return allEvents;
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -569,7 +569,7 @@ var app = function(request1, response) {
   var updateEvent = printWindowEventsTable
     .then(
       // Step 7
-      function(res) {
+      function (res) {
         // update the first value
         event = [];
         evt = res[0];
@@ -577,7 +577,7 @@ var app = function(request1, response) {
         event.push(evt);
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               console.log('\nUpdating events');
               return client.updateEvents(
@@ -587,7 +587,7 @@ var app = function(request1, response) {
                 event
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -600,33 +600,33 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // if updating single value successful, then create a list of new values to insert
   createRandomEvents = updateEvent
-    .then(function(res) {
+    .then(function (res) {
       mutliplier = 4.0;
       events = [];
       evtCount = 2;
-      var prom = new Promise(function(resolve, reject) {
+      var prom = new Promise(function (resolve, reject) {
         callback = resolve;
         totalEvents = 40;
         buildEvents();
       });
       return prom;
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // if creating a list of new values successful, then update values in the stream
   var updateEvents = createRandomEvents
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.updateEvents(
               tenantId,
@@ -635,7 +635,7 @@ var app = function(request1, response) {
               events
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -647,18 +647,18 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get updated events
   getWindowEvents = updateEvents
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nGetting updated events');
       // get updated values
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getWindowValues(
               tenantId,
@@ -668,7 +668,7 @@ var app = function(request1, response) {
               180
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -681,17 +681,17 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printUpdateEvents = getWindowEvents
-    .then(function(res) {
+    .then(function (res) {
       var updatedEvents = JSON.parse(res);
       dumpEvents(updatedEvents);
       return updatedEvents;
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -701,7 +701,7 @@ var app = function(request1, response) {
   var replaceEvent = printUpdateEvents
     .then(
       // Step 8
-      function(res) {
+      function (res) {
         console.log('\nReplacing events');
         var event = [];
         var replaceEvent = waveDataObj.NextWave(2.0, 0);
@@ -710,7 +710,7 @@ var app = function(request1, response) {
 
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.replaceEvents(
                 tenantId,
@@ -719,7 +719,7 @@ var app = function(request1, response) {
                 event
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -732,34 +732,34 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // if updating single value successful, then create a list of new values to insert
   var createReplaceEvents = replaceEvent
-    .then(function(res) {
+    .then(function (res) {
       multiplier = 20.0;
       var events = [];
       evtCount = 2;
-      var prom = new Promise(function(resolve, reject) {
+      var prom = new Promise(function (resolve, reject) {
         callback = resolve;
         totalEvents = 40;
         buildEvents();
       });
       return prom;
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   //replace multiple events
   var replaceEvents = createReplaceEvents
-    .then(function(res) {
+    .then(function (res) {
       var replaceEvents = events;
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.replaceEvents(
               tenantId,
@@ -768,7 +768,7 @@ var app = function(request1, response) {
               replaceEvents
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -780,7 +780,7 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -788,11 +788,11 @@ var app = function(request1, response) {
   var getReplacedEvents = replaceEvents
     .then(
       // Step 9
-      function(res) {
+      function (res) {
         console.log('Getting replaced events');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.getWindowValues(
                 tenantId,
@@ -802,7 +802,7 @@ var app = function(request1, response) {
                 180
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -816,16 +816,16 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printReplaceEvents = getReplacedEvents
-    .then(function(res) {
+    .then(function (res) {
       var updatedEvents = JSON.parse(res);
       dumpEvents(updatedEvents);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -833,11 +833,11 @@ var app = function(request1, response) {
   var getInterpolatedEvents = printReplaceEvents
     .then(
       // Step 9
-      function(res) {
+      function (res) {
         console.log('\nGetting interpolated events');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.getRangeValuesInterpolated(
                 tenantId,
@@ -848,7 +848,7 @@ var app = function(request1, response) {
                 4
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -863,17 +863,17 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printInterpolatedEvents = getInterpolatedEvents
-    .then(function(res) {
+    .then(function (res) {
       var updatedEvents = JSON.parse(res);
       console.log('Interpolated events');
       dumpEvents(updatedEvents);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -881,11 +881,11 @@ var app = function(request1, response) {
   var getFilteredEvents = printInterpolatedEvents
     .then(
       // Step 10
-      function(res) {
+      function (res) {
         console.log('\nGetting filtered events');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.getWindowValues(
                 tenantId,
@@ -895,7 +895,7 @@ var app = function(request1, response) {
                 50
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -909,17 +909,17 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printFilteredEvents = getFilteredEvents
-    .then(function(res) {
+    .then(function (res) {
       var updatedEvents = JSON.parse(res);
       console.log('Filtered events');
       dumpEvents(updatedEvents);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -927,11 +927,11 @@ var app = function(request1, response) {
   var getSampledValues = printFilteredEvents
     .then(
       // Step 11
-      function(res) {
+      function (res) {
         console.log('\nGetting sampled values');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.getSampledValues(
                 tenantId,
@@ -943,7 +943,7 @@ var app = function(request1, response) {
                 'sin'
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -959,17 +959,17 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printSampledValues = getSampledValues
-    .then(function(res) {
+    .then(function (res) {
       var sampledValues = JSON.parse(res);
       console.log('Sampled values');
       dumpEvents(sampledValues);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -977,10 +977,10 @@ var app = function(request1, response) {
   var getRangeEvents = printSampledValues
     .then(
       // Step 12
-      function(res) {
+      function (res) {
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.getRangeValues(
                 tenantId,
@@ -993,7 +993,7 @@ var app = function(request1, response) {
                 sdsObjs.sdsBoundaryType.ExactOrCalculated
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -1010,18 +1010,18 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // create a Property Override
   var propertyOverride = new sdsObjs.SdsPropertyOverride({
     SdsTypePropertyId: 'Radians',
-    InterpolationMode: sdsObjs.sdsStreamMode.Discrete
+    InterpolationMode: sdsObjs.sdsStreamMode.Discrete,
   });
   var propertyOverrides = [propertyOverride];
 
-  var printDefaultBehavior = getRangeEvents.then(function(res) {
+  var printDefaultBehavior = getRangeEvents.then(function (res) {
     var obj = JSON.parse(res);
     foundEvents = obj;
     console.log(
@@ -1030,7 +1030,7 @@ var app = function(request1, response) {
     console.log(
       "\nDefault (Continuous) requesting data starting at index location '1', where we have not entered data, Sds will interpolate a value for each property:"
     );
-    obj.forEach(function(elem) {
+    obj.forEach(function (elem) {
       console.log(
         'Order: ' +
           elem.Order +
@@ -1044,11 +1044,11 @@ var app = function(request1, response) {
 
   // update stream
   var updateStream = printDefaultBehavior
-    .then(function(res) {
+    .then(function (res) {
       sampleStream.PropertyOverrides = propertyOverrides;
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.updateStream(
               tenantId,
@@ -1056,22 +1056,22 @@ var app = function(request1, response) {
               sampleStream
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.updateStream(tenantId, sampleNamespaceId, sampleStream);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   getRangeEvents = updateStream
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getRangeValues(
               tenantId,
@@ -1084,7 +1084,7 @@ var app = function(request1, response) {
               sdsObjs.sdsBoundaryType.ExactOrCalculated
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1100,19 +1100,19 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // print stepwise results
-  var printResultEvent = getRangeEvents.then(function(res) {
+  var printResultEvent = getRangeEvents.then(function (res) {
     var obj = JSON.parse(res);
     foundEvents = obj;
     console.log(
       '\nWe can override this behavior on a property by property basis, here we override the Radians property instructing Sds not to interpolate.'
     );
     console.log('\nSds will now return the default value for the data type:');
-    obj.forEach(function(elem) {
+    obj.forEach(function (elem) {
       console.log(
         'Order: ' +
           elem.Order +
@@ -1128,10 +1128,10 @@ var app = function(request1, response) {
   // SdsStreamViews
   var streamViewMessage = printResultEvent.then(
     // Step 13
-    function(res) {
+    function (res) {
       console.log('\nSdsStreamViews');
       console.log('Here is some of our data as it is stored on the server:');
-      res.forEach(function(elem) {
+      res.forEach(function (elem) {
         console.log(
           'Sin: ' + elem.Sin + ', Cos: ' + elem.Cos + ', Tan: ' + elem.Tan
         );
@@ -1143,39 +1143,39 @@ var app = function(request1, response) {
   var orderTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'OrderTarget',
     SdsType: intType,
-    IsKey: true
+    IsKey: true,
   });
   var radiansTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'RadiansTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var tauTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'TauTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var sinTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'SinTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var cosTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'CosTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var tanTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'TanTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var sinhTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'SinhTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var coshTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'CoshTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
   var tanhTargetProperty = new sdsObjs.SdsTypeProperty({
     Id: 'TanhTarget',
-    SdsType: doubleType
+    SdsType: doubleType,
   });
 
   var sinInt = new sdsObjs.SdsTypeProperty({ Id: 'SinInt', SdsType: intType });
@@ -1189,7 +1189,7 @@ var app = function(request1, response) {
     Description:
       "This is a sample Sds type for storing a StreamView of WaveData's sin, cos and tan properties as Integers",
     SdsTypeCode: sdsObjs.sdsTypeCode.Object,
-    Properties: [orderTargetProperty, tanInt, cosInt, sinInt]
+    Properties: [orderTargetProperty, tanInt, cosInt, sinInt],
   });
 
   var targetType = new sdsObjs.SdsType({
@@ -1207,46 +1207,46 @@ var app = function(request1, response) {
       tanTargetProperty,
       sinhTargetProperty,
       coshTargetProperty,
-      tanhTargetProperty
-    ]
+      tanhTargetProperty,
+    ],
   });
 
   // create target types on server
   var createTargetType = streamViewMessage
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.createType(tenantId, sampleNamespaceId, targetType);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.createType(tenantId, sampleNamespaceId, targetType);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var createTargetIntegerType = createTargetType
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.createType(tenantId, sampleNamespaceId, integerType);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.createType(tenantId, sampleNamespaceId, integerType);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -1255,15 +1255,15 @@ var app = function(request1, response) {
     Id: sampleStreamViewId,
     Name: 'MapSampleTypeToATargetType',
     TargetTypeId: targetTypeId,
-    SourceTypeId: sampleTypeId
+    SourceTypeId: sampleTypeId,
   });
 
   // create StreamView on the server
   var createAutoStreamView = createTargetIntegerType
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.createStreamView(
               tenantId,
@@ -1271,7 +1271,7 @@ var app = function(request1, response) {
               autoStreamView
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1282,22 +1282,22 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // create SdsStreamViewProperties to explicitly map source property to target property
   var sinStreamViewProperty = new sdsObjs.SdsStreamViewProperty({
     SourceId: 'Sin',
-    TargetId: 'SinInt'
+    TargetId: 'SinInt',
   });
   var cosStreamViewProperty = new sdsObjs.SdsStreamViewProperty({
     SourceId: 'Cos',
-    TargetId: 'CosInt'
+    TargetId: 'CosInt',
   });
   var tanStreamViewProperty = new sdsObjs.SdsStreamViewProperty({
     SourceId: 'Tan',
-    TargetId: 'TanInt'
+    TargetId: 'TanInt',
   });
 
   // build a StreamView using SdsStreamViewProperties
@@ -1309,16 +1309,16 @@ var app = function(request1, response) {
     Properties: [
       sinStreamViewProperty,
       cosStreamViewProperty,
-      tanStreamViewProperty
-    ]
+      tanStreamViewProperty,
+    ],
   });
 
   // create the StreamView on the server
   var createManualStreamView = createAutoStreamView
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.createStreamView(
               tenantId,
@@ -1326,7 +1326,7 @@ var app = function(request1, response) {
               manualStreamView
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1337,16 +1337,16 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get range of values specifying our StreamView
   var getRangeStreamViewEvents = createManualStreamView
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getRangeValues(
               tenantId,
@@ -1360,7 +1360,7 @@ var app = function(request1, response) {
               autoStreamView.Id
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1377,18 +1377,18 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // print results
   var dumpStreamViewEvent = getRangeStreamViewEvents
-    .then(function(res) {
+    .then(function (res) {
       var obj = JSON.parse(res);
       console.log(
         "\nSpecifying a StreamView with an SdsType of the same shape returns values that are automatically mapped to the target SdsType's properties:"
       );
-      obj.forEach(function(elem) {
+      obj.forEach(function (elem) {
         console.log(
           'SinTarget: ' +
             elem.SinTarget +
@@ -1399,16 +1399,16 @@ var app = function(request1, response) {
         );
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get range of values specifying our integer StreamView
   var getRangeIntegerStreamViewEvents = getRangeStreamViewEvents
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getRangeValues(
               tenantId,
@@ -1422,7 +1422,7 @@ var app = function(request1, response) {
               manualStreamViewId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1439,18 +1439,18 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // print results
   var dumpIntegerStreamViewEvent = getRangeIntegerStreamViewEvents
-    .then(function(res) {
+    .then(function (res) {
       var obj = JSON.parse(res);
       console.log(
         '\nSdsStreamViews can also convert certain types of data, here we return integers where the original values were doubles:'
       );
-      obj.forEach(function(elem) {
+      obj.forEach(function (elem) {
         console.log(
           'SinInt: ' +
             elem.SinInt +
@@ -1461,16 +1461,16 @@ var app = function(request1, response) {
         );
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // request maps
   var getAutoSdsStreamViewMap = dumpIntegerStreamViewEvent
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStreamViewMap(
               tenantId,
@@ -1478,7 +1478,7 @@ var app = function(request1, response) {
               sampleStreamViewId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1489,28 +1489,28 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // print map
   var dumpMapResult = getAutoSdsStreamViewMap
-    .then(function(res) {
+    .then(function (res) {
       var obj = JSON.parse(res);
       console.log(
         '\nWe can query Sds to return the SdsStreamViewMap for our SdsStreamView, here is the one generated automatically:'
       );
       dumpStreamViewMap(obj);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getManualSdsStreamViewMap = dumpMapResult
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStreamViewMap(
               tenantId,
@@ -1518,7 +1518,7 @@ var app = function(request1, response) {
               manualStreamViewId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1529,33 +1529,33 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // print map
   dumpMapResult = getManualSdsStreamViewMap
-    .then(function(res) {
+    .then(function (res) {
       var obj = JSON.parse(res);
       console.log(
         '\nHere is our explicit mapping, note SdsStreamViewMap will return all properties of the Source Type, even those without a corresponding Target property:'
       );
       dumpStreamViewMap(obj);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getFirstValueSV = dumpMapResult
     .then(
       // Step 14
-      function(res) {
+      function (res) {
         console.log(
           'We will now update the stream type based on the streamview'
         );
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.getFirstValue(
                 tenantId,
@@ -1563,7 +1563,7 @@ var app = function(request1, response) {
                 sampleStreamId
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -1575,24 +1575,24 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printFirstValueSV = getFirstValueSV
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nReminder of FirstValue:');
       dumpEvent(JSON.parse(res));
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getFirstS = printFirstValueSV
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStream(
               tenantId,
@@ -1600,31 +1600,31 @@ var app = function(request1, response) {
               sampleStreamId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.getStream(tenantId, sampleNamespaceId, sampleStreamId);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printFirstS = getFirstS
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nReminder of Stream def:');
       console.log(res);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var updateStreamType = printFirstS
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.updateStreamType(
               tenantId,
@@ -1633,7 +1633,7 @@ var app = function(request1, response) {
               sampleStreamViewId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1645,15 +1645,15 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getFirstValueSV2 = updateStreamType
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getFirstValue(
               tenantId,
@@ -1661,7 +1661,7 @@ var app = function(request1, response) {
               sampleStreamId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1672,24 +1672,24 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printFirstValueSV2 = getFirstValueSV2
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nNew FirstValue:');
       dumpEventTarget(JSON.parse(res));
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getFirstS2 = printFirstValueSV2
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStream(
               tenantId,
@@ -1697,37 +1697,37 @@ var app = function(request1, response) {
               sampleStreamId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.getStream(tenantId, sampleNamespaceId, sampleStreamId);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printFirstS2 = getFirstS2
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nNew Stream def:');
       console.log(res);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getTypes = printFirstS2
     .then(
       // Step 14
-      function(res) {
+      function (res) {
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.getTypes(tenantId, sampleNamespaceId, '', 0, 100);
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -1735,24 +1735,24 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printTypes = getTypes
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nTypes:');
       console.log(res);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getTypesQuery = printTypes
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getTypes(
               tenantId,
@@ -1762,7 +1762,7 @@ var app = function(request1, response) {
               100
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1775,16 +1775,16 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printTypesQuery = getTypesQuery
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nTypes after Query:');
       console.log(res);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -1792,12 +1792,12 @@ var app = function(request1, response) {
   var createTags = printTypesQuery
     .then(
       // Step 15
-      function(res) {
+      function (res) {
         console.log("\nLet's add some Tags and Metadata to our stream:");
         var tags = ['waves', 'periodic', '2018', 'validated'];
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.updateTags(
                 tenantId,
@@ -1806,7 +1806,7 @@ var app = function(request1, response) {
                 tags
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -1819,20 +1819,20 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var createMetadata = createTags
-    .then(function(res) {
+    .then(function (res) {
       var metadata = {
         Region: 'North America',
         Country: 'Canada',
-        Province: 'Quebec'
+        Province: 'Quebec',
       };
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.updateMetadata(
               tenantId,
@@ -1841,7 +1841,7 @@ var app = function(request1, response) {
               metadata
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1853,48 +1853,48 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getTags = createMetadata
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getTags(tenantId, sampleNamespaceId, sampleStreamId);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.getTags(tenantId, sampleNamespaceId, sampleStreamId);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // print tags
   var printTags = getTags
-    .then(function(res) {
+    .then(function (res) {
       var obj = JSON.parse(res);
       console.log('\nTags now associated with ' + sampleStreamId + ':');
-      obj.forEach(function(elem, index) {
+      obj.forEach(function (elem, index) {
         console.log(elem);
       });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get metadata
   var getMetadata = printTags
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getMetadata(
               tenantId,
@@ -1903,7 +1903,7 @@ var app = function(request1, response) {
               ''
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1915,20 +1915,20 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // print metadata
   var printMetadata = getMetadata
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nMetadata now associated with ' + sampleStreamId + ':');
       var obj = JSON.parse(res);
       console.log('Metadata key Region: ' + obj['Region']);
       console.log('Metadata key Country: ' + obj['Country']);
       console.log('Metadata key Province: ' + obj['Province']);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -1936,11 +1936,11 @@ var app = function(request1, response) {
   var deleteOneEvent = printMetadata
     .then(
       // Step 16
-      function(res) {
+      function (res) {
         console.log('\nDeleting values from the SdsStream');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.deleteEvent(
                 tenantId,
@@ -1949,7 +1949,7 @@ var app = function(request1, response) {
                 0
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -1962,16 +1962,16 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // delete all events
   var deleteWindowEvents = deleteOneEvent
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.deleteWindowEvents(
               tenantId,
@@ -1981,7 +1981,7 @@ var app = function(request1, response) {
               198
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -1994,7 +1994,7 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -2006,20 +2006,20 @@ var app = function(request1, response) {
     TypeId: sampleTypeId,
     Indexes: [
       {
-        SdsTypePropertyId: 'Radians'
-      }
-    ]
+        SdsTypePropertyId: 'Radians',
+      },
+    ],
   });
 
   var createSecondaryStream = deleteWindowEvents
     .then(
       // Step 17
-      function(res) {
+      function (res) {
         console.log('Creating an SdsStream with a secondary index');
         // create SdsStream
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.createStream(
                 tenantId,
@@ -2027,7 +2027,7 @@ var app = function(request1, response) {
                 sampleStreamWithSecondaryIndex
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -2039,16 +2039,16 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get metadata
   var getSecondaryStream = createSecondaryStream
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStream(
               tenantId,
@@ -2056,7 +2056,7 @@ var app = function(request1, response) {
               sampleStreamSecondaryId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2067,26 +2067,26 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printSecondaryStream = getSecondaryStream
-    .then(function(res) {
+    .then(function (res) {
       if (JSON.parse(res)['Indexes'].length != 1)
         throw 'Indexes not right.  Secondary index expected';
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // Modifying an existing stream with a secondary index.
 
   var getOriginalStream = printSecondaryStream
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStream(
               tenantId,
@@ -2094,47 +2094,47 @@ var app = function(request1, response) {
               sampleStreamId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.getStream(tenantId, sampleNamespaceId, sampleStreamId);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var updateOriginalStream = getOriginalStream
-    .then(function(res) {
+    .then(function (res) {
       var stream = JSON.parse(res);
       stream['Indexes'] = [{ SdsTypePropertyId: 'RadiansTarget' }];
       console.log('\n New original Stream:');
       console.log(JSON.stringify(stream));
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.updateStream(tenantId, sampleNamespaceId, stream);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.updateStream(tenantId, sampleNamespaceId, stream);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getOriginalStream2 = updateOriginalStream
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nResponse from update of index on original stream:');
       console.log(res);
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStream(
               tenantId,
@@ -2142,31 +2142,31 @@ var app = function(request1, response) {
               sampleStreamId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.getStream(tenantId, sampleNamespaceId, sampleStreamId);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printOriginalStream = getOriginalStream2
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nOriginal Stream with secondary index:');
       console.log(res);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getSecondaryStreamAgain = printOriginalStream
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStream(
               tenantId,
@@ -2174,7 +2174,7 @@ var app = function(request1, response) {
               sampleStreamSecondaryId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2185,40 +2185,40 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var updateSecondaryStream = getSecondaryStreamAgain
-    .then(function(res) {
+    .then(function (res) {
       var stream = JSON.parse(res);
       stream['Indexes'] = [];
       console.log('\nNew Secondary Stream:');
       console.log(JSON.stringify(stream));
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.updateStream(tenantId, sampleNamespaceId, stream);
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
         return client.updateStream(tenantId, sampleNamespaceId, stream);
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getSecondaryStreamAgain2 = updateSecondaryStream
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nResponse from update of index on secondary stream:');
       console.log(res);
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.getStream(
               tenantId,
@@ -2226,7 +2226,7 @@ var app = function(request1, response) {
               sampleStreamSecondaryId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2237,16 +2237,16 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printSecondaryStreamAfterUpdate = getSecondaryStreamAgain2
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nSecondary Stream with no secondary index:');
       console.log(res);
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -2254,11 +2254,11 @@ var app = function(request1, response) {
   var createCompoundType = printSecondaryStreamAfterUpdate
     .then(
       // Step 18
-      function(res) {
+      function (res) {
         console.log('Creating an SdsType with a compound index');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               return client.createType(
                 tenantId,
@@ -2266,7 +2266,7 @@ var app = function(request1, response) {
                 compoundType
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -2274,7 +2274,7 @@ var app = function(request1, response) {
         }
       }
     )
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -2283,15 +2283,15 @@ var app = function(request1, response) {
     Id: sampleStreamIdCompound,
     Name: sampleStreamIdCompound,
     Description: 'A Stream to store the WaveData Sds types events',
-    TypeId: compoundTypeId
+    TypeId: compoundTypeId,
   });
 
   var createCompoundStreamFromType = createCompoundType
-    .then(function(res) {
+    .then(function (res) {
       console.log('Creating an SdsStream from Type with a compound index');
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.createStream(
               tenantId,
@@ -2299,7 +2299,7 @@ var app = function(request1, response) {
               sampleStreamCompoundIndex
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2310,7 +2310,7 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -2319,7 +2319,7 @@ var app = function(request1, response) {
   var event2 = [];
 
   var insertValue1 = createCompoundStreamFromType
-    .then(function(res) {
+    .then(function (res) {
       console.log('Inserting data');
       evt = waveDataObj.NextWaveCompound(1, 10);
       event2.push(evt);
@@ -2335,7 +2335,7 @@ var app = function(request1, response) {
       event2.push(evt);
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             return client.insertEvents(
               tenantId,
@@ -2344,7 +2344,7 @@ var app = function(request1, response) {
               event2
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2356,16 +2356,16 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get last event
   var getLastValue2 = insertValue1
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             console.log('Getting latest event');
             return client.getLastValue(
@@ -2374,7 +2374,7 @@ var app = function(request1, response) {
               sampleStreamIdCompound
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2385,24 +2385,24 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printLastValue2 = getLastValue2
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nLastValue:');
       dumpEvent(JSON.parse(res));
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var getFirstValue = printLastValue2
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             console.log('Getting first event');
             return client.getFirstValue(
@@ -2411,7 +2411,7 @@ var app = function(request1, response) {
               sampleStreamIdCompound
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2422,25 +2422,25 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printFirstValue = getFirstValue
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nFirstValue:');
       dumpEvent(JSON.parse(res));
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // get all events
   var getWindowEvents2 = printFirstValue
-    .then(function(res) {
+    .then(function (res) {
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             console.log('\nGetting all events');
             return client.getWindowValues(
@@ -2451,7 +2451,7 @@ var app = function(request1, response) {
               '10|8'
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2464,25 +2464,25 @@ var app = function(request1, response) {
         );
       }
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   var printWindowEvents2 = getWindowEvents2
-    .then(function(res) {
+    .then(function (res) {
       console.log('\nWindow Value:');
       dumpEvents(JSON.parse(res));
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
   // One catch to rule all the errors
   var testFinished = printWindowEvents2
-    .then(function(res) {
+    .then(function (res) {
       //console.log("All values deleted successfully!");
     })
-    .catch(function(err) {
+    .catch(function (err) {
       logError(err);
     });
 
@@ -2491,12 +2491,12 @@ var app = function(request1, response) {
     .finally(
       // Step 20
       // delete the stream
-      function() {
+      function () {
         console.log('Cleaning up');
         console.log('Deleting the stream');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               client.deleteStream(
                 tenantId,
@@ -2514,7 +2514,7 @@ var app = function(request1, response) {
                 sampleStreamId
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -2536,11 +2536,11 @@ var app = function(request1, response) {
         }
       }
     )
-    .finally(function() {
+    .finally(function () {
       console.log('Deleting the StreamViews');
       if (client.tokenExpires < nowSeconds) {
         return checkTokenExpired(client)
-          .then(function(res) {
+          .then(function (res) {
             refreshToken(res, client);
             client.deleteStreamView(
               tenantId,
@@ -2553,7 +2553,7 @@ var app = function(request1, response) {
               manualStreamViewId
             );
           })
-          .catch(function(err) {
+          .catch(function (err) {
             logError(err);
           });
       } else {
@@ -2571,11 +2571,11 @@ var app = function(request1, response) {
     })
     .finally(
       // delete the types
-      function() {
+      function () {
         console.log('Deleting the types');
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
-            .then(function(res) {
+            .then(function (res) {
               refreshToken(res, client);
               client.deleteType(tenantId, sampleNamespaceId, compoundTypeId);
               client.deleteType(
@@ -2590,7 +2590,7 @@ var app = function(request1, response) {
                 sampleTypeId
               );
             })
-            .catch(function(err) {
+            .catch(function (err) {
               logError(err);
             });
         } else {
@@ -2601,7 +2601,7 @@ var app = function(request1, response) {
         }
       }
     )
-    .then(function() {
+    .then(function () {
       if (!success) {
         console.log('An error occured!\n' + errorCap);
         process.exit(1);
@@ -2610,7 +2610,7 @@ var app = function(request1, response) {
     })
     .catch(
       // log the call that failed
-      function(err) {
+      function (err) {
         console.log('An error occured!\n' + err);
         process.exit(1);
       }
@@ -2628,7 +2628,7 @@ var app = function(request1, response) {
 };
 
 //if you want to run a server
-var toRun = function() {
+var toRun = function () {
   //This server is hosted over HTTP.  This is not secure and should not be used beyond local testing.
   http.createServer(app).listen(8080);
 };
