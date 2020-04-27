@@ -63,7 +63,7 @@ jobs:
           echo Install requirements
           pip install -r requirements.txt
           echo Run tests
-          python -m pytest --junitxml=junit/test-results.xml  ./program.py
+          python -m pytest --junitxml=junit/test-results.xml ./test.py
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
