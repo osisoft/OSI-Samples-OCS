@@ -56,18 +56,11 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
-      - script: |
-          npm install request
-          npm install request-promise
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+      - bash: npm ci
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Install dependencies'
 
-      - script: |
-          echo NPM CI
-          call npm ci
-          echo Run tests
-          call npm test
-          echo Complete
+      - bash: npm test
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
 
@@ -79,6 +72,7 @@ jobs:
           searchFolder: '$(Build.SourcesDirectory)$(projPath)/TestResults'
           testRunTitle: '$(Agent.JobName) on $(imageName)'
         displayName: 'Publish test results'
+        condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

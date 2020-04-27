@@ -394,7 +394,7 @@ restCall({
 - _skip_ is the increment by which the retrieval will happen.
 - _count_ is how many values you wish to have returned.
 - _reverse_ is a boolean that when `true` causes the retrieval to work backwards from the starting point.
-- _boundary_type_ is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- _boundary\_type_ is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown:
 

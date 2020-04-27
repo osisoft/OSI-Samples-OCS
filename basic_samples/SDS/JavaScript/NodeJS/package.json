@@ -11,11 +11,10 @@
   },
   "requires": true,
   "dependencies": {
-    "request-promise": "4.2.4"
+    "request-promise": "4.2.5"
   },
   "devDependencies": {
-    "jasmine": "3.3.1",
-    "request": "2.88.0",
-    "request-promise": "4.2.4"
+    "jasmine": "3.5.0",
+    "request": "2.88.2"
   }
 }
