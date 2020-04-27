@@ -79,6 +79,7 @@ jobs:
           testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
         displayName: 'Publish test results'
+        condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

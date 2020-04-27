@@ -69,12 +69,12 @@ jobs:
         displayName: 'Run tests'
 
       - task: PublishTestResults@2
-        condition: succeededOrFailed()
         inputs:
           testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
           testRunTitle: '$(Agent.JobName) on $(imageName)'
         displayName: 'Publish test results'
+        condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

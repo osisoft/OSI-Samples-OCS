@@ -69,8 +69,7 @@ def find_field_key(fieldset_fields, field_source, key):
 
 def main(test=False):
     """This function is the main body of the Data View sample script"""
-    success = True
-    exception = {}
+    exception = None
 
     config = configparser.ConfigParser()
     config.read('config.ini')
@@ -223,13 +222,12 @@ def main(test=False):
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
-    except Exception as ex:
-        print((f'Encountered Error: {ex}'))
+    except Exception as error:
+        print((f'Encountered Error: {error}'))
         print()
         traceback.print_exc()
         print()
-        success = False
-        exception = ex
+        exception = error
 
     finally:
 
@@ -250,7 +248,7 @@ def main(test=False):
         try:
             dataview = ocs_client.DataViews.getDataView(
                 namespace_id, SAMPLE_DATAVIEW_ID)
-        except Exception as ex:
+        except Exception as error:
             # Exception is expected here since Data View has been deleted
             dataview = None
         finally:
@@ -269,7 +267,7 @@ def main(test=False):
         suppress_error(lambda: ocs_client.Types.deleteType(
             namespace_id, SAMPLE_TYPE_ID_2))
 
-        if test and not success:
+        if test and exception is not None:
             raise exception
     print('Complete!')
 

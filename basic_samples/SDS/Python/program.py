@@ -1,6 +1,19 @@
+"""This sample script demonstrates how to invoke the Sequential Data Store REST API"""
+
+# Disable pylint warnings:
+# Allow catching general exception Exception (broad-except)
+# pylint: disable=W0703
+# Allow more than 12 branches (too-many-branches)
+# pylint: disable=R0912
+# Allow more than 15 local variables (too-many-locals)
+# pylint: disable=R0914
+# Allow more than 50 statements (too-many-statements)
+# pylint: disable=R0915
+
 import configparser
 import inspect
 import math
+import traceback
 
 from ocs_sample_library_preview import (SdsType, SdsTypeCode, SdsTypeProperty,
                                         OCSClient, SdsStream, SdsBoundaryType,
@@ -8,290 +21,294 @@ from ocs_sample_library_preview import (SdsType, SdsTypeCode, SdsTypeProperty,
                                         SdsStreamViewProperty, SdsStreamView,
                                         SdsStreamViewMap, SdsStreamIndex)
 
-from .WaveData import (WaveData, WaveDataCompound, WaveDataInteger,
-                      WaveDataTarget)
+from .wave_data import (WaveData, WaveDataCompound, WaveDataInteger,
+                        WaveDataTarget)
 
-# returns a type that represents the WaveData data
-def getWaveDataType(sampleTypeId):
-    if sampleTypeId is None or not isinstance(sampleTypeId, str):
+
+def get_wave_data_type(sample_type_id):
+    """Creates an SDS type definition for WaveData"""
+    if sample_type_id is None or not isinstance(sample_type_id, str):
         raise TypeError("sampleTypeId is not an instantiated string")
 
-    intType = SdsType()
-    intType.Id = "intType"
-    intType.SdsTypeCode = SdsTypeCode.Int32
+    int_type = SdsType()
+    int_type.Id = "intType"
+    int_type.SdsTypeCode = SdsTypeCode.Int32
 
-    doubleType = SdsType()
-    doubleType.Id = "doubleType"
-    doubleType.SdsTypeCode = SdsTypeCode.Double
+    double_type = SdsType()
+    double_type.Id = "doubleType"
+    double_type.SdsTypeCode = SdsTypeCode.Double
 
     # note that the Order is the key (primary index)
-    orderProperty = SdsTypeProperty()
-    orderProperty.Id = "Order"
-    orderProperty.SdsType = intType
-    orderProperty.IsKey = True
+    order_property = SdsTypeProperty()
+    order_property.Id = "Order"
+    order_property.SdsType = int_type
+    order_property.IsKey = True
 
-    tauProperty = SdsTypeProperty()
-    tauProperty.Id = "Tau"
-    tauProperty.SdsType = doubleType
+    tau_property = SdsTypeProperty()
+    tau_property.Id = "Tau"
+    tau_property.SdsType = double_type
 
-    radiansProperty = SdsTypeProperty()
-    radiansProperty.Id = "Radians"
-    radiansProperty.SdsType = doubleType
+    radians_property = SdsTypeProperty()
+    radians_property.Id = "Radians"
+    radians_property.SdsType = double_type
 
-    sinProperty = SdsTypeProperty()
-    sinProperty.Id = "Sin"
-    sinProperty.SdsType = doubleType
+    sin_property = SdsTypeProperty()
+    sin_property.Id = "Sin"
+    sin_property.SdsType = double_type
 
-    cosProperty = SdsTypeProperty()
-    cosProperty.Id = "Cos"
-    cosProperty.SdsType = doubleType
+    cos_property = SdsTypeProperty()
+    cos_property.Id = "Cos"
+    cos_property.SdsType = double_type
 
-    tanProperty = SdsTypeProperty()
-    tanProperty.Id = "Tan"
-    tanProperty.SdsType = doubleType
+    tan_property = SdsTypeProperty()
+    tan_property.Id = "Tan"
+    tan_property.SdsType = double_type
 
-    sinhProperty = SdsTypeProperty()
-    sinhProperty.Id = "Sinh"
-    sinhProperty.SdsType = doubleType
+    sinh_property = SdsTypeProperty()
+    sinh_property.Id = "Sinh"
+    sinh_property.SdsType = double_type
 
-    coshProperty = SdsTypeProperty()
-    coshProperty.Id = "Cosh"
-    coshProperty.SdsType = doubleType
+    cosh_property = SdsTypeProperty()
+    cosh_property.Id = "Cosh"
+    cosh_property.SdsType = double_type
 
-    tanhProperty = SdsTypeProperty()
-    tanhProperty.Id = "Tanh"
-    tanhProperty.SdsType = doubleType
+    tanh_property = SdsTypeProperty()
+    tanh_property.Id = "Tanh"
+    tanh_property.SdsType = double_type
 
     # create an SdsType for WaveData Class
     wave = SdsType()
-    wave.Id = sampleTypeId
+    wave.Id = sample_type_id
     wave.Name = "WaveDataSample"
     wave.Description = "This is a sample Sds type for storing WaveData type "\
                        "events."
     wave.SdsTypeCode = SdsTypeCode.Object
-    wave.Properties = [orderProperty, tauProperty, radiansProperty,
-                       sinProperty, cosProperty, tanProperty,
-                       sinhProperty, coshProperty, tanhProperty]
+    wave.Properties = [order_property, tau_property, radians_property,
+                       sin_property, cos_property, tan_property,
+                       sinh_property, cosh_property, tanh_property]
 
     return wave
 
 
-# returns a type that represents the WaveData data
-def getWaveCompoundDataType(sampleTypeId):
-    if sampleTypeId is None or not isinstance(sampleTypeId, str):
+def get_wave_compound_data_type(sample_type_id):
+    """Creates a compound SDS type definition for WaveData"""
+    if sample_type_id is None or not isinstance(sample_type_id, str):
         raise TypeError("sampleTypeId is not an instantiated string")
 
-    intType = SdsType()
-    intType.Id = "intType"
-    intType.SdsTypeCode = SdsTypeCode.Int32
+    int_type = SdsType()
+    int_type.Id = "intType"
+    int_type.SdsTypeCode = SdsTypeCode.Int32
 
-    doubleType = SdsType()
-    doubleType.Id = "doubleType"
-    doubleType.SdsTypeCode = SdsTypeCode.Double
+    double_type = SdsType()
+    double_type.Id = "doubleType"
+    double_type.SdsTypeCode = SdsTypeCode.Double
 
     # note that the Order is the key (primary index)
-    orderProperty = SdsTypeProperty()
-    orderProperty.Id = "Order"
-    orderProperty.SdsType = intType
-    orderProperty.IsKey = True
-    orderProperty.Order = 1
+    order_property = SdsTypeProperty()
+    order_property.Id = "Order"
+    order_property.SdsType = int_type
+    order_property.IsKey = True
+    order_property.Order = 1
 
-    multiplierProperty = SdsTypeProperty()
-    multiplierProperty.Id = "Multiplier"
-    multiplierProperty.SdsType = intType
-    multiplierProperty.IsKey = True
-    multiplierProperty.Order = 2
+    multiplier_property = SdsTypeProperty()
+    multiplier_property.Id = "Multiplier"
+    multiplier_property.SdsType = int_type
+    multiplier_property.IsKey = True
+    multiplier_property.Order = 2
 
-    tauProperty = SdsTypeProperty()
-    tauProperty.Id = "Tau"
-    tauProperty.SdsType = doubleType
+    tau_property = SdsTypeProperty()
+    tau_property.Id = "Tau"
+    tau_property.SdsType = double_type
 
-    radiansProperty = SdsTypeProperty()
-    radiansProperty.Id = "Radians"
-    radiansProperty.SdsType = doubleType
+    radians_property = SdsTypeProperty()
+    radians_property.Id = "Radians"
+    radians_property.SdsType = double_type
 
-    sinProperty = SdsTypeProperty()
-    sinProperty.Id = "Sin"
-    sinProperty.SdsType = doubleType
+    sin_property = SdsTypeProperty()
+    sin_property.Id = "Sin"
+    sin_property.SdsType = double_type
 
-    cosProperty = SdsTypeProperty()
-    cosProperty.Id = "Cos"
-    cosProperty.SdsType = doubleType
+    cos_property = SdsTypeProperty()
+    cos_property.Id = "Cos"
+    cos_property.SdsType = double_type
 
-    tanProperty = SdsTypeProperty()
-    tanProperty.Id = "Tan"
-    tanProperty.SdsType = doubleType
+    tan_property = SdsTypeProperty()
+    tan_property.Id = "Tan"
+    tan_property.SdsType = double_type
 
-    sinhProperty = SdsTypeProperty()
-    sinhProperty.Id = "Sinh"
-    sinhProperty.SdsType = doubleType
+    sinh_property = SdsTypeProperty()
+    sinh_property.Id = "Sinh"
+    sinh_property.SdsType = double_type
 
-    coshProperty = SdsTypeProperty()
-    coshProperty.Id = "Cosh"
-    coshProperty.SdsType = doubleType
+    cosh_property = SdsTypeProperty()
+    cosh_property.Id = "Cosh"
+    cosh_property.SdsType = double_type
 
-    tanhProperty = SdsTypeProperty()
-    tanhProperty.Id = "Tanh"
-    tanhProperty.SdsType = doubleType
+    tanh_property = SdsTypeProperty()
+    tanh_property.Id = "Tanh"
+    tanh_property.SdsType = double_type
 
     # create an SdsType for WaveData Class
     wave = SdsType()
-    wave.Id = sampleTypeId
+    wave.Id = sample_type_id
     wave.Name = "WaveDataTypeCompound"
     wave.Description = "This is a sample Sds type for storing WaveData type "\
                        "events"
     wave.SdsTypeCode = SdsTypeCode.Object
-    wave.Properties = [orderProperty, multiplierProperty, tauProperty,
-                       radiansProperty, sinProperty, cosProperty, tanProperty,
-                       sinhProperty, coshProperty, tanhProperty]
+    wave.Properties = [order_property, multiplier_property, tau_property,
+                       radians_property, sin_property, cos_property, tan_property,
+                       sinh_property, cosh_property, tanh_property]
 
     return wave
 
 
-# returns a type that represents the WaveDataTarget data
-def getWaveDataTargetType(sampleTypeId):
-    if sampleTypeId is None or not isinstance(sampleTypeId, str):
+def get_wave_data_target_type(sample_type_id):
+    """Creates an SDS type definition for WaveDataTarget"""
+    if sample_type_id is None or not isinstance(sample_type_id, str):
         raise TypeError("sampleTypeId is not an instantiated string")
 
-    intType = SdsType()
-    intType.Id = "intType"
-    intType.SdsTypeCode = SdsTypeCode.Int32
+    int_type = SdsType()
+    int_type.Id = "intType"
+    int_type.SdsTypeCode = SdsTypeCode.Int32
 
-    doubleType = SdsType()
-    doubleType.Id = "doubleType"
-    doubleType.SdsTypeCode = SdsTypeCode.Double
+    double_type = SdsType()
+    double_type.Id = "doubleType"
+    double_type.SdsTypeCode = SdsTypeCode.Double
 
     # note that the Order is the key (primary index)
-    orderTargetProperty = SdsTypeProperty()
-    orderTargetProperty.Id = "OrderTarget"
-    orderTargetProperty.SdsType = intType
-    orderTargetProperty.IsKey = True
+    order_target_property = SdsTypeProperty()
+    order_target_property.Id = "OrderTarget"
+    order_target_property.SdsType = int_type
+    order_target_property.IsKey = True
 
-    tauTargetProperty = SdsTypeProperty()
-    tauTargetProperty.Id = "TauTarget"
-    tauTargetProperty.SdsType = doubleType
+    tau_target_property = SdsTypeProperty()
+    tau_target_property.Id = "TauTarget"
+    tau_target_property.SdsType = double_type
 
-    radiansTargetProperty = SdsTypeProperty()
-    radiansTargetProperty.Id = "RadiansTarget"
-    radiansTargetProperty.SdsType = doubleType
+    radians_target_property = SdsTypeProperty()
+    radians_target_property.Id = "RadiansTarget"
+    radians_target_property.SdsType = double_type
 
-    sinTargetProperty = SdsTypeProperty()
-    sinTargetProperty.Id = "SinTarget"
-    sinTargetProperty.SdsType = doubleType
+    sin_target_property = SdsTypeProperty()
+    sin_target_property.Id = "SinTarget"
+    sin_target_property.SdsType = double_type
 
-    cosTargetProperty = SdsTypeProperty()
-    cosTargetProperty.Id = "CosTarget"
-    cosTargetProperty.SdsType = doubleType
+    cos_target_property = SdsTypeProperty()
+    cos_target_property.Id = "CosTarget"
+    cos_target_property.SdsType = double_type
 
-    tanTargetProperty = SdsTypeProperty()
-    tanTargetProperty.Id = "TanTarget"
-    tanTargetProperty.SdsType = doubleType
+    tan_target_property = SdsTypeProperty()
+    tan_target_property.Id = "TanTarget"
+    tan_target_property.SdsType = double_type
 
-    sinhTargetProperty = SdsTypeProperty()
-    sinhTargetProperty.Id = "SinhTarget"
-    sinhTargetProperty.SdsType = doubleType
+    sinh_target_property = SdsTypeProperty()
+    sinh_target_property.Id = "SinhTarget"
+    sinh_target_property.SdsType = double_type
 
-    coshTargetProperty = SdsTypeProperty()
-    coshTargetProperty.Id = "CoshTarget"
-    coshTargetProperty.SdsType = doubleType
+    cosh_target_property = SdsTypeProperty()
+    cosh_target_property.Id = "CoshTarget"
+    cosh_target_property.SdsType = double_type
 
-    tanhTargetProperty = SdsTypeProperty()
-    tanhTargetProperty.Id = "TanhTarget"
-    tanhTargetProperty.SdsType = doubleType
+    tanh_target_property = SdsTypeProperty()
+    tanh_target_property.Id = "TanhTarget"
+    tanh_target_property.SdsType = double_type
 
     # create an SdsType for WaveData Class
     wave = SdsType()
-    wave.Id = sampleTargetTypeId
+    wave.Id = SAMPLE_TARGET_TYPE_ID
     wave.Name = "WaveDataTargetSample"
     wave.Description = "This is a sample Sds type for storing WaveDataTarget"\
                        " type events"
     wave.SdsTypeCode = SdsTypeCode.Object
-    wave.Properties = [orderTargetProperty, tauTargetProperty,
-                       radiansTargetProperty, sinTargetProperty,
-                       cosTargetProperty, tanTargetProperty,
-                       sinhTargetProperty, coshTargetProperty,
-                       tanhTargetProperty]
+    wave.Properties = [order_target_property, tau_target_property,
+                       radians_target_property, sin_target_property,
+                       cos_target_property, tan_target_property,
+                       sinh_target_property, cosh_target_property,
+                       tanh_target_property]
 
     return wave
 
 
-# returns a type that represents WaveDataInteger data
-def getWaveDataIntegerType(sampleTypeId):
-    if sampleTypeId is None or not isinstance(sampleTypeId, str):
+def get_wave_data_integer_type(sample_type_id):
+    """Creates an SDS type definition for WaveDataInteger"""
+    if sample_type_id is None or not isinstance(sample_type_id, str):
         raise TypeError("sampleTypeId is not an instantiated string")
 
-    intType = SdsType()
-    intType.Id = "intType"
-    intType.SdsTypeCode = SdsTypeCode.Int32
+    int_type = SdsType()
+    int_type.Id = "intType"
+    int_type.SdsTypeCode = SdsTypeCode.Int32
 
     # note that the Order is the key (primary index)
-    orderTargetProperty = SdsTypeProperty()
-    orderTargetProperty.Id = "OrderTarget"
-    orderTargetProperty.SdsType = intType
-    orderTargetProperty.IsKey = True
+    order_target_property = SdsTypeProperty()
+    order_target_property.Id = "OrderTarget"
+    order_target_property.SdsType = int_type
+    order_target_property.IsKey = True
 
-    sinIntProperty = SdsTypeProperty()
-    sinIntProperty.Id = "SinInt"
-    sinIntProperty.SdsType = intType
+    sin_int_property = SdsTypeProperty()
+    sin_int_property.Id = "SinInt"
+    sin_int_property.SdsType = int_type
 
-    cosIntProperty = SdsTypeProperty()
-    cosIntProperty.Id = "CosInt"
-    cosIntProperty.SdsType = intType
+    cos_int_property = SdsTypeProperty()
+    cos_int_property.Id = "CosInt"
+    cos_int_property.SdsType = int_type
 
-    tanIntProperty = SdsTypeProperty()
-    tanIntProperty.Id = "TanInt"
-    tanIntProperty.SdsType = intType
+    tan_int_property = SdsTypeProperty()
+    tan_int_property.Id = "TanInt"
+    tan_int_property.SdsType = int_type
 
     # create an SdsType for the WaveDataInteger Class
     wave = SdsType()
-    wave.Id = sampleIntegerTypeId
+    wave.Id = SAMPLE_INTEGER_TYPE_ID
     wave.Name = "WaveDataIntegerSample"
     wave.Description = "This is a sample Sds type for storing WaveDataInteger"\
                        "type events"
     wave.SdsTypeCode = SdsTypeCode.Object
-    wave.Properties = [orderTargetProperty, sinIntProperty,
-                       cosIntProperty, tanIntProperty]
+    wave.Properties = [order_target_property, sin_int_property,
+                       cos_int_property, tan_int_property]
 
     return wave
 
 
-# Generate a new WaveData event
-def nextWave(order, multiplier):
+def next_wave(order, multiplier):
+    """Creates a new WaveData event"""
     radians = (order) * math.pi/32
 
-    newWave = WaveDataCompound()
-    newWave.Order = order
-    newWave.Multiplier = multiplier
-    newWave.Radians = radians
-    newWave.Tau = radians / (2 * math.pi)
-    newWave.Sin = multiplier * math.sin(radians)
-    newWave.Cos = multiplier * math.cos(radians)
-    newWave.Tan = multiplier * math.tan(radians)
-    newWave.Sinh = multiplier * math.sinh(radians)
-    newWave.Cosh = multiplier * math.cosh(radians)
-    newWave.Tanh = multiplier * math.tanh(radians)
+    new_wave = WaveDataCompound()
+    new_wave.order = order
+    new_wave.multiplier = multiplier
+    new_wave.radians = radians
+    new_wave.tau = radians / (2 * math.pi)
+    new_wave.sin = multiplier * math.sin(radians)
+    new_wave.cos = multiplier * math.cos(radians)
+    new_wave.tan = multiplier * math.tan(radians)
+    new_wave.sinh = multiplier * math.sinh(radians)
+    new_wave.cosh = multiplier * math.cosh(radians)
+    new_wave.tanh = multiplier * math.tanh(radians)
 
-    return newWave
+    return new_wave
 
 
 # we'll use the following for cleanup, suppressing errors
-def suppressError(sdsCall):
+def suppress_error(sds_call):
+    """Suppress an error thrown by SDS"""
     try:
-        sdsCall()
-    except Exception as e:
-        print(f"Encountered Error: {e}")
+        sds_call()
+    except Exception as error:
+        print(f"Encountered Error: {error}")
 
 
-def isprop(v):
-    return isinstance(v, property)
+def is_prop(value):
+    """Check whether a field is a property of an object"""
+    return isinstance(value, property)
 
 
-def toString(event):
+def to_string(event):
+    """Converts an event into a string"""
     string = ""
-    props = inspect.getmembers(type(event), isprop)
-    printOrder = [2, 3, 4, 0, 6, 5, 1, 7, 8]
-    orderedProps = [props[i] for i in printOrder]
-    for prop in orderedProps:
+    props = inspect.getmembers(type(event), is_prop)
+    print_order = [2, 3, 4, 0, 6, 5, 1, 7, 8]
+    ordered_props = [props[i] for i in print_order]
+    for prop in ordered_props:
         value = prop[1].fget(event)
         if value is None:
             string += "{name}: , ".format(name=prop[0])
@@ -300,50 +317,50 @@ def toString(event):
     return string[:-2]
 
 
-def toWaveData(jsonObj):
+def to_wave_data(json_obj):
+    """"Converts JSON object into WaveData type"""
     # Many JSON implementations leave default values out.  We compensate for
     # WaveData, knowing  that all values should be filled in
     wave = WaveData()
-    properties = inspect.getmembers(type(wave), isprop)
+    properties = inspect.getmembers(type(wave), is_prop)
     for prop in properties:
         # Pre-Assign the default
         prop[1].fset(wave, 0)
 
-        if prop[0] in jsonObj:
-            value = jsonObj[prop[0]]
+        if prop[0] in json_obj:
+            value = json_obj[prop[0]]
             if value is not None:
                 prop[1].fset(wave, value)
     return wave
 
 
-###############################################################################
-# The following define the identifiers we'll use throughout
-###############################################################################
-
-sampleTypeId = "WaveData_SampleType"
-sampleTargetTypeId = "WaveDataTarget_SampleType"
-sampleIntegerTypeId = "WaveData_IntegerType"
-sampleStreamId = "WaveData_SampleStream"
-sampleStreamViewId = "WaveData_SampleStreamView"
-sampleStreamViewIntId = "WaveData_SampleIntStreamView"
-streamIdSecondary = "SampleStream_Secondary"
-streamIdCompound = "SampleStream_Compound"
-compoundTypeId = "SampleType_Compound"
+# Sample Data Information
+SAMPLE_TYPE_ID = "WaveData_SampleType"
+SAMPLE_TARGET_TYPE_ID = "WaveDataTarget_SampleType"
+SAMPLE_INTEGER_TYPE_ID = "WaveData_IntegerType"
+SAMPLE_STREAM_ID = "WaveData_SampleStream"
+SAMPLE_STREAM_VIEW_ID = "WaveData_SampleStreamView"
+SAMPLE_STREAM_VIEW_INT_ID = "WaveData_SampleIntStreamView"
+STREAM_ID_SECONDARY = "SampleStream_Secondary"
+STREAM_ID_COMPOUND = "SampleStream_Compound"
+COMPOUND_TYPE_ID = "SampleType_Compound"
 
 
-def main():
+def main(test=False):
+    """This function is the main body of the SDS sample script"""
+    exception = None
     try:
         config = configparser.ConfigParser()
         config.read('config.ini')
 
         # Step 1
-        ocsClient = OCSClient(config.get('Access', 'ApiVersion'),
-                              config.get('Access', 'Tenant'),
-                              config.get('Access', 'Resource'),
-                              config.get('Credentials', 'ClientId'),
-                              config.get('Credentials', 'ClientSecret'))
+        ocs_client = OCSClient(config.get('Access', 'ApiVersion'),
+                               config.get('Access', 'Tenant'),
+                               config.get('Access', 'Resource'),
+                               config.get('Credentials', 'ClientId'),
+                               config.get('Credentials', 'ClientSecret'))
 
-        namespaceId = config.get('Configurations', 'Namespace')
+        namespace_id = config.get('Configurations', 'Namespace')
 
         print(r"------------------------------------------")
         print(r"  _________    .___     __________        ")
@@ -353,7 +370,7 @@ def main():
         print(r"/_______  /\____ /____  >|____|    / ____|")
         print(r"        \/      \/    \/           \/     ")
         print(r"------------------------------------------")
-        print("Sds endpoint at {url}".format(url=ocsClient.uri))
+        print("Sds endpoint at {url}".format(url=ocs_client.uri))
         print()
 
         # Step 2
@@ -361,9 +378,9 @@ def main():
         # SdsType get or creation
         #######################################################################
         print("Creating an SdsType")
-        waveType = getWaveDataType(sampleTypeId)
-        waveType = ocsClient.Types.getOrCreateType(namespaceId, waveType)
-        assert waveType.Id == sampleTypeId, "Error getting back wave Type"
+        wave_type = get_wave_data_type(SAMPLE_TYPE_ID)
+        wave_type = ocs_client.Types.getOrCreateType(namespace_id, wave_type)
+        assert wave_type.Id == SAMPLE_TYPE_ID, "Error getting back wave Type"
 
         # Step 3
         #######################################################################
@@ -371,11 +388,11 @@ def main():
         #######################################################################
         print("Creating an SdsStream")
         stream = SdsStream()
-        stream.Id = sampleStreamId
+        stream.Id = SAMPLE_STREAM_ID
         stream.Name = "WaveStreamPySample"
         stream.Description = "A Stream to store the WaveData events"
-        stream.TypeId = waveType.Id
-        ocsClient.Streams.createOrUpdateStream(namespaceId, stream)
+        stream.TypeId = wave_type.Id
+        ocs_client.Streams.createOrUpdateStream(namespace_id, stream)
 
         # Step 4
         #######################################################################
@@ -384,111 +401,114 @@ def main():
 
         print("Inserting data")
         # Insert a single event
-        event = nextWave(0, 2.0)
-        ocsClient.Streams.insertValues(namespaceId, stream.Id, [event])
+        event = next_wave(0, 2.0)
+        ocs_client.Streams.insertValues(namespace_id, stream.Id, [event])
 
         # Insert a list of events
         waves = []
-        for i in range(2, 20, 2):
-            waves.append(nextWave(i, 2.0))
-        ocsClient.Streams.insertValues(namespaceId, stream.Id, waves)
+        for error in range(2, 20, 2):
+            waves.append(next_wave(error, 2.0))
+        ocs_client.Streams.insertValues(namespace_id, stream.Id, waves)
 
         # Step 5
         # Get the last inserted event in a stream
         print("Getting latest event")
-        wave = ocsClient.Streams.getLastValue(namespaceId, stream.Id, WaveData)
-        print(toString(wave))
+        wave = ocs_client.Streams.getLastValue(
+            namespace_id, stream.Id, WaveData)
+        print(to_string(wave))
         print()
 
         # Get all the events
-        waves = ocsClient.Streams.getWindowValues(
-            namespaceId, stream.Id, WaveData, 0, 180)
+        waves = ocs_client.Streams.getWindowValues(
+            namespace_id, stream.Id, WaveData, 0, 180)
         print("Getting all events")
         print("Total events found: " + str(len(waves)))
         for wave in waves:
-            print(toString(wave))
+            print(to_string(wave))
         print()
 
         # Step 6
         # get all values with headers
-        waves = ocsClient.Streams.getWindowValuesForm(
-            namespaceId, stream.Id, None, 0, 180, "tableh")
+        waves = ocs_client.Streams.getWindowValuesForm(
+            namespace_id, stream.Id, None, 0, 180, "tableh")
         print("Getting all events in table format")
         print(waves)
 
         # Step 7
         print("Updating events")
         # Update the first event
-        event = nextWave(0, 4.0)
-        ocsClient.Streams.updateValues(namespaceId, stream.Id, [event])
+        event = next_wave(0, 4.0)
+        ocs_client.Streams.updateValues(namespace_id, stream.Id, [event])
 
         # Update the rest of the events, adding events that have no prior
         # index entry
-        updatedEvents = []
-        for i in range(2, 40, 2):
-            event = nextWave(i, 4.0)
-            updatedEvents.append(event)
-        ocsClient.Streams.updateValues(namespaceId, stream.Id, updatedEvents)
+        updated_events = []
+        for error in range(2, 40, 2):
+            event = next_wave(error, 4.0)
+            updated_events.append(event)
+        ocs_client.Streams.updateValues(
+            namespace_id, stream.Id, updated_events)
 
         # Get all the events
-        waves = ocsClient.Streams.getWindowValues(namespaceId, stream.Id,
-                                                  WaveData, 0, 40)
+        waves = ocs_client.Streams.getWindowValues(namespace_id, stream.Id,
+                                                   WaveData, 0, 40)
         print("Getting updated events")
         print("Total events found: " + str(len(waves)))
         for wave in waves:
-            print(toString(wave))
+            print(to_string(wave))
         print()
 
         # Step 8
         print("Replacing events")
         # replace one value
-        event = nextWave(0, 5.0)
-        ocsClient.Streams.replaceValues(namespaceId, stream.Id, [event])
+        event = next_wave(0, 5.0)
+        ocs_client.Streams.replaceValues(namespace_id, stream.Id, [event])
 
         # replace multiple values
-        replacedEvents = []
-        for i in range(2, 40, 2):
-            event = nextWave(i, 5.0)
-            replacedEvents.append(event)
-        ocsClient.Streams.replaceValues(namespaceId, stream.Id, replacedEvents)
+        replaced_events = []
+        for error in range(2, 40, 2):
+            event = next_wave(error, 5.0)
+            replaced_events.append(event)
+        ocs_client.Streams.replaceValues(
+            namespace_id, stream.Id, replaced_events)
 
         # Step 9
         # Get all the events
-        waves = ocsClient.Streams.getWindowValues(namespaceId, stream.Id,
-                                                  WaveData, 0, 180)
+        waves = ocs_client.Streams.getWindowValues(namespace_id, stream.Id,
+                                                   WaveData, 0, 180)
         print("Getting replaced events")
         print("Total events found: " + str(len(waves)))
         for wave in waves:
-            print(toString(wave))
+            print(to_string(wave))
         print()
 
-        retrievedInterpolated = ocsClient.Streams.getRangeValuesInterpolated(
-            namespaceId, stream.Id, None, "5", "32", 4)
+        retrieved_interpolated = ocs_client.Streams.getRangeValuesInterpolated(
+            namespace_id, stream.Id, None, "5", "32", 4)
         print("Sds can interpolate or extrapolate data at an index location "
               "where data does not explicitly exist:")
-        print(retrievedInterpolated)
+        print(retrieved_interpolated)
         print()
 
         # Step 10
         # Filtering from all values
         print("Getting filtered events")
-        filteredEvents = ocsClient.Streams.getWindowValues(
-            namespaceId, sampleStreamId, WaveData, 0, 50, 'Radians lt 3')
+        filtered_events = ocs_client.Streams.getWindowValues(
+            namespace_id, SAMPLE_STREAM_ID, WaveData, 0, 50, 'Radians lt 3')
 
-        print("Total events found: " + str(len(filteredEvents)))
-        for wave in filteredEvents:
-            print(toString(wave))
+        print("Total events found: " + str(len(filtered_events)))
+        for wave in filtered_events:
+            print(to_string(wave))
         print()
 
         # Step 11
         # Sampling from all values
         print("Getting sampled values")
-        sampledWaves = ocsClient.Streams.getSampledValues(
-            namespaceId, stream.Id, WaveData, 0, 40, "sin", 4)
+        sampled_waves = ocs_client.Streams.getSampledValues(
+            namespace_id, stream.Id, WaveData, 0, 40, "sin", 4)
 
-        print("Total events found: " + str(len(sampledWaves)))
-        for wave in sampledWaves:
-            print(toString(wave))
+        print("Total events found: " + str(len(sampled_waves)))
+        for wave in sampled_waves:
+            print(to_string(wave))
         print()
 
         # Step 12
@@ -502,8 +522,8 @@ def main():
         print()
 
         # We will retrieve three events using the default behavior, Continuous
-        waves = ocsClient.Streams.getRangeValues(
-            namespaceId, stream.Id, WaveData, "1", 0, 3, False,
+        waves = ocs_client.Streams.getRangeValues(
+            namespace_id, stream.Id, WaveData, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated)
 
         print("Default (Continuous) requesting data starting at index location"
@@ -512,21 +532,21 @@ def main():
 
         for wave in waves:
             print(("Order: {order}: Radians: {radians} Cos: {cos}".format(
-                order=wave.Order, radians=wave.Radians, cos=wave.Cos)))
+                order=wave.order, radians=wave.radians, cos=wave.cos)))
 
         # Create a Discrete stream PropertyOverride indicating that we do not
         #  want Sds to calculate a value for Radians and update our stream
-        propertyOverride = SdsStreamPropertyOverride()
-        propertyOverride.SdsTypePropertyId = 'Radians'
-        propertyOverride.InterpolationMode = 3
+        property_override = SdsStreamPropertyOverride()
+        property_override.SdsTypePropertyId = 'Radians'
+        property_override.InterpolationMode = 3
 
         # update the stream
-        props = [propertyOverride]
+        props = [property_override]
         stream.PropertyOverrides = props
-        ocsClient.Streams.createOrUpdateStream(namespaceId, stream)
+        ocs_client.Streams.createOrUpdateStream(namespace_id, stream)
 
-        waves = ocsClient.Streams.getRangeValues(
-            namespaceId, stream.Id, WaveData, "1", 0, 3, False,
+        waves = ocs_client.Streams.getRangeValues(
+            namespace_id, stream.Id, WaveData, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated)
         print()
         print("We can override this read behavior on a property by property"
@@ -535,7 +555,7 @@ def main():
         print("Sds will now return the default value for the data type:")
         for wave in waves:
             print(("Order: {order}: Radians: {radians} Cos: {cos}".format(
-                order=wave.Order, radians=wave.Radians, cos=wave.Cos)))
+                order=wave.order, radians=wave.radians, cos=wave.cos)))
 
         # Step 13
         #######################################################################
@@ -543,13 +563,13 @@ def main():
         #######################################################################
 
         # Create additional types to define our targets
-        waveTargetType = getWaveDataTargetType(sampleTargetTypeId)
-        waveTargetType = ocsClient.Types.getOrCreateType(namespaceId,
-                                                         waveTargetType)
+        wave_target_type = get_wave_data_target_type(SAMPLE_TARGET_TYPE_ID)
+        wave_target_type = ocs_client.Types.getOrCreateType(namespace_id,
+                                                            wave_target_type)
 
-        waveIntegerType = getWaveDataIntegerType(sampleIntegerTypeId)
-        waveIntegerType = ocsClient.Types.getOrCreateType(namespaceId,
-                                                          waveIntegerType)
+        wave_integer_type = get_wave_data_integer_type(SAMPLE_INTEGER_TYPE_ID)
+        wave_integer_type = ocs_client.Types.getOrCreateType(namespace_id,
+                                                             wave_integer_type)
 
         # Create an SdsStreamViewProperty objects when we want to explicitly
         # map one property to another
@@ -571,73 +591,73 @@ def main():
 
         # Create a streamView mapping our original type to our target type,
         # data shape is the same so let Sds handle the mapping
-        streamView = SdsStreamView()
-        streamView.Id = sampleStreamViewId
-        streamView.Name = "SampleStreamView"
-        streamView.TargetTypeId = waveTargetType.Id
-        streamView.SourceTypeId = waveType.Id
+        stream_view = SdsStreamView()
+        stream_view.Id = SAMPLE_STREAM_VIEW_ID
+        stream_view.Name = "SampleStreamView"
+        stream_view.TargetTypeId = wave_target_type.Id
+        stream_view.SourceTypeId = wave_type.Id
 
         # Data shape and data types are different so include explicit mappings
         # between properties
-        manualStreamView = SdsStreamView()
-        manualStreamView.Id = sampleStreamViewIntId
-        manualStreamView.Name = "SampleIntStreamView"
-        manualStreamView.TargetTypeId = waveIntegerType.Id
-        manualStreamView.SourceTypeId = waveType.Id
-        manualStreamView.Properties = [vp1, vp2, vp3, vp4]
+        manual_stream_view = SdsStreamView()
+        manual_stream_view.Id = SAMPLE_STREAM_VIEW_INT_ID
+        manual_stream_view.Name = "SampleIntStreamView"
+        manual_stream_view.TargetTypeId = wave_integer_type.Id
+        manual_stream_view.SourceTypeId = wave_type.Id
+        manual_stream_view.Properties = [vp1, vp2, vp3, vp4]
 
-        automaticStreamView = ocsClient.Streams.getOrCreateStreamView(
-            namespaceId, streamView)
-        manualStreamView = ocsClient.Streams.getOrCreateStreamView(
-            namespaceId, manualStreamView)
+        automatic_stream_view = ocs_client.Streams.getOrCreateStreamView(
+            namespace_id, stream_view)
+        manual_stream_view = ocs_client.Streams.getOrCreateStreamView(
+            namespace_id, manual_stream_view)
 
-        streamViewMap1 = SdsStreamViewMap()
-        streamViewMap1 = ocsClient.Streams.getStreamViewMap(
-            namespaceId, automaticStreamView.Id)
+        stream_view_map_1 = SdsStreamViewMap()
+        stream_view_map_1 = ocs_client.Streams.getStreamViewMap(
+            namespace_id, automatic_stream_view.Id)
 
-        streamViewMap2 = SdsStreamViewMap()
-        streamViewMap2 = ocsClient.Streams.getStreamViewMap(
-            namespaceId, manualStreamView.Id)
+        stream_view_map_2 = SdsStreamViewMap()
+        stream_view_map_2 = ocs_client.Streams.getStreamViewMap(
+            namespace_id, manual_stream_view.Id)
 
-        rangeWaves = ocsClient.Streams.getRangeValues(
-            namespaceId, stream.Id, WaveData, "1", 0, 3, False,
+        range_waves = ocs_client.Streams.getRangeValues(
+            namespace_id, stream.Id, WaveData, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated)
         print()
         print("SdsStreamViews")
         print("Here is some of our data as it is stored on the server:")
-        for way in rangeWaves:
+        for way in range_waves:
             print(("Sin: {sin}, Cos: {cos}, Tan: {tan}".format(
-                sin=way.Sin, cos=way.Cos, tan=way.Tan)))
+                sin=way.sin, cos=way.cos, tan=way.tan)))
 
         # StreamView data when retrieved with a streamView
-        rangeWaves = ocsClient.Streams.getRangeValues(
-            namespaceId, stream.Id, WaveDataTarget, "1", 0, 3, False,
-            SdsBoundaryType.ExactOrCalculated, automaticStreamView.Id)
+        range_waves = ocs_client.Streams.getRangeValues(
+            namespace_id, stream.Id, WaveDataTarget, "1", 0, 3, False,
+            SdsBoundaryType.ExactOrCalculated, automatic_stream_view.Id)
         print()
         print("Specifying a streamView with an SdsType of the same shape"
               "returns values that are automatically mapped to the target"
               " SdsType's properties:")
-        for way in rangeWaves:
+        for way in range_waves:
             print(("SinTarget: {sinTarget}, CosTarget: {cosTarget}, TanTarget:"
-                   " {tanTarget}").format(sinTarget=way.SinTarget,
-                                          cosTarget=way.CosTarget,
-                                          tanTarget=way.TanTarget))
+                   " {tanTarget}").format(sinTarget=way.sin_target,
+                                          cosTarget=way.cos_target,
+                                          tanTarget=way.tan_target))
 
-        rangeWaves = ocsClient.Streams.getRangeValues(
-            namespaceId, stream.Id, WaveDataInteger, "1", 0, 3, False,
-            SdsBoundaryType.ExactOrCalculated, manualStreamView.Id)
+        range_waves = ocs_client.Streams.getRangeValues(
+            namespace_id, stream.Id, WaveDataInteger, "1", 0, 3, False,
+            SdsBoundaryType.ExactOrCalculated, manual_stream_view.Id)
         print()
         print("SdsStreamViews can also convert certain types of data, here we"
               " return integers where the original values were doubles:")
-        for way in rangeWaves:
+        for way in range_waves:
             print(("SinInt: {sinInt}, CosInt: {cosInt}, TanInt: {tanInt}")
-                  .format(sinInt=way.SinInt, cosInt=way.CosInt,
-                          tanInt=way.TanInt))
+                  .format(sinInt=way.sin_int, cosInt=way.cos_int,
+                          tanInt=way.tan_int))
 
         print()
         print("We can query Sds to return the SdsStreamViewMap for our "
               "SdsStreamView, here is the one generated automatically:")
-        for prop in streamViewMap1.Properties:
+        for prop in stream_view_map_1.Properties:
             print(("{source} => {dest}".format(
                 source=prop.SourceId, dest=prop.TargetId)))
 
@@ -645,7 +665,7 @@ def main():
         print("Here is our explicit mapping, note SdsStreamViewMap will return"
               " all properties of the Source Type, even those without a "
               "corresponding Target property:")
-        for prop in streamViewMap2.Properties:
+        for prop in stream_view_map_2.Properties:
             if hasattr(prop, 'TargetId'):
                 print(("{source} => {dest}".format(source=prop.SourceId,
                                                    dest=prop.TargetId)))
@@ -656,33 +676,34 @@ def main():
         # Step 14
         print("We will now update the stream type based on the streamview")
 
-        firstVal = ocsClient.Streams.getFirstValue(namespaceId, stream.Id,
-                                                   None)
-        ocsClient.Streams.updateStreamType(namespaceId, stream.Id,
-                                           sampleStreamViewId)
+        first_val = ocs_client.Streams.getFirstValue(namespace_id, stream.Id,
+                                                     None)
+        ocs_client.Streams.updateStreamType(namespace_id, stream.Id,
+                                            SAMPLE_STREAM_VIEW_ID)
 
-        newStream = ocsClient.Streams.getStream(namespaceId, sampleStreamId)
-        firstValUpdated = ocsClient.Streams.getFirstValue(namespaceId,
-                                                          sampleStreamId, None)
+        new_stream = ocs_client.Streams.getStream(
+            namespace_id, SAMPLE_STREAM_ID)
+        first_val_updated = ocs_client.Streams.getFirstValue(namespace_id,
+                                                             SAMPLE_STREAM_ID, None)
 
-        print("The new type id" + newStream.TypeId + " compared to the "
+        print("The new type id" + new_stream.TypeId + " compared to the "
               "original one " + stream.TypeId)
-        print("The new type value " + str(firstVal) + " compared to the "
-              "original one " + str(firstValUpdated))
+        print("The new type value " + str(first_val) + " compared to the "
+              "original one " + str(first_val_updated))
 
         # Step 15
-        types = ocsClient.Types.getTypes(namespaceId, 0, 100)
-        typesQuery = ocsClient.Types.getTypes(
-            namespaceId, 0, 100, "Id:*Target*")
+        types = ocs_client.Types.getTypes(namespace_id, 0, 100)
+        types_query = ocs_client.Types.getTypes(
+            namespace_id, 0, 100, "Id:*Target*")
 
         print()
         print("All Types: ")
-        for typeI in types:
-            print(typeI.Id)
+        for type_i in types:
+            print(type_i.Id)
 
         print("Types after Query: ")
-        for typeI in typesQuery:
-            print(typeI.Id)
+        for type_i in types_query:
+            print(type_i.Id)
 
         # Step 16
         #######################################################################
@@ -695,20 +716,20 @@ def main():
         metadata = {"Region": "North America", "Country": "Canada",
                     "Province": "Quebec"}
 
-        ocsClient.Streams.createOrUpdateTags(namespaceId, stream.Id, tags)
-        ocsClient.Streams.createOrUpdateMetadata(namespaceId, stream.Id,
-                                                 metadata)
+        ocs_client.Streams.createOrUpdateTags(namespace_id, stream.Id, tags)
+        ocs_client.Streams.createOrUpdateMetadata(namespace_id, stream.Id,
+                                                  metadata)
 
         print()
         print("Tags now associated with ", stream.Id)
-        print(ocsClient.Streams.getTags(namespaceId, stream.Id))
+        print(ocs_client.Streams.getTags(namespace_id, stream.Id))
 
-        region = ocsClient.Streams.getMetadata(
-            namespaceId, stream.Id, "Region")
-        country = ocsClient.Streams.getMetadata(
-            namespaceId, stream.Id, "Country")
-        province = ocsClient.Streams.getMetadata(
-            namespaceId, stream.Id, "Province")
+        region = ocs_client.Streams.getMetadata(
+            namespace_id, stream.Id, "Region")
+        country = ocs_client.Streams.getMetadata(
+            namespace_id, stream.Id, "Country")
+        province = ocs_client.Streams.getMetadata(
+            namespace_id, stream.Id, "Province")
 
         print()
         print("Metadata now associated with", stream.Id, ":")
@@ -724,13 +745,13 @@ def main():
         print()
         print('Deleting values from the SdsStream')
         # remove a single value from the stream
-        ocsClient.Streams.removeValue(namespaceId, stream.Id, 0)
+        ocs_client.Streams.removeValue(namespace_id, stream.Id, 0)
 
         # remove multiple values from the stream
-        ocsClient.Streams.removeWindowValues(namespaceId, stream.Id, 0, 40)
+        ocs_client.Streams.removeWindowValues(namespace_id, stream.Id, 0, 40)
         try:
-            event = ocsClient.Streams.getLastValue(namespaceId, stream.Id,
-                                                   WaveData)
+            event = ocs_client.Streams.getLastValue(namespace_id, stream.Id,
+                                                    WaveData)
             if event is not None:
                 raise ValueError
         except TypeError:
@@ -743,13 +764,14 @@ def main():
         index.SdsTypePropertyId = "Radians"
 
         secondary = SdsStream()
-        secondary.Id = streamIdSecondary
-        secondary.TypeId = sampleTypeId
+        secondary.Id = STREAM_ID_SECONDARY
+        secondary.TypeId = SAMPLE_TYPE_ID
         secondary.Indexes = [index]
 
-        secondary = ocsClient.Streams.getOrCreateStream(namespaceId, secondary)
+        secondary = ocs_client.Streams.getOrCreateStream(
+            namespace_id, secondary)
         count = 0
-        if(stream.Indexes):
+        if stream.Indexes:
             count = len(stream.Indexes)
 
         print("Secondary indexes on streams original:" + str(count) +
@@ -759,75 +781,80 @@ def main():
         # Modifying an existing stream with a secondary index.
         print("Modifying a stream to have a secondary index.")
 
-        sampleStream = ocsClient.Streams.getStream(namespaceId, sampleStreamId)
+        sample_stream = ocs_client.Streams.getStream(
+            namespace_id, SAMPLE_STREAM_ID)
 
         index = SdsStreamIndex()
         index.SdsTypePropertyId = "RadiansTarget"
-        sampleStream.Indexws = [index]
-        ocsClient.Streams.createOrUpdateStream(namespaceId, sampleStream)
+        sample_stream.Indexws = [index]
+        ocs_client.Streams.createOrUpdateStream(namespace_id, sample_stream)
 
-        sampleStream = ocsClient.Streams.getStream(namespaceId, sampleStreamId)
+        sample_stream = ocs_client.Streams.getStream(
+            namespace_id, SAMPLE_STREAM_ID)
         # Modifying an existing stream to remove the secondary index
         print("Removing a secondary index from a stream.")
 
         secondary.Indexes = []
 
-        ocsClient.Streams.createOrUpdateStream(namespaceId, secondary)
+        ocs_client.Streams.createOrUpdateStream(namespace_id, secondary)
 
-        secondary = ocsClient.Streams.getStream(namespaceId, secondary.Id)
+        secondary = ocs_client.Streams.getStream(namespace_id, secondary.Id)
 
-        originalLength = "0"
+        original_length = "0"
         if stream.Indexes:
-            originalLength = str(len(stream.Indexes))
+            original_length = str(len(stream.Indexes))
 
-        secondaryLength = "0"
+        secondary_length = "0"
         if secondary.Indexes:
-            secondaryLength = str(len(secondary.Indexes))
+            secondary_length = str(len(secondary.Indexes))
 
-        print("Secondary indexes on streams original:" + originalLength +
-              ". New one:  " + secondaryLength)
+        print("Secondary indexes on streams original:" + original_length +
+              ". New one:  " + secondary_length)
 
         # Step 19
         # Adding Compound Index Type
         print("Creating an SdsType with a compound index")
-        typeCompound = getWaveCompoundDataType(compoundTypeId)
-        ocsClient.Types.getOrCreateType(namespaceId, typeCompound)
+        type_compound = get_wave_compound_data_type(COMPOUND_TYPE_ID)
+        ocs_client.Types.getOrCreateType(namespace_id, type_compound)
 
         # create an SdsStream
         print("Creating an SdsStream off of type with compound index")
-        streamCompound = SdsStream()
-        streamCompound.Id = streamIdCompound
-        streamCompound.TypeId = typeCompound.Id
-        ocsClient.Streams.createOrUpdateStream(namespaceId, streamCompound)
+        stream_compound = SdsStream()
+        stream_compound.Id = STREAM_ID_COMPOUND
+        stream_compound.TypeId = type_compound.Id
+        ocs_client.Streams.createOrUpdateStream(namespace_id, stream_compound)
 
         # Step 20
         print("Inserting data")
         waves = []
-        waves.append(nextWave(1, 10))
-        waves.append(nextWave(2, 2))
-        waves.append(nextWave(3, 1))
-        waves.append(nextWave(10, 3))
-        waves.append(nextWave(10, 8))
-        waves.append(nextWave(10, 10))
-        ocsClient.Streams.insertValues(namespaceId, streamIdCompound, waves)
+        waves.append(next_wave(1, 10))
+        waves.append(next_wave(2, 2))
+        waves.append(next_wave(3, 1))
+        waves.append(next_wave(10, 3))
+        waves.append(next_wave(10, 8))
+        waves.append(next_wave(10, 10))
+        ocs_client.Streams.insertValues(
+            namespace_id, STREAM_ID_COMPOUND, waves)
 
-        latestCompound = ocsClient.Streams.getLastValue(
-            namespaceId, streamIdCompound, None)
-        firstCompound = ocsClient.Streams.getFirstValue(
-            namespaceId, streamIdCompound, None)
+        latest_compound = ocs_client.Streams.getLastValue(
+            namespace_id, STREAM_ID_COMPOUND, None)
+        first_compound = ocs_client.Streams.getFirstValue(
+            namespace_id, STREAM_ID_COMPOUND, None)
 
-        windowVal = ocsClient.Streams.getWindowValues(
-            namespaceId, streamIdCompound, None, "2|1", "10|8")
+        window_val = ocs_client.Streams.getWindowValues(
+            namespace_id, STREAM_ID_COMPOUND, None, "2|1", "10|8")
 
-        print("First data: " + str(firstCompound) +
-              " Latest data: " + str(latestCompound))
+        print("First data: " + str(first_compound) +
+              " Latest data: " + str(latest_compound))
         print("Window Data:")
-        print(str(windowVal))
+        print(str(window_val))
 
-    except Exception as i:
-        print(("Encountered Error: {error}".format(error=i)))
-        assert False, ("Encountered Error: {error}".format(error=i))
+    except Exception as error:
+        print((f'Encountered Error: {error}'))
         print()
+        traceback.print_exc()
+        print()
+        exception = error
 
     finally:
         # Step 21
@@ -838,32 +865,33 @@ def main():
         # Clean up the remaining artifacts
         print("Cleaning up")
         print("Deleting the stream")
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, sampleStreamId))
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, streamIdSecondary))
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, streamIdCompound))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, SAMPLE_STREAM_ID))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, STREAM_ID_SECONDARY))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, STREAM_ID_COMPOUND))
 
         print("Deleting the streamViews")
-        suppressError(lambda: ocsClient.Streams.deleteStreamView(
-            namespaceId, sampleStreamViewId))
-        suppressError(lambda: ocsClient.Streams.deleteStreamView(
-            namespaceId, sampleStreamViewIntId))
+        suppress_error(lambda: ocs_client.Streams.deleteStreamView(
+            namespace_id, SAMPLE_STREAM_VIEW_ID))
+        suppress_error(lambda: ocs_client.Streams.deleteStreamView(
+            namespace_id, SAMPLE_STREAM_VIEW_INT_ID))
 
         print("Deleting the types")
-        suppressError(lambda: ocsClient.Types.deleteType(
-            namespaceId, sampleTypeId))
-        suppressError(lambda: ocsClient.Types.deleteType(
-            namespaceId, sampleTargetTypeId))
-        suppressError(lambda: ocsClient.Types.deleteType(
-            namespaceId, sampleIntegerTypeId))
-        suppressError(lambda: ocsClient.Types.deleteType(
-            namespaceId, compoundTypeId))
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, SAMPLE_TYPE_ID))
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, SAMPLE_TARGET_TYPE_ID))
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, SAMPLE_INTEGER_TYPE_ID))
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, COMPOUND_TYPE_ID))
 
-main()
-print("done")
+        if test and exception is not None:
+            raise exception
+    print('Complete!')
 
 
-def test_main():
+if __name__ == '__main__':
     main()
