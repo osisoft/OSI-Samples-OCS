@@ -318,6 +318,7 @@ ocs_samples/library_samples/Java/ocs_sample_library_preview/ocs_sample_library_p
 cov-int/
 junit/
 *.binlog
+junit/
 
 # Credential Config Files
 product-readiness.*

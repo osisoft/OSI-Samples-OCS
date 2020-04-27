@@ -8,7 +8,7 @@ Developed against DotNet 3.1.
 
 ## Running the sample
 
-Replace the placeholders in the [appsettings](appsettings.json) file with your TenantID, NamespaceId, ClientID and ClientSecret.
+Replace the placeholders in the [appsettings](UomsSample/appsettings.json) file with your TenantID, NamespaceId, ClientID and ClientSecret.
 
 ### Requirements
 
