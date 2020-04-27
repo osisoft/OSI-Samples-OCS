@@ -103,15 +103,15 @@ class WaveData:
     def tanh(self, tanh):
         self._tanh = tanh
 
-    def is_prop(self):
+    def isprop(self):
         """Check whether a field is a property of an object"""
         return isinstance(self, property)
 
-    def to_json(self):
+    def toJson(self):
         """Converts the object into JSON"""
-        return json.dumps(self.to_dictionary())
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self):
+    def toDictionary(self):
         """Converts the object into a dictionary"""
         dictionary = {}
         for prop in inspect.getmembers(type(self),
@@ -122,12 +122,12 @@ class WaveData:
         return dictionary
 
     @staticmethod
-    def from_json(json_obj):
+    def fromJson(json_obj):
         """Creates the object from JSON"""
-        return WaveData.from_dictionary(json_obj)
+        return WaveData.fromDictionary(json_obj)
 
     @staticmethod
-    def from_dictionary(content):
+    def fromDictionary(content):
         """Creates the object from a dictionary"""
         wave = WaveData()
 
@@ -193,15 +193,15 @@ class WaveDataInteger:
     def tan_int(self, tan_int):
         self._tan_int = tan_int
 
-    def is_prop(self):
+    def isprop(self):
         """Check whether a field is a property of an object"""
         return isinstance(self, property)
 
-    def to_json(self):
+    def toJson(self):
         """Converts the object into JSON"""
-        return json.dumps(self.to_dictionary())
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self):
+    def toDictionary(self):
         """Converts the object into a dictionary"""
         dictionary = {}
         for prop in inspect.getmembers(type(self),
@@ -212,12 +212,12 @@ class WaveDataInteger:
         return dictionary
 
     @staticmethod
-    def from_json(json_obj):
+    def fromJson(json_obj):
         """Creates the object from JSON"""
-        return WaveDataInteger.from_dictionary(json_obj)
+        return WaveDataInteger.fromDictionary(json_obj)
 
     @staticmethod
-    def from_dictionary(content):
+    def fromDictionary(content):
         """Creates the object from a dictionary"""
         wave = WaveDataInteger()
 
@@ -332,15 +332,15 @@ class WaveDataTarget:
     def tanh_target(self, tanh_target):
         self._tanh_target = tanh_target
 
-    def is_prop(self):
+    def isprop(self):
         """Check whether a field is a property of an object"""
         return isinstance(self, property)
 
-    def to_json(self):
+    def toJson(self):
         """Converts the object into JSON"""
-        return json.dumps(self.to_dictionary())
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self):
+    def toDictionary(self):
         """Converts the object into a dictionary"""
         dictionary = {}
         for prop in inspect.getmembers(type(self),
@@ -351,12 +351,12 @@ class WaveDataTarget:
         return dictionary
 
     @staticmethod
-    def from_json(json_obj):
+    def fromJson(json_obj):
         """Creates the object from JSON"""
-        return WaveDataTarget.from_dictionary(json_obj)
+        return WaveDataTarget.fromDictionary(json_obj)
 
     @staticmethod
-    def from_dictionary(content):
+    def fromDictionary(content):
         """Creates the object from a dictionary"""
         wave = WaveDataTarget()
 
@@ -482,15 +482,15 @@ class WaveDataCompound:
     def tanh(self, tanh):
         self._tanh = tanh
 
-    def is_prop(self):
+    def isprop(self):
         """Check whether a field is a property of an object"""
         return isinstance(self, property)
 
-    def to_json(self):
+    def toJson(self):
         """Converts the object into JSON"""
-        return json.dumps(self.to_dictionary())
+        return json.dumps(self.toDictionary())
 
-    def to_dictionary(self):
+    def toDictionary(self):
         """Converts the object into a dictionary"""
         dictionary = {}
         for prop in inspect.getmembers(type(self),
@@ -501,12 +501,12 @@ class WaveDataCompound:
         return dictionary
 
     @staticmethod
-    def from_json(json_obj):
+    def fromJson(json_obj):
         """Creates the object from JSON"""
-        return WaveData.from_dictionary(json_obj)
+        return WaveData.fromDictionary(json_obj)
 
     @staticmethod
-    def from_dictionary(content):
+    def fromDictionary(content):
         """Creates the object from a dictionary"""
         wave = WaveData()
 
