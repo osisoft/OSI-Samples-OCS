@@ -212,14 +212,16 @@ var app = function (request1, response) {
     SdsType: doubleType,
   });
 
-  var orderCompoundProperty = new sdsObjs.SdsTypeProperty({
-    Id: 'Order',
+  var id1 = 'Order';
+  var id2 = 'Multiplier';
+  var compound1 = new sdsObjs.SdsTypeProperty({
+    Id: id1,
     SdsType: intType,
     IsKey: true,
     Order: 1,
   });
-  var multiplierCompoundProperty = new sdsObjs.SdsTypeProperty({
-    Id: 'Multiplier',
+  var compound2 = new sdsObjs.SdsTypeProperty({
+    Id: id2,
     SdsType: intType,
     IsKey: true,
     Order: 2,
@@ -251,8 +253,8 @@ var app = function (request1, response) {
     Description: 'This is a sample Sds type for storing WaveData type events',
     SdsTypeCode: sdsObjs.sdsTypeCode.Object,
     Properties: [
-      orderCompoundProperty,
-      multiplierCompoundProperty,
+      compound1,
+      compound2,
       tauProperty,
       radiansProperty,
       sinProperty,
