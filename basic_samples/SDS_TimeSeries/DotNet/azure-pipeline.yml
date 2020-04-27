@@ -49,7 +49,7 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)/SDS_TS_DotNet
+          filePath: $(projPath)/SdsTsDotNet
 
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
