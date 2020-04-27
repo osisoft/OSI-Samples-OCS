@@ -255,6 +255,22 @@ namespace SdsTsDotNet
 
                 #endregion
             }
+            catch (AggregateException ex)
+            {
+                Console.WriteLine("Inner Exceptions:");
+                foreach (Exception inner in ex.InnerExceptions)
+                {
+                    Console.WriteLine(inner);
+                }
+
+                Console.WriteLine("Inner Exception:");
+                Console.WriteLine(ex.InnerException);
+
+                Console.WriteLine("Flattened Exception:");
+                Console.WriteLine(ex.Flatten());
+                _toThrow = ex;
+                throw;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
