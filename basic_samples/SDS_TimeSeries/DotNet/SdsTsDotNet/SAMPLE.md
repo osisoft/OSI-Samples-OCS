@@ -8,7 +8,7 @@ This sample walkthru is written to be used by Try .NET. This means that the rend
 
 The first time you press "TestSample >" on the page it might take a few minutes for it compile and do its magic before it runs and writes something to the console writing part of it. Subsequent runs are faster (this appears true across dotnet try sessions and browswer refreshes)
 
-## Narative
+## Narrative
 
 For this sample we are someone who wants to store and retrieve data from 3 different tanks; vessel, tank1 and tank2. These 3 different tanks have 2 value readings; pressure and temperature. To start we are only concerned with tank1, because we know once we get it setup we can easily scale to get the other data. We are collecting this data ourselves from the sensors directly. In this sample we explore different ways we can store the data in OCS and different ways we can retrieve the data.
 
@@ -20,7 +20,7 @@ The first thing we need to do is setup the application to run. We need to know w
 
 These variables are used to hold the configuration settings. Update these as appropriate.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region configurationSettings --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region configurationSettings --session TestSample
 
 ```
 
@@ -28,7 +28,7 @@ With that information we now need to define the names of what we will store in O
 
 These variables are used to create the Types and Strings. Update these as appropriate.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region settings --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region settings --session TestSample
 
 ```
 
@@ -36,7 +36,7 @@ These variables are used to create the Types and Strings. Update these as approp
 
 With basic settings and configuration ready we can now authenticate against OCS and initlize the OCS client library
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step1 --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step1 --session TestSample
 
 ```
 
@@ -44,13 +44,13 @@ With basic settings and configuration ready we can now authenticate against OCS 
 
 We decide we are going to store the OCS as a Simple type that only has a value and a time-stamp. First we need to create the CLR type we want to represent in OCS.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step2a --session TestSample
+```cs --source-file ./TimeData.cs --project ./SdsTsDotNet.csproj --region step2a --session TestSample
 
 ```
 
 Once we have that we create the type in OCS using the SdsTypeBuilder to build the SdSType and then use the metadataservice to create the type.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step2b --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step2b --session TestSample
 
 ```
 
@@ -58,7 +58,7 @@ Once we have that we create the type in OCS using the SdsTypeBuilder to build th
 
 Since we are wanting to store Tank1's data we need to create 2 streams for Tank1, one for the pressure and one for the temperature.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step3 --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step3 --session TestSample
 
 ```
 
@@ -74,19 +74,19 @@ In anything real, this would be a call to an outside system (whether that be to 
 
 Note: we are using the type `PressureTemperatureData` that is editable in Step 5 below.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step4a --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step4a --session TestSample
 
 ```
 
 We need to get the values we want and assign them to our Simple Type.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step4b --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step4b --session TestSample
 
 ```
 
 With them in the right format, we can then send them in.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step4c --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step4c --session TestSample
 
 ```
 
@@ -94,13 +94,13 @@ With them in the right format, we can then send them in.
 
 At this point we decide we want to try storing a complex type. So we can store the data exactly like we get back from the sensor. To do this, we now need to create the appropriate type
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step5a --session TestSample
+```cs --source-file ./PressureTemperatureData.cs --project ./SdsTsDotNet.csproj --region step5a --session TestSample
 
 ```
 
 With the class defined we take advantage of how we can create the type in OCS using the SdsTypeBuilder to build the SdSType and then the metadataservice to create the type.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step5b --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step5b --session TestSample
 
 ```
 
@@ -108,7 +108,7 @@ With the class defined we take advantage of how we can create the type in OCS us
 
 We can use the same approach we did in Step 3 and create the tank stream.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step6 --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step6 --session TestSample
 
 ```
 
@@ -116,7 +116,7 @@ We can use the same approach we did in Step 3 and create the tank stream.
 
 If you want to see the data that is being collected, look back at Step 4. Otherwise this a straightforward call based on what we have done previously.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step6 --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step6 --session TestSample
 
 ```
 
@@ -124,7 +124,7 @@ If you want to see the data that is being collected, look back at Step 4. Otherw
 
 At this point we should look to see how the data is stored on OCS and how we can view it. There are many different API calls and options for reading data. For simplicity we are going to get the timestamps from the data and use this to call for the full window data.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step8 --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step8 --session TestSample
 
 ```
 
@@ -134,7 +134,7 @@ Note because of the JSON conversions done by this library there is no need to tu
 
 In some instances it is important to get a summary of the data you are viewing. Maybe you want an average or the count of what is in there over a timeframe.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step10 --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step10 --session TestSample
 
 ```
 
@@ -142,13 +142,13 @@ In some instances it is important to get a summary of the data you are viewing. 
 
 Now we want to create the streams for storing our other tanks too, and populate them with data.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step11a --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step11a --session TestSample
 
 ```
 
 With those created we can now get our data back from tank2 and vessel in 1 call.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step11b --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step11b --session TestSample
 
 ```
 
@@ -158,6 +158,6 @@ Note that since we did an outer join we get data for all points in the timeframe
 
 As part of the sample we clean up after ourselves.
 
-```cs --source-file ./Program.cs --project ./SDS_TS_DotNet.csproj --region step12 --session TestSample
+```cs --source-file ./Program.cs --project ./SdsTsDotNet.csproj --region step12 --session TestSample
 
 ```

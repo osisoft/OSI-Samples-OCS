@@ -4,7 +4,7 @@
 
 The sample code in this topic demonstrates how to invoke the OCS client library. By examining the code, you will see how to create an SdsType and SdsStream, and how to create, read, update, and delete values in SDS. You will also see the summaries value call, and how to do bulk streams calls.
 
-When working in .NET, it is recommended that you use the OCS Client Libraries metapackage, OSIsoft.OCSClients. The metapackage is a NuGet package available from https://api.nuget.org/v3/index.json. The libraries offer a framework of classes that make client development easier.
+When working in .NET, it is recommended that you use the OCS Client Libraries metapackage, OSIsoft.OCSClients. The metapackage is a NuGet package available from [https://api.nuget.org/v3/index.json](https://api.nuget.org/v3/index.json). The libraries offer a framework of classes that make client development easier.
 
 [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
 
@@ -16,7 +16,7 @@ In this example we assume that you have the dotnet core CLI.
 
 To run this example from the commandline run
 
-```
+```shell
 cd SDS_TS_DotNet
 dotnet restore
 dotnet run
@@ -24,7 +24,7 @@ dotnet run
 
 to test this program change directories to the test and run
 
-```
+```shell
 cd SDS_TS_DotNetTests
 dotnet restore
 dotnet test
