@@ -21,8 +21,8 @@ from ocs_sample_library_preview import (SdsType, SdsTypeCode, SdsTypeProperty,
                                         SdsStreamViewProperty, SdsStreamView,
                                         SdsStreamViewMap, SdsStreamIndex)
 
-from .wave_data import (WaveData, WaveDataCompound, WaveDataInteger,
-                        WaveDataTarget)
+from wave_data import (WaveData, WaveDataCompound, WaveDataInteger,
+                       WaveDataTarget)
 
 
 def get_wave_data_type(sample_type_id):
