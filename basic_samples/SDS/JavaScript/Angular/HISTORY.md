@@ -1,6 +1,6 @@
 # Version History
 
-## 1.1.9 / 2020-04-23
+## 1.2.0 / 2020-04-23
 
 - Updated to use Polaris in place of Coverity
 - Update pipeline to run on Linux

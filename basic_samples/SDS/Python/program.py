@@ -288,7 +288,6 @@ def next_wave(order, multiplier):
     return new_wave
 
 
-# we'll use the following for cleanup, suppressing errors
 def suppress_error(sds_call):
     """Suppress an error thrown by SDS"""
     try:

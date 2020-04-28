@@ -1,5 +1,7 @@
 # Building a Python client to make REST API calls to the SDS Service
 
+**Version:** 1.0.13
+
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=927&branchName=master)
 
 The sample code in this topic demonstrates how to invoke SDS REST APIs using Python. By examining the code, you will see how to create an SdsType and SdsStream, and how to create, read, update, and delete values in SDS. You will also see the effect of the accept verbosity header, summaries value call, and how to do bulk streams calls.
@@ -10,7 +12,7 @@ The sections that follow provide a brief description of the process from beginni
 
 Developed against Python 3.7.2.
 
-## To Run this Sample:
+## Running the Sample
 
 1. Clone the GitHub repository
 1. Install required modules: `pip install -r requirements.txt`
@@ -27,7 +29,7 @@ or
 1. Install pytest `pip install pytest`
 1. Run `pytest program.py`
 
-## Configure the Sample:
+## Configure the Sample
 
 Included in the sample there is a configuration file with placeholders that need to be replaced with the proper values. They include information for authentication, connecting to the SDS Service, and pointing to a namespace.
 

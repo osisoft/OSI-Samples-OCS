@@ -4,7 +4,7 @@ import unittest
 from .program import main
 
 
-class DataViewsPythonSample(unittest.TestCase):
+class DataViewsPythonSampleTests(unittest.TestCase):
     """Tests for the Data Views Python sample"""
 
     @classmethod

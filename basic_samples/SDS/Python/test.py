@@ -4,7 +4,7 @@ import unittest
 from .program import main
 
 
-class SDSPythonSample(unittest.TestCase):
+class SDSPythonSampleTests(unittest.TestCase):
     """Tests for the SDS Python sample"""
 
     @classmethod

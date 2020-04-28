@@ -12,7 +12,7 @@ from selenium.webdriver.chrome.options import Options
 from .program import main
 
 
-class AuthPKCEPythonSample(unittest.TestCase):
+class AuthPKCEPythonSampleTests(unittest.TestCase):
     """Tests for the Authorization Code + PKCE Python script"""
 
     @classmethod
