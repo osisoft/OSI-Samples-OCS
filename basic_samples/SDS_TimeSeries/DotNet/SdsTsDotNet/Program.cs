@@ -255,6 +255,34 @@ namespace SdsTsDotNet
 
                 #endregion
             }
+            catch (OSIsoft.Data.Http.SdsHttpClientException ex)
+            {
+                Console.WriteLine("Inner Exceptions:");
+                foreach (Exception inner in ex.ChildExceptions)
+                {
+                    Console.WriteLine(inner);
+                }
+
+                Console.WriteLine("Inner Exception:");
+                Console.WriteLine(ex.InnerException);
+
+                Console.WriteLine("Errors:");
+                foreach (var err in ex.Errors)
+                {
+                    Console.WriteLine($"{err.Key}: {err.Value}");
+                }
+
+                Console.WriteLine("Message:");
+                Console.WriteLine(ex.Message);
+
+                Console.WriteLine("Reason:");
+                Console.WriteLine(ex.ReasonPhrase);
+
+                Console.WriteLine("Exception:");
+                Console.WriteLine(ex);
+                _toThrow = ex;
+                throw;
+            }
             catch (AggregateException ex)
             {
                 Console.WriteLine("Inner Exceptions:");
