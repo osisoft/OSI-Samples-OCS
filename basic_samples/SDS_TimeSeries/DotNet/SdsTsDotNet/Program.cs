@@ -141,8 +141,8 @@ namespace SdsTsDotNet
 
                 var resultsPressure = (await dataService.GetWindowValuesAsync<TimeData>(
                     streamPressureName, 
-                    firstTime.Time.ToString("o", CultureInfo.InvariantCulture), 
-                    lastTime.Time.ToString("o", CultureInfo.InvariantCulture))
+                    firstTime.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture), 
+                    lastTime.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture))
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -154,8 +154,8 @@ namespace SdsTsDotNet
 
                 var resultsTank = (await dataService.GetWindowValuesAsync<PressureTemperatureData>(
                     streamTank1, 
-                    firstTime.Time.ToString("o", CultureInfo.InvariantCulture), 
-                    lastTime.Time.ToString("o", CultureInfo.InvariantCulture))
+                    firstTime.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture), 
+                    lastTime.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture))
                     .ConfigureAwait(false))
                     .ToList();
 
@@ -181,8 +181,8 @@ namespace SdsTsDotNet
                 #region step10
                 var resultsTankSummary = (await dataService.GetIntervalsAsync<PressureTemperatureData>(
                     streamTank1,
-                    firstTime.Time.ToString("o", CultureInfo.InvariantCulture),
-                    lastTime.Time.ToString("o", CultureInfo.InvariantCulture),
+                    firstTime.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture),
+                    lastTime.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture),
                     1)
                     .ConfigureAwait(false))
                     .ToList();
@@ -235,8 +235,8 @@ namespace SdsTsDotNet
                 var results2Tanks = await dataService.GetJoinValuesAsync<PressureTemperatureData>(
                     new string[] { tankStream0.Id, tankStream2.Id },
                     SdsJoinType.Outer,
-                    firstTime2.Time.ToString("o", CultureInfo.InvariantCulture),
-                    lastTime2.Time.ToString("o", CultureInfo.InvariantCulture))
+                    firstTime2.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture),
+                    lastTime2.Time.ToUniversalTime().ToString("o", CultureInfo.InvariantCulture))
                     .ConfigureAwait(false);
 
                 Console.WriteLine();
@@ -254,50 +254,6 @@ namespace SdsTsDotNet
                 }
 
                 #endregion
-            }
-            catch (OSIsoft.Data.Http.SdsHttpClientException ex)
-            {
-                Console.WriteLine("Inner Exceptions:");
-                foreach (Exception inner in ex.ChildExceptions)
-                {
-                    Console.WriteLine(inner);
-                }
-
-                Console.WriteLine("Inner Exception:");
-                Console.WriteLine(ex.InnerException);
-
-                Console.WriteLine("Errors:");
-                foreach (var err in ex.Errors)
-                {
-                    Console.WriteLine($"{err.Key}: {err.Value}");
-                }
-
-                Console.WriteLine("Message:");
-                Console.WriteLine(ex.Message);
-
-                Console.WriteLine("Reason:");
-                Console.WriteLine(ex.ReasonPhrase);
-
-                Console.WriteLine("Exception:");
-                Console.WriteLine(ex);
-                _toThrow = ex;
-                throw;
-            }
-            catch (AggregateException ex)
-            {
-                Console.WriteLine("Inner Exceptions:");
-                foreach (Exception inner in ex.InnerExceptions)
-                {
-                    Console.WriteLine(inner);
-                }
-
-                Console.WriteLine("Inner Exception:");
-                Console.WriteLine(ex.InnerException);
-
-                Console.WriteLine("Flattened Exception:");
-                Console.WriteLine(ex.Flatten());
-                _toThrow = ex;
-                throw;
             }
             catch (Exception ex)
             {
