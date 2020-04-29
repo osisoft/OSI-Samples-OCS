@@ -1,6 +1,6 @@
 variables:
   - name: projPath
-    value: '/library_samples/Python3/'
+    value: '/library_samples/Python/'
 
 jobs:
   - job: 'PublishLibrary'
