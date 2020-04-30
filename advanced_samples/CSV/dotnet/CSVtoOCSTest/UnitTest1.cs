@@ -1,18 +1,13 @@
-using NUnit.Framework;
+using Xunit;
 
 namespace CSVtoOCS_pkceTest
 {
     public class UnitTest1
     {
-        [SetUp]
-        public void Setup()
-        {
-            CSVtoOCS.SystemBrowser.OpenBrowser = new OpenTestBrowser();
-        }
-
-        [Test]
+        [Fact]
         public void Test1()
         {
+            CSVtoOCS.SystemBrowser.OpenBrowser = new OpenTestBrowser();
             Assert.True(CSVtoOCS.Program.MainAsync(true).Result);
         }
     }

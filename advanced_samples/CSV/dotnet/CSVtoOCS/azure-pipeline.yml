@@ -42,9 +42,8 @@ jobs:
   - job: Tests
     strategy:
       matrix:
-        # Cannot run on Linux due to missing Selenium Chrome Driver
-        # linux:
-        #   imageName: 'ubuntu-16.04'
+        linux:
+          imageName: 'ubuntu-16.04'
         windows:
           imageName: 'vs2017-win2016'
     pool:
@@ -68,73 +67,7 @@ jobs:
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
         displayName: 'Run tests'
-
-#manually added because there were issues with binskim
-  - job: Analysis
-    pool:
-      name: 00-OSIManaged-Test
-      demands: COMPUTERNAME -equals $(buildAgent)
-    steps:
-      - script: |
-          echo Clean
-          call dotnet clean
-          echo Restore
-          call dotnet restore --ignore-failed-sources
-          echo Build
-          call dotnet msbuild -p:HIGHENTROPYVA=true
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Build (DotNet)'
-
-      # BinSkim
-      - task: BinSkim@3
-        inputs:
-          InputType: 'Basic'
-          Function: 'analyze'
-          AnalyzeTarget: '$(Build.SourcesDirectory)$(projPath)/bin/Debug/netcoreapp3.0/CSVtoOCS_pkce.dll'
-
-      - task: BinSkim@3
-        inputs:
-          InputType: 'Basic'
-          Function: 'dump'
-          DumpTarget: '$(Build.ArtifactStagingDirectory)'
-
-      - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
-        inputs:
-          Products: BD
-          BlackDuckService: 'product-readiness.BlackDuck'
-          DetectArguments: |
-            --detect.project.name="product-readiness.$(bdProject)"
-            --detect.project.version.name="$(Build.SourceBranchName)"
-            --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
-            --detect.code.location.name="code_location_$(bdProject)_$(Build.SourceBranchName)"
-            --detect.bom.aggregate.name="bom_$(bdProject)_$(Build.SourceBranchName)"
-        displayName: 'Synopsys: Detect'
-
-         # Coverity
-      - script: if not exist $(covFolder) mkdir $(covFolder)
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Coverity: Make dir'
-        continueOnError: true
-
-      # - DotNet
-      - script: |
-          echo Clean
-          call dotnet clean
-          echo Restore
-          call dotnet restore
-          echo Build
-          "$(covPath)cov-build" --dir $(covFolder) dotnet build
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Coverity (DotNet): Build'
-
-      - script: '"$(covPath)cov-analyze" --dir .'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
-        displayName: 'Coverity: Analyze'
-
-      - script: '"$(covPath)cov-commit-defects" --stream "Engineering Incubation - $(covStream)" --host $(covServer) --https-port 8443 --auth-key-file "$(covAuthPath)" --dir .'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/$(covFolder)/
-        displayName: 'Coverity: Upload'
         
-
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: dotnet
