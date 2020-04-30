@@ -19,9 +19,7 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/library_samples/Python'
-  - name: covStream
-    value: LibPy
-  - name: bdProject
+  - name: analysisProject
     value: Lib_Python
 
 jobs:
