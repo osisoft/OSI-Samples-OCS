@@ -1,5 +1,9 @@
 # Authorization Code Flow + PKCE Sample and Test for Power BI Desktop
 
+**Version:** 1.0.2
+
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_PowerBI?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=996&branchName=master)
+
 The OCS Connector for Power BI Desktop is used to get data from the OCS API into Power BI Desktop. The connector uses the OAuth Authorization Code with PKCE flow to connect to the API and get an access token.
 
 ## Prerequisites
@@ -32,7 +36,10 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. The connector should be available as "OSIsoft Cloud Services Sample (Beta)" in the category "Online Services"
 1. Select it and click "Connect"
 1. If using the connector for the first time, you may get another warning regarding untrusted connectors
-1. When prompted for a URL, enter the API URL to get data from, like `https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/`
+1. When prompted for what URL settings to use,
+   - OCS URI: This should be the base url of OSIsoft Cloud Services, like `https://dat-b.osisoft.com`
+   - API URL Path: This should be the API endpoint path and parameters to use, like `/api/v1/Tenants/{tenantId}/Namespaces/`
+   - Timeout: Optionally, define a timeout in seconds for the request, usually only necessary for extremely large queries. By default, the timeout is 100 seconds.
 1. Click OK, and you will be prompted to login if you have not already, using an organizational account
 1. Once logged in, the Power Query Editor should open with the results.
 
@@ -40,7 +47,7 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 
 The query will look something like:
 
-```
+```C#
 let
     Source = OCSConnector.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/")
 in
@@ -55,7 +62,7 @@ Once the data is expanded, if necessary, right click on column headers and use t
 
 At this point, the data should be consumable in a Power BI Dashboard! The final query will look something like:
 
-```
+```C#
 let
     Source = OCSConnector_Sample.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/"),
     #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),

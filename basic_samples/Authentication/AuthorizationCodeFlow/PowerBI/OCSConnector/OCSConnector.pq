@@ -42,14 +42,35 @@ windowWidth = 720;
 windowHeight = 1024;
 
 [DataSource.Kind="OCSConnector_Sample", Publish="OCSConnector_Sample.Publish"]
-shared OCSConnector_Sample.Contents = (ocsUri as text, optional apiUri as text, optional timeout as number) =>
+shared OCSConnector_Sample.Contents = Value.ReplaceType(OCSConnectorImpl, OCSConnectorType);
+
+OCSConnectorType = type function(
+    ocsUri as (type text meta [
+        Documentation.FieldCaption = "OCS URI",
+        Documentation.FieldDescription = "OSIsoft Cloud Services base url",
+        Documentation.SampleValues = {"https://dat-b.osisoft.com"}
+    ]),
+    apiUri as (type text meta [
+        Documentation.FieldCaption = "API URI Path",
+        Documentation.FieldDescription = "Path and parameters for API endpoint",
+        Documentation.SampleValues = {"/api/v1/Tenants/{tenantId}/Namespaces"}
+    ]),
+    timeout as (type number meta [
+        Documentation.FieldCaption = "Timeout",
+        Documentation.FieldDescription = "Timeout in seconds for API requests",
+        Documentation.SampleValues = {100}
+    ])) as binary meta [
+        Documentation.LongDescription = "Raw data returned from API, usually JSON or CSV"
+    ];
+
+OCSConnectorImpl = (ocsUri as text, optional apiUri as text, optional timeout as number) =>
     let
         url = ocsUri & apiUri,
         source = if timeout = null
         then Web.Contents(url)
         else Web.Contents(url, [ Headers = [#"Request-Timeout" = Number.ToText(timeout)], Timeout = #duration(0,0,0,timeout)])
     in
-        source; 
+        source;
 
 // Data Source Kind description
 OCSConnector_Sample = [
