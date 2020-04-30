@@ -32,14 +32,13 @@ class Authentication(object):
         
 
     def getToken(self):
+        if ((self.__expiration - time.time()) > 5 * 60):
+            return self.__token
+            
         return self.__getToken()
 
 
     def __getClientIDSecretToken(self):
-           
-        if ((self.__expiration - time.time()) > 5 * 60):
-            return self.__token
-
         tokenEndpoint = self.__url + "/identity/connect/token"
 
         tokenInformation = requests.post(
@@ -60,10 +59,6 @@ class Authentication(object):
         return self.__token
 
     def __getPKCEToken(self):
-
-        if ((self.__expiration - time.time()) > 5 * 60):
-            return self.__token
-
         try:
             debug = os.environ.get("OCS_PKCE_DEBUG", None)
             redirect_uri = 'http://localhost:5004/callback.html'
