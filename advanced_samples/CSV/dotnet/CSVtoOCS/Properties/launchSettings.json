@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CSVtoOCS_pkce": {
+    "CSVtoOCS": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

@@ -34,7 +34,10 @@ namespace CSVtoOCS
         {
             string fileLocationIn = "datafile.csv";
             if (args.Length > 0)
-                fileLocationIn = args[0];
+            {
+                if(args[0] != "%LAUNCHER_ARGS%")
+                    fileLocationIn = args[0];
+            }
             MainAsync(fileLocation: fileLocationIn).GetAwaiter().GetResult();
         }
 

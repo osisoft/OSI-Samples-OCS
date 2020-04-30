@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace CSVtoOCS_pkceTest
+namespace CSVtoOCSTest
 {
     public class UnitTest1
     {

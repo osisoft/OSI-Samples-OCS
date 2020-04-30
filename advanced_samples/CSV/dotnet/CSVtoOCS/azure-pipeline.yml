@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/advanced_samples/CSV/dotnet/CSVtoOCS_pkce'
+      - '/advanced_samples/CSV/dotnet/CSVtoOC'
 
 pr:
   branches:
