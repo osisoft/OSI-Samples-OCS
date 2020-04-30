@@ -34,7 +34,7 @@ class Authentication(object):
     def getToken(self):
         if ((self.__expiration - time.time()) > 5 * 60):
             return self.__token
-            
+
         return self.__getToken()
 
 
@@ -60,7 +60,7 @@ class Authentication(object):
 
     def __getPKCEToken(self):
         try:
-            debug = os.environ.get("OCS_PKCE_DEBUG", None)
+            debug = int(os.environ.get("OCS_PKCE_DEBUG", 0))
             redirect_uri = 'http://localhost:5004/callback.html'
             scope = 'openid ocsapi'
 
