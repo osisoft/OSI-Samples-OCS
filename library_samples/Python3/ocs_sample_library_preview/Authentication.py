@@ -60,7 +60,6 @@ class Authentication(object):
 
     def __getPKCEToken(self):
         try:
-            debug = int(os.environ.get("OCS_PKCE_DEBUG", 0))
             redirect_uri = 'http://localhost:5004/callback.html'
             scope = 'openid ocsapi'
 
@@ -71,14 +70,14 @@ class Authentication(object):
                 hashlib.sha256(verifier).digest()).rstrip(b'=')
 
             # Get OAuth endpoint configuration
-            print('Step 1: Get OAuth endpoint configuration...') if debug else ()
+            print('Step 1: Get OAuth endpoint configuration...')
             endpoint = json.loads(requests.get(
                 self.__url + '/identity/.well-known/openid-configuration').content)
             auth_endpoint = endpoint.get('authorization_endpoint')
             token_endpoint = endpoint.get('token_endpoint')
 
             # Set up request handler for web browser login
-            print('Step 2: Set up server to process authorization response...') if debug else ()
+            print('Step 2: Set up server to process authorization response...')
 
             class RequestHandler(BaseHTTPRequestHandler):
                 """Handles authentication redirect uri and extracts authorization code from URL"""
@@ -102,7 +101,7 @@ class Authentication(object):
             server = HTTPServer(('', 5004), RequestHandler)
 
             # Open web browser against authorization endpoint
-            print('Step 3: Authorize the user...') if debug else ()
+            print('Step 3: Authorize the user...')
             auth_url = auth_endpoint + \
                 '?response_type=code&code_challenge=' + challenge.decode() + \
                 '&code_challenge_method=S256&client_id=' + self.__clientId + \
@@ -115,11 +114,11 @@ class Authentication(object):
                 raise SdsError("This notebook/script should be run locally on your machine to authenticate")
 
             # Wait for response in browser
-            print('Step 4: Set server to handle one request...') if debug else ()
+            print('Step 4: Set server to handle one request...')
             server.handle_request()
 
             # Use authorization code to get bearer token
-            print('Step 5: Get a token using the authorization code...') if debug else ()
+            print('Step 5: Get a token using the authorization code...')
             token = requests.post(token_endpoint, [
                 ('grant_type', 'authorization_code'),
                 ('client_id', self.__clientId),
@@ -134,10 +133,9 @@ class Authentication(object):
 
             self.__expiration = float(expiration) + time.time()
             self.__token = token['access_token']
-            print(f"Step 6: Read the Access Token: {self.__token}\nComplete!") if debug else ()
+            print(f"Step 6: Access token read ok\nComplete!")
             return self.__token
 
         except Exception as error:
             msg = "Encountered Error: {error}".format(error=error)
-            print(msg) if debug else ()
             raise SdsError(msg)
