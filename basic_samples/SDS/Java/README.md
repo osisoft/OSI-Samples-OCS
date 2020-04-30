@@ -18,7 +18,7 @@ Using VSCode, Eclipse or any IDE:
 
 1. Clone a local copy of the GitHub repository.
 1. Install Maven.
-1. \*Install the ocs_sample_library_preview to your local Maven repo using "mvn install" from \\library_samples\\Java\\ocs_sample_library_preview\\
+1. Install the ocs_sample_library_preview to your local Maven repo using `mvn install` from `\library_samples\Java\`
 1. If you are using Eclipse, select `File` > `Import` > `Maven`> `Existing maven project` and then select the local copy.
 1. Replace the configuration strings in `config.properties`
 
@@ -36,7 +36,7 @@ Using a command line:
       Variable value - location to the extracted folder for the  
       maven ~\apache-maven-x.x.x in User variables.  
       and, also add ~\apache-maven-x.x.x\bin path to the Path variable in System variables.
-1. \*Install the ocs_sample_library_preview to your local Maven repo using: `mvn install` from \library_samples\Java\ocs_sample_library_preview\
+1. Install the ocs_sample_library_preview to your local Maven repo using: `mvn install` from `\library_samples\Java\`
 1. Replace the configuration strings in `config.properties`
 
 Building and running the project:

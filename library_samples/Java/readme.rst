@@ -37,7 +37,7 @@ Using a command line
       and, also add ~\apache-maven-x.x.x\bin path to the Path variable in System variables.
 
 *Currently this project is not hosted on the central Maven repo and must be compiled and installed locally to be used in any of the other examples.
-To do this run mvn install library_samples\Java\ocs_sample_library_preview\pom.xml
+To do this run mvn install library_samples\Java\pom.xml
 
 Instantiate an OCS Client
 -----------------------

@@ -29,7 +29,7 @@
   
   <scm>
     
-  <connection>scm:git:git://github.com/osisoft/OSI-Samples/tree/master/library_samples/Java/ocs_sample_library_preview.git</connection>
+  <connection>scm:git:git://github.com/osisoft/OSI-Samples/tree/master/library_samples/Java.git</connection>
     <url>https://github.com/osisoft/OSI-Samples</url>
   </scm>
  

@@ -4,7 +4,7 @@
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=884&branchName=master)
 
-The sample code in this demonstrates how to invoke Data View REST APIs via the sample Java client [library](https://github.com/osisoft/OSI-Samples/tree/master/library_samples/Java/ocs_sample_library_preview). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a data view, update it, retrieve it, and retrieve data from it in different ways. At the end of the sample, everything that was created is deleted.
+The sample code in this demonstrates how to invoke Data View REST APIs via the sample Java client [library](https://github.com/osisoft/OSI-Samples/tree/master/library_samples/Java). The sample demonstrates how to establish a connection to SDS, obtain an authorization token, create an SdsType and SdsStream with data (if needed), create a data view, update it, retrieve it, and retrieve data from it in different ways. At the end of the sample, everything that was created is deleted.
 
 ## Summary of steps to run the Java demo
 
@@ -12,7 +12,7 @@ Using Eclipse or any IDE:
 
 1. Clone a local copy of the GitHub repository.
 1. Install Maven.
-1. \*Install the ocs_sample_library_preview to your local Maven repo using run mvn install pom.xml from `\library_samples\Java\ocs_sample_library_preview\`
+1. \*Install the ocs_sample_library_preview to your local Maven repo using run mvn install pom.xml from `\library_samples\Java\`
 1. If you are using Eclipse, select `File` > `Import` > `Maven`> `Existing maven project` and then select the local copy.
 1. Replace the configuration strings in `config.properties`
 
@@ -30,7 +30,7 @@ Using a command line:
       Variable value - location to the extracted folder for the  
       maven `~\apache-maven-x.x.x` in User variables.  
       and, also add `~\apache-maven-x.x.x\bin` path to the Path variable in System variables.
-1. \*Install the ocs_sample_library_preview to your local Maven repo using `run mvn install pom.xml` from `\library_samples\Java\ocs_sample_library_preview\`
+1. \*Install the ocs_sample_library_preview to your local Maven repo using `run mvn install pom.xml` from `\library_samples\Java\`
 1. Building and running the project.
    1. `cd` to your project location.
    1. run `mvn package exec:java` on cmd.

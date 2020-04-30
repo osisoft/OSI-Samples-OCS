@@ -313,7 +313,6 @@ typings/
 /Basic/DotNet/SdsRestApiCore/.vs/config/applicationhost.config
 .vscode/launch.json
 
-ocs_samples/library_samples/Java/ocs_sample_library_preview/ocs_sample_library_preview.iml
 *.zip
 cov-int/
 junit/
