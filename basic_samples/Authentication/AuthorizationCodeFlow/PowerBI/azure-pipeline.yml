@@ -62,10 +62,14 @@ jobs:
           fileLibrary: $(CredFileURLLibrary)
           filePath: $(projPath)
 
-      - script: | 
+      - script: |
+          echo Directory contents
           dir
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
-          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"          
+          echo MSBuild
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe -t:Rebuild"
+          echo Copy to Power BI Desktop
+          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+          echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
 
@@ -75,13 +79,7 @@ jobs:
 
       - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
-        displayName: 'Run coded UI'
-        
-      - script:
-          call xcopy ".\TestResults\." "C:\Users\$(username)\Documents\TestResults"
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
-        displayName: 'copytest results'
-        condition: always()
+        displayName: 'Run tests'
 
       - task: PublishTestResults@2
         inputs:
