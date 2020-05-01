@@ -3,13 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{4DF76451-A46A-4C0B-BE03-459FAAFA07E6}") = "OCSConnector", "OCSConnector\OCSConnector.mproj", "{4EBCB3F4-1799-44BF-84C1-9FBA08E44F9D}"
+Project("{4DF76451-A46A-4C0B-BE03-459FAAFA07E6}") = "OCSConnector", "OCSConnector\OCSConnector.mproj", "{792914F4-4B2E-47BC-BE54-5330B884DCA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCSConnectorTest", "OCSConnectorTest\OCSConnectorTest.csproj", "{1AF652CE-3EB9-4058-AAD0-D06F05FFA0EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5EC2A5D1-800D-4AEB-8A46-CD4A2EC5DF9F}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipeline.yml = azure-pipeline.yml
+		HISTORY.md = HISTORY.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -21,12 +22,12 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4EBCB3F4-1799-44BF-84C1-9FBA08E44F9D}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{4EBCB3F4-1799-44BF-84C1-9FBA08E44F9D}.Debug|x86.ActiveCfg = Debug|x86
-		{4EBCB3F4-1799-44BF-84C1-9FBA08E44F9D}.Debug|x86.Build.0 = Debug|x86
-		{4EBCB3F4-1799-44BF-84C1-9FBA08E44F9D}.Release|Any CPU.ActiveCfg = Release|x86
-		{4EBCB3F4-1799-44BF-84C1-9FBA08E44F9D}.Release|x86.ActiveCfg = Release|x86
-		{4EBCB3F4-1799-44BF-84C1-9FBA08E44F9D}.Release|x86.Build.0 = Release|x86
+		{792914F4-4B2E-47BC-BE54-5330B884DCA8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{792914F4-4B2E-47BC-BE54-5330B884DCA8}.Debug|x86.ActiveCfg = Debug|x86
+		{792914F4-4B2E-47BC-BE54-5330B884DCA8}.Debug|x86.Build.0 = Debug|x86
+		{792914F4-4B2E-47BC-BE54-5330B884DCA8}.Release|Any CPU.ActiveCfg = Release|x86
+		{792914F4-4B2E-47BC-BE54-5330B884DCA8}.Release|x86.ActiveCfg = Release|x86
+		{792914F4-4B2E-47BC-BE54-5330B884DCA8}.Release|x86.Build.0 = Release|x86
 		{1AF652CE-3EB9-4058-AAD0-D06F05FFA0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1AF652CE-3EB9-4058-AAD0-D06F05FFA0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AF652CE-3EB9-4058-AAD0-D06F05FFA0EA}.Debug|x86.ActiveCfg = Debug|Any CPU
