@@ -43,18 +43,26 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. Click OK, and you will be prompted to login if you have not already, using an organizational account
 1. Once logged in, the Power Query Editor should open with the results.
 
+When using the Power Query Advanced Editor, the function `OCSConnector_Sample.Contents` can be used. The parameters correspond to the parameters described above; `ocsUri`, `apiUri`, and `timeout`.
+
 ## Using the Results
 
 The query will look something like:
 
 ```C#
 let
-    Source = OCSConnector.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/")
+    Source = OCSConnector.Contents("https://dat-b.osisoft.com", "/api/v1/Tenants/{tenantid}/")
 in
     Source
 ```
 
-However, the results will be displayed as a list of "Record" objects that are not easily consumable. To convert the results to a table, right click the `List` header and select `To Table`, accepting the default options.
+However, the results will be displayed as binary content, which is not directly consumable by Power BI. The binary first needs to be parsed. Data from OSIsoft Cloud Services is usually returned as JSON, but some endpoints can also return CSV format. Generally, if the parameter `form=csv` or `form=csvh` is being used, the content is returned in CSV format, otherwise the content is in JSON format. Not all endpoints support the `form` parameter.
+
+To parse the binary content, right click on it, and select either "CSV" or "JSON".
+
+If your content is CSV, the data should be ready to use. If the column headers are using default names like Column1, make sure you are using `form=csvh` (CSV with headers) instead of `form=csv`. Power BI should parse the headers from `csvh` format into column headers automatically.
+
+If your content is in JSON, you will now see a list of "Record" objects that are still not easily consumable. To convert the results to a table, right click the `List` header and select `To Table`, accepting the default options.
 
 This does little better, the data is then displayed as a list of "Record" objects under the header "Column1." However, now there is an icon with two arrows in that column header. Click that button, and then select what fields to use in the table, and expand out the data.
 
@@ -64,11 +72,11 @@ At this point, the data should be consumable in a Power BI Dashboard! The final 
 
 ```C#
 let
-    Source = OCSConnector_Sample.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/"),
-    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
-    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1", {"Id", "Region", "Self", "Description", "State"}, {"Column1.Id", "Column1.Region", "Column1.Self", "Column1.Description", "Column1.State"})
+    Source = OCSConnector_Sample.Contents("https://dat-b.osisoft.com/", "api/v1/Tenants/{tenantid}/Namespaces/"),
+    Converted = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    Expanded = Table.ExpandRecordColumn(Converted, "Column1", {"Id", "Region", "Self", "Description", "State"}, {"Column1.Id", "Column1.Region", "Column1.Self", "Column1.Description", "Column1.State"})
 in
-    #"Expanded Column1"
+    Expanded
 ```
 
 ## Tests
