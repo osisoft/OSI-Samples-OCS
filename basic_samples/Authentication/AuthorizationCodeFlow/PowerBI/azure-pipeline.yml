@@ -79,12 +79,7 @@ jobs:
 
       - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
-        displayName: 'Run coded UI'
-
-      - script: call xcopy ".\TestResults\." "C:\Users\$(username)\Documents\TestResults"
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
-        displayName: 'copytest results'
-        condition: always()
+        displayName: 'Run tests'
 
       - task: PublishTestResults@2
         inputs:
