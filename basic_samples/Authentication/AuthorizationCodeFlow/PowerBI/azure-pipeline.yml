@@ -62,10 +62,10 @@ jobs:
           fileLibrary: $(CredFileURLLibrary)
           filePath: $(projPath)
 
-      - script: | 
+      - script: |
           dir
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe -t:Rebuild"
-          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"          
+          call copy /y ".\obj\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build'
 
@@ -76,9 +76,8 @@ jobs:
       - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
         displayName: 'Run coded UI'
-        
-      - script:
-          call xcopy ".\TestResults\." "C:\Users\$(username)\Documents\TestResults"
+
+      - script: call xcopy ".\TestResults\." "C:\Users\$(username)\Documents\TestResults"
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
         displayName: 'copytest results'
         condition: always()
