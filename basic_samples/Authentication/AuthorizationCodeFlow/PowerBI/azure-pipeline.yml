@@ -58,6 +58,10 @@ jobs:
           fileLibrary: $(CredFileURLLibrary)
           filePath: $(projPath)/OCSConnector
 
+      - bash: rm TestResults
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
+        displayName: 'Delete old test results'
+
       - script: |
           dir
           call vsdevcmd
