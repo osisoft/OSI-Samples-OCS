@@ -46,18 +46,18 @@ shared OCSConnector_Sample.Contents = Value.ReplaceType(OCSConnectorImpl, OCSCon
 
 OCSConnectorType = type function(
     ocsUri as (type text meta [
-        Documentation.FieldCaption = "OCS URI",
-        Documentation.FieldDescription = "OSIsoft Cloud Services base url",
+        Documentation.FieldCaption = "OSIsoft Cloud Services URI",
+        Documentation.FieldDescription = "OSIsoft Cloud Services API base address",
         Documentation.SampleValues = {"https://dat-b.osisoft.com"}
     ]),
-    apiUri as (type text meta [
+    optional apiUri as (type text meta [
         Documentation.FieldCaption = "API URI Path",
         Documentation.FieldDescription = "Path and parameters for API endpoint",
         Documentation.SampleValues = {"/api/v1/Tenants/{tenantId}/Namespaces"}
     ]),
-    timeout as (type number meta [
+    optional timeout as (type number meta [
         Documentation.FieldCaption = "Timeout",
-        Documentation.FieldDescription = "Timeout in seconds for API requests",
+        Documentation.FieldDescription = "Timeout in seconds for API request",
         Documentation.SampleValues = {100}
     ])) as binary meta [
         Documentation.LongDescription = "Raw data returned from API, usually JSON or CSV"
