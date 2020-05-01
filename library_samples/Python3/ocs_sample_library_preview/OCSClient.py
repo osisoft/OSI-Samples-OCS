@@ -12,7 +12,7 @@ class OCSClient:
     def __init__(self, apiversion, tenant, url, clientId, clientSecret,
                  acceptVerbosity=False):
         """
-        Use this to help comuninaication with OCS
+        Use this to help communinication with OCS
         :param apiversion: Version of the api you are communicating with
         :param tenant: Your tenant ID
         :param url: The base URL for your OCS instance
