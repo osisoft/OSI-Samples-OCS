@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/advanced_samples/CSV/dotnet/CSVtoOC'
+      - "/advanced_samples/CSV/dotnet/CSVtoOC"
 
 pr:
   branches:
@@ -13,10 +13,10 @@ pr:
       - master
   paths:
     include:
-      - '/advanced_samples/CSV/dotnet/CSVtoOCS_pkce'
+      - "/advanced_samples/CSV/dotnet/CSVtoOCS"
 
 schedules:
-  - cron: '0 0 * * 0'
+  - cron: "0 0 * * 0"
     displayName: Weekly build
     branches:
       include:
@@ -24,17 +24,17 @@ schedules:
     always: true
 
 variables:
-  - template: '/miscellaneous/build_templates/variables.yml'
+  - template: "/miscellaneous/build_templates/variables.yml"
   - name: projPath
-    value: '/advanced_samples/CSV/dotnet/CSVtoOCS_pkce'
+    value: "/advanced_samples/CSV/dotnet/CSVtoOCS"
   - name: testPath
-    value: '/advanced_samples/CSV/dotnet/CSVtoOCS_pkceTest'
+    value: "/advanced_samples/CSV/dotnet/CSVtoOCSTest"
   - name: CredFile
     value: appsettings.json
   - name: CredFileLibrary
     value: product-readiness.csvtoocs_dotnet.json
   - name: covStream
-    value: CSVtoOCS_DotNet 
+    value: CSVtoOCS_DotNet
   - name: bdProject
     value: CSVtoOCS_DotNet
 
@@ -43,13 +43,13 @@ jobs:
     strategy:
       matrix:
         linux:
-          imageName: 'ubuntu-16.04'
+          imageName: "ubuntu-16.04"
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: "vs2017-win2016"
     pool:
       vmImage: $(imageName)
     steps:
-      - template: '/miscellaneous/build_templates/config.yml'
+      - template: "/miscellaneous/build_templates/config.yml"
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
@@ -59,15 +59,15 @@ jobs:
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Build app'
+        displayName: "Build app"
 
       - script: |
           dotnet restore
           dotnet msbuild -p:HIGHENTROPYVA=true
           dotnet test
         workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: 'Run tests'
-        
-  - template: '/miscellaneous/build_templates/analysis.yml'
+        displayName: "Run tests"
+
+  - template: "/miscellaneous/build_templates/analysis.yml"
     parameters:
       language: dotnet
