@@ -78,7 +78,6 @@ namespace CSVtoOCS
                 }
 
                 (configuration as ConfigurationRoot).Dispose();
-                var uriResource = new Uri(resource);
 
                 // Setup access to OCS
                 AuthenticationHandler_PKCE authenticationHandler = new AuthenticationHandler_PKCE(tenantId, clientId, resource);
@@ -89,8 +88,6 @@ namespace CSVtoOCS
 
                 if (createStreams)
                 {
-                    metaService = sdsService.GetMetadataService(tenantId, namespaceId);
-
                     SdsType typeToCreate = SdsTypeBuilder.CreateSdsType<TemperatureReadings>();
                     typeToCreate.Id = typeID;
                     Console.WriteLine("Creating Type");
