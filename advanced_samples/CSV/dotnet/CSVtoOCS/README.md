@@ -4,27 +4,26 @@
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/CSVtoOCS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1393&branchName=master)
 
-Developed against DotNet 3.2.
+Developed against DotNet core 3.1.
 
-## Getting Started
+## About this sample
+
+This sample sends data from a passed in csv file or from the datafile.csv file local to the application to OCS.
+This sample uses the Authentication flow to authenticate against OCS. .  
+By default it will create the type and the streams used in the defauly datafile.csv.
+When testing it will check the values to make sure they are saved on OCS.
+When testing, at the end, it will delete whatever it added to the system.
+
+## Running this sample
 
 In this example we assume that you have the dotnet core CLI.
 
-To run this example from the commandline run
+### Prerequisites
 
-```
-dotnet restore
-dotnet run
-```
+- Register an Authorization Code client in OCS and ensure that the registered client in OCS contains `https://127.0.0.1:54567/signin-oidc` in the list of RedirectUris. For details on this please see this [video](https://www.youtube.com/watch?v=97QJjUKa6Pk)
+- Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
-to test this program change directories to the test and run
-
-```
-dotnet restore
-dotnet test
-```
-
-## Configure constants for connecting and authentication
+### Configure constants for connecting and authentication
 
 Please update the appsettings.json file with the appropriate information as shown below. This sample leverages PKCE login, so that way the user running this application has appropriate authorization.
 
@@ -39,14 +38,23 @@ Please update the appsettings.json file with the appropriate information as show
 }
 ```
 
-## About this sample
+### Using Command Line
 
-This sample sends data from a passed in csv file or from the datafile.csv file local to the application to OCS. 
-By default it will create the type and the streams used in the defauly datafile.csv. 
-When testing it will check the values to make sure they are saved on OCS. 
-When testing, at the end, it will delete whatever it added to the system.
+To run this example from the commandline run:
+
+```shell
+dotnet restore
+dotnet run
+```
+
+To test this program change directories to the test and run:
+
+```shell
+dotnet restore
+dotnet test
+```
 
 ---
 
-For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
+For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)

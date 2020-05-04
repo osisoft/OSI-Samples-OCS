@@ -20,7 +20,6 @@ namespace CSVtoOCS
     public class Program
     {
         public static Exception toThrow = null;
-        public static bool success = true;
 
         static List<TemperatureReadingsWithIds> dataList;
         static IEnumerable<string> streamsIdsToSendTo;
@@ -29,14 +28,14 @@ namespace CSVtoOCS
         private static bool createStreams = true;
         static string stream1ID = "stream1", stream2ID = "stream2", typeID = "TemperatureReadings";
         static bool test = false;
+        static IConfiguration configuration;
 
         static void Main(string[] args)
         {
             string fileLocationIn = "datafile.csv";
             if (args.Length > 0)
             {
-                if(args[0] != "%LAUNCHER_ARGS%")
-                    fileLocationIn = args[0];
+                fileLocationIn = args[0];
             }
             MainAsync(fileLocation: fileLocationIn).GetAwaiter().GetResult();
         }
@@ -44,7 +43,6 @@ namespace CSVtoOCS
         public static async Task<bool> MainAsync(bool testIn = false, string fileLocation = "datafile.csv")
         {
             test = testIn;
-            success = true;
 
             try
             {
@@ -58,7 +56,7 @@ namespace CSVtoOCS
                 streamsIdsToSendTo = dataList.Select(dataeEntry => dataeEntry.StreamId).Distinct();
 
                 //Get Configuration information about where this is sending to
-                IConfiguration configuration = new ConfigurationBuilder()
+                configuration = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .AddJsonFile("appsettings.test.json", optional: true)
@@ -80,7 +78,7 @@ namespace CSVtoOCS
                 }
 
                 (configuration as ConfigurationRoot).Dispose();
-                var uriResource = new Uri(resource);                               
+                var uriResource = new Uri(resource);
 
                 // Setup access to OCS
                 AuthenticationHandler_PKCE authenticationHandler = new AuthenticationHandler_PKCE(tenantId, clientId, resource);
@@ -123,7 +121,6 @@ namespace CSVtoOCS
             }
             catch (Exception ex)
             {
-                success = false;
                 Console.WriteLine(ex.Message);
                 toThrow = ex;
             }
@@ -159,7 +156,8 @@ namespace CSVtoOCS
 
             if (toThrow != null)
                 throw toThrow;
-            return success;
+
+            return toThrow == null;
         }
 
         /// <summary>
@@ -178,7 +176,6 @@ namespace CSVtoOCS
                 Console.WriteLine($"Got error in {methodToRun.Method.Name} with value {value} but continued on:" + ex.Message);
                 if (toThrow == null)
                 {
-                    success = false;
                     toThrow = ex;
                 }
             }
@@ -220,7 +217,6 @@ namespace CSVtoOCS
                 {
                     if (toThrow == null)
                     {
-                        success = false;
                         toThrow = ex;
                     }
                 }
@@ -244,7 +240,6 @@ namespace CSVtoOCS
                     Console.WriteLine($"Got error in seeing that removed values are gone in {streamId} but continued on:" + ex.Message);
                     if (toThrow == null)
                     {
-                        success = false;
                         toThrow = ex;
                     }
                 }
@@ -261,12 +256,11 @@ namespace CSVtoOCS
                     var timeStampToDelete = dataList.Select(o => o.Timestamp);
                     await dataService.RemoveValuesAsync(streamId, timeStampToDelete);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"Got error in removing values in {streamId} but continued on:" + ex.Message);
                     if (toThrow == null)
                     {
-                        success = false;
                         toThrow = ex;
                     }
                 }
@@ -277,14 +271,14 @@ namespace CSVtoOCS
         {
             public string StreamId { get; set; }
         }
-        
+
         public class TemperatureReadings
         {
             public TemperatureReadings()
             {
             }
 
-            public TemperatureReadings (TemperatureReadingsWithIds tempReading)
+            public TemperatureReadings(TemperatureReadingsWithIds tempReading)
             {
                 Timestamp = tempReading.Timestamp;
                 Temperature1 = tempReading.Temperature1;
