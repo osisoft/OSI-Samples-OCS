@@ -1,5 +1,6 @@
 import json
 
+from .Authentication import Authentication
 from .SdsError import SdsError
 
 import requests
@@ -9,17 +10,13 @@ import time
 class BaseClient(object):
     """Handles communication with Sds Service.  Internal Use"""
 
-    def __init__(self, apiversion, tenant, url, clientId, clientSecret,
+    def __init__(self, apiversion, tenant, url, clientId, clientSecret=None,
                  acceptVerbosity=False):
         self.__apiversion = apiversion
         self.__tenant = tenant
-        self.__clientId = clientId
-        self.__clientSecret = clientSecret
         self.__url = url  # if resource.endswith("/")  else resource + "/"
-
-        self.__token = ""
-        self.__expiration = 0
-        self.__getToken()
+        self.__auth_object = Authentication(tenant, url, clientId, clientSecret)
+        self.__auth_object.getToken()
         self.__acceptVerbosity = acceptVerbosity
         self.__requestTimeout = None
 
@@ -78,27 +75,8 @@ class BaseClient(object):
         Gets the bearer token
         :return:
         """
-        if ((self.__expiration - time.time()) > 5 * 60):
-            return self.__token
-
-        tokenEndpoint = self.__url + "/identity/connect/token"
-
-        tokenInformation = requests.post(
-            tokenEndpoint,
-            data={"client_id": self.__clientId,
-                  "client_secret": self.__clientSecret,
-                  "grant_type": "client_credentials"})
-
-        token = json.loads(tokenInformation.content)
-
-        expiration = token.get("expires_in", None)
-        if expiration is None:
-            raise SdsError(
-                f"Failed to get token, check client id/secret: {token['error']}")
-
-        self.__expiration = float(expiration) + time.time()
-        self.__token = token['access_token']
-        return self.__token
+        return self.__auth_object.getToken()
+ 
 
     def sdsHeaders(self):
         """

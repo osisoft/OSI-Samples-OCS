@@ -9,7 +9,7 @@ class OCSClient:
     A client that handles communication with OCS
     """
 
-    def __init__(self, apiversion, tenant, url, clientId, clientSecret,
+    def __init__(self, apiversion, tenant, url, clientId, clientSecret=None,
                  acceptVerbosity=False):
         """
         Use this to help communinication with OCS
