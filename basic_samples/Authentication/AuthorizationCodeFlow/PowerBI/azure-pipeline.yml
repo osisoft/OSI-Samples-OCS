@@ -65,7 +65,7 @@ jobs:
       - script: |
           dir
           call vsdevcmd
-          call msbuild"
+          call msbuild -t:rebuild"
           call copy /y ".\OCSConnector\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
