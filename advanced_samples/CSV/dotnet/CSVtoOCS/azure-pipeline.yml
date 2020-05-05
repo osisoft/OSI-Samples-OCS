@@ -1,0 +1,76 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - "/advanced_samples/CSV/dotnet/CSVtoOC"
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - "/advanced_samples/CSV/dotnet/CSVtoOCS"
+
+schedules:
+  - cron: "0 0 * * 0"
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+    always: true
+
+variables:
+  - template: "/miscellaneous/build_templates/variables.yml"
+  - name: projPath
+    value: "/advanced_samples/CSV/dotnet/CSVtoOCS"
+  - name: testPath
+    value: "/advanced_samples/CSV/dotnet/CSVtoOCSTest"
+  - name: CredFile
+    value: appsettings.json
+  - name: CredFileLibrary
+    value: product-readiness.csvtoocs_dotnet.json
+  - name: covStream
+    value: CSVtoOCS_DotNet
+  - name: bdProject
+    value: CSVtoOCS_DotNet
+
+jobs:
+  - job: Tests
+    strategy:
+      matrix:
+        # - Chrome Driver throws errors
+        #linux:
+        #imageName: "ubuntu-16.04"
+        windows:
+          imageName: "vs2017-win2016"
+    pool:
+      vmImage: $(imageName)
+    steps:
+      - template: "/miscellaneous/build_templates/config.yml"
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - script: |
+          dotnet restore
+          dotnet msbuild -p:HIGHENTROPYVA=true
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: "Build app"
+
+      - script: |
+          dotnet restore
+          dotnet msbuild -p:HIGHENTROPYVA=true
+          dotnet test
+        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
+        displayName: "Run tests"
+
+  - template: "/miscellaneous/build_templates/analysis.yml"
+    parameters:
+      language: dotnet
+      # - Chrome Driver throws errors
+      skipBinSkim: true
