@@ -1,8 +1,12 @@
 # Version History
 
-## 0.1.6_preview / 2020-04-30
+## 0.1.7_preview / 2020-05-05
 
 - Updated to use Polaris in place of Coverity
+
+## 0.1.6_preview / 2020-05-04
+
+- Added overload of OCSClient that allows PKCE authentication
 
 ## 0.1.5.2_internal / 2020-04-02
 
