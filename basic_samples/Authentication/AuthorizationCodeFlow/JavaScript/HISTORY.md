@@ -1,6 +1,6 @@
 # Version History
 
-## 1.1.0 / 2020-04-16
+## 1.1.0 / 2020-05-05
 
 - Use npm package 'serve' in place of 'http-server'
 - Updated to use Polaris in place of Coverity

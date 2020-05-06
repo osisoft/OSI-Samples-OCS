@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.13 / 2020-04-27
+## 1.0.13 / 2020-05-05
 
 - Updated to use Polaris in place of Coverity
 - Log and publish test results

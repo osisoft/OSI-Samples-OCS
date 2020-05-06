@@ -196,14 +196,12 @@ namespace SdsTsDotNet
 
                 // Step 11
                 //  Bulk calls
-                Console.WriteLine("Step 11a:");
                 #region step11a
                 var tankStream0 = new SdsStream
                 {
                     Id = streamTank0,
                     TypeId = tankType.Id,
                 };
-                Console.WriteLine("Step 11a: 1");
                 tankStream = await metadataService.GetOrCreateStreamAsync(tankStream0).ConfigureAwait(false);
 
                 var tankStream2 = new SdsStream
@@ -212,25 +210,20 @@ namespace SdsTsDotNet
                     TypeId = tankType.Id,
                     Description = "A stream for data of tank2",
                 };
-                Console.WriteLine("Step 11a: 2");
                 tankStream2 = await metadataService.GetOrCreateStreamAsync(tankStream2).ConfigureAwait(false);
 
-                Console.WriteLine("Step 11a: 3");
                 var data2 = GetData2();
                 var sortedData2 = data2.OrderBy(entry => entry.Time).ToList();
                 var firstTime2 = sortedData2.First();
                 var lastTime2 = sortedData2.Last();
 
-                Console.WriteLine("Step 11a: 4");
                 await dataService.InsertValuesAsync(tankStream2.Id, data2).ConfigureAwait(false);
-                Console.WriteLine("Step 11a: 5");
                 await dataService.InsertValuesAsync(tankStream0.Id, GetData()).ConfigureAwait(false);
 
                 #endregion
 
                 Thread.Sleep(200); // slight rest here for consistency
 
-                Console.WriteLine("Step 11b:");
                 #region step11b
                 var results2Tanks = await dataService.GetJoinValuesAsync<PressureTemperatureData>(
                     new string[] { tankStream0.Id, tankStream2.Id },
