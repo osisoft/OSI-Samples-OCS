@@ -2,6 +2,6 @@
 {
     public interface IOpenBrowser
     {
-        void OpenBrowser(string url, string userName, string password);
+        void OpenBrowser(string address, string userName, string password);
     }
 }

@@ -21,6 +21,7 @@ schedules:
     branches:
       include:
         - master
+    always: true
 
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
@@ -30,20 +31,17 @@ variables:
     value: config.js
   - name: CredFileLibrary
     value: product-readiness.auth_pkce_javascript.js
-  - name: covStream
-    value: Auth_PKCE_JavaScript
-  - name: bdProject
+  - name: analysisProject
     value: Auth_PKCE_JavaScript
 
 jobs:
   - job: Tests
     strategy:
       matrix:
-        # Cannot run on Linux due to missing Selenium Chrome Driver
-        # linux:
-        #   imageName: 'ubuntu-16.04'
+        linux:
+          imageName: ubuntu-latest
         windows:
-          imageName: 'vs2017-win2016'
+          imageName: windows-latest
     pool:
       vmImage: $(imageName)
     steps:
@@ -58,7 +56,7 @@ jobs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
-      - script: call npm ci
+      - bash: npm ci
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Install dependencies'
 
@@ -66,9 +64,19 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Run app'
 
-      - script: call npm test
+      - bash: npm test
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: '*.xml'
+          failTaskOnFailedTests: true
+          searchFolder: '$(Build.SourcesDirectory)$(projPath)/TestResults'
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+        displayName: 'Publish test results'
+        condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

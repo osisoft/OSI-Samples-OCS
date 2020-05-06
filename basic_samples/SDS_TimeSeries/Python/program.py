@@ -1,98 +1,104 @@
+"""
+This sample script demonstrates how to invoke the
+Sequential Data Store REST API with Time Series data
+"""
+
+# Disable pylint warnings:
+# Allow catching general exception Exception (broad-except)
+# pylint: disable=W0703
+# Allow more than 15 local variables (too-many-locals)
+# pylint: disable=R0914
+# Allow more than 50 statements (too-many-statements)
+# pylint: disable=R0915
+
+import configparser
+import json
+import time
 from ocs_sample_library_preview import (SdsType, SdsTypeCode, SdsTypeProperty,
                                         OCSClient, SdsStream)
-import configparser
-import time
-import json
 
-sendingToOCS = True
-namespaceId = ''
-typeValueTimeName = "Value_Time"
-typePressureTemperatureTimeName = "Pressure_Temp_Time"
+SENDING_TO_OCS = True
+TYPE_VALUE_TIME_NAME = "Value_Time"
+TYPE_PRESSURE_TEMPERATURE_TIME_NAME = "Pressure_Temp_Time"
 
-streamPressureName = "Pressure_Tank1"
-streamTempName = "Temperature_Tank1"
-streamTank0 = "Vessel"
-streamTank1 = "Tank1"
-streamTank2 = "Tank2"
+STREAM_PRESSURE_NAME = "Pressure_Tank1"
+STREAM_TEMP_NAME = "Temperature_Tank1"
+STREAM_TANK_0 = "Vessel"
+STREAM_TANK_1 = "Tank1"
+STREAM_TANK_2 = "Tank2"
 
-valueCache = []
-valueCache2 = []
-exception: Exception = None
+VALUE_CACHE = []
+VALUE_CACHE_2 = []
 
 
-def CheckCreation(client, vals):
-    return True
+def get_type_value_time():
+    """Creates a type for value/time events"""
 
-
-def GetType_ValueTime():
-
-    global typeValueTimeName
-    typeValueTime = SdsType(
-        id=typeValueTimeName,
+    type_value_time = SdsType(
+        id=TYPE_VALUE_TIME_NAME,
         description="A Time-Series indexed type with a value",
         sdsTypeCode=SdsTypeCode.Object)
 
-    doubleType = SdsType()
-    doubleType.Id = "doubleType"
-    doubleType.SdsTypeCode = SdsTypeCode.Double
+    double_type = SdsType()
+    double_type.Id = "doubleType"
+    double_type.SdsTypeCode = SdsTypeCode.Double
 
-    timeType = SdsType()
-    timeType.Id = "string"
-    timeType.SdsTypeCode = SdsTypeCode.DateTime
+    time_type = SdsType()
+    time_type.Id = "string"
+    time_type.SdsTypeCode = SdsTypeCode.DateTime
 
     value = SdsTypeProperty()
     value.Id = "value"
-    value.SdsType = doubleType
+    value.SdsType = double_type
 
-    time = SdsTypeProperty()
-    time.Id = "time"
-    time.SdsType = timeType
-    time.IsKey = True
+    time_prop = SdsTypeProperty()
+    time_prop.Id = "time"
+    time_prop.SdsType = time_type
+    time_prop.IsKey = True
 
-    typeValueTime.Properties = []
-    typeValueTime.Properties.append(value)
-    typeValueTime.Properties.append(time)
+    type_value_time.Properties = []
+    type_value_time.Properties.append(value)
+    type_value_time.Properties.append(time_prop)
 
-    return typeValueTime
+    return type_value_time
 
 
-def GetType_PressTempTime():
-    global typePressureTemperatureTimeName
-    typePressTempTime = SdsType(
-        id=typePressureTemperatureTimeName,
+def get_type_press_temp_time():
+    """Creates a type for press/temp/time events"""
+
+    type_press_temp_time = SdsType(
+        id=TYPE_PRESSURE_TEMPERATURE_TIME_NAME,
         description="A Time-Series indexed type with 2 values",
         sdsTypeCode=SdsTypeCode.Object)
 
-    doubleType = SdsType()
-    doubleType.Id = "doubleType"
-    doubleType.SdsTypeCode = SdsTypeCode.Double
+    double_type = SdsType()
+    double_type.Id = "doubleType"
+    double_type.SdsTypeCode = SdsTypeCode.Double
 
-    timeType = SdsType()
-    timeType.Id = "string"
-    timeType.SdsTypeCode = SdsTypeCode.DateTime
+    time_type = SdsType()
+    time_type.Id = "string"
+    time_type.SdsTypeCode = SdsTypeCode.DateTime
 
     temperature = SdsTypeProperty()
     temperature.Id = "temperature"
-    temperature.SdsType = doubleType
+    temperature.SdsType = double_type
 
     pressure = SdsTypeProperty()
     pressure.Id = "pressure"
-    pressure.SdsType = doubleType
+    pressure.SdsType = double_type
 
-    time = SdsTypeProperty()
-    time.Id = "time"
-    time.SdsType = timeType
-    time.IsKey = True
+    time_prop = SdsTypeProperty()
+    time_prop.Id = "time"
+    time_prop.SdsType = time_type
+    time_prop.IsKey = True
 
-    typePressTempTime.Properties = [temperature, pressure, time]
+    type_press_temp_time.Properties = [temperature, pressure, time_prop]
 
-    return typePressTempTime
+    return type_press_temp_time
 
 
-def GetData():
-    global valueCache
-    if valueCache:
-        return valueCache
+def get_data():
+    """Creates a set of data for use in the sample"""
 
     values = []
     values.append({"pressure": 346, "temperature": 91,
@@ -111,23 +117,19 @@ def GetData():
                    "time": "2017-01-11T22:27:23.430Z"})
     values.append({"pressure": 390, "temperature": 0,
                    "time": "2017-01-11T22:28:29.430Z"})
-    valueCache = values
     return values
 
 
-def GetData_Tank2():
-    global valueCache2
-    if valueCache2:
-        return valueCache2
+def get_data_tank_2():
+    """Creates a set of data for use in the sample"""
+
     values = []
     values.append({"pressure": 345, "temperature": 89,
                    "time": "2017-01-11T22:20:23.430Z"})
-
     values.append({"pressure": 356, "temperature": 0,
                    "time": "2017-01-11T22:21:23.430Z"})
     values.append({"pressure": 354, "temperature": 88,
                    "time": "2017-01-11T22:22:23.430Z"})
-
     values.append({"pressure": 374, "temperature": 87,
                    "time": "2017-01-11T22:28:23.430Z"})
     values.append({"pressure": 384.5, "temperature": 88,
@@ -137,45 +139,47 @@ def GetData_Tank2():
     values.append({"pressure": 390, "temperature": 87,
                    "time": "2017-01-11T22:28:29.430Z"})
 
-    valueCache2 = values
     return values
 
 
-def GetPressureData():
-    vals = GetData()
+def get_pressure_data():
+    """Gets a set of pressure data"""
+
+    vals = get_data()
     values = []
     for val in vals:
         values.append({"value": val["pressure"], "time": val["time"]})
     return values
 
 
-def GetTemperatureData():
-    vals = GetData()
+def get_temperature_data():
+    """Gets a set of temperature data"""
+
+    vals = get_data()
     values = []
     for val in vals:
         values.append({"value": val["temperature"], "time": val["time"]})
     return values
 
 
-def suppressError(sdsCall):
-    global exception
+def suppress_error(sds_call):
+    """Suppress an error thrown by SDS"""
     try:
-        sdsCall()
-    except Exception as e:
-        if not (exception):
-            exception = e
-        print(("Encountered Error: {error}".format(error=e)))
+        sds_call()
+    except Exception as error:
+        print(f"Encountered Error: {error}")
 
 
-def main():
-    global namespaceId, streamPressureName, streamTempName, exception
+def main(test=False):
+    """This function is the main body of the SDS Time Series sample script"""
+    exception = None
     try:
         config = configparser.ConfigParser()
         config.read('config.ini')
-        namespaceId = config.get('Configurations', 'Namespace')
+        namespace_id = config.get('Configurations', 'Namespace')
 
-# step 1
-        ocsClient: OCSClient = OCSClient(
+        # step 1
+        ocs_client: OCSClient = OCSClient(
             config.get('Access', 'ApiVersion'),
             config.get('Access', 'Tenant'),
             config.get('Access', 'Resource'),
@@ -183,67 +187,68 @@ def main():
             config.get('Credentials', 'ClientSecret'),
             False)
 
-# step 2
+        # step 2
         print('Creating value and time type')
-        timeValueType = GetType_ValueTime()
-        timeValueType = ocsClient.Types.getOrCreateType(
-            namespaceId, timeValueType)
+        time_value_type = get_type_value_time()
+        time_value_type = ocs_client.Types.getOrCreateType(
+            namespace_id, time_value_type)
 
-# step 3
+        # step 3
         print('Creating a stream for pressure and temperature')
-        pressureStream = SdsStream(
-            id=streamPressureName,
-            typeId=timeValueType.Id,
+        pressure_stream = SdsStream(
+            id=STREAM_PRESSURE_NAME,
+            typeId=time_value_type.Id,
             description="A stream for pressure data of tank1")
-        ocsClient.Streams.createOrUpdateStream(namespaceId, pressureStream)
-        temperatureStream = SdsStream(
-            id=streamTempName,
-            typeId=timeValueType.Id,
+        ocs_client.Streams.createOrUpdateStream(namespace_id, pressure_stream)
+        temperature_stream = SdsStream(
+            id=STREAM_TEMP_NAME,
+            typeId=time_value_type.Id,
             description="A stream for temperature data of tank1")
-        ocsClient.Streams.createOrUpdateStream(namespaceId, temperatureStream)
+        ocs_client.Streams.createOrUpdateStream(
+            namespace_id, temperature_stream)
 
-# step 4
-        ocsClient.Streams.insertValues(
-            namespaceId,
-            pressureStream.Id,
-            json.dumps((GetPressureData())))
-        ocsClient.Streams.insertValues(
-            namespaceId,
-            temperatureStream.Id,
-            json.dumps((GetTemperatureData())))
+        # step 4
+        ocs_client.Streams.insertValues(
+            namespace_id,
+            pressure_stream.Id,
+            json.dumps((get_pressure_data())))
+        ocs_client.Streams.insertValues(
+            namespace_id,
+            temperature_stream.Id,
+            json.dumps((get_temperature_data())))
 
-# step 5
+        # step 5
         print('Creating a tank type that has both stream and temperature')
-        tankType = GetType_PressTempTime()
-        tankType = ocsClient.Types.getOrCreateType(namespaceId, tankType)
+        tank_type = get_type_press_temp_time()
+        tank_type = ocs_client.Types.getOrCreateType(namespace_id, tank_type)
 
-# step 6
+        # step 6
         print('Creating a tank stream')
-        tankStream = SdsStream(
-            id=streamTank1,
-            typeId=tankType.Id,
+        tank_stream = SdsStream(
+            id=STREAM_TANK_1,
+            typeId=tank_type.Id,
             description="A stream for data of tank1s")
-        ocsClient.Streams.createOrUpdateStream(namespaceId, tankStream)
+        ocs_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
 
-# step 7
-        ocsClient.Streams.insertValues(namespaceId, streamTank1,
-                                       json.dumps(GetData()))
+        # step 7
+        ocs_client.Streams.insertValues(namespace_id, STREAM_TANK_1,
+                                        json.dumps(get_data()))
 
         print()
         print()
         print('Looking at the data in the system.  In this case we have some'
               'null values that are encoded as 0 for the value.')
-        data = GetData()
-        tank1Sorted = sorted(data, key=lambda x: x['time'], reverse=False)
+        data = get_data()
+        tank_1_sorted = sorted(data, key=lambda x: x['time'], reverse=False)
         print()
         print('Value we sent:')
-        print(tank1Sorted[1])
-        firstTime = tank1Sorted[0]['time']
-        lastTime = tank1Sorted[-1]['time']
+        print(tank_1_sorted[1])
+        first_time = tank_1_sorted[0]['time']
+        last_time = tank_1_sorted[-1]['time']
 
-# step 8
-        results = ocsClient.Streams.getWindowValues(
-            namespaceId, streamPressureName, None, firstTime, lastTime)
+        # step 8
+        results = ocs_client.Streams.getWindowValues(
+            namespace_id, STREAM_PRESSURE_NAME, None, first_time, last_time)
 
         print()
         print('Value from pressure stream:')
@@ -251,73 +256,74 @@ def main():
 
         print()
         print('Value from tank1 stream:')
-        results = ocsClient.Streams.getWindowValues(
-            namespaceId, streamTank1, None, firstTime, lastTime)
+        results = ocs_client.Streams.getWindowValues(
+            namespace_id, STREAM_TANK_1, None, first_time, last_time)
         print((results)[1])
 
-# step 9
+        # step 9
         print()
         print()
         print("turning on verbosity")
-        ocsClient.acceptverbosity = True
+        ocs_client.acceptverbosity = True
 
         print("This means that will get default values back (in our case"
               " 0.0 since we are looking at doubles)")
 
         print()
         print('Value from pressure stream:')
-        results = ocsClient.Streams.getWindowValues(
-            namespaceId, streamPressureName, None, firstTime, lastTime)
+        results = ocs_client.Streams.getWindowValues(
+            namespace_id, STREAM_PRESSURE_NAME, None, first_time, last_time)
         print((results)[1])
         print()
         print('Value from tank1 stream:')
-        results = ocsClient.Streams.getWindowValues(
-            namespaceId, streamTank1, None, firstTime, lastTime)
+        results = ocs_client.Streams.getWindowValues(
+            namespace_id, STREAM_TANK_1, None, first_time, last_time)
         print((results)[1])
 
-# step 10
+        # step 10
 
         print()
         print()
         print("Getting data summary")
         # the count of 1 refers to the number of intervals requested
-        summaryResults = ocsClient.Streams.getSummaries(
-            namespaceId, streamTank1, None, firstTime, lastTime, 1)
-        print(summaryResults)
+        summary_results = ocs_client.Streams.getSummaries(
+            namespace_id, STREAM_TANK_1, None, first_time, last_time, 1)
+        print(summary_results)
 
         print()
         print()
         print('Now we want to look at data across multiple tanks.')
         print('For that we can take advantage of bulk stream calls')
         print('Creating new tank streams')
-        tankStream = SdsStream(
-            id=streamTank2,
-            typeId=tankType.Id,
+        tank_stream = SdsStream(
+            id=STREAM_TANK_2,
+            typeId=tank_type.Id,
             description="A stream for data of tank2")
-        ocsClient.Streams.createOrUpdateStream(namespaceId, tankStream)
+        ocs_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
 
-        dataTank2 = GetData_Tank2()
-        ocsClient.Streams.insertValues(
-            namespaceId, streamTank2, json.dumps(GetData_Tank2()))
+        data_tank_2 = get_data_tank_2()
+        ocs_client.Streams.insertValues(
+            namespace_id, STREAM_TANK_2, json.dumps(get_data_tank_2()))
 
-        tank2Sorted = sorted(dataTank2, key=lambda x: x['time'], reverse=False)
-        firstTimeTank2 = tank2Sorted[0]['time']
-        lastTimeTank2 = tank2Sorted[-1]['time']
+        tank_2_sorted = sorted(
+            data_tank_2, key=lambda x: x['time'], reverse=False)
+        first_time_tank_2 = tank_2_sorted[0]['time']
+        last_time_tank_2 = tank_2_sorted[-1]['time']
 
-        tankStream = SdsStream(
-            id=streamTank0, typeId=tankType.Id, description="")
-        ocsClient.Streams.createOrUpdateStream(namespaceId, tankStream)
+        tank_stream = SdsStream(
+            id=STREAM_TANK_0, typeId=tank_type.Id, description="")
+        ocs_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
 
-        ocsClient.Streams.insertValues(
-            namespaceId, streamTank0, json.dumps(GetData()))
+        ocs_client.Streams.insertValues(
+            namespace_id, STREAM_TANK_0, json.dumps(get_data()))
 
         time.sleep(10)
 
-# step 11
+        # step 11
         print('Getting bulk call results')
-        results = ocsClient.Streams.getStreamsWindow(
-            namespaceId, [streamTank0, streamTank2], None,
-            firstTimeTank2, lastTimeTank2)
+        results = ocs_client.Streams.getStreamsWindow(
+            namespace_id, [STREAM_TANK_0, STREAM_TANK_2], None,
+            first_time_tank_2, last_time_tank_2)
         print(results)
 
     except Exception as ex:
@@ -332,29 +338,27 @@ def main():
         print()
         print("Cleaning up")
         print("Deleting the stream")
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, streamPressureName))
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, streamTempName))
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, streamTank0))
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, streamTank1))
-        suppressError(lambda: ocsClient.Streams.deleteStream(
-            namespaceId, streamTank2))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, STREAM_PRESSURE_NAME))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, STREAM_TEMP_NAME))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, STREAM_TANK_0))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, STREAM_TANK_1))
+        suppress_error(lambda: ocs_client.Streams.deleteStream(
+            namespace_id, STREAM_TANK_2))
 
         print("Deleting the types")
-        suppressError(lambda: ocsClient.Types.deleteType(
-            namespaceId, typePressureTemperatureTimeName))
-        suppressError(lambda: ocsClient.Types.deleteType(
-            namespaceId, typeValueTimeName))
-    if (exception):
-        raise exception
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, TYPE_PRESSURE_TEMPERATURE_TIME_NAME))
+        suppress_error(lambda: ocs_client.Types.deleteType(
+            namespace_id, TYPE_VALUE_TIME_NAME))
+
+        if test and exception is not None:
+            raise exception
+    print('Complete!')
 
 
-main()
-print("done")
-
-
-def test_main():
+if __name__ == '__main__':
     main()

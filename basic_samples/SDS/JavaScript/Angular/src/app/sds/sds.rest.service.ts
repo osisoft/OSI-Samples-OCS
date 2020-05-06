@@ -1,10 +1,7 @@
-// sds.rest.service.ts
-//
-
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import 'rxjs/Rx';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+
 import sdsConfig from '../config/sdsconfig.json';
 import { SdsConfig } from '../config/sdsconfig.js';
 
@@ -47,14 +44,14 @@ export enum SdsTypeCode {
   Guid = 19,
   DateTimeOffset = 20,
   TimeSpan = 21,
-  Version = 22
+  Version = 22,
 }
 
 export enum SdsStreamMode {
   Continuous = 0,
   StepWiseContinuousLeading = 1,
   StepwiseContinuousTrailing = 2,
-  Discrete = 3
+  Discrete = 3,
 }
 
 export class SdsStreamPropertyOverride {
@@ -80,7 +77,7 @@ export enum SdsBoundaryType {
   Exact = 0,
   Inside = 1,
   Outside = 2,
-  ExactOrCalculated = 3
+  ExactOrCalculated = 3,
 }
 
 export class SdsStreamView {
@@ -123,8 +120,8 @@ export class SdsRestService {
       headers: new HttpHeaders({
         'Cache-Control': 'no-cache',
         'Content-Type': 'application/json',
-        Accept: 'application/json'
-      })
+        Accept: 'application/json',
+      }),
     };
   }
 

@@ -27,10 +27,6 @@ variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
     value: '/basic_samples/SDS/JavaScript/Angular'
-  - name: configPath
-    value: '/basic_samples/SDS/JavaScript/Angular/src/app/config'
-  - name: credPath
-    value: '/basic_samples/SDS/JavaScript/Angular/e2e/src'
   - name: CredFile
     value: cred.json
   - name: CredFileSdsConfig
@@ -43,56 +39,70 @@ variables:
     value: product-readiness.sds_angular.sds.json
   - name: CredFileOidcConfigLibrary
     value: product-readiness.sds_angular.oidc.json
-  - name: covStream
-    value: SDSangJS
-  - name: bdProject
+  - name: analysisProject
     value: SDS_Angular
 
 jobs:
   - job: Tests
-    # Tests run in Chrome, no reason to run on multiple OS
+    strategy:
+      matrix:
+        linux:
+          imageName: ubuntu-latest
+        windows:
+          imageName: windows-latest
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: $(imageName)
     steps:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(credPath)
+          filePath: $(projPath)/e2e/src
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFileSdsConfig)
           fileLibrary: $(CredFileSdsConfigLibrary)
-          filePath: $(configPath)
+          filePath: $(projPath)/src/app/config
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFileOidcConfig)
           fileLibrary: $(CredFileOidcConfigLibrary)
-          filePath: $(configPath)
+          filePath: $(projPath)/src/app/config
 
       - task: NodeTool@0
         inputs:
           versionSpec: '10.x'
         displayName: 'Specify Node version'
 
-      - powershell: |
-          (Get-Item "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe").VersionInfo
-        displayName: 'Print Chrome Version'
+      - bash: npm ci
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Install dependencies'
 
-      - script: |
-          echo Install Angular CLI
-          call npm install -g @angular/cli
-          echo NPM CI
-          call npm ci
-          echo NPX Webdriver-Manager
-          call npx webdriver-manager update --versions.chrome 79.0.3945.36
-          echo Run e2e tests
-          call ng e2e --webdriver-update=false
-          echo Complete
+      - bash: npx webdriver-manager update --versions.chrome 80.0.3987.106
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Ubuntu: Update webdriver-manager'
+        condition: eq(variables['imageName'],'ubuntu-latest')
+
+      - bash: npx webdriver-manager update
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
+        displayName: 'Windows: Update webdriver-manager'
+        condition: eq(variables['imageName'],'windows-latest')
+
+      - bash: npm run e2e
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: '*.xml'
+          failTaskOnFailedTests: true
+          searchFolder: '$(Build.SourcesDirectory)$(projPath)/TestResults'
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+        displayName: 'Publish test results'
+        condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

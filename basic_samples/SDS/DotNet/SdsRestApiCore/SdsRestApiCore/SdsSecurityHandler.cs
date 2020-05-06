@@ -1,12 +1,6 @@
-// <copyright file="SdsSecurityHandler.cs" company="OSIsoft, LLC">
-//
-// </copyright>
-
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.Client;
@@ -30,16 +24,16 @@ namespace SdsRestApiCore
             InnerHandler = new HttpClientHandler()
             {
                 AllowAutoRedirect = false,
-                AutomaticDecompression = System.Net.DecompressionMethods.GZip
+                AutomaticDecompression = System.Net.DecompressionMethods.GZip,
             };
         }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (request != null)
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessTokenAsync(cancellationToken));
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await GetAccessTokenAsync(cancellationToken).ConfigureAwait(false));
 
-            return await base.SendAsync(request, cancellationToken);
+            return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         }
 
         private async Task<string> GetAccessTokenAsync(CancellationToken cancellationToken)
@@ -49,48 +43,47 @@ namespace SdsRestApiCore
                 return _accessToken;
             }
 
-            using (HttpClient client = new HttpClient())
+            using HttpClient client = new HttpClient();
+            var discoveryRequest = new DiscoveryDocumentRequest
             {
-                var discoveryRequest = new DiscoveryDocumentRequest {
-                    Address = _resource + "/identity",
-                    Policy = new DiscoveryPolicy
-                    {
-                        Authority = "https://identity.osisoft.com",
-                        ValidateEndpoints = false,
-                        ValidateIssuerName = false
-                    }
-                };
-
-                var discoveryResponse = await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken);
-
-                if (discoveryResponse.IsError)
-                    throw new InvalidOperationException(discoveryResponse.Error);
-
-                var clientCredentialsTokenRequest = new ClientCredentialsTokenRequest
+                Address = _resource + "/identity",
+                Policy = new DiscoveryPolicy
                 {
-                    Address = discoveryResponse.TokenEndpoint,
-                    ClientId = _clientId,
-                    ClientSecret = _clientSecret,
-                    Scope = "ocsapi" 
-                };
+                    Authority = "https://identity.osisoft.com",
+                    ValidateEndpoints = false,
+                    ValidateIssuerName = false,
+                },
+            };
 
-                DateTime now = DateTime.UtcNow;
+            var discoveryResponse = await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken).ConfigureAwait(false);
 
-                var tokenResponse = await client.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest, cancellationToken);
+            if (discoveryResponse.IsError)
+                throw new InvalidOperationException(discoveryResponse.Error);
 
-                if (discoveryResponse.IsError)
-                    throw new InvalidOperationException(tokenResponse.Error);
+            var clientCredentialsTokenRequest = new ClientCredentialsTokenRequest
+            {
+                Address = discoveryResponse.TokenEndpoint,
+                ClientId = _clientId,
+                ClientSecret = _clientSecret,
+                Scope = "ocsapi",
+            };
 
-                if (string.IsNullOrEmpty(tokenResponse.AccessToken))
-                    throw new InvalidOperationException("Failed to acquire Access Token");
+            DateTime now = DateTime.UtcNow;
 
-                _accessToken = tokenResponse.AccessToken;
+            var tokenResponse = await client.RequestClientCredentialsTokenAsync(clientCredentialsTokenRequest, cancellationToken).ConfigureAwait(false);
 
-                // Add a buffer of 30 seconds to the expiration delta.
-                _accessTokenExpiry = now.AddSeconds(tokenResponse.ExpiresIn - 30);
+            if (discoveryResponse.IsError)
+                throw new InvalidOperationException(tokenResponse.Error);
 
-                return _accessToken;
-            }
+            if (string.IsNullOrEmpty(tokenResponse.AccessToken))
+                throw new InvalidOperationException("Failed to acquire Access Token");
+
+            _accessToken = tokenResponse.AccessToken;
+
+            // Add a buffer of 30 seconds to the expiration delta.
+            _accessTokenExpiry = now.AddSeconds(tokenResponse.ExpiresIn - 30);
+
+            return _accessToken;
         }
     }
 }

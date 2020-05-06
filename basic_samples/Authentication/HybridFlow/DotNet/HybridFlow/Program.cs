@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
-using static System.Int32;
 
 namespace HybridFlow
 {
@@ -11,28 +11,28 @@ namespace HybridFlow
     {
         private static IConfiguration _configuration;
 
-        public static void Main(string[] args)
+        public static void Main()
         {
             bool test = false;
             try
             {
                 InitConfig();
 
-                if (SystemBrowser.openBrowser == null)
+                if (SystemBrowser.OpenBrowser == null)
                 {
-                    SystemBrowser.openBrowser = new OpenSystemBrowser();
+                    SystemBrowser.OpenBrowser = new OpenSystemBrowser();
                 }
                 else
                 {
                     test = true;
-                    SystemBrowser.password = GetConfigValue("Password");
-                    SystemBrowser.userName = GetConfigValue("UserName");
+                    SystemBrowser.Password = GetConfigValue("Password");
+                    SystemBrowser.UserName = GetConfigValue("UserName");
                 }
 
-                HybridFlow.OcsUrl = GetConfigValue("Resource");
-                HybridFlow.RedirectHost = GetConfigValue("RedirectHost");
-                HybridFlow.RedirectPort = Parse(GetConfigValue("RedirectPort"));
-                HybridFlow.RedirectPath = GetConfigValue("RedirectPath");
+                Hybrid.OcsAddress = GetConfigValue("Resource");
+                Hybrid.RedirectHost = GetConfigValue("RedirectHost");
+                Hybrid.RedirectPort = int.Parse(GetConfigValue("RedirectPort"), CultureInfo.InvariantCulture);
+                Hybrid.RedirectPath = GetConfigValue("RedirectPath");
 
                 var tenantId = GetConfigValue("TenantId");
                 var clientId = GetConfigValue("ClientId");
@@ -42,12 +42,12 @@ namespace HybridFlow
 
                 // Get access token and refresh token.
                 var (accessToken, refreshToken, expiration) =
-                    HybridFlow.GetHybridFlowAccessToken(clientId, clientSecret, tenantId);
+                    Hybrid.GetHybridFlowAccessToken(clientId, clientSecret, tenantId);
                 Console.WriteLine("Access Token: " + accessToken);
                 Console.WriteLine("Refresh Token: " + refreshToken);
                 Console.WriteLine("Expires: " + expiration);
 
-                //  Make a request to Get Users endpoint
+                // Make a request to Get Users endpoint
                 var result1 = GetRequest($"{ocsUrl}/api/{apiVersion}/Tenants/{tenantId}/Users", accessToken).Result;
                 Console.WriteLine(result1
                     ? "Request succeeded"
@@ -58,12 +58,12 @@ namespace HybridFlow
                 // Get a new access token from a refresh token. If the previous access token has not expired it can still be used.
                 // This will also reissue a new refresh token. Old refresh token will no longer be valid after use.
                 (accessToken, refreshToken, expiration) =
-                    HybridFlow.GetAccessTokenFromRefreshToken(refreshToken, clientId, clientSecret);
+                    Hybrid.GetAccessTokenFromRefreshToken(refreshToken, clientId, clientSecret);
                 Console.WriteLine("Access Token: " + accessToken);
                 Console.WriteLine("Refresh Token: " + refreshToken);
                 Console.WriteLine("Expires: " + expiration);
 
-                //  Make a request to Get Users endpoint
+                // Make a request to Get Users endpoint
                 var result2 = GetRequest($"{ocsUrl}/api/{apiVersion}/Tenants/{tenantId}/Users", accessToken).Result;
                 Console.WriteLine(result2
                     ? "Request succeeded"
@@ -75,7 +75,7 @@ namespace HybridFlow
             {
                 Console.WriteLine(e.ToString());
                 if (test)
-                    throw e;
+                    throw;
             }
 
             if (!test)
@@ -84,8 +84,8 @@ namespace HybridFlow
 
         private static async Task<bool> GetRequest(string endpoint, string accessToken)
         {
-            Console.WriteLine("Make request: ");
-            var request = new HttpRequestMessage()
+            Console.WriteLine("Make request:");
+            using var request = new HttpRequestMessage()
             {
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(endpoint),
@@ -97,17 +97,14 @@ namespace HybridFlow
 
             try
             {
-                using (var client = new HttpClient())
-                {
-                    var response = await client.SendAsync(request);
-                    response.EnsureSuccessStatusCode();
+                using var client = new HttpClient();
+                var response = await client.SendAsync(request).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
 
-                    // Uncomment this line to get the results of the calls
-                    //var responseBodyJson = JsonConvert.SerializeObject(response.Content.ReadAsStringAsync().Result, Formatting.Indented);
-                    //Console.WriteLine(responseBodyJson);
-
-                    return true;
-                }
+                // Uncomment this line to get the results of the calls
+                // var responseBodyJson = JsonConvert.SerializeObject(response.Content.ReadAsStringAsync().Result, Formatting.Indented);
+                // Console.WriteLine(responseBodyJson);
+                return true;
             }
             catch (HttpRequestException)
             {
@@ -123,15 +120,15 @@ namespace HybridFlow
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
                     .Build();
             }
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException ex)
             {
-                Console.WriteLine("Config file missing");
-                throw e;
+                Console.WriteLine("Config file missing: " + ex);
+                throw;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error while initiating configuration: " + ex.ToString());
-                throw ex;
+                throw;
             }
         }
 
@@ -155,10 +152,10 @@ namespace HybridFlow
 
                 return value;
             }
-            catch (Exception ex)
+            catch
             {
                 Console.WriteLine($"Configuration issue");
-                throw ex;
+                throw;
             }
         }
     }

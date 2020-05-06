@@ -1,4 +1,6 @@
-﻿# SDS JavaScript Example using Angular
+﻿# Sequential Data Store Angular Sample
+
+**Version:** 1.2.0
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Angular?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=921&branchName=master)
 
@@ -71,13 +73,11 @@ Login using the button in the webpage header
 
 The SDS Services page contains several buttons that demonstrate the main functionality of SDS:
 
-```
-Create and Insert: Create the type, then the stream, then inserts WaveData events into the stream.
-Retrieve Events: Get the latest event and then get all events from the SdsStream.
-Update and Replace: Updates events, adds an additional ten events, then replace all.
-SdsStreamViews: Create and demonstrate SdsStreamViews and SdsStreamViewMaps
-Cleanup: Deletes the events, stream, streamViews and types.
-```
+- Create and Insert: Create the type, then the stream, then inserts WaveData events into the stream.
+- Retrieve Events: Get the latest event and then get all events from the SdsStream.
+- Update and Replace: Updates events, adds an additional ten events, then replace all.
+- SdsStreamViews: Create and demonstrate SdsStreamViews and SdsStreamViewMaps
+- Cleanup: Deletes the events, stream, streamViews and types.
 
 To run the example, click each of the buttons in turn from top to bottom. In most modern browsers, you can view the API calls and results as they occur by pressing **F12**.
 
@@ -161,10 +161,10 @@ The local SdsStream can be created in the SDS service by a POST request as follo
 
 ```js
 this.sdsService.createStream(this.stream).subscribe(
-  res => {
+  (res) => {
     this.button2Message = res.status;
   },
-  err => {
+  (err) => {
     this.button2Message = err;
   }
 );
@@ -258,13 +258,10 @@ this.sdsService.getWindowValues(streamId, 0, 40, 'Radians%20lt%203');
 getRangeValues(streamId: string, start, count, boundary: SdsBoundaryType, streamViewId: string = ''): Observable<any>
 ```
 
-- _skip_ is the increment by which the retrieval will happen.
-- _count_ is how many values you wish to have returned.
-- _reverse_ is a boolean that when `true` causes the retrieval to work
-  backwards from the starting point.
-- _boundary_type_ is a `SdsBoundaryType` value that determines the
-  behavior if the starting index cannot be found. Refer the to the
-  [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- **skip** is the increment by which the retrieval will happen.
+- **count** is how many values you wish to have returned.
+- **reverse** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
+- **boundary_type** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown :
 
@@ -277,7 +274,7 @@ this.sdsService.getRangeValues(
 );
 ```
 
-You can also retreive the values in the form of a table (in this case with headers).
+You can also retrieve the values in the form of a table (in this case with headers).
 Here is the request:
 
 ```js

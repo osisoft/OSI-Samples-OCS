@@ -1,0 +1,29 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/library_samples/Python'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/library_samples/Python'
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/library_samples/Python'
+  - name: analysisProject
+    value: Lib_Python
+
+jobs:
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: python
+      lib: true

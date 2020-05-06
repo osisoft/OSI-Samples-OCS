@@ -31,9 +31,7 @@ variables:
     value: config.ini
   - name: CredFileLibrary
     value: product-readiness.auth_pkce_python.ini
-  - name: covStream
-    value: Auth_PKCE_Python
-  - name: bdProject
+  - name: analysisProject
     value: Auth_PKCE_Python
 
 jobs:
@@ -72,11 +70,11 @@ jobs:
         displayName: 'Run tests'
 
       - task: PublishTestResults@2
-        condition: succeededOrFailed()
         inputs:
           testResultsFiles: '**/test-*.xml'
           failTaskOnFailedTests: true
         displayName: 'Publish test results'
+        condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

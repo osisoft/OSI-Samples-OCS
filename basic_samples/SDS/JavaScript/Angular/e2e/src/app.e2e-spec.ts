@@ -1,143 +1,75 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser } from 'protractor';
 
 const fs = require('fs');
 
 function writeScreenShot(data, filename) {
-    const stream = fs.createWriteStream(filename);
-    stream.write(new Buffer(data, 'base64'));
-    stream.end();
+  const stream = fs.createWriteStream(filename);
+  stream.write(new Buffer(data, 'base64'));
+  stream.end();
 }
 
-describe('workspace-project App', () => {
-    let page: AppPage;
-    let originalTimeout;
+describe('SDS Angular Sample', () => {
+  let page: AppPage;
+  let originalTimeout;
 
-    beforeEach((done) => {
-      originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-      jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
-      page = new AppPage();
-      done();
+  beforeEach((done) => {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
+    page = new AppPage();
+    done();
   });
 
-  it('should just work...', (done) => {
-      browser.waitForAngularEnabled(false);
-      page.navigateTo()
-          .then((res) => {
-        page.login2()
-            .then((res) => {
-        browser.driver.sleep(15000)
-            .then((res) => {
-        page.createType()
-            .then((res) => {
-        page.createStream()
-            .then((res) => {
-        page.writeData()
-            .then((res) => {
-        page.retreiveEvents()
-            .then((res) => {
-        page.updateValues()
-            .then((res) => {
-        page.replaceValues()
-            .then((res) => {
-        page.retrieveInterpolatedValues()
-            .then((res) => {
-        page.retrieveFilteredValues()
-            .then((res) => {
-        page.retrieveSampledValues()
-            .then((res) => {
-        page.propertyOverride()
-            .then((res) => {
-        page.createSdsType2()
-            .then((res) => {
-        page.createSdsStream2()
-            .then((res) => {
-        page.retreiveEventsBasedOnSdsView()
-        .then((res) => {
-        page.createStreamViewWithProps()
-            .then((res) => {
-        page.getEvents2()
-            .then((res) => {
-        page.sdsStreamViewMap()
-            .then((res) => {
-        page.updateStreamType()
-            .then((res) => {
-        page.queryTypes()
-            .then((res) => {
-        page.createTagsAndMetaData()
-            .then((res) => {
-        page.getTags()
-            .then((res) => {
-        page.getMetadata()
-            .then((res) => {
-        page.deleteVal()
-            .then((res) => {
-        page.secondaryCreate()
-            .then((res) => {
-        page.secondaryUpdate()
-            .then((res) => {
-        page.createCompoundTypeandStream()
-            .then((res) => {
-        page.createAndRetreiveCompoundData()
-            .then((res) => {
-        page.deleteRest()
-            .then((res) => {
-        done();
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        });
-        })
+  it('Should run to completion', async (done) => {
+    await browser.waitForAngularEnabled(false);
+    await page.navigateTo();
+    await page.login2();
+    await browser.driver.sleep(15000);
+    await page.createType();
+    await page.createStream();
+    await page.writeData();
+    await page.retrieveEvents();
+    await page.updateValues();
+    await page.replaceValues();
+    await page.retrieveInterpolatedValues();
+    await page.retrieveFilteredValues();
+    await page.retrieveSampledValues();
+    await page.propertyOverride();
+    await page.createSdsType2();
+    await page.createSdsStream2();
+    await page.retrieveEventsBasedOnSdsView();
+    await page.createStreamViewWithProps();
+    await page.getEvents2();
+    await page.sdsStreamViewMap();
+    await browser.driver.sleep(2000);
+    await page.updateStreamType();
+    await page.queryTypes();
+    await page.createTagsAndMetaData();
+    await page.getTags();
+    await page.getMetadata();
+    await page.deleteVal();
+    await page.secondaryCreate();
+    await page.secondaryUpdate();
+    await page.createCompoundTypeandStream();
+    await page.createAndRetrieveCompoundData();
+    await page.deleteRest();
+    done();
   });
 
-    afterEach((done) => {
-
-        browser.takeScreenshot().then(function (png) {
-            writeScreenShot(png, 'exception2.png');
-        });
-        // page.deleteRest();
-    // Assert that there are no errors emitted from the browser
-    /*
-     * const logs = browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(jasmine.objectContaining({
-      level: logging.Level.SEVERE,
-    } as logging.Entry));
-    */
-        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
-        done();
+  afterEach((done) => {
+    browser.takeScreenshot().then(function (png) {
+      writeScreenShot(png, 'afterEach.png');
     });
 
-    afterAll((done) => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    done();
+  });
 
-        browser.takeScreenshot().then(function (png) {
-            writeScreenShot(png, 'exception.png');
-        });
-        page.deleteRest();
-        done();
+  afterAll((done) => {
+    browser.takeScreenshot().then(function (png) {
+      writeScreenShot(png, 'afterAll.png');
     });
+    page.deleteRest();
+    done();
+  });
 });

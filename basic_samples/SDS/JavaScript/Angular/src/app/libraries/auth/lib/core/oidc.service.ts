@@ -1,21 +1,4 @@
-// oidc.service.ts
-//
-// Copyright (C) 2018 OSIsoft, LLC. All rights reserved.
-//
-// THIS SOFTWARE CONTAINS CONFIDENTIAL INFORMATION AND TRADE SECRETS OF
-// OSIsoft, LLC.  USE, DISCLOSURE, OR REPRODUCTION IS PROHIBITED WITHOUT
-// THE PRIOR EXPRESS WRITTEN PERMISSION OF OSIsoft, LLC.
-//
-// RESTRICTED RIGHTS LEGEND
-// Use, duplication, or disclosure by the Government is subject to restrictions
-// as set forth in subparagraph (c)(1)(ii) of the Rights in Technical Data and
-// Computer Software clause at DFARS 252.227.7013
-//
-// OSIsoft, LLC
-// 1600 Alvarado St, San Leandro, CA 94577
-
 import { Injectable } from '@angular/core';
-
 import { UserManager, UserManagerSettings, User } from 'oidc-client';
 import { Subject } from 'rxjs';
 
@@ -54,7 +37,7 @@ export class OidcService {
    */
   public handleRedirectCallback() {
     this.checkInit();
-    return this.manager.signinRedirectCallback().then(user => {
+    return this.manager.signinRedirectCallback().then((user) => {
       this.user = user;
     });
   }
@@ -115,7 +98,7 @@ export class OidcService {
 
   private checkInit() {
     if (!this.serviceInitialized) {
-      throw 'AdalService has not been initialized.';
+      throw new Error('AdalService has not been initialized.');
     }
   }
 
@@ -135,7 +118,8 @@ export class OidcService {
   // TODO: Delete this. See note in userInfo property.
   private getCachedUser() {
     const storageKey = `oidc.user:${this.config.authority}:${this.config.client_id}`;
-    const userString = sessionStorage.getItem(storageKey) || localStorage.getItem(storageKey);
+    const userString =
+      sessionStorage.getItem(storageKey) || localStorage.getItem(storageKey);
     return JSON.parse(userString);
   }
 }

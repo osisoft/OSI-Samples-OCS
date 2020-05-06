@@ -18,9 +18,7 @@ pr:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnector'
-  - name: testPath
-    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI/OCSConnectorTest'
+    value: '/basic_samples/Authentication/AuthorizationCodeFlow/PowerBI'
   - name: CredFile
     value: client_id
   - name: CredFileLibrary
@@ -33,9 +31,7 @@ variables:
     value: url
   - name: CredFileURLLibrary
     value: product-readiness.url
-  - name: covStream
-    value: Auth_PKCE_PowerBI
-  - name: bdProject
+  - name: analysisProject
     value: Auth_PKCE_PowerBI
 
 jobs:
@@ -48,44 +44,44 @@ jobs:
         parameters:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/OCSConnector
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFileTenantID)
           fileLibrary: $(CredFileTenantIDLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/OCSConnector
 
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFileURL)
           fileLibrary: $(CredFileURLLibrary)
-          filePath: $(projPath)
+          filePath: $(projPath)/OCSConnector
+
+      - bash: rm -rf TestResults
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
+        displayName: 'Delete old test results'
 
       - script: |
-          echo Directory contents
           dir
-          echo MSBuild
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" & "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe -t:Rebuild"
-          echo Copy to Power BI Desktop
-          call copy /y ".\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+          call vsdevcmd
+          call msbuild -t:rebuild"
+          call copy /y ".\OCSConnector\bin\Debug\OCSConnector.mez" "C:\Users\$(username)\Documents\Power BI Desktop\Custom Connectors"
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
-      - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\Tools\VsDevCmd.bat" &  "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"'
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/
-        displayName: 'Build test'
-
-      - script: '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\mstest" /testcontainer:OCSConnectorTest.dll'
-        workingDirectory: $(Build.SourcesDirectory)$(testPath)/bin/debug
+      - script: 'call mstest /testcontainer:OCSConnectorTest.dll'
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
         displayName: 'Run tests'
 
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'VSTest'
           testResultsFiles: '*.trx'
-          searchFolder: '$(Build.SourcesDirectory)$(testPath)/bin/debug/TestResults'
+          failTaskOnFailedTests: true
+          searchFolder: '$(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug/TestResults'
+          testRunTitle: '$(Agent.JobName) on $(buildAgent)'
+        displayName: 'Publish test results'
         condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'

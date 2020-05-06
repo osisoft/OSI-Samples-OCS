@@ -1,12 +1,11 @@
-// datasrc.component.ts
-//
-
 import { Component } from '@angular/core';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+
 import {
   SdsBoundaryType,
   SdsRestService,
   SdsStreamPropertyOverride,
-  SdsStreamIndex
+  SdsStreamIndex,
 } from '../sds/sds.rest.service';
 import {
   SdsType,
@@ -16,9 +15,8 @@ import {
   SdsStreamMode,
   SdsStreamView,
   SdsStreamViewProperty,
-  SdsStreamViewMap
+  SdsStreamViewMap,
 } from '../sds/sds.rest.service';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 const streamId = 'WaveDataStream';
 const streamIdSecondary = 'SampleStream_Secondary';
@@ -78,7 +76,7 @@ class WaveDataInteger {
 @Component({
   selector: 'app-datasrc',
   templateUrl: './datasrc.component.html',
-  styleUrls: ['./datasrc.component.css']
+  styleUrls: ['./datasrc.component.css'],
 })
 export class DatasrcComponent {
   stream: SdsStream;
@@ -132,8 +130,8 @@ export class DatasrcComponent {
   secondaryUpdateMessage: string;
   secondaryDeleteMessage: string;
   createCompoundTypeandStreamMessage: string;
-  createAndRetreiveCompoundDataMessage: string;
-  createAndRetreiveCompoundDataMessageData: string;
+  createAndRetrieveCompoundDataMessage: string;
+  createAndRetrieveCompoundDataMessageData: string;
 
   constructor(private sdsService: SdsRestService) {
     this.hasEvents = false;
@@ -207,7 +205,7 @@ export class DatasrcComponent {
       tanProperty,
       sinhProperty,
       coshProperty,
-      tanhProperty
+      tanhProperty,
     ];
     waveDataType.SdsTypeCode = SdsTypeCode.Object;
 
@@ -274,7 +272,7 @@ export class DatasrcComponent {
       tanProperty,
       sinhProperty,
       coshProperty,
-      tanhProperty
+      tanhProperty,
     ];
     waveDataType.SdsTypeCode = SdsTypeCode.Object;
 
@@ -341,7 +339,7 @@ export class DatasrcComponent {
       tanTargetProperty,
       sinhTargetProperty,
       coshTargetProperty,
-      tanhTargetProperty
+      tanhTargetProperty,
     ];
     waveDataTargetType.SdsTypeCode = SdsTypeCode.Object;
 
@@ -379,7 +377,7 @@ export class DatasrcComponent {
       orderTargetProperty,
       sinIntProperty,
       cosIntProperty,
-      tanIntProperty
+      tanIntProperty,
     ];
     waveDataIntType.SdsTypeCode = SdsTypeCode.Object;
 
@@ -426,7 +424,7 @@ export class DatasrcComponent {
       streamViewProperty0,
       streamViewProperty1,
       streamViewProperty2,
-      streamViewProperty3
+      streamViewProperty3,
     ];
     return manualStreamView;
   }
@@ -470,10 +468,10 @@ export class DatasrcComponent {
     const type = this.buildWaveDataType();
     console.log(type);
     this.sdsService.createType(type).subscribe(
-      res => {
+      (res) => {
         this.button1Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button1Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -484,10 +482,10 @@ export class DatasrcComponent {
     this.stream.Id = streamId;
     this.stream.TypeId = typeId;
     this.sdsService.createStream(this.stream).subscribe(
-      res => {
+      (res) => {
         this.button2Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button2Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -497,19 +495,19 @@ export class DatasrcComponent {
     const index = new SdsStreamIndex();
     index.SdsTypePropertyId = 'SinhInt';
     this.sdsService.getStream(streamId).subscribe(
-      res => {
+      (res) => {
         this.stream = res.body as SdsStream;
         this.stream.Indexes = [index];
         this.sdsService.updateStream(this.stream).subscribe(
-          res2 => {
+          (res2) => {
             this.secondaryUpdateMessage = this.healthyResponseMessage(res2);
           },
-          err => {
+          (err) => {
             this.secondaryUpdateMessage = this.unhealthyResponseMessage(err);
           }
         );
       },
-      err => {
+      (err) => {
         this.secondaryUpdateMessage = this.unhealthyResponseMessage(err);
       }
     );
@@ -519,11 +517,11 @@ export class DatasrcComponent {
     this.streamSecondaryIndex.Indexes = [];
 
     this.sdsService.updateStream(this.streamSecondaryIndex).subscribe(
-      res => {
+      (res) => {
         this.secondaryDeleteMessage =
           this.healthyResponseMessage(res) + JSON.stringify(res.body);
       },
-      err => {
+      (err) => {
         this.secondaryDeleteMessage = this.unhealthyResponseMessage(err);
       }
     );
@@ -538,11 +536,11 @@ export class DatasrcComponent {
     this.streamSecondaryIndex.Indexes = [index];
 
     this.sdsService.createStream(this.streamSecondaryIndex).subscribe(
-      res => {
+      (res) => {
         this.secondaryCreateMessage =
           this.healthyResponseMessage(res) + JSON.stringify(res.body);
       },
-      err => {
+      (err) => {
         this.secondaryCreateMessage = this.unhealthyResponseMessage(err);
       }
     );
@@ -555,21 +553,21 @@ export class DatasrcComponent {
     compoundStream.TypeId = compoundTypeId;
 
     this.sdsService.createType(compoundType).subscribe(
-      res => {
+      (res) => {
         this.sdsService.createStream(compoundStream).subscribe(
-          res2 => {
+          (res2) => {
             this.createCompoundTypeandStreamMessage = this.healthyResponseMessage(
               res2
             );
           },
-          err => {
+          (err) => {
             this.createCompoundTypeandStreamMessage = this.unhealthyResponseMessage(
               err
             );
           }
         );
       },
-      err => {
+      (err) => {
         this.createCompoundTypeandStreamMessage = this.unhealthyResponseMessage(
           err
         );
@@ -581,10 +579,10 @@ export class DatasrcComponent {
     const list: Array<WaveData> = [];
     list.push(this.newWaveDataEvent(0, 2.5, 2));
     this.sdsService.insertValues(streamId, list).subscribe(
-      res => {
+      (res) => {
         this.button3Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button3Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -597,10 +595,10 @@ export class DatasrcComponent {
     }
 
     this.sdsService.insertValues(streamId, list).subscribe(
-      res => {
+      (res) => {
         this.button3Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button3Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -611,12 +609,12 @@ export class DatasrcComponent {
     this.sdsService
       .getRangeValues(streamId, 1, 40, SdsBoundaryType.ExactOrCalculated)
       .subscribe(
-        res => {
+        (res) => {
           this.events = res.body as WaveData[];
           this.hasEvents = true;
           this.button4Message = `Found ${this.events.length} events`;
         },
-        err => {
+        (err) => {
           this.button4Message = this.unhealthyResponseMessage(err);
         }
       );
@@ -627,14 +625,14 @@ export class DatasrcComponent {
     this.sdsService
       .getRangeValuesHeaders(streamId, 1, 40, SdsBoundaryType.ExactOrCalculated)
       .subscribe(
-        res => {
+        (res) => {
           this.eventsHeaders = res.body as string;
           this.hasEventsHeaders = true;
           this.getDataWithHeadersMessage =
             this.healthyResponseMessage(res) +
             JSON.stringify(this.eventsHeaders);
         },
-        err => {
+        (err) => {
           this.getDataWithHeadersMessage = this.unhealthyResponseMessage(err);
         }
       );
@@ -645,14 +643,14 @@ export class DatasrcComponent {
     this.sdsService
       .getWindowValues(streamId, 0, 50, 'Radians%20lt%203')
       .subscribe(
-        res => {
+        (res) => {
           this.eventsFiltered = res.body as string;
           this.hasEventsFiltered = true;
           this.getFilteredValuesMessage =
             this.healthyResponseMessage(res) +
             JSON.stringify(this.eventsFiltered);
         },
-        err => {
+        (err) => {
           this.getFilteredValuesMessage = this.unhealthyResponseMessage(err);
         }
       );
@@ -660,12 +658,12 @@ export class DatasrcComponent {
 
   retrieveSampledValues() {
     this.sdsService.getSampledValues(streamId, 0, 40, 4, 'sin').subscribe(
-      res => {
+      (res) => {
         this.eventsSampled = res.body as string;
         this.getSampledValuesMessage =
           this.healthyResponseMessage(res) + JSON.stringify(this.eventsSampled);
       },
-      err => {
+      (err) => {
         this.getSampledValuesMessage = this.unhealthyResponseMessage(err);
       }
     );
@@ -673,11 +671,11 @@ export class DatasrcComponent {
 
   updateStreamType() {
     this.sdsService.updateStreamType(streamId, manualStreamViewId).subscribe(
-      res => {
+      (res) => {
         const resp = res.body as string;
         this.updateStreamTypeMessage = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.updateStreamTypeMessage = this.unhealthyResponseMessage(err);
       }
     );
@@ -685,12 +683,12 @@ export class DatasrcComponent {
 
   queryTypes() {
     this.sdsService.getTypes(0, 100, 'Id:*Target*').subscribe(
-      res => {
+      (res) => {
         const resp = res.body as string;
         this.queryTypesMessage =
           this.healthyResponseMessage(res) + JSON.stringify(resp);
       },
-      err => {
+      (err) => {
         this.queryTypesMessage = this.unhealthyResponseMessage(err);
       }
     );
@@ -699,20 +697,20 @@ export class DatasrcComponent {
   retrieveInterpolatedValues() {
     this.hasEventsInterpolated = false;
     this.sdsService.getWindowValuesInterpolated(streamId, 5, 32, 4).subscribe(
-      res => {
+      (res) => {
         this.eventsInterpolated = res.body as string;
         this.hasEventsInterpolated = true;
         this.getDataInterpolatedMessage =
           this.healthyResponseMessage(res) +
           JSON.stringify(this.eventsInterpolated);
       },
-      err => {
+      (err) => {
         this.getDataInterpolatedMessage = this.unhealthyResponseMessage(err);
       }
     );
   }
 
-  createAndRetreiveCompoundData() {
+  createAndRetrieveCompoundData() {
     const list: Array<WaveDataCompound> = [];
     list.push(this.newWaveDataCompoundEvent(1, 10));
     list.push(this.newWaveDataCompoundEvent(2, 2));
@@ -721,30 +719,30 @@ export class DatasrcComponent {
     list.push(this.newWaveDataCompoundEvent(10, 8));
     list.push(this.newWaveDataCompoundEvent(10, 10));
     this.sdsService.insertValues(streamIdCompound, list).subscribe(
-      res => {
-        this.createAndRetreiveCompoundDataMessage = this.healthyResponseMessage(
+      (res) => {
+        this.createAndRetrieveCompoundDataMessage = this.healthyResponseMessage(
           res
         );
         this.sdsService
           .getWindowValues(streamIdCompound, '2|1', '10|8')
           .subscribe(
-            res2 => {
-              this.createAndRetreiveCompoundDataMessage = this.healthyResponseMessage(
+            (res2) => {
+              this.createAndRetrieveCompoundDataMessage = this.healthyResponseMessage(
                 res2
               );
-              this.createAndRetreiveCompoundDataMessageData = JSON.stringify(
+              this.createAndRetrieveCompoundDataMessageData = JSON.stringify(
                 res2.body
               );
             },
-            err => {
-              this.createAndRetreiveCompoundDataMessage = this.unhealthyResponseMessage(
+            (err) => {
+              this.createAndRetrieveCompoundDataMessage = this.unhealthyResponseMessage(
                 err
               );
             }
           );
       },
-      err => {
-        this.createAndRetreiveCompoundDataMessage = this.unhealthyResponseMessage(
+      (err) => {
+        this.createAndRetrieveCompoundDataMessage = this.unhealthyResponseMessage(
           err
         );
       }
@@ -757,10 +755,10 @@ export class DatasrcComponent {
       list.push(this.newWaveDataEvent(i, 2.5, 4));
     }
     this.sdsService.updateValues(streamId, list).subscribe(
-      res => {
+      (res) => {
         this.button14Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button14Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -772,10 +770,10 @@ export class DatasrcComponent {
       list.push(this.newWaveDataEvent(i, 1.5, 5));
     }
     this.sdsService.replaceValues(streamId, list).subscribe(
-      res => {
+      (res) => {
         this.button15Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button15Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -787,10 +785,10 @@ export class DatasrcComponent {
     propertyOverride.InterpolationMode = SdsStreamMode.Discrete;
     this.stream.PropertyOverrides = [propertyOverride];
     this.sdsService.updateStream(this.stream).subscribe(
-      res => {
+      (res) => {
         this.button5Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button5Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -799,10 +797,10 @@ export class DatasrcComponent {
   createAutoStreamViewTargetType() {
     const type = this.buildWaveDataTargetType();
     this.sdsService.createType(type).subscribe(
-      res => {
+      (res) => {
         this.button6Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button6Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -811,10 +809,10 @@ export class DatasrcComponent {
   createAutoStreamView() {
     const streamView = this.buildAutoStreamView();
     this.sdsService.createStreamView(streamView).subscribe(
-      res => {
+      (res) => {
         this.button7Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button7Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -831,12 +829,12 @@ export class DatasrcComponent {
         autoStreamViewId
       )
       .subscribe(
-        res => {
+        (res) => {
           this.targetEvents = res.body as WaveDataTarget[];
           this.hasStreamView1Events = true;
           this.button8Message = `Found ${this.targetEvents.length} events`;
         },
-        err => {
+        (err) => {
           this.button8Message = this.unhealthyResponseMessage(err);
         }
       );
@@ -845,19 +843,19 @@ export class DatasrcComponent {
   createSdsStreamViewPropertiesAndManualType() {
     const type = this.buildWaveDataIntegerType();
     this.sdsService.createType(type).subscribe(
-      res => {
+      (res) => {
         this.button9Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button9Message = this.unhealthyResponseMessage(err);
       }
     );
     const streamView = this.buildManualStreamView();
     this.sdsService.createStreamView(streamView).subscribe(
-      res => {
+      (res) => {
         this.button9Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button9Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -874,12 +872,12 @@ export class DatasrcComponent {
         manualStreamViewId
       )
       .subscribe(
-        res => {
+        (res) => {
           this.integerEvents = res.body as WaveDataInteger[];
           this.hasStreamView2Events = true;
           this.button10Message = `Found ${this.integerEvents.length} events`;
         },
-        err => {
+        (err) => {
           this.button10Message = this.unhealthyResponseMessage(err);
         }
       );
@@ -887,12 +885,12 @@ export class DatasrcComponent {
 
   getSdsStreamViewMap() {
     this.sdsService.getStreamViewMap(manualStreamViewId).subscribe(
-      res => {
+      (res) => {
         this.streamViewMap = res.body as SdsStreamViewMap;
         this.hasMapProperties = true;
         this.button11Message = `SdsStreamViewMap`;
       },
-      err => {
+      (err) => {
         this.button11Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -903,21 +901,21 @@ export class DatasrcComponent {
     const metadata = {
       Region: 'North America',
       Country: 'Canada',
-      Province: 'Quebec'
+      Province: 'Quebec',
     };
     this.sdsService.createTags(streamId, tags).subscribe(
-      res => {
+      (res) => {
         this.button16Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button16Message = this.unhealthyResponseMessage(err);
       }
     );
     this.sdsService.createMetadata(streamId, metadata).subscribe(
-      res => {
+      (res) => {
         this.button16Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button16Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -925,7 +923,7 @@ export class DatasrcComponent {
 
   getAndPrintTags() {
     this.sdsService.getTags(streamId).subscribe(
-      res => {
+      (res) => {
         const tags = res.body as Array<string>;
         let result = 'Tags associated with ' + streamId + ': ';
         for (let i = 0; i < tags.length; i++) {
@@ -934,7 +932,7 @@ export class DatasrcComponent {
 
         this.button17Message = result;
       },
-      err => {
+      (err) => {
         this.button17Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -942,11 +940,11 @@ export class DatasrcComponent {
 
   getAndPrintMetadata() {
     this.sdsService.getMetadata(streamId).subscribe(
-      res => {
+      (res) => {
         this.metadataMap = res.body as Map<string, string>;
         this.hasMetadata = true;
       },
-      err => {
+      (err) => {
         this.button18Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -954,10 +952,10 @@ export class DatasrcComponent {
 
   deleteAllValues() {
     this.sdsService.deleteWindowValues(streamId, 0, 200).subscribe(
-      res => {
+      (res) => {
         this.button13Message = this.healthyResponseMessage(res);
       },
-      err => {
+      (err) => {
         this.button13Message = this.unhealthyResponseMessage(err);
       }
     );
@@ -969,42 +967,42 @@ export class DatasrcComponent {
         // you can't delete a type if there are existing streams or streamViews
         // that depend on it, so we must make sure the stream is deleted first.
         this.sdsService.deleteStreamView(autoStreamViewId).subscribe(
-          res => {
+          (res) => {
             this.button12Message = this.healthyResponseMessage(res);
           },
-          err => {
+          (err) => {
             this.button12Message = this.unhealthyResponseMessage(err);
           }
         );
         this.sdsService.deleteStreamView(manualStreamViewId).subscribe(
-          res => {
+          (res) => {
             this.button12Message = this.healthyResponseMessage(res);
           },
-          err => {
+          (err) => {
             this.button12Message = this.unhealthyResponseMessage(err);
           }
         );
         this.sdsService.deleteType(typeId).subscribe(
-          res => {
+          (res) => {
             this.button12Message = this.healthyResponseMessage(res);
           },
-          err => {
+          (err) => {
             this.button12Message = this.unhealthyResponseMessage(err);
           }
         );
         this.sdsService.deleteType(targetTypeId).subscribe(
-          res => {
+          (res) => {
             this.button12Message = this.healthyResponseMessage(res);
           },
-          err => {
+          (err) => {
             this.button12Message = this.unhealthyResponseMessage(err);
           }
         );
         this.sdsService.deleteType(targetIntTypeId).subscribe(
-          res => {
+          (res) => {
             this.button12Message = this.healthyResponseMessage(res);
           },
-          err => {
+          (err) => {
             this.button12Message = this.unhealthyResponseMessage(err);
           }
         );
@@ -1012,10 +1010,10 @@ export class DatasrcComponent {
     });
     this.sdsService.deleteStream(streamIdCompound).subscribe(() => {
       this.sdsService.deleteType(compoundTypeId).subscribe(
-        res => {
+        (res) => {
           this.button12Message = this.healthyResponseMessage(res);
         },
-        err => {
+        (err) => {
           this.button12Message = this.unhealthyResponseMessage(err);
         }
       );

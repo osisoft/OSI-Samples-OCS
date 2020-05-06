@@ -1,6 +1,3 @@
-// datasrc.component.spec.ts
-//
-
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DatasrcComponent } from './datasrc.component';
@@ -11,9 +8,8 @@ describe('DatasrcComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DatasrcComponent ]
-    })
-    .compileComponents();
+      declarations: [DatasrcComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
