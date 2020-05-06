@@ -1,6 +1,10 @@
 # Version History
 
-## 1.2.0 / 2020-04-23
+## 1.2.1 / 2020-05-06
+
+- Fixed minor issue in datasrc component template
+
+## 1.2.0 / 2020-05-05
 
 - Updated to use Polaris in place of Coverity
 - Update pipeline to run on Linux

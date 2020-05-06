@@ -1,6 +1,6 @@
 # Version History
 
-## 0.2.3 / 2020-04-17
+## 0.2.3 / 2020-05-05
 
 - Renamed folder from Python3 to Python
 - Resolved pylint reported issues in sample

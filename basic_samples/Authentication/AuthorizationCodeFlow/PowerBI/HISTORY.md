@@ -1,6 +1,10 @@
 # Version History
 
-## 1.0.3 / 2020-05-01
+## 1.0.4 / 2020-05-06
+
+- Fix issues with build settings in solution file
+
+## 1.0.3 / 2020-05-05
 
 - Updated to use Polaris in place of Coverity
 

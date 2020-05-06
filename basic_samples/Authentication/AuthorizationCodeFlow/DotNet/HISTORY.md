@@ -1,6 +1,6 @@
 # Version History
 
-## 1.2.0 / 2020-04-15
+## 1.2.0 / 2020-05-05
 
 - Updated dependencies
 - Added StyleCop/FxCop

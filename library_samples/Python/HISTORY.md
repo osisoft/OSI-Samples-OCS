@@ -1,5 +1,9 @@
 # Version History
 
+## 0.1.8_preview / 2020-05-06
+
+- Added weekly schedule to analysis pipeline
+
 ## 0.1.7_preview / 2020-05-05
 
 - Updated to use Polaris in place of Coverity
