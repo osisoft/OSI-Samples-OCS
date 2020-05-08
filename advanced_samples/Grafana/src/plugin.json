@@ -1,0 +1,46 @@
+{
+  "type": "datasource",
+  "name": "OSIsoft Cloud Services",
+  "id": "osisoft-cloud-services",
+  "metrics": true,
+  "info": {
+    "description": "Simple OCS data source",
+    "author": {
+      "name": "OSIsoft, LLC",
+      "url": "https://osisoft.com"
+    },
+    "logos": {
+      "small": "img/ocs.png",
+      "large": "img/ocs.png"
+    },
+    "links": [
+      {
+        "name": "GitHub",
+        "url": "https://github.com/osisoft/OSI-Samples-OCS"
+      },
+      {
+        "name": "Apache-2 License",
+        "url": "https://github.com/osisoft/OSI-Samples-OCS/blob/master/LICENSE"
+      }
+    ],
+    "version": "1.0.0",
+    "updated": "2020-05-06"
+  },
+  "routes": [
+    {
+      "path": "ocs",
+      "url": "{{.JsonData.url}}",
+      "tokenAuth": {
+        "url": "{{.JsonData.url}}/identity/connect/token",
+        "params": {
+          "grant_type": "client_credentials",
+          "client_id": "{{.JsonData.client}}",
+          "client_secret": "{{.SecureJsonData.secret}}"
+        }
+      }
+    }
+  ],
+  "dependencies": {
+    "grafanaVersion": "6.4.x"
+  }
+}

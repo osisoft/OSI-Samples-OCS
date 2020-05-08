@@ -1,0 +1,26 @@
+{
+  "name": "dataviews-grafana",
+  "description": "A sample that queries SDS Stream data from Grafana.",
+  "version": "1.0.0",
+  "private": true,
+  "author": "OSIsoft, LLC",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osisoft/OSI-Samples-OCS.git",
+    "directory": "basic_samples/DataViews/Grafana"
+  },
+  "scripts": {
+    "build": "grafana-toolkit plugin:build",
+    "dev": "grafana-toolkit plugin:dev",
+    "test": "jasmine"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@grafana/data": "^6.7.3",
+    "@grafana/runtime": "^6.7.3",
+    "@grafana/toolkit": "^6.7.3",
+    "@types/grafana": "github:CorpGlory/types-grafana.git",
+    "typescript": "^3.8.3"
+  }
+}
