@@ -28,7 +28,7 @@ variables:
   - name: projPath
     value: '/advanced_samples/Grafana'
   - name: analysisProject
-    value: OCS_Grafana
+    value: Grafana_NodeJS
 
 jobs:
   - job: Tests

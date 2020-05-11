@@ -1,10 +1,10 @@
 {
   "type": "datasource",
-  "name": "OSIsoft Cloud Services",
-  "id": "osisoft-cloud-services",
+  "name": "OSIsoft Cloud Services (SAMPLE)",
+  "id": "osisoft-cloud-services-sample",
   "metrics": true,
   "info": {
-    "description": "Simple OCS data source",
+    "description": "Simple OCS data source sample",
     "author": {
       "name": "OSIsoft, LLC",
       "url": "https://osisoft.com"
@@ -16,7 +16,7 @@
     "links": [
       {
         "name": "GitHub",
-        "url": "https://github.com/osisoft/OSI-Samples-OCS"
+        "url": "https://github.com/osisoft/OSI-Samples-OCS/advanced_samples/Grafana"
       },
       {
         "name": "Apache-2 License",

@@ -1,5 +1,5 @@
 {
-  "name": "dataviews-grafana",
+  "name": "dataviews-grafana-sample",
   "description": "A sample that queries SDS Stream data from Grafana.",
   "version": "1.0.0",
   "private": true,
