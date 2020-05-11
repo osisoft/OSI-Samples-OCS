@@ -13,7 +13,7 @@
   "scripts": {
     "build": "grafana-toolkit plugin:build",
     "dev": "grafana-toolkit plugin:dev",
-    "test": "jasmine"
+    "test": "grafana-toolkit plugin:test"
   },
   "dependencies": {},
   "devDependencies": {
