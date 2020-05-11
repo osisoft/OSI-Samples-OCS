@@ -1,6 +1,5 @@
 parameters:
   language: ''
-  web: false
   lib: false
   skipBinSkim: false
 
