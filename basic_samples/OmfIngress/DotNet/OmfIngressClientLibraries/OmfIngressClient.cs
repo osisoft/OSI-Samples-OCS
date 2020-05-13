@@ -29,12 +29,12 @@ namespace OmfIngressClientLibraries
             // Create a Topic
             Console.WriteLine($"Creating a Topic in Namespace {_namespaceId} for Client with Id {deviceClientId}");
             Console.WriteLine();
-            Topic topic = new Topic()
+            CreateTopic topic = new CreateTopic()
             {
                 Name = connectionName,
                 Description = "This is a sample Topic",
-                ClientIds = new List<string>() { deviceClientId },
             };
+            topic.ClientIds.Add(deviceClientId);
             Topic createdTopic = await _omfIngressService.CreateTopicAsync(topic).ConfigureAwait(false);
             Console.WriteLine($"Created a Topic with Id {createdTopic.Id}");
             Console.WriteLine();
@@ -42,7 +42,7 @@ namespace OmfIngressClientLibraries
             // Create a Subscription
             Console.WriteLine($"Creating a Subscription in Namespace {destinationNamespaceId} for Topic with Id {createdTopic.Id}");
             Console.WriteLine();
-            Subscription subscription = new Subscription()
+            CreateSubscription subscription = new CreateSubscription()
             {
                 Name = $"{connectionName}-{destinationNamespaceId}",
                 Description = "This is a sample Subscription",
