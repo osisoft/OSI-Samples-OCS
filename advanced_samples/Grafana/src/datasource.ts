@@ -1,7 +1,15 @@
 import { DataQueryRequest, DataQueryResponse, DataSourceApi, DataSourceInstanceSettings, MutableDataFrame, FieldType } from '@grafana/data';
-import { BackendSrv } from '@grafana/runtime';
 
 import { OcsQuery, OcsDataSourceOptions } from 'types';
+
+export declare type BackendSrvRequest = {
+  url: string;
+  method?: string;
+};
+
+export interface BackendSrv {
+  datasourceRequest(options: BackendSrvRequest): Promise<any>;
+}
 
 export class OcsDatasource extends DataSourceApi<OcsQuery, OcsDataSourceOptions> {
   type: string;
