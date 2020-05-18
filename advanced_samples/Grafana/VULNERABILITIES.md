@@ -1,6 +1,6 @@
 # Dependency Vulnerabilities
 
-This sample references the npm package [@grafana/toolkit](https://www.npmjs.com/package/@grafana/toolkit), which has some dependencies which have identified security vulnerabilities. This sample is potentially unsafe due to these issues. Please review these issues before using this sample.
+This sample references the npm package [@grafana/toolkit](https://www.npmjs.com/package/@grafana/toolkit). At the time of this publishing (2020-05-18), our SDL practices identified the following vulnerabilities in dependencies of this npm package. This sample is potentially unsafe due to these issues. Please review these issues before using this sample.
 
 - JQuery 3.4.1
   - [CVE-2018-18405](https://nvd.nist.gov/vuln/detail/CVE-2018-18405)

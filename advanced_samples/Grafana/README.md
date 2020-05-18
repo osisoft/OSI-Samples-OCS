@@ -13,9 +13,9 @@ This sample demonstrates how to build a [Grafana](https://grafana.com/) plugin t
 - Register a Client Credentials Client in OSIsoft Cloud Services; a client secret will need to be provided to the sample plugin configuration
 - [NodeJS](https://nodejs.org/en/)
 
-## Known Security Issues
+## Known Dependency Vulnerabilities
 
-This sample has a dependency on the npm package [@grafana/toolkit](https://www.npmjs.com/package/@grafana/toolkit), which has multiple dependencies with security vulnerabilities. Please note that using this sample is potentially unsafe due to these issues. Please review these issues before using this sample. See [VULNERABILITIES.md](VULNERABILITIES.md) for details.
+This sample has a dependency on the npm package [@grafana/toolkit](https://www.npmjs.com/package/@grafana/toolkit). At the time of this publishing (2020-05-18), our SDL practices identified that this npm package has multiple dependencies with security vulnerabilities. Please note that using this sample is potentially unsafe due to these issues. Please review these issues before using this sample. See [VULNERABILITIES.md](VULNERABILITIES.md) for details.
 
 ## Running the Sample
 
