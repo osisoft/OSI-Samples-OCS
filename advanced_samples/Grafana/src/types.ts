@@ -1,11 +1,19 @@
 import { DataQuery, DataSourceJsonData } from '@grafana/data';
 
-export interface OcsQuery extends DataQuery {
+export enum SdsDataSourceType {
+  OCS = 'ocs',
+  EDS = 'eds',
+}
+
+export interface SdsQuery extends DataQuery {
   namespace: string;
   stream: string;
 }
 
-export interface OcsDataSourceOptions extends DataSourceJsonData {
+export interface SdsDataSourceOptions extends DataSourceJsonData {
+  type: SdsDataSourceType;
+  port: string;
+  url: string;
   version: string;
   tenant: string;
   client: string;

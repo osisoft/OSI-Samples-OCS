@@ -1,10 +1,10 @@
 {
   "type": "datasource",
-  "name": "OSIsoft Cloud Services (SAMPLE)",
-  "id": "osisoft-cloud-services-sample",
+  "name": "OSIsoft Sequential Data Store (SAMPLE)",
+  "id": "osisoft-sds-sample",
   "metrics": true,
   "info": {
-    "description": "Simple OCS data source sample",
+    "description": "Simple SDS data source sample",
     "author": {
       "name": "OSIsoft, LLC",
       "url": "https://osisoft.com"
