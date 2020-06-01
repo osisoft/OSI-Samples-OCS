@@ -8,7 +8,7 @@ This sample demonstrates how to build a [Grafana](https://grafana.com/) plugin t
 
 ## Requirements
 
-- [Grafana 6.4+](https://grafana.com/grafana/download)
+- [Grafana 7.0+](https://grafana.com/grafana/download)
 - Web Browser with JavaScript enbaled
 - [NodeJS](https://nodejs.org/en/)
 - If using OSIsoft Cloud Services, register a Client Credentials Client in OSIsoft Cloud Services; a client secret will need to be provided to the sample plugin configuration
@@ -20,7 +20,7 @@ This sample demonstrates how to build a [Grafana](https://grafana.com/) plugin t
 1. (Optional) If using other plugins, rename the folder to `osisoft-cloud-services-sample`
 1. Open a command prompt inside that folder
 1. Install dependencies, using `npm ci`
-1. Build the plugin, using `npm build` (or `npm dev` for browser debugging)
+1. Build the plugin, using `npm run build` (or `npm run dev` for browser debugging)
 1. Restart the Grafana server to load the new plugin
 1. Add a new Grafana datasource using the sample (see [Grafana docs](https://grafana.com/docs/grafana/latest/features/datasources/add-a-data-source/))
 1. Choose whether to query against OSIsoft Cloud Services or Edge Data Store

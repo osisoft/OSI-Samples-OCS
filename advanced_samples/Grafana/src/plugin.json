@@ -41,6 +41,6 @@
     }
   ],
   "dependencies": {
-    "grafanaVersion": "6.4.x"
+    "grafanaVersion": "7.0.0"
   }
 }
