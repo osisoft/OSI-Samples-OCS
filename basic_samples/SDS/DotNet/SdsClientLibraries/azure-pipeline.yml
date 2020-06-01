@@ -51,9 +51,6 @@ jobs:
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)/SdsClientLibraries
 
-      - bash: 'dir'
-          workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
         inputs:
