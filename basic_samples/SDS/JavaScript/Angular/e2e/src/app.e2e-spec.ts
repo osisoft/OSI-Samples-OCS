@@ -41,7 +41,7 @@ describe('SDS Angular Sample', () => {
     await page.createStreamViewWithProps();
     await page.getEvents2();
     await page.sdsStreamViewMap();
-    await browser.driver.sleep(2000);
+    await browser.driver.sleep(5000);
     await page.updateStreamType();
     await page.queryTypes();
     await page.createTagsAndMetaData();
