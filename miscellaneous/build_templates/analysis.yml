@@ -1,8 +1,8 @@
 parameters:
   language: ''
-  web: false
   lib: false
   skipBinSkim: false
+  npmBuild: false
 
 jobs:
   - job: Analysis
@@ -96,6 +96,10 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (NodeJS): Install dependencies'
         condition: eq('${{ parameters.language }}', 'nodejs')
+      - script: npm run build
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build (NodeJS): Run build'
+        condition: and(eq('${{ parameters.language }}', 'nodejs'), eq('${{ parameters.npmBuild }}', true))
 
       # - PowerBI
       - script: |

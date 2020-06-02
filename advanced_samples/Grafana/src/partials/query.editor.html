@@ -1,0 +1,18 @@
+<query-editor-row query-ctrl="ctrl" class="generic-datasource-query-row" has-text-edit-mode="true">
+  <div class="gf-form-inline">
+    <div class="gf-form" ng-if="ctrl.datasource.type === 'ocs'">
+      <label class="gf-form-label">
+        Namespace
+        <info-popover mode="right-normal">The Namespace where the Stream is stored</info-popover>
+      </label>
+      <input type="text" class="gf-form-input" ng-model="ctrl.target.namespace" required placeholder="NamespaceId" />
+    </div>
+    <div class="gf-form">
+      <label class="gf-form-label">
+        Stream
+        <info-popover mode="right-normal">The Stream to get values for</info-popover>
+      </label>
+      <input type="text" class="gf-form-input" ng-model="ctrl.target.stream" required placeholder="StreamId" />
+    </div>
+  </div>
+</query-editor-row>
