@@ -9,8 +9,9 @@ This sample demonstrates how to build a [Grafana](https://grafana.com/) plugin t
 ## Requirements
 
 - [Grafana 7.0+](https://grafana.com/grafana/download)
-- Web Browser with JavaScript enbaled
+- Web Browser with JavaScript enabled
 - [NodeJS](https://nodejs.org/en/)
+- [Git](https://git-scm.com/download/win)
 - If using OSIsoft Cloud Services, register a Client Credentials Client in OSIsoft Cloud Services; a client secret will need to be provided to the sample plugin configuration
 - If using Edge Data Store, the browser must be running local to a running copy of Edge Data Store
 
