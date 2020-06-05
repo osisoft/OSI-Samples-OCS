@@ -466,7 +466,6 @@ export class DatasrcComponent {
 
   createType() {
     const type = this.buildWaveDataType();
-    console.log(type);
     this.sdsService.createType(type).subscribe(
       (res) => {
         this.button1Message = this.healthyResponseMessage(res);
@@ -1023,12 +1022,10 @@ export class DatasrcComponent {
   }
 
   healthyResponseMessage(res: HttpResponse<any>) {
-    console.log(res);
     return `${res.status} (${res.statusText})`;
   }
 
   unhealthyResponseMessage(err: HttpErrorResponse) {
-    console.log(err);
     return `${err.status} (${err.statusText}) [${
       err.error ? err.error.Reason : 'No error message'
     }] Op-Id:${err.headers.get('Operation-Id')}`;

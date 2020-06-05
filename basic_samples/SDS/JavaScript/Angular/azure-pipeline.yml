@@ -85,7 +85,7 @@ jobs:
         displayName: 'Ubuntu: Update webdriver-manager'
         condition: eq(variables['imageName'],'ubuntu-latest')
 
-      - bash: npx webdriver-manager update
+      - bash: npx webdriver-manager update --versions.chrome 81.0.4044.138
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Windows: Update webdriver-manager'
         condition: eq(variables['imageName'],'windows-latest')
@@ -107,4 +107,3 @@ jobs:
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
       language: angular
-      web: true
