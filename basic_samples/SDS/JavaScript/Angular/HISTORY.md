@@ -1,5 +1,14 @@
 # Version History
 
+## 1.2.3 / 2020-06-09
+
+- Update pipeline version of Google Chrome for windows-latest
+
+## 1.2.2 / 2020-06-09
+
+- Dependabot bump of websocket-extensions from 0.1.3 to 0.1.4
+- Fixes security vulnerability CVE-2020-7662
+
 ## 1.2.1 / 2020-05-06
 
 - Fixed minor issue in datasrc component template

@@ -1,6 +1,6 @@
 ﻿# Sequential Data Store Angular Sample
 
-**Version:** 1.2.1
+**Version:** 1.2.3
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Angular?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=921&branchName=master)
 
