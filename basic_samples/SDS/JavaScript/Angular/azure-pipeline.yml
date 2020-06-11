@@ -80,14 +80,16 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Install dependencies'
 
-      - bash: npx webdriver-manager update --versions.chrome 80.0.3987.106
+      # Currently same version on Windows & Ubuntu, preserving separate
+      # conditionals in case these images go out of sync in the future
+      - bash: npx webdriver-manager update --versions.chrome 83.0.4103.39
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Ubuntu: Update webdriver-manager'
         condition: eq(variables['imageName'],'ubuntu-latest')
 
       - bash: npx webdriver-manager update --versions.chrome 83.0.4103.39
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
-        displayName: 'Windows: Update webdriver-manager'
+        displayName: 'Update webdriver-manager'
         condition: eq(variables['imageName'],'windows-latest')
 
       - bash: npm run e2e
