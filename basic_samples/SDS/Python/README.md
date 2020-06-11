@@ -1,6 +1,6 @@
 ﻿# SDS JavaScript Example using Python
 
-**Version:** 1.0.12
+**Version:** 1.0.13
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=925&branchName=master)
 

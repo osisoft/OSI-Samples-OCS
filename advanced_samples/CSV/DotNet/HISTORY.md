@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.2 / 2020-06-11
+
+- Updated dependencies
+
 ## 1.0.1 / 2020-05-05
 
 - Added FxCop/StyleCop to main project

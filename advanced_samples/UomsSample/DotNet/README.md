@@ -1,6 +1,6 @@
 # UOMs DotNet Sample
 
-**Version:** 1.1.0
+**Version:** 1.1.1
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/UOM_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=928&branchName=master)
 

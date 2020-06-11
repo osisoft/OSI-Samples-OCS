@@ -76,7 +76,7 @@ namespace HybridFlow
             using HttpClient client = new HttpClient();
 
             // Create a discovery request
-            var discoveryDocumentRequest = new DiscoveryDocumentRequest
+            using var discoveryDocumentRequest = new DiscoveryDocumentRequest
             {
                 Address = OcsIdentityUrl,
                 Policy = new DiscoveryPolicy
@@ -163,7 +163,7 @@ namespace HybridFlow
 
             // Make a refresh token request. This will issue new access and refresh tokens.
             using var tokenClient = new HttpClient();
-            var refreshRequest = new RefreshTokenRequest
+            using var refreshRequest = new RefreshTokenRequest
             {
                 Address = provider.TokenEndpoint,
                 ClientId = clientId,

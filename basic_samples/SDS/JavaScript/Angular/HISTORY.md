@@ -1,5 +1,9 @@
 # Version History
 
+## 1.2.4 / 2020-06-11
+
+- Updated dependencies
+
 ## 1.2.3 / 2020-06-09
 
 - Update pipeline version of Google Chrome for windows-latest

@@ -1,5 +1,9 @@
 # Version History
 
+## 1.1.2 / 2020-06-11
+
+- Updated dependencies
+
 ## 1.1.1 / 2020-05-06
 
 - Removed extraneous log messages from debugging
