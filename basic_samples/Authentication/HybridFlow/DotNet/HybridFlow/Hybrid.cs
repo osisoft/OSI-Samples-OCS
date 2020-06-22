@@ -122,6 +122,7 @@ namespace HybridFlow
                     Scope = scope,
                     FilterClaims = false,
                     Flow = OidcClientOptions.AuthenticationFlow.Hybrid,
+                    ResponseMode = OidcClientOptions.AuthorizeResponseMode.FormPost,
                     Browser = browser,
                     Policy = new Policy
                     {
