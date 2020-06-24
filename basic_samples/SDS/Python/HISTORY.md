@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.13 / 2020-06-11
+
+- Updated dependencies
+
 ## 1.0.12 / 2020-05-05
 
 - Updated to use Polaris in place of Coverity

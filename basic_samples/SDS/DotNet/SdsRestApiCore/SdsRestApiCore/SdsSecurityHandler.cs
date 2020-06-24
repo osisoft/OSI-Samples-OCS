@@ -44,7 +44,7 @@ namespace SdsRestApiCore
             }
 
             using HttpClient client = new HttpClient();
-            var discoveryRequest = new DiscoveryDocumentRequest
+            using var discoveryRequest = new DiscoveryDocumentRequest
             {
                 Address = _resource + "/identity",
                 Policy = new DiscoveryPolicy
@@ -60,7 +60,7 @@ namespace SdsRestApiCore
             if (discoveryResponse.IsError)
                 throw new InvalidOperationException(discoveryResponse.Error);
 
-            var clientCredentialsTokenRequest = new ClientCredentialsTokenRequest
+            using var clientCredentialsTokenRequest = new ClientCredentialsTokenRequest
             {
                 Address = discoveryResponse.TokenEndpoint,
                 ClientId = _clientId,

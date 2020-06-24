@@ -1,5 +1,9 @@
 # Version History
 
+## 0.0.17-preview / 2020-06-11
+
+- Updated dependencies
+
 ## 0.0.16-preview / 2020-05-06
 
 - Added weekly schedule to analysis pipeline

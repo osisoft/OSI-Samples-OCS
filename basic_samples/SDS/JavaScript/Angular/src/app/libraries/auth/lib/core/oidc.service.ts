@@ -39,6 +39,7 @@ export class OidcService {
     this.checkInit();
     return this.manager.signinRedirectCallback().then((user) => {
       this.user = user;
+      return user;
     });
   }
 

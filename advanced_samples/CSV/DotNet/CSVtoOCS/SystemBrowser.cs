@@ -57,7 +57,7 @@ namespace CSVtoOCS
             }
         }
 
-        private int GetRandomUnusedPort()
+        private static int GetRandomUnusedPort()
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();

@@ -1,5 +1,9 @@
 # Version History
 
+## 0.2.4 / 2020-06-11
+
+- Updated dependencies
+
 ## 0.2.3 / 2020-05-05
 
 - Renamed folder from Python3 to Python

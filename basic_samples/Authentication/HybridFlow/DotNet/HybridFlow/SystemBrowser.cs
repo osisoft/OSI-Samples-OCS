@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.OidcClient.Browser;
 
@@ -30,7 +31,7 @@ namespace HybridFlow
 
         public int Port { get; }
 
-        public async Task<BrowserResult> InvokeAsync(BrowserOptions options)
+        public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken token = new CancellationToken())
         {
             if (options == null)
             {
@@ -56,7 +57,7 @@ namespace HybridFlow
             }
         }
 
-        private int GetRandomUnusedPort()
+        private static int GetRandomUnusedPort()
         {
             var listener = new TcpListener(IPAddress.Loopback, 0);
             listener.Start();
