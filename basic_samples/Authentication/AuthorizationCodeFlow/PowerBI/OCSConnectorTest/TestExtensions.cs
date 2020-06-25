@@ -7,7 +7,7 @@ using OpenQA.Selenium.Appium.Interfaces;
 
 namespace OCSConnectorTest
 {
-    public static class Extensions
+    public static class TestExtensions
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static T TryFindElementByName<T>(this IGenericFindsByName<T> element, string name, int seconds = 30) where T : IWebElement
