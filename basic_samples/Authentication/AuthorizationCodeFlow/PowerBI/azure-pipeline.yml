@@ -31,6 +31,10 @@ variables:
     value: url
   - name: CredFileURLLibrary
     value: product-readiness.url
+  - name: CredFileTest
+    value: appsettings.json
+  - name: CredFileTestLibrary
+    value: product-readiness.auth_pkce_powerbi
   - name: analysisProject
     value: Auth_PKCE_PowerBI
 
@@ -58,6 +62,12 @@ jobs:
           fileLibrary: $(CredFileURLLibrary)
           filePath: $(projPath)/OCSConnector
 
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFileTest)
+          fileLibrary: $(CredFileTestLibrary)
+          filePath: $(projPath)/OCSConnectorTest
+
       - bash: rm -rf TestResults
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
         displayName: 'Delete old test results'
@@ -70,19 +80,13 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
-      - script: 'call mstest /testcontainer:OCSConnectorTest.dll'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
+      - task: DotNetCoreCLI@2
         displayName: 'Run tests'
-
-      - task: PublishTestResults@2
         inputs:
-          testResultsFormat: 'VSTest'
-          testResultsFiles: '*.trx'
-          failTaskOnFailedTests: true
-          searchFolder: '$(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug/TestResults'
+          command: test
+          publishTestResults: true
           testRunTitle: '$(Agent.JobName) on $(buildAgent)'
-        displayName: 'Publish test results'
-        condition: always()
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
