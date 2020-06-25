@@ -34,7 +34,7 @@ variables:
   - name: CredFileTest
     value: appsettings.json
   - name: CredFileTestLibrary
-    value: product-readiness.auth_pkce_powerbi
+    value: product-readiness.auth_pkce_powerbi.json
   - name: analysisProject
     value: Auth_PKCE_PowerBI
 
