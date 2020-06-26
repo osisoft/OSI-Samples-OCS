@@ -166,7 +166,7 @@ namespace OCSConnectorTest
                 try
                 {
                     var result = element.FindElementsByName(name);
-                    if (result != null) return result;
+                    if (result != null && result.Count > 0) return result;
                 }
                 catch { }
             }

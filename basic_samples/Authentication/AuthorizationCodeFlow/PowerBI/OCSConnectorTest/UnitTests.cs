@@ -62,7 +62,7 @@ namespace OCSConnectorTest
 
             // Enter query info
             var uri = powerBISession.TryFindElementsByName("OSIsoft Cloud Services URI");
-            uri[1].SendKeys(Settings.OcsUri.ToString());
+            uri[1].SendKeys(Settings.OcsAddress);
 
             var path = powerBISession.TryFindElementsByName("API URI Path (optional)");
             path[1].SendKeys($"/api/v1/Tenants/{Settings.OcsTenantId}/Namespaces");
