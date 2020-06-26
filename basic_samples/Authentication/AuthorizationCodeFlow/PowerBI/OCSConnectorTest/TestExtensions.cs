@@ -140,5 +140,38 @@ namespace OCSConnectorTest
 
             return null;
         }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
+        public static ReadOnlyCollection<T> TryClickAndFindElementsByName<T>(this IGenericFindsByName<T> element, IWebElement button, string name, int seconds = 30) where T : IWebElement
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            if (button == null)
+            {
+                throw new ArgumentNullException(nameof(button));
+            }
+
+            Stopwatch sw = Stopwatch.StartNew();
+            while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
+            {
+                try
+                {
+                    button.Click();
+                }
+                catch { }
+
+                try
+                {
+                    var result = element.FindElementsByName(name);
+                    if (result != null) return result;
+                }
+                catch { }
+            }
+
+            return default;
+        }
     }
 }
