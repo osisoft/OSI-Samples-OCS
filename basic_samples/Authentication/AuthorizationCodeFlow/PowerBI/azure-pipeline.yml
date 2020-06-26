@@ -80,10 +80,6 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
-      - script: taskkill /F /IM PBIDesktop.exe
-        continueOnError: true
-        displayName: 'Pre-test: Stop Power BI Desktop'
-
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
         inputs:
@@ -94,7 +90,7 @@ jobs:
 
       - script: taskkill /F /IM PBIDesktop.exe
         continueOnError: true
-        displayName: 'Post-test: Stop Power BI Desktop'
+        displayName: 'Stop Power BI Desktop'
         condition: succeededOrFailed()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
