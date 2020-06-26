@@ -76,7 +76,15 @@ namespace OCSConnectorTest
             // Sign in
             var personalAccount = powerBISession.TryClickAndFindElementsByName(signin, "Personal Account");
             Assert.NotNull(personalAccount);
-            var email = powerBISession.TryClickAndFindElementByAccessibilityId(personalAccount[1], "i0116");
+            var email = powerBISession.TryClickAndFindElementByAccessibilityId(personalAccount[1], "i0116", 15);
+            if (email == null)
+            {
+                // Try going back and choosing "Use another account"
+                var back = powerBISession.TryClickAndFindElementByAccessibilityId(personalAccount[1], "idBtn_Back");
+                var otherAccount = powerBISession.TryClickAndFindElementByName(back, "Use another account");
+                email = powerBISession.TryClickAndFindElementByAccessibilityId(otherAccount, "i0116");
+            }
+
             email.SendKeys(Settings.Login);
 
             var next = powerBISession.TryFindElementByAccessibilityId("idSIButton9");
