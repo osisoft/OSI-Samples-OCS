@@ -80,6 +80,10 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
+      - script: taskkill /IM "PBIDesktop.exe" /F
+        failOnStdErr: false
+        displayName: 'Pre-test: Stop Power BI Desktop'
+
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
         inputs:
@@ -87,6 +91,11 @@ jobs:
           publishTestResults: true
           testRunTitle: '$(Agent.JobName) on $(buildAgent)'
           workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest
+
+      - script: taskkill /IM "PBIDesktop.exe" /F
+        failOnStdErr: false
+        displayName: 'Post-test: Stop Power BI Desktop'
+        condition: succeededOrFailed()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:
