@@ -80,8 +80,9 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
-      - script: taskkill /IM "PBIDesktop.exe" /F
-        failOnStderr: false
+      - script: |
+          tasklist /FI "IMAGENAME eq PBIDesktop.exe" 2>NUL | find /I /N "PBIDesktop.exe">NUL
+          if "%ERRORLEVEL%"=="0" taskkill /f /im PBIDesktop.exe
         displayName: 'Pre-test: Stop Power BI Desktop'
 
       - task: DotNetCoreCLI@2
@@ -92,8 +93,9 @@ jobs:
           testRunTitle: '$(Agent.JobName) on $(buildAgent)'
           workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest
 
-      - script: taskkill /IM "PBIDesktop.exe" /F
-        failOnStderr: false
+      - script: |
+          tasklist /FI "IMAGENAME eq PBIDesktop.exe" 2>NUL | find /I /N "PBIDesktop.exe">NUL
+          if "%ERRORLEVEL%"=="0" taskkill /f /im PBIDesktop.exe
         displayName: 'Post-test: Stop Power BI Desktop'
         condition: succeededOrFailed()
 
