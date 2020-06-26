@@ -138,7 +138,7 @@ namespace OCSConnectorTest
                 catch { }
             }
 
-            return null;
+            return default;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
