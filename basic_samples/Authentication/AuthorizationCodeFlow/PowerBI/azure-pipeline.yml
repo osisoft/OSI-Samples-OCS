@@ -81,7 +81,7 @@ jobs:
         displayName: 'Build'
 
       - script: taskkill /IM "PBIDesktop.exe" /F
-        failOnStdErr: false
+        failOnStderr: false
         displayName: 'Pre-test: Stop Power BI Desktop'
 
       - task: DotNetCoreCLI@2
@@ -93,7 +93,7 @@ jobs:
           workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest
 
       - script: taskkill /IM "PBIDesktop.exe" /F
-        failOnStdErr: false
+        failOnStderr: false
         displayName: 'Post-test: Stop Power BI Desktop'
         condition: succeededOrFailed()
 
