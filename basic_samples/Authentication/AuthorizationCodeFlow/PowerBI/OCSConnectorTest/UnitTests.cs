@@ -41,34 +41,23 @@ namespace OCSConnectorTest
             // Clear cached credentials
             var queries = powerBISession.TryFindElementByName("Queries");
             var transformData = queries.TryFindElementsByName("Transform data");
-            transformData[2].Click();
-
-            var dataSourceSettings = powerBISession.TryFindElementByName("Data source settings");
-            dataSourceSettings.Click();
-
-            var clearPermissions = powerBISession.TryFindElementByName("Clear Permissions");
-            clearPermissions.Click();
-
-            var delete = powerBISession.TryFindElementByName("Delete", 5);
+            var dataSourceSettings = powerBISession.TryClickAndFindElementByName(transformData[2], "Data source settings");
+            var clearPermissions = powerBISession.TryClickAndFindElementByName(dataSourceSettings, "Clear Permissions");
+            var delete = powerBISession.TryClickAndFindElementByName(clearPermissions, "Delete", 5);
             if (delete != null)
             {
                 delete.Click();
             }
 
             var close = powerBISession.TryFindElementByName("Close");
-            close.Click();
+            var getData = powerBISession.TryClickAndFindElementByName(close, "Get data");
 
             // Open OCS Connector
-            var getData = powerBISession.TryFindElementByName("Get data");
-            getData.Click();
-
-            var search = powerBISession.TryFindElementByName("Search");
+            var search = powerBISession.TryClickAndFindElementByName(getData, "Search");
             search.SendKeys("OSI");
 
             var sample = powerBISession.TryFindElementByName("OSIsoft Cloud Services Sample (Beta)");
-            sample.Click();
-
-            var connect = powerBISession.TryFindElementByName("Connect");
+            var connect = powerBISession.TryClickAndFindElementByName(sample, "Connect");
             connect.Click();
 
             // Enter query info
@@ -82,28 +71,19 @@ namespace OCSConnectorTest
             timeout[1].SendKeys("100");
 
             var ok = powerBISession.TryFindElementByName("OK");
-            ok.Click();
+            var signin = powerBISession.TryClickAndFindElementByName(ok, "Sign in");
 
             // Sign in
-            var signin = powerBISession.TryFindElementByName("Sign in");
-            signin.Click();
-
-            var personalAccount = powerBISession.TryFindElementByName("Personal Account");
-            personalAccount.Click();
-
-            var email = powerBISession.TryFindElementByAccessibilityId("i0116");
+            var personalAccount = powerBISession.TryClickAndFindElementByName(signin, "Personal Account");
+            var email = powerBISession.TryClickAndFindElementByAccessibilityId(personalAccount, "i0116");
             email.SendKeys(Settings.Login);
 
             var next = powerBISession.TryFindElementByAccessibilityId("idSIButton9");
-            next.Click();
-
-            var pwd = powerBISession.TryFindElementByAccessibilityId("i0118");
+            var pwd = powerBISession.TryClickAndFindElementByAccessibilityId(next, "i0118");
             pwd.SendKeys(Settings.Password);
 
             signin = powerBISession.TryFindElementByAccessibilityId("idSIButton9");
-            signin.Click();
-
-            connect = powerBISession.TryFindElementByName("Connect");
+            connect = powerBISession.TryClickAndFindElementByName(signin, "Connect");
             connect.Click();
 
             // Find Power Query Editor window
@@ -118,9 +98,7 @@ namespace OCSConnectorTest
 
             // Verify results
             var record = queryEditorSession.TryFindElementByName("Record");
-            record.Click();
-
-            var self = queryEditorSession.TryFindElementByName("Self");
+            var self = queryEditorSession.TryClickAndFindElementByName(record, "Self");
             Assert.NotNull(self);
         }
     }
