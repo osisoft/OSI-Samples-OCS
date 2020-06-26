@@ -75,6 +75,7 @@ namespace OCSConnectorTest
 
             // Sign in
             var personalAccount = powerBISession.TryClickAndFindElementsByName(signin, "Personal Account");
+            Assert.NotNull(personalAccount);
             var email = powerBISession.TryClickAndFindElementByAccessibilityId(personalAccount[1], "i0116");
             email.SendKeys(Settings.Login);
 
