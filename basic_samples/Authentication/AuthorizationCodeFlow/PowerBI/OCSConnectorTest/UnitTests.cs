@@ -47,59 +47,62 @@ namespace OCSConnectorTest
             var queries = powerBISession.TryFindElementByName("Queries");
             var transformData = queries.TryFindElementsByName("Transform data");
             var dataSourceSettings = powerBISession.TryClickAndFindElementByName(transformData[2], "Data source settings");
-            var clearPermissions = powerBISession.TryClickAndFindElementsByName(dataSourceSettings, "Clear Permissions");
-            var delete = powerBISession.TryClickAndFindElementByName(clearPermissions[1], "Delete", 10);
+            var dataSourceSettingsDialog = powerBISession.TryClickAndFindElementByAccessibilityId(dataSourceSettings, "ManageDataSourcesDialog");
+            var clearPermissions = dataSourceSettingsDialog.TryFindElementsByName("Clear Permissions");
+            var delete = dataSourceSettingsDialog.TryClickAndFindElementByName(clearPermissions[1], "Delete", 10);
             if (delete != null)
             {
                 delete.Click();
             }
 
-            var close = powerBISession.TryFindElementByName("Close");
-            var getData = powerBISession.TryClickAndFindElementByName(close, "Get data");
+            var close = dataSourceSettingsDialog.TryFindElementByName("Close");
+            close.Click();
 
             // Open OCS Connector
-            var getDataWindow = powerBISession.TryClickAndFindElementByName(getData, "Get Data");
+            var getData = powerBISession.TryFindElementByName("Get data");
+            var getDataWindow = powerBISession.TryClickAndFindElementByAccessibilityId(getData, "DataSourceGalleryDialog");
             var search = getDataWindow.FindElementByName("Search");
             search.SendKeys("OSI");
 
-            var sample = powerBISession.TryFindElementByName("OSIsoft Cloud Services Sample (Beta)");
-            var connect = powerBISession.TryClickAndFindElementByName(sample, "Connect");
-            connect.Click();
+            var sample = getDataWindow.TryFindElementByName("OSIsoft Cloud Services Sample (Beta)");
+            var connect = getDataWindow.TryClickAndFindElementByName(sample, "Connect");
 
             // Enter query info
-            var uri = powerBISession.TryFindElementsByName("OSIsoft Cloud Services URI");
+            var builderDialog = powerBISession.TryClickAndFindElementByAccessibilityId(connect, "BuilderDialog");
+            var uri = builderDialog.TryFindElementsByName("OSIsoft Cloud Services URI");
             uri[1].SendKeys(Settings.OcsAddress);
 
-            var path = powerBISession.TryFindElementsByName("API URI Path (optional)");
+            var path = builderDialog.TryFindElementsByName("API URI Path (optional)");
             path[1].SendKeys($"/api/v1/Tenants/{Settings.OcsTenantId}/Namespaces");
 
-            var timeout = powerBISession.TryFindElementsByName("Timeout (optional)");
+            var timeout = builderDialog.TryFindElementsByName("Timeout (optional)");
             timeout[1].SendKeys("100");
 
-            var ok = powerBISession.TryFindElementByName("OK");
-            var signin = powerBISession.TryClickAndFindElementByName(ok, "Sign in");
+            var ok = builderDialog.TryFindElementByName("OK");
+            var signin = builderDialog.TryClickAndFindElementByName(ok, "Sign in");
 
             // Sign in
-            var personalAccount = powerBISession.TryClickAndFindElementsByName(signin, "Personal Account");
+            var oauthDialog = powerBISession.TryClickAndFindElementByAccessibilityId(signin, "OAuthDialog");
+            var personalAccount = oauthDialog.TryFindElementsByName("Personal Account");
             Assert.NotNull(personalAccount);
             personalAccount[1].Click();
-            var email = powerBISession.TryFindElementByAccessibilityId("i0116", 15);
+            var email = oauthDialog.TryFindElementByAccessibilityId("i0116", 15);
             if (email == null)
             {
                 // Try going back and choosing "Use another account"
-                var back = powerBISession.TryFindElementByAccessibilityId("idBtn_Back");
-                var otherAccount = powerBISession.TryClickAndFindElementByName(back, "Use another account");
-                email = powerBISession.TryClickAndFindElementByAccessibilityId(otherAccount, "i0116");
+                var back = oauthDialog.TryFindElementByAccessibilityId("idBtn_Back");
+                var otherAccount = oauthDialog.TryClickAndFindElementByName(back, "Use another account");
+                email = oauthDialog.TryClickAndFindElementByAccessibilityId(otherAccount, "i0116");
             }
 
             email.SendKeys(Settings.Login);
 
-            var next = powerBISession.TryFindElementByAccessibilityId("idSIButton9");
-            var pwd = powerBISession.TryClickAndFindElementByAccessibilityId(next, "i0118");
+            var next = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
+            var pwd = oauthDialog.TryClickAndFindElementByAccessibilityId(next, "i0118");
             pwd.SendKeys(Settings.Password);
 
-            signin = powerBISession.TryFindElementByAccessibilityId("idSIButton9");
-            connect = powerBISession.TryClickAndFindElementByName(signin, "Connect");
+            signin = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
+            connect = oauthDialog.TryClickAndFindElementByName(signin, "Connect");
             connect.Click();
 
             // Find Power Query Editor window
