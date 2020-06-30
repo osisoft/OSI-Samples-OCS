@@ -93,6 +93,7 @@ jobs:
         continueOnError: true
         displayName: 'Stop test processes'
         condition: succeededOrFailed()
-  # - template: '/miscellaneous/build_templates/analysis.yml'
-  #   parameters:
-  #     language: powerbi
+
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: powerbi
