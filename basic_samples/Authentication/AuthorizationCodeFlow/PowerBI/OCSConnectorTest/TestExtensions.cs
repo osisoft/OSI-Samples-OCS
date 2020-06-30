@@ -28,7 +28,7 @@ namespace OCSConnectorTest
                 catch { }
             }
 
-            Console.WriteLine($"TryFindElementByName: Failed to find element \"${name}\"");
+            Console.WriteLine($"TryFindElementByName: Failed to find element \"{name}\"");
             return default;
         }
 
@@ -62,7 +62,7 @@ namespace OCSConnectorTest
                 catch { }
             }
 
-            Console.WriteLine($"TryClickAndFindElementByName: Failed to find element \"${name}\"");
+            Console.WriteLine($"TryClickAndFindElementByName: Failed to find element \"{name}\"");
             return default;
         }
 
@@ -85,7 +85,7 @@ namespace OCSConnectorTest
                 catch { }
             }
 
-            Console.WriteLine($"TryFindElementByAccessibilityId: Failed to find element \"${selector}\"");
+            Console.WriteLine($"TryFindElementByAccessibilityId: Failed to find element \"{selector}\"");
             return default;
         }
 
@@ -119,7 +119,7 @@ namespace OCSConnectorTest
                 catch { }
             }
 
-            Console.WriteLine($"TryClickAndFindElementByAccessibilityId: Failed to find element \"${selector}\"");
+            Console.WriteLine($"TryClickAndFindElementByAccessibilityId: Failed to find element \"{selector}\"");
             return default;
         }
 
@@ -142,7 +142,7 @@ namespace OCSConnectorTest
                 catch { }
             }
 
-            Console.WriteLine($"TryFindElementsByName: Failed to find element \"${name}\"");
+            Console.WriteLine($"TryFindElementsByName: Failed to find element \"{name}\"");
             return default;
         }
 
@@ -176,7 +176,7 @@ namespace OCSConnectorTest
                 catch { }
             }
 
-            Console.WriteLine($"TryClickAndFindElementsByName: Failed to find element \"${name}\"");
+            Console.WriteLine($"TryClickAndFindElementsByName: Failed to find element \"{name}\"");
             return default;
         }
     }
