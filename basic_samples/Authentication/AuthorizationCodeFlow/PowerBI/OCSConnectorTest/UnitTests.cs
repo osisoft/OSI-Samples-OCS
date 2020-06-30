@@ -61,8 +61,8 @@ namespace OCSConnectorTest
             var clearPermissionsDialog = dataSourceSettingsDialog.TryClickAndFindElementByAccessibilityId(clearPermissions[1], "MessageDialog", 10);
             if (clearPermissionsDialog != null)
             {
-                var delete = clearPermissionsDialog.TryFindElementByName("Delete");
-                delete.Click();
+                var delete = clearPermissionsDialog.TryFindElementsByName("Delete");
+                delete[1].Click();
             }
 
             var close = dataSourceSettingsDialog.TryFindElementByName("Close");
