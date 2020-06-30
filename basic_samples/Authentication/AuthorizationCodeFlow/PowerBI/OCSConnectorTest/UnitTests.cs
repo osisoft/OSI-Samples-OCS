@@ -58,10 +58,10 @@ namespace OCSConnectorTest
             var dataSourceSettings = powerBISession.TryClickAndFindElementByName(transformData[2], "Data source settings");
             var dataSourceSettingsDialog = powerBISession.TryClickAndFindElementByAccessibilityId(dataSourceSettings, "ManageDataSourcesDialog");
             var clearPermissions = dataSourceSettingsDialog.TryFindElementsByName("Clear Permissions");
-            var delete = dataSourceSettingsDialog.TryClickAndFindElementByName(clearPermissions[1], "Delete", 10);
-            if (delete != null)
+            var clearPermissionsDialog = dataSourceSettingsDialog.TryClickAndFindElementByAccessibilityId(clearPermissions[1], "MessageDialog", 10);
+            if (clearPermissionsDialog != null)
             {
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+                var delete = clearPermissionsDialog.TryFindElementByName("Delete");
                 delete.Click();
             }
 
