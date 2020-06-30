@@ -80,6 +80,11 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
+      - script: |
+          start cmd /c "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe"
+          start cmd /c "C:\Program Files (x86)\Windows Kits\10\bin\x86\inspect.exe"
+        displayName: 'Start test dependencies'
+
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
         inputs:
@@ -88,9 +93,12 @@ jobs:
           testRunTitle: '$(Agent.JobName) on $(buildAgent)'
           workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest
 
-      - script: taskkill /F /IM PBIDesktop.exe
+      - script: |
+          taskkill /F /IM PBIDesktop.exe
+          taskkill /F /IM inspect.exe
+          taskkill /F /IM WinAppDriver.exe
         continueOnError: true
-        displayName: 'Stop Power BI Desktop'
+        displayName: 'Stop test processes'
         condition: succeededOrFailed()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
