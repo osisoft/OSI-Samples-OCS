@@ -23,7 +23,6 @@ namespace OCSConnectorTest
             var inspectOptions = new AppiumOptions();
             inspectOptions.AddAdditionalCapability("app", @"C:\Program Files (x86)\Windows Kits\10\bin\x86\inspect.exe");
             using var inspectSession = new WindowsDriver<WindowsElement>(appiumUri, inspectOptions);
-            inspectSession.Manage().Window.Minimize();
 
             // Start Power BI
             var splashOptions = new AppiumOptions();
