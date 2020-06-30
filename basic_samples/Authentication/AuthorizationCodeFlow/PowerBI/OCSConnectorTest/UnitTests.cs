@@ -92,9 +92,11 @@ namespace OCSConnectorTest
                 // Try going back and choosing "Use another account"
                 var back = oauthDialog.TryFindElementByAccessibilityId("idBtn_Back");
                 back.Click();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
                 var otherAccount = oauthDialog.TryFindElementByName("Use another account");
                 otherAccount.Click();
-                email = oauthDialog.TryFindElementByAccessibilityId(otherAccount, "i0116");
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                email = oauthDialog.TryFindElementByAccessibilityId("i0116");
             }
 
             email.SendKeys(Settings.Login);
