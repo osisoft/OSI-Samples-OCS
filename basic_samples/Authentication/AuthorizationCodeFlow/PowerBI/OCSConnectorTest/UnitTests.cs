@@ -42,8 +42,8 @@ namespace OCSConnectorTest
             var queries = powerBISession.TryFindElementByName("Queries");
             var transformData = queries.TryFindElementsByName("Transform data");
             var dataSourceSettings = powerBISession.TryClickAndFindElementByName(transformData[2], "Data source settings");
-            var clearPermissions = powerBISession.TryClickAndFindElementByName(dataSourceSettings, "Clear Permissions");
-            var delete = powerBISession.TryClickAndFindElementByName(clearPermissions, "Delete", 5);
+            var clearPermissions = powerBISession.TryClickAndFindElementsByName(dataSourceSettings, "Clear Permissions");
+            var delete = powerBISession.TryClickAndFindElementByName(clearPermissions[1], "Delete", 10);
             if (delete != null)
             {
                 delete.Click();
