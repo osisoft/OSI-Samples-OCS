@@ -21,7 +21,7 @@ namespace OCSConnectorTest
             // Start inspect.exe
             var appiumUri = new Uri("http://127.0.0.1:4723");
             var inspectOptions = new AppiumOptions();
-            inspectOptions.AddAdditionalCapability("app", @"C:\Program Files (x86)\Microsoft Kits\10\bin\x86\inspect.exe");
+            inspectOptions.AddAdditionalCapability("app", @"C:\Program Files (x86)\Windows Kits\10\bin\x86\inspect.exe");
             using var inspectSession = new WindowsDriver<WindowsElement>(appiumUri, inspectOptions);
 
             // Start Power BI
