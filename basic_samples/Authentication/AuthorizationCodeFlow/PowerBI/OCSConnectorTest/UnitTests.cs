@@ -61,6 +61,7 @@ namespace OCSConnectorTest
             var delete = dataSourceSettingsDialog.TryClickAndFindElementByName(clearPermissions[1], "Delete", 10);
             if (delete != null)
             {
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
                 delete.Click();
             }
 
