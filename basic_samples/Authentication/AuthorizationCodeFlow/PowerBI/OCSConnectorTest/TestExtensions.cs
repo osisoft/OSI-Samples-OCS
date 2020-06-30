@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using Appium.Interfaces.Generic.SearchContext;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Interfaces;
@@ -29,6 +31,7 @@ namespace OCSConnectorTest
             }
 
             Console.WriteLine($"TryFindElementByName: Failed to find element \"{name}\"");
+            TakeScreenshot();
             return default;
         }
 
@@ -63,6 +66,7 @@ namespace OCSConnectorTest
             }
 
             Console.WriteLine($"TryClickAndFindElementByName: Failed to find element \"{name}\"");
+            TakeScreenshot();
             return default;
         }
 
@@ -86,6 +90,7 @@ namespace OCSConnectorTest
             }
 
             Console.WriteLine($"TryFindElementByAccessibilityId: Failed to find element \"{selector}\"");
+            TakeScreenshot();
             return default;
         }
 
@@ -120,6 +125,7 @@ namespace OCSConnectorTest
             }
 
             Console.WriteLine($"TryClickAndFindElementByAccessibilityId: Failed to find element \"{selector}\"");
+            TakeScreenshot();
             return default;
         }
 
@@ -143,6 +149,7 @@ namespace OCSConnectorTest
             }
 
             Console.WriteLine($"TryFindElementsByName: Failed to find element \"{name}\"");
+            TakeScreenshot();
             return default;
         }
 
@@ -177,7 +184,16 @@ namespace OCSConnectorTest
             }
 
             Console.WriteLine($"TryClickAndFindElementsByName: Failed to find element \"{name}\"");
+            TakeScreenshot();
             return default;
+        }
+
+        public static void TakeScreenshot()
+        {
+            using var captureBmp = new Bitmap(1920, 1024, PixelFormat.Format32bppArgb);
+            using var captureGraphic = Graphics.FromImage(captureBmp);
+            captureGraphic.CopyFromScreen(0, 0, 0, 0, captureBmp.Size);
+            captureBmp.Save("capture.jpg", ImageFormat.Jpeg);
         }
     }
 }
