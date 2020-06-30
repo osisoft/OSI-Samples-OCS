@@ -18,8 +18,13 @@ namespace OCSConnectorTest
             // Load test settings
             Settings = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(Directory.GetCurrentDirectory() + "\\appsettings.json"));
 
-            // Start Power BI
+            // Start inspect.exe
             var appiumUri = new Uri("http://127.0.0.1:4723");
+            var inspectOptions = new AppiumOptions();
+            inspectOptions.AddAdditionalCapability("app", @"C:\Program Files (x86)\Microsoft Kits\10\bin\x86\inspect.exe");
+            using var inspectSession = new WindowsDriver<WindowsElement>(appiumUri, inspectOptions);
+
+            // Start Power BI
             var splashOptions = new AppiumOptions();
             splashOptions.AddAdditionalCapability("app", @"C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe");
             using var splashSession = new WindowsDriver<WindowsElement>(appiumUri, splashOptions);
