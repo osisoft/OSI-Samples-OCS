@@ -55,15 +55,16 @@ namespace OCSConnectorTest
             }
 
             var close = powerBISession.TryFindElementsByName("Close");
-            var getData = powerBISession.TryClickAndFindElementByName(close[1], "Get data");
+            close[1].TryClickUntilException();
 
             // Open OCS Connector
+            var getData = powerBISession.TryFindElementByName("Get data");
             var search = powerBISession.TryClickAndFindElementByName(getData, "Search");
             search.SendKeys("OSI");
 
             var sample = powerBISession.TryFindElementByName("OSIsoft Cloud Services Sample (Beta)");
             var connect = powerBISession.TryClickAndFindElementByName(sample, "Connect");
-            connect.Click();
+            connect.TryClickUntilException();
 
             // Enter query info
             var uri = powerBISession.TryFindElementsByName("OSIsoft Cloud Services URI");
@@ -99,7 +100,7 @@ namespace OCSConnectorTest
 
             signin = powerBISession.TryFindElementByAccessibilityId("idSIButton9");
             connect = powerBISession.TryClickAndFindElementByName(signin, "Connect");
-            connect.Click();
+            connect.TryClickUntilException();
 
             // Find Power Query Editor window
             var queryEditorWindow = desktopSession.TryFindElementByName("Untitled - Power Query Editor");

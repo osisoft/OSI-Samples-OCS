@@ -188,6 +188,28 @@ namespace OCSConnectorTest
             return default;
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
+        public static void TryClickUntilException(this IWebElement button, int seconds = 30)
+        {
+            if (button == null)
+            {
+                throw new ArgumentNullException(nameof(button));
+            }
+
+            Stopwatch sw = Stopwatch.StartNew();
+            while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
+            {
+                try
+                {
+                    button.Click();
+                }
+                catch { return; }
+            }
+
+            Console.WriteLine($"TryClickUntilException: Failed to close using button");
+            TakeScreenshot();
+        }
+
         public static void TakeScreenshot()
         {
             using var captureBmp = new Bitmap(1920, 1024, PixelFormat.Format32bppArgb);
