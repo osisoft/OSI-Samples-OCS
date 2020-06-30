@@ -92,21 +92,23 @@ namespace OCSConnectorTest
                 // Try going back and choosing "Use another account"
                 var back = oauthDialog.TryFindElementByAccessibilityId("idBtn_Back");
                 back.Click();
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
                 var otherAccount = oauthDialog.TryFindElementByName("Use another account");
                 otherAccount.Click();
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(5));
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
                 email = oauthDialog.TryFindElementByAccessibilityId("i0116");
             }
 
             email.SendKeys(Settings.Login);
 
             var next = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
-            var pwd = oauthDialog.TryClickAndFindElementByAccessibilityId(next, "i0118");
+            next.Click();
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            var pwd = oauthDialog.TryFindElementByAccessibilityId("i0118");
             pwd.SendKeys(Settings.Password);
 
             signin = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
-            connect = oauthDialog.TryClickAndFindElementByName(signin, "Connect");
+            connect = builderDialog.TryClickAndFindElementByName(signin, "Connect");
             connect.Click();
 
             // Find Power Query Editor window
