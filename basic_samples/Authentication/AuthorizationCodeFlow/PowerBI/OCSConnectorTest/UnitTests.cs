@@ -43,6 +43,15 @@ namespace OCSConnectorTest
             powerBIOptions.AddAdditionalCapability("appTopLevelWindow", powerBIWindowHandle);
             using var powerBISession = new WindowsDriver<WindowsElement>(appiumUri, powerBIOptions);
 
+            // Close Start window
+            var startWindow = powerBISession.TryFindElementByAccessibilityId("KoStartDialog", 10);
+            if (startWindow != null)
+            {
+                var closeStart = startWindow.FindElementByName("Close");
+                closeStart.Click();
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            }
+
             // Clear cached credentials
             var queries = powerBISession.TryFindElementByName("Queries");
             var transformData = queries.TryFindElementsByName("Transform data");
