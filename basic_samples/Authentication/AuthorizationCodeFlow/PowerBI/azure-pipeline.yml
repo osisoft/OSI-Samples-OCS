@@ -94,7 +94,6 @@ jobs:
       - script: |
           taskkill /F /IM PBIDesktop.exe
           taskkill /F /IM WinAppDriver.exe
-          taskkill /F /IM inspect.exe
         continueOnError: true
         displayName: 'Stop test processes'
         condition: succeededOrFailed()
