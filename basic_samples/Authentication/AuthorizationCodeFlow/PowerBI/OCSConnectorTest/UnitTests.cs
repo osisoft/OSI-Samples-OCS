@@ -86,13 +86,15 @@ namespace OCSConnectorTest
             var personalAccount = oauthDialog.TryFindElementsByName("Personal Account");
             Assert.NotNull(personalAccount);
             personalAccount[1].Click();
-            var email = oauthDialog.TryFindElementByAccessibilityId("i0116", 15);
+            var email = oauthDialog.TryFindElementByAccessibilityId("i0116", 10);
             if (email == null)
             {
                 // Try going back and choosing "Use another account"
                 var back = oauthDialog.TryFindElementByAccessibilityId("idBtn_Back");
-                var otherAccount = oauthDialog.TryClickAndFindElementByName(back, "Use another account");
-                email = oauthDialog.TryClickAndFindElementByAccessibilityId(otherAccount, "i0116");
+                back.Click();
+                var otherAccount = oauthDialog.TryFindElementByName("Use another account");
+                otherAccount.Click();
+                email = oauthDialog.TryFindElementByAccessibilityId(otherAccount, "i0116");
             }
 
             email.SendKeys(Settings.Login);
