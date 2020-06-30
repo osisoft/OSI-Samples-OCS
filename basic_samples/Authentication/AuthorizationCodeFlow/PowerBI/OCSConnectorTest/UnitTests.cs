@@ -49,8 +49,8 @@ namespace OCSConnectorTest
                 delete.Click();
             }
 
-            var close = powerBISession.TryFindElementByName("Close");
-            var getData = powerBISession.TryClickAndFindElementByName(close, "Get data");
+            var close = powerBISession.TryFindElementsByName("Close");
+            var getData = powerBISession.TryClickAndFindElementByName(close[1], "Get data");
 
             // Open OCS Connector
             var search = powerBISession.TryClickAndFindElementByName(getData, "Search");
