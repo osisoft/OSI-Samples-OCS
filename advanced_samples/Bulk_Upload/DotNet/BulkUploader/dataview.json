@@ -1,0 +1,48 @@
+[
+  {
+    "Id": "Wind Turbine Data",
+    "Name": "Wind Turbine Data",
+    "Description": "from the Enterprise Wide 2020 PI World lab ",
+    "IndexField": {
+      "Source": 0,
+      "Keys": [],
+      "Label": "Timestamp"
+    },
+    "Queries": [
+      {
+        "Id": "Query1",
+        "Kind": 1,
+        "Value": "turbine:GE*"
+      }
+    ],
+    "DataFieldSets": [
+      {
+        "QueryId": "Query1",
+        "DataFields": [
+          {
+            "Source": 3,
+            "Keys": [ "Value" ],
+            "Label": "{IdentifyingValue}"
+          }
+        ],
+        "IdentifyingField": {
+          "Source": 5,
+          "Keys": [ "Measurement" ],
+          "Label": "{IdentifyingValue} {FirstKey}"
+        }
+      }
+    ],
+    "GroupingFields": [
+      {
+        "Source": 5,
+        "Keys": [ "Turbine" ],
+        "Label": "{IdentifyingValue} {FirstKey}"
+      }
+    ],
+    "DefaultStartIndex": "2020-01-15T08:00:00.000Z",
+    "DefaultEndIndex": "2020-01-26T08:00:00.000Z",
+    "DefaultInterval": "00:00:01:00",
+    "IndexTypeCode": 16,
+    "Shape": 0
+  }
+]
