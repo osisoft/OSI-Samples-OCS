@@ -22,15 +22,19 @@ variables:
   - name: CredFile
     value: client_id
   - name: CredFileLibrary
-    value: product-readiness.client_id
+    value: product-readiness.auth_pkce_powerbi.client_id
   - name: CredFileTenantID
     value: tenant_id
   - name: CredFileTenantIDLibrary
-    value: product-readiness.tenant_id
+    value: product-readiness.auth_pkce_powerbi.tenant_id
   - name: CredFileURL
     value: url
   - name: CredFileURLLibrary
-    value: product-readiness.url
+    value: product-readiness.auth_pkce_powerbi.url
+  - name: CredFileTest
+    value: appsettings.json
+  - name: CredFileTestLibrary
+    value: product-readiness.auth_pkce_powerbi.json
   - name: analysisProject
     value: Auth_PKCE_PowerBI
 
@@ -58,9 +62,11 @@ jobs:
           fileLibrary: $(CredFileURLLibrary)
           filePath: $(projPath)/OCSConnector
 
-      - bash: rm -rf TestResults
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
-        displayName: 'Delete old test results'
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFileTest)
+          fileLibrary: $(CredFileTestLibrary)
+          filePath: $(projPath)/OCSConnectorTest
 
       - script: |
           dir
@@ -70,19 +76,23 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Build'
 
-      - script: 'call mstest /testcontainer:OCSConnectorTest.dll'
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug
-        displayName: 'Run tests'
+      - script: start cmd /c "C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe"
+        displayName: 'Start test dependencies'
 
-      - task: PublishTestResults@2
+      - task: DotNetCoreCLI@2
+        displayName: 'Run tests'
         inputs:
-          testResultsFormat: 'VSTest'
-          testResultsFiles: '*.trx'
-          failTaskOnFailedTests: true
-          searchFolder: '$(Build.SourcesDirectory)$(projPath)/OCSConnectorTest/bin/debug/TestResults'
+          command: test
+          publishTestResults: true
           testRunTitle: '$(Agent.JobName) on $(buildAgent)'
-        displayName: 'Publish test results'
-        condition: always()
+          workingDirectory: $(Build.SourcesDirectory)$(projPath)/OCSConnectorTest
+
+      - script: |
+          taskkill /F /IM PBIDesktop.exe
+          taskkill /F /IM WinAppDriver.exe
+        continueOnError: true
+        displayName: 'Stop test processes'
+        condition: succeededOrFailed()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

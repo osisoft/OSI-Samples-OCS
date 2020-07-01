@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.5 / 2020-06-26
+
+- Updated test using Appium in place of Coded UI
+
 ## 1.0.4 / 2020-05-06
 
 - Fix issues with build settings in solution file
