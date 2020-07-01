@@ -37,7 +37,7 @@
     <None Update="sdsStreamDataPI_PISRV01_99.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sdsStream.json">
+    <None Update="sdsStreams.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sdsStreamMetaPI_PISRV01_98.json">
@@ -46,7 +46,7 @@
     <None Update="sdsStreamMetaPI_PISRV01_99.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sdsType.json">
+    <None Update="sdsTypes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
