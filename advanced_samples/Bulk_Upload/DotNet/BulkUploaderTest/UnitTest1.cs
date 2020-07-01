@@ -30,8 +30,6 @@ namespace BulkUploaderTest
             Cleanup();
             if (!success)
                 throw toThrow;
-            Assert.True(success);
-
         }
 
         private void Cleanup()
