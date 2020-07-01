@@ -20,7 +20,7 @@ namespace BulkUploaderTest
 
             try
             {
-                success = Program.MainAsync().Result;
+                _ = Program.MainAsync().Result;
             }
             catch (Exception ex)
             {
@@ -93,7 +93,8 @@ namespace BulkUploaderTest
                 }
                 catch (Exception ex)
                 {
-                    LogError(ex);
+                    Console.Write(ex); // not causing test to error because it is common that a type might exist on for other types
+                    //LogError(ex);
                 }
             }
         }
