@@ -12,12 +12,25 @@ namespace BulkUploaderTest
 {
     public class UnitTest1
     {
+        public static Exception toThrow = null;
+        public static bool success = true;
         [Fact]
-        public void Test1()
+        public void Test1()           
         {
-            var res = Program.MainAsync().Result;
+
+            try
+            {
+                success = Program.MainAsync().Result;
+            }
+            catch (Exception ex)
+            {
+                LogError(ex);
+            }
+
             Cleanup();
-            Assert.True(res);
+            if (!success)
+                throw toThrow;
+            Assert.True(success);
 
         }
 
@@ -47,7 +60,25 @@ namespace BulkUploaderTest
             List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
             foreach (var dataview in dataviews)
             {
-                Program.dvService.DeleteDataViewAsync(dataview.Id).Wait();
+                try
+                {
+                    Program.dvService.DeleteDataViewAsync(dataview.Id).Wait();
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex);
+                }
+
+            }
+        }
+
+        private static void LogError(Exception ex)
+        {
+            Console.Write(ex);
+            if (success)
+            {
+                success = false;
+                toThrow = ex;
             }
         }
 
@@ -58,7 +89,14 @@ namespace BulkUploaderTest
             List<SdsType> typeList = JsonConvert.DeserializeObject<List<SdsType>>(types);
             foreach (var type in typeList)
             {
-                Program.metadataService.DeleteTypeAsync(type.Id).Wait();
+                try
+                { 
+                    Program.metadataService.DeleteTypeAsync(type.Id).Wait();
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex);
+                }
             }
         }
 
@@ -69,7 +107,14 @@ namespace BulkUploaderTest
             var streamsList = JsonConvert.DeserializeObject<List<SdsStream>>(streams);
             foreach (var stream in streamsList)
             {
-                Program.metadataService.DeleteStreamAsync(stream.Id).Wait();
+                try 
+                {                 
+                    Program.metadataService.DeleteStreamAsync(stream.Id).Wait();
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex);
+                }
             }
         }
     }
