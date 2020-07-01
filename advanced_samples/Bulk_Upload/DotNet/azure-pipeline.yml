@@ -32,7 +32,7 @@ variables:
   - name: CredFileLibrary
     value: product-readiness.BulkUpload_DotNet.json
   - name: analysisProject
-    value: BulkUpload_DotNet
+    value: SDS_BulkUpload_DotNet
 
 jobs:
   - job: Tests
