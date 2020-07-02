@@ -31,19 +31,19 @@
     <None Update="dataview.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sdsStreamDataPI_PISRV01_98.json">
+    <None Update="sdsStreamDatastream1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sdsStreamDataPI_PISRV01_99.json">
+    <None Update="sdsStreamDatastream2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sdsStreams.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sdsStreamMetaPI_PISRV01_98.json">
+    <None Update="sdsStreamMetastream1.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="sdsStreamMetaPI_PISRV01_99.json">
+    <None Update="sdsStreamMetastream2.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="sdsTypes.json">
