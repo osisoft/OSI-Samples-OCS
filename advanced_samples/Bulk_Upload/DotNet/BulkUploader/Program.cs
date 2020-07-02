@@ -41,7 +41,6 @@ namespace Bulk_Uploader
             success = true;
             metadataService = null;
 
-
             try
             {
                 IConfiguration configuration = new ConfigurationBuilder()

@@ -17,7 +17,6 @@ namespace BulkUploaderTest
         [Fact]
         public void Test1()           
         {
-
             try
             {
                 _ = Program.MainAsync().Result;
