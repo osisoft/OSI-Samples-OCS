@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Bulk_Uploader;
+using BulkUploader;
 using Newtonsoft.Json;
 using OSIsoft.Data;
 using OSIsoft.DataViews;
@@ -13,8 +13,10 @@ namespace BulkUploaderTest
     public class UnitTest1
     {
         private static Exception _toThrow = null;
+
         [Fact]
-        public void Test1()           
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
+        public void Test1()
         {
             try
             {
@@ -30,25 +32,7 @@ namespace BulkUploaderTest
                 throw _toThrow;
         }
 
-        private void Cleanup()
-        {
-            if (!string.IsNullOrEmpty(Program.DataviewPath))
-            {
-                DeleteDataView();
-            }
-
-            if (!string.IsNullOrEmpty(Program.SdsStreamPath))
-            {
-                DeleteStreams();
-            }
-
-            if (!string.IsNullOrEmpty(Program.SdsTypePath))
-            {
-                DeleteTypes();
-            }
-        }
-
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         private static void DeleteDataView()
         {
             Console.WriteLine($"Deleting Dataviews");
@@ -64,7 +48,6 @@ namespace BulkUploaderTest
                 {
                     LogError(ex);
                 }
-
             }
         }
 
@@ -77,6 +60,7 @@ namespace BulkUploaderTest
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         private static void DeleteTypes()
         {
             Console.WriteLine($"Deleting Types");
@@ -99,6 +83,7 @@ namespace BulkUploaderTest
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         private static void DeleteStreams()
         {
             Console.WriteLine($"Deleting streams");
@@ -114,6 +99,24 @@ namespace BulkUploaderTest
                 {
                     LogError(ex);
                 }
+            }
+        }
+
+        private void Cleanup()
+        {
+            if (!string.IsNullOrEmpty(Program.DataviewPath))
+            {
+                DeleteDataView();
+            }
+
+            if (!string.IsNullOrEmpty(Program.SdsStreamPath))
+            {
+                DeleteStreams();
+            }
+
+            if (!string.IsNullOrEmpty(Program.SdsTypePath))
+            {
+                DeleteTypes();
             }
         }
     }

@@ -12,9 +12,7 @@ using OSIsoft.DataViews;
 using OSIsoft.DataViews.Contracts;
 using OSIsoft.Identity;
 
-#pragma warning disable CA1707 // Identifiers should not contain underscores
-namespace Bulk_Uploader
-#pragma warning restore CA1707 // Identifiers should not contain underscores
+namespace BulkUploader
 {
     public static class Program
     {
@@ -40,63 +38,53 @@ namespace Bulk_Uploader
         {
             MetadataService = null;
 
-            try
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.test.json", optional: true)
+                .Build();
+
+            var tenantId = configuration["TenantId"];
+            var namespaceId = configuration["NamespaceId"];
+            var resource = configuration["Resource"];
+            var clientId = configuration["ClientId"];
+            var clientKey = configuration["ClientKey"];
+
+            DataviewPath = configuration["Dataview"];
+            SdsStreamPath = configuration["Stream"];
+            SdsTypePath = configuration["Type"];
+
+            SdsStreamDataPath = configuration["Data"];
+            SdsStreamMetaPath = configuration["Metadata"];
+            SdsStreamTagPath = configuration["Tags"];
+
+            SdsDataOnlyPath = configuration["DataOnly"];
+
+            (configuration as ConfigurationRoot).Dispose();
+            var uriResource = new Uri(resource);
+
+            AuthenticationHandler authenticationHandler = new AuthenticationHandler(uriResource, clientId, clientKey);
+
+            SdsService sdsService = new SdsService(new Uri(resource), authenticationHandler);
+            MetadataService = sdsService.GetMetadataService(tenantId, namespaceId);
+            DataService = sdsService.GetDataService(tenantId, namespaceId);
+
+            if (!string.IsNullOrEmpty(SdsTypePath))
+                SendTypes();
+
+            if (!string.IsNullOrEmpty(SdsStreamPath))
+                SendStreams();
+
+            if (!string.IsNullOrEmpty(SdsDataOnlyPath))
+                SendData();
+
+            if (!string.IsNullOrEmpty(DataviewPath))
             {
-                IConfiguration configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json")
-                    .AddJsonFile("appsettings.test.json", optional: true)
-                    .Build();
+                AuthenticationHandler authenticationHandlerDataViews = new AuthenticationHandler(uriResource, clientId, clientKey); // currently this has to be a different auth handler or it throws errors
+                var dv_service_factory = new DataViewServiceFactory(new Uri(resource), authenticationHandlerDataViews);
+                DvService = dv_service_factory.GetDataViewService(tenantId, namespaceId);
 
-                var tenantId = configuration["TenantId"];
-                var namespaceId = configuration["NamespaceId"];
-                var resource = configuration["Resource"];
-                var clientId = configuration["ClientId"];
-                var clientKey = configuration["ClientKey"];
-
-                DataviewPath = configuration["Dataview"];
-                SdsStreamPath = configuration["Stream"];
-                SdsTypePath = configuration["Type"];
-
-                SdsStreamDataPath = configuration["Data"];
-                SdsStreamMetaPath = configuration["Metadata"];
-                SdsStreamTagPath = configuration["Tags"];
-
-                SdsDataOnlyPath = configuration["DataOnly"];
-
-                (configuration as ConfigurationRoot).Dispose();
-                var uriResource = new Uri(resource);
-
-                AuthenticationHandler authenticationHandler = new AuthenticationHandler(uriResource, clientId, clientKey);
-
-                SdsService sdsService = new SdsService(new Uri(resource), authenticationHandler);
-                MetadataService = sdsService.GetMetadataService(tenantId, namespaceId);
-                DataService = sdsService.GetDataService(tenantId, namespaceId);
-                var tableService = sdsService.GetTableService(tenantId, namespaceId);
-
-                if (!string.IsNullOrEmpty(SdsTypePath))
-                    SendTypes();
-
-                if (!string.IsNullOrEmpty(SdsStreamPath))
-                    SendStreams();
-
-                if (!string.IsNullOrEmpty(SdsDataOnlyPath))
-                    SendData();
-
-                if (!string.IsNullOrEmpty(DataviewPath))
-                {
-                    AuthenticationHandler authenticationHandlerDataViews = new AuthenticationHandler(uriResource, clientId, clientKey); // currently this has to be a different auth handler or it throws errors
-                    var dv_service_factory = new DataViewServiceFactory(new Uri(resource), authenticationHandlerDataViews);
-                    DvService = dv_service_factory.GetDataViewService(tenantId, namespaceId);
-
-                    SendDataView();
-                }
-            }
-#pragma warning disable CA1031 // Do not catch general exception types
-            catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
-            {
-                LogException(ex);
+                SendDataView();
             }
 
             if (ToThrow != null)
@@ -134,6 +122,7 @@ namespace Bulk_Uploader
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can send the other streams and not stop on a 'small' issue")]
         private static void SendStreams()
         {
             Console.WriteLine($"Sending streams from file: {SdsStreamPath}");
@@ -152,9 +141,7 @@ namespace Bulk_Uploader
                         string meta = File.ReadAllText(path);
                         MetadataService.UpdateStreamMetadataAsync(stream.Id, JsonConvert.DeserializeObject<IDictionary<string, string>>(meta));
                     }
-#pragma warning disable CA1031 // Do not catch general exception types
                     catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
                     {
                         LogException(ex);
                     }
@@ -169,9 +156,7 @@ namespace Bulk_Uploader
                         string meta = File.ReadAllText(path);
                         MetadataService.UpdateStreamTagsAsync(stream.Id, JsonConvert.DeserializeObject<IList<string>>(meta));
                     }
-#pragma warning disable CA1031 // Do not catch general exception types
                     catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
                     {
                         LogException(ex);
                     }
@@ -187,9 +172,7 @@ namespace Bulk_Uploader
                         var dataAsList = JsonConvert.DeserializeObject<List<JObject>>(data);
                         DataService.UpdateValuesAsync(stream.Id, dataAsList).Wait();
                     }
-#pragma warning disable CA1031 // Do not catch general exception types
                     catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
                     {
                         LogException(ex);
                     }
@@ -205,17 +188,8 @@ namespace Bulk_Uploader
                 string data = File.ReadAllText(file);
                 var matches = Regex.Matches(file, @"(?<=sdsdata)(.+?)(?=.json)");
                 var streamName = matches.First().Value;
-                try
-                {
-                    var dataAsList = JsonConvert.DeserializeObject<List<JObject>>(data);
-                    DataService.UpdateValuesAsync(streamName, dataAsList).Wait();  
-                }
-#pragma warning disable CA1031 // Do not catch general exception types
-                catch (Exception ex)
-#pragma warning restore CA1031 // Do not catch general exception types
-                {
-                    LogException(ex);
-                }
+                var dataAsList = JsonConvert.DeserializeObject<List<JObject>>(data);
+                DataService.UpdateValuesAsync(streamName, dataAsList).Wait();
             }
         }
     }
