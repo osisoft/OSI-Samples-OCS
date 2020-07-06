@@ -1,45 +1,44 @@
-﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using OSIsoft.Data;
-using OSIsoft.DataViews.Contracts;
-using OSIsoft.Identity;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using OSIsoft.Data;
 using OSIsoft.DataViews;
-using System;
+using OSIsoft.DataViews.Contracts;
+using OSIsoft.Identity;
 
+#pragma warning disable CA1707 // Identifiers should not contain underscores
 namespace Bulk_Uploader
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 {
-    public class Program
+    public static class Program
     {
-        public static string dataviewPath;
-        public static string sdsTypePath;
-        public static string sdsStreamPath;
-        public static string sdsStreamMetaPath;
-        public static string sdsStreamTagPath;
-        public static string sdsStreamDataPath;
-        public static string sdsDataOnlyPath;
+        public static string DataviewPath { get; set; }
+        public static string SdsTypePath { get; set; }
+        public static string SdsStreamPath { get; set; }
+        public static string SdsStreamMetaPath { get; set; }
+        public static string SdsStreamTagPath { get; set; }
+        public static string SdsStreamDataPath { get; set; }
+        public static string SdsDataOnlyPath { get; set; }
 
-        public static Exception toThrow = null;
-        public static bool success = true;
-        public static ISdsMetadataService metadataService;
-        public static ISdsDataService dataService;
-        public static IDataViewService dvService;
-
+        public static Exception ToThrow { get; set; }
+        public static ISdsMetadataService MetadataService { get; set; }
+        public static ISdsDataService DataService { get; set; }
+        public static IDataViewService DvService { get; set; }
 
         public static void Main()
         {
-            MainAsync().GetAwaiter().GetResult();
+            Main();
         }
 
-        public static async Task<bool> MainAsync(bool test = false)
+        public static bool MainRunner()
         {
-            success = true;
-            metadataService = null;
+            MetadataService = null;
 
             try
             {
@@ -55,15 +54,15 @@ namespace Bulk_Uploader
                 var clientId = configuration["ClientId"];
                 var clientKey = configuration["ClientKey"];
 
-                dataviewPath = (configuration["Dataview"]);
-                sdsStreamPath = (configuration["Stream"]);
-                sdsTypePath = (configuration["Type"]);
+                DataviewPath = configuration["Dataview"];
+                SdsStreamPath = configuration["Stream"];
+                SdsTypePath = configuration["Type"];
 
-                sdsStreamDataPath = (configuration["Data"]);
-                sdsStreamMetaPath = (configuration["Metadata"]);
-                sdsStreamTagPath = (configuration["Tags"]);
+                SdsStreamDataPath = configuration["Data"];
+                SdsStreamMetaPath = configuration["Metadata"];
+                SdsStreamTagPath = configuration["Tags"];
 
-                sdsDataOnlyPath = (configuration["DataOnly"]);
+                SdsDataOnlyPath = configuration["DataOnly"];
 
                 (configuration as ConfigurationRoot).Dispose();
                 var uriResource = new Uri(resource);
@@ -71,121 +70,128 @@ namespace Bulk_Uploader
                 AuthenticationHandler authenticationHandler = new AuthenticationHandler(uriResource, clientId, clientKey);
 
                 SdsService sdsService = new SdsService(new Uri(resource), authenticationHandler);
-                metadataService = sdsService.GetMetadataService(tenantId, namespaceId);
-                dataService = sdsService.GetDataService(tenantId, namespaceId);
+                MetadataService = sdsService.GetMetadataService(tenantId, namespaceId);
+                DataService = sdsService.GetDataService(tenantId, namespaceId);
                 var tableService = sdsService.GetTableService(tenantId, namespaceId);
 
-                if(!String.IsNullOrEmpty(sdsTypePath))
+                if (!string.IsNullOrEmpty(SdsTypePath))
                     SendTypes();
-                if (!String.IsNullOrEmpty(sdsStreamPath))
+
+                if (!string.IsNullOrEmpty(SdsStreamPath))
                     SendStreams();
-                if(!String.IsNullOrEmpty(sdsDataOnlyPath))
+
+                if (!string.IsNullOrEmpty(SdsDataOnlyPath))
                     SendData();
 
-                if (!String.IsNullOrEmpty(dataviewPath))
+                if (!string.IsNullOrEmpty(DataviewPath))
                 {
-                    AuthenticationHandler authenticationHandlerDataViews = new AuthenticationHandler(uriResource, clientId, clientKey); //currently this has to be a different auth handler or it throws errors
-                    var dvServiceFactory = new DataViewServiceFactory(new Uri(resource), authenticationHandlerDataViews);
-                    dvService = dvServiceFactory.GetDataViewService(tenantId, namespaceId);
+                    AuthenticationHandler authenticationHandlerDataViews = new AuthenticationHandler(uriResource, clientId, clientKey); // currently this has to be a different auth handler or it throws errors
+                    var dv_service_factory = new DataViewServiceFactory(new Uri(resource), authenticationHandlerDataViews);
+                    DvService = dv_service_factory.GetDataViewService(tenantId, namespaceId);
 
                     SendDataView();
                 }
             }
+#pragma warning disable CA1031 // Do not catch general exception types
             catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
             {
-                success = false;
-                Console.WriteLine(ex.Message);
-                toThrow = ex;
-            }
-            finally
-            {
-
+                LogException(ex);
             }
 
+            if (ToThrow != null)
+                throw ToThrow;
 
-            if (test && !success)
-                throw toThrow;
             Console.WriteLine("Success!!!");
-
-            return success;
+            return true;
         }
 
+        private static void LogException(Exception ex)
+        {
+            Console.WriteLine(ex);
+            if (ToThrow == null)
+                ToThrow = ex;
+        }
 
         private static void SendDataView()
         {
-            string dataviewS = File.ReadAllText(dataviewPath);
+            string dataviewS = File.ReadAllText(DataviewPath);
             List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
             foreach (var dataview in dataviews)
             {
-                dvService.CreateOrUpdateDataViewAsync(dataview).Wait();
+                DvService.CreateOrUpdateDataViewAsync(dataview).Wait();
             }
         }
 
         private static void SendTypes()
         {
-            Console.WriteLine($"Sending types from file: {sdsTypePath}");
-            string types = File.ReadAllText(sdsTypePath);
+            Console.WriteLine($"Sending types from file: {SdsTypePath}");
+            string types = File.ReadAllText(SdsTypePath);
             List<SdsType> typeList = JsonConvert.DeserializeObject<List<SdsType>>(types);
             foreach (var type in typeList)
             {
-                metadataService.GetOrCreateTypeAsync(type).Wait();
+                MetadataService.GetOrCreateTypeAsync(type).Wait();
             }
         }
 
         private static void SendStreams()
         {
-            Console.WriteLine($"Sending streams from file: {sdsStreamPath}");
-            string streams = File.ReadAllText(sdsStreamPath);
+            Console.WriteLine($"Sending streams from file: {SdsStreamPath}");
+            string streams = File.ReadAllText(SdsStreamPath);
             var streamsList = JsonConvert.DeserializeObject<List<SdsStream>>(streams); 
             foreach (var stream in streamsList)
             {
-                metadataService.GetOrCreateStreamAsync(stream).Wait();
+                MetadataService.GetOrCreateStreamAsync(stream).Wait();
 
-                if (!String.IsNullOrEmpty(sdsStreamMetaPath))
+                if (!string.IsNullOrEmpty(SdsStreamMetaPath))
                 {
                     try
                     {
-                        string path = sdsStreamMetaPath + stream.Id + ".json";
+                        string path = SdsStreamMetaPath + stream.Id + ".json";
                         Console.WriteLine($"Sending stream metadata from file: {path}");
                         string meta = File.ReadAllText(path);
-                        metadataService.UpdateStreamMetadataAsync(stream.Id, JsonConvert.DeserializeObject<IDictionary<string,string>>(meta));
+                        MetadataService.UpdateStreamMetadataAsync(stream.Id, JsonConvert.DeserializeObject<IDictionary<string, string>>(meta));
                     }
+#pragma warning disable CA1031 // Do not catch general exception types
                     catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                     {
-                        success = false;
-                        toThrow = ex;
-                    }
-                }
-                if (!String.IsNullOrEmpty(sdsStreamTagPath))
-                {
-                    try
-                    {
-                        string path = sdsStreamTagPath + stream.Id + ".json";
-                        Console.WriteLine($"Sending stream tag from file: {path}");
-                        string meta = File.ReadAllText(path);
-                        metadataService.UpdateStreamTagsAsync(stream.Id, JsonConvert.DeserializeObject<IList<string>>(meta));
-                    }
-                    catch (Exception ex)
-                    {
-                        success = false;
-                        toThrow = ex;
+                        LogException(ex);
                     }
                 }
 
-                if (!String.IsNullOrEmpty(sdsStreamDataPath))
+                if (!string.IsNullOrEmpty(SdsStreamTagPath))
                 {
                     try
                     {
-                        string path = sdsStreamDataPath + stream.Id + ".json";
+                        string path = SdsStreamTagPath + stream.Id + ".json";
+                        Console.WriteLine($"Sending stream tag from file: {path}");
+                        string meta = File.ReadAllText(path);
+                        MetadataService.UpdateStreamTagsAsync(stream.Id, JsonConvert.DeserializeObject<IList<string>>(meta));
+                    }
+#pragma warning disable CA1031 // Do not catch general exception types
+                    catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
+                    {
+                        LogException(ex);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(SdsStreamDataPath))
+                {
+                    try
+                    {
+                        string path = SdsStreamDataPath + stream.Id + ".json";
                         Console.WriteLine($"Sending stream data from file: {path}");
                         string data = File.ReadAllText(path);
                         var dataAsList = JsonConvert.DeserializeObject<List<JObject>>(data);
-                        dataService.UpdateValuesAsync(stream.Id, dataAsList).Wait();
+                        DataService.UpdateValuesAsync(stream.Id, dataAsList).Wait();
                     }
+#pragma warning disable CA1031 // Do not catch general exception types
                     catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                     {
-                        success = false;
-                        toThrow = ex;
+                        LogException(ex);
                     }
                 }
             }
@@ -193,7 +199,7 @@ namespace Bulk_Uploader
 
         private static void SendData()
         {
-            foreach (String file in Directory.GetFiles(@".", "sdsdata*.json", SearchOption.AllDirectories))
+            foreach (string file in Directory.GetFiles(@".", "sdsdata*.json", SearchOption.AllDirectories))
             {
                 Console.WriteLine($"Sending stream data from file: {file}");
                 string data = File.ReadAllText(file);
@@ -202,16 +208,13 @@ namespace Bulk_Uploader
                 try
                 {
                     var dataAsList = JsonConvert.DeserializeObject<List<JObject>>(data);
-                    dataService.UpdateValuesAsync(streamName, dataAsList).Wait();  
+                    DataService.UpdateValuesAsync(streamName, dataAsList).Wait();  
                 }
+#pragma warning disable CA1031 // Do not catch general exception types
                 catch (Exception ex)
+#pragma warning restore CA1031 // Do not catch general exception types
                 {
-                    success = false;
-                    Console.WriteLine(streamName);
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
-                    success = false;
-                    toThrow = ex;
+                    LogException(ex);
                 }
             }
         }

@@ -1,10 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Bulk_Uploader;
 using Newtonsoft.Json;
 using OSIsoft.Data;
 using OSIsoft.DataViews;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -12,14 +12,13 @@ namespace BulkUploaderTest
 {
     public class UnitTest1
     {
-        public static Exception toThrow = null;
-        public static bool success = true;
+        private static Exception _toThrow = null;
         [Fact]
         public void Test1()           
         {
             try
             {
-                _ = Program.MainAsync().Result;
+                Program.MainRunner();
             }
             catch (Exception ex)
             {
@@ -27,23 +26,23 @@ namespace BulkUploaderTest
             }
 
             Cleanup();
-            if (!success)
-                throw toThrow;
+            if (_toThrow != null)
+                throw _toThrow;
         }
 
         private void Cleanup()
         {
-            if (!String.IsNullOrEmpty(Program.dataviewPath))
+            if (!string.IsNullOrEmpty(Program.DataviewPath))
             {
                 DeleteDataView();
             }
 
-            if (!String.IsNullOrEmpty(Program.sdsStreamPath))
+            if (!string.IsNullOrEmpty(Program.SdsStreamPath))
             {
                 DeleteStreams();
             }
 
-            if (!String.IsNullOrEmpty(Program.sdsTypePath))
+            if (!string.IsNullOrEmpty(Program.SdsTypePath))
             {
                 DeleteTypes();
             }
@@ -53,13 +52,13 @@ namespace BulkUploaderTest
         private static void DeleteDataView()
         {
             Console.WriteLine($"Deleting Dataviews");
-            string dataviewS = File.ReadAllText(Program.dataviewPath);
+            string dataviewS = File.ReadAllText(Program.DataviewPath);
             List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
             foreach (var dataview in dataviews)
             {
                 try
                 {
-                    Program.dvService.DeleteDataViewAsync(dataview.Id).Wait();
+                    Program.DvService.DeleteDataViewAsync(dataview.Id).Wait();
                 }
                 catch (Exception ex)
                 {
@@ -72,28 +71,30 @@ namespace BulkUploaderTest
         private static void LogError(Exception ex)
         {
             Console.Write(ex);
-            if (success)
+            if (_toThrow != null)
             {
-                success = false;
-                toThrow = ex;
+                _toThrow = ex;
             }
         }
 
         private static void DeleteTypes()
         {
             Console.WriteLine($"Deleting Types");
-            string types = File.ReadAllText(Program.sdsTypePath);
+            string types = File.ReadAllText(Program.SdsTypePath);
             List<SdsType> typeList = JsonConvert.DeserializeObject<List<SdsType>>(types);
             foreach (var type in typeList)
             {
                 try
                 { 
-                    Program.metadataService.DeleteTypeAsync(type.Id).Wait();
+                    Program.MetadataService.DeleteTypeAsync(type.Id).Wait();
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(ex); // not causing test to error because it is common that a type might exist on for other types
-                    //LogError(ex);
+                    Console.Write(ex);
+
+                    // Note: For delete of type we are not causing the test to error if it failes because it is common that a type might exist on for other streams.  If you want to make sure it delete uncomment the line below.
+
+                    // LogError(ex);
                 }
             }
         }
@@ -101,13 +102,13 @@ namespace BulkUploaderTest
         private static void DeleteStreams()
         {
             Console.WriteLine($"Deleting streams");
-            string streams = File.ReadAllText(Program.sdsStreamPath);
+            string streams = File.ReadAllText(Program.SdsStreamPath);
             var streamsList = JsonConvert.DeserializeObject<List<SdsStream>>(streams);
             foreach (var stream in streamsList)
             {
                 try 
                 {                 
-                    Program.metadataService.DeleteStreamAsync(stream.Id).Wait();
+                    Program.MetadataService.DeleteStreamAsync(stream.Id).Wait();
                 }
                 catch (Exception ex)
                 {

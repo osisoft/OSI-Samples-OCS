@@ -12,7 +12,7 @@ Developed against DotNet core 3.1.
 
 This sample uses SDS OCSclients to send values, streams, types and dataviews. This simple sample sends SDS JSON messages that are saved pre-formed as files named sdsType.json, sdsStream.json, sdsdata{streamID}.json, dataview.json. It sends the files in that order. If there are metadata or tag files it will send that for the streams.
 
-It does only basic error checking to make sure the message was accepted by the endpoint. The primary function of this sample is for easy bulk loading of data for other samples (particularly ML based samples where the amount of data is prohibitive to include in the sample itself). Included in
+It does only basic error checking to make sure the message was accepted by the endpoint. The primary function of this sample is for easy bulk loading of data for other samples (particularly ML based samples where the amount of data is prohibitive to include in the sample itself). Included in the [SampleCollections](../SampleCollections) are the data sets including an editable appsettings.json.
 
 ## Requirements
 
@@ -22,7 +22,7 @@ The [.NET Core CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) is refe
 
 This sample needs an OMF client credential created. For details on creating those see [OSIsoft Learning Channel](https://www.youtube.com/watch?v=52lAnkGC1IM).
 
-The configuration of this application is done in the file [appsettings.json](.\BartIngress\appsettings.json).
+The configuration of this application is done in the file [appsettings.json](.\BulkUploader\appsettings.json).
 
 1. `Resource` can usually be left as default, but should be the host specified at the beginning of the URL in the [OCS API Console](https://cloud.osisoft.com/apiconsole)
 1. `TenantId` should be the ID that comes after `/Tenants/` in the same URL
@@ -41,7 +41,7 @@ The configuration of this application is done in the file [appsettings.json](.\B
 1. Clone the GitHub repository
 1. Open the folder with your favorite IDE
 1. Update `appsettings.json` with your credentials
-1. `shelldotnet restore`
+1. `dotnet restore`
 1. `dotnet run`
 
 ## Running the Automated Test
