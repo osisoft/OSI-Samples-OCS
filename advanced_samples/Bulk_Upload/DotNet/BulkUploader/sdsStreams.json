@@ -1,0 +1,18 @@
+[
+  {
+    "Id": "stream1",
+    "Name": "GE01_BL1.ACT_PV",
+    "Description": "Turbine 01 Blade 1, Actual Value",
+    "TypeId": "PI-Float32-Simple",
+    "InterpolationMode": null,
+    "ExtrapolationMode": null
+  },
+  {
+    "Id": "stream2",
+    "Name": "GE01_BL2.ACT_PV",
+    "Description": "Turbine 01 Blade 2, Actual Value",
+    "TypeId": "PI-Float32-Simple",
+    "InterpolationMode": null,
+    "ExtrapolationMode": null
+  }
+]

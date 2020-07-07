@@ -1,0 +1,122 @@
+[
+    {
+        "Timestamp": "2020-06-29T14:32:48.6941857Z",
+        "SolarRadiation": 1291499001,
+        "Temperature": 92.82727660277266
+    },
+    {
+        "Timestamp": "2020-06-29T15:32:48.6941857Z",
+        "SolarRadiation": 718517271,
+        "Temperature": 98.42623085641591
+    },
+    {
+        "Timestamp": "2020-06-29T15:41:58.2676163Z",
+        "SolarRadiation": 468842009,
+        "Temperature": 18.60457450086464
+    },
+    {
+        "Timestamp": "2020-06-29T16:32:48.6941857Z",
+        "SolarRadiation": 1878456413,
+        "Temperature": 12.524671113362848
+    },
+    {
+        "Timestamp": "2020-06-29T16:41:58.2676163Z",
+        "SolarRadiation": 984971610,
+        "Temperature": 92.27860271571139
+    },
+    {
+        "Timestamp": "2020-06-29T17:32:48.6941857Z",
+        "SolarRadiation": 1293744366,
+        "Temperature": 24.5347509740548
+    },
+    {
+        "Timestamp": "2020-06-29T17:41:58.2676163Z",
+        "SolarRadiation": 1992983404,
+        "Temperature": 93.07077880626115
+    },
+    {
+        "Timestamp": "2020-06-29T18:32:48.6941857Z",
+        "SolarRadiation": 1957719282,
+        "Temperature": 39.79894669717129
+    },
+    {
+        "Timestamp": "2020-06-29T18:41:58.2676163Z",
+        "SolarRadiation": 1076533261,
+        "Temperature": 15.450700938445841
+    },
+    {
+        "Timestamp": "2020-06-29T19:32:48.6941857Z",
+        "SolarRadiation": 606129830,
+        "Temperature": 76.18955572889632
+    },
+    {
+        "Timestamp": "2020-06-29T19:41:58.2676163Z",
+        "SolarRadiation": 690710838,
+        "Temperature": 22.920381521303383
+    },
+    {
+        "Timestamp": "2020-06-29T20:32:48.6941857Z",
+        "SolarRadiation": 263996266,
+        "Temperature": 44.04539747352032
+    },
+    {
+        "Timestamp": "2020-06-29T20:41:58.2676163Z",
+        "SolarRadiation": 1295735776,
+        "Temperature": 46.21496673031476
+    },
+    {
+        "Timestamp": "2020-06-29T21:32:48.6941857Z",
+        "SolarRadiation": 1292655055,
+        "Temperature": 3.900911660818808
+    },
+    {
+        "Timestamp": "2020-06-29T21:41:58.2676163Z",
+        "SolarRadiation": 2020567805,
+        "Temperature": 37.75811364769848
+    },
+    {
+        "Timestamp": "2020-06-29T22:32:48.6941857Z",
+        "SolarRadiation": 175589667,
+        "Temperature": 99.01962852991169
+    },
+    {
+        "Timestamp": "2020-06-29T22:41:58.2676163Z",
+        "SolarRadiation": 1827429160,
+        "Temperature": 2.096815454818688
+    },
+    {
+        "Timestamp": "2020-06-29T23:32:48.6941857Z",
+        "SolarRadiation": 1616026006,
+        "Temperature": 11.21753021665734
+    },
+    {
+        "Timestamp": "2020-06-29T23:41:58.2676163Z",
+        "SolarRadiation": 816986415,
+        "Temperature": 80.58939328444627
+    },
+    {
+        "Timestamp": "2020-06-30T00:32:48.6941857Z",
+        "SolarRadiation": 2023957269,
+        "Temperature": 43.40722404579037
+    },
+    {
+        "Timestamp": "2020-06-30T00:41:58.2676163Z",
+        "SolarRadiation": 1521045161,
+        "Temperature": 94.85946111141679
+    },
+    {
+        "Timestamp": "2020-06-30T01:32:48.6941857Z",
+        "SolarRadiation": 1627371294,
+        "Temperature": 11.224242630984747
+    },
+    {
+        "Timestamp": "2020-06-30T01:41:58.2676163Z",
+        "SolarRadiation": 1964233431,
+        "Temperature": 69.86908203450454
+    },
+    {
+        "Timestamp": "2020-06-30T02:32:48.6941857Z",
+        "SolarRadiation": 263057079,
+        "Temperature": 70.49262601439497
+    }
+]
