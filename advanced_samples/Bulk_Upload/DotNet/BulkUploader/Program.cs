@@ -31,7 +31,7 @@ namespace BulkUploader
 
         public static void Main()
         {
-            Main();
+            MainRunner();
         }
 
         public static bool MainRunner()
