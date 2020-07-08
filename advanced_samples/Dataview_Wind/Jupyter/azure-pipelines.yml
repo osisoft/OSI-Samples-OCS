@@ -47,8 +47,8 @@ jobs:
   - job: Tests
     strategy:
       matrix:
-        linux:
-          imageName: ubuntu-latest
+      #  linux:
+      #    imageName: ubuntu-latest
         windows:
           imageName: windows-latest
     pool:
@@ -117,7 +117,7 @@ jobs:
         displayName: 'Publish test results'
         condition: always()
 
-  - template: '/miscellaneous/build_templates/analysis.yml'
-    parameters:
-      language: python
-      skipPolaris: true
+#  - template: '/miscellaneous/build_templates/analysis.yml'
+#    parameters:
+#      language: python
+#      skipPolaris: true
