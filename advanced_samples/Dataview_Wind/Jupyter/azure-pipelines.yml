@@ -80,9 +80,9 @@ jobs:
           call dotnet build
           echo checkes 
           dir '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data'
-          dir '$(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1'
+          dir '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader/bin/Debug/netcoreapp3.1'
           echo copy data 
-          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1'
+          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader/bin/Debug/netcoreapp3.1'
           echo checkes2
           dir '$(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1'
           echo upload 
@@ -90,7 +90,7 @@ jobs:
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/
         displayName: 'Upload data needed'
-
+        
       - bash: |
           echo Install requirements
           pip install -r requirements.txt
