@@ -106,17 +106,38 @@ namespace BulkUploaderTest
         {
             if (!string.IsNullOrEmpty(Program.DataviewPath))
             {
-                DeleteDataView();
+                try
+                {
+                    DeleteDataView();
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex);
+                }
             }
 
             if (!string.IsNullOrEmpty(Program.SdsStreamPath))
             {
-                DeleteStreams();
+                try
+                {
+                    DeleteStreams();
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex);
+                }
             }
 
             if (!string.IsNullOrEmpty(Program.SdsTypePath))
             {
-                DeleteTypes();
+                try
+                {
+                    DeleteTypes();
+                }
+                catch (Exception ex)
+                {
+                    LogError(ex);
+                }
             }
         }
     }
