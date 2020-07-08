@@ -79,12 +79,11 @@ jobs:
           echo Build
           call dotnet build
           echo checkes 
-          dir '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data'
-          dir '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader/bin/Debug/netcoreapp3.1'
+          dir 
           echo copy data 
-          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader/bin/Debug/netcoreapp3.1'
+          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader'
           echo checkes2
-          dir '$(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1'
+          dir 
           echo upload 
           call dotnet run
           echo Complete
