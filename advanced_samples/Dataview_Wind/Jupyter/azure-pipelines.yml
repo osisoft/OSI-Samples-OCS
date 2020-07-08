@@ -41,7 +41,7 @@ variables:
   - name: bulkUploadCredFile
     value: appsettings.json
   - name: bulkUploadCredFileLibrary
-    value: product-readiness.BulkUpload_DotNet.json
+    value: product-readiness.BulkUpload_DataviewWindFarm.json
 
 jobs:
   - job: Tests
