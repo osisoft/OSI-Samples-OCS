@@ -27,32 +27,18 @@ namespace BulkUploaderTest
                 LogError(ex);
             }
 
-            Cleanup();
+            Program.Cleanup();
+            LogError(Program.ToThrow);
+
             if (_toThrow != null)
                 throw _toThrow;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
-        private static void DeleteDataView()
-        {
-            Console.WriteLine($"Deleting Dataviews");
-            string dataviewS = File.ReadAllText(Program.DataviewPath);
-            List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
-            foreach (var dataview in dataviews)
-            {
-                try
-                {
-                    Program.DvService.DeleteDataViewAsync(dataview.Id).Wait();
-                }
-                catch (Exception ex)
-                {
-                    LogError(ex);
-                }
-            }
-        }
-
         private static void LogError(Exception ex)
         {
+            if (ex == null)
+                return;
+
             Console.Write(ex);
             if (_toThrow != null)
             {
@@ -60,85 +46,5 @@ namespace BulkUploaderTest
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
-        private static void DeleteTypes()
-        {
-            Console.WriteLine($"Deleting Types");
-            string types = File.ReadAllText(Program.SdsTypePath);
-            List<SdsType> typeList = JsonConvert.DeserializeObject<List<SdsType>>(types);
-            foreach (var type in typeList)
-            {
-                try
-                { 
-                    Program.MetadataService.DeleteTypeAsync(type.Id).Wait();
-                }
-                catch (Exception ex)
-                {
-                    Console.Write(ex);
-
-                    // Note: For delete of type we are not causing the test to error if it failes because it is common that a type might exist on for other streams.  If you want to make sure it delete uncomment the line below.
-
-                    // LogError(ex);
-                }
-            }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
-        private static void DeleteStreams()
-        {
-            Console.WriteLine($"Deleting streams");
-            string streams = File.ReadAllText(Program.SdsStreamPath);
-            var streamsList = JsonConvert.DeserializeObject<List<SdsStream>>(streams);
-            foreach (var stream in streamsList)
-            {
-                try 
-                {                 
-                    Program.MetadataService.DeleteStreamAsync(stream.Id).Wait();
-                }
-                catch (Exception ex)
-                {
-                    LogError(ex);
-                }
-            }
-        }
-
-        private void Cleanup()
-        {
-            if (!string.IsNullOrEmpty(Program.DataviewPath))
-            {
-                try
-                {
-                    DeleteDataView();
-                }
-                catch (Exception ex)
-                {
-                    LogError(ex);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(Program.SdsStreamPath))
-            {
-                try
-                {
-                    DeleteStreams();
-                }
-                catch (Exception ex)
-                {
-                    LogError(ex);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(Program.SdsTypePath))
-            {
-                try
-                {
-                    DeleteTypes();
-                }
-                catch (Exception ex)
-                {
-                    LogError(ex);
-                }
-            }
-        }
     }
 }

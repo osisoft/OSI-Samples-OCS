@@ -30,9 +30,18 @@ variables:
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
-    value: product-readiness.config.ini
+    value: product-readiness.sds_python.ini
   - name: analysisProject
     value: SDSDataviewJupyter
+
+  - name: bulkUploadprojPath
+    value: '/advanced_samples/Bulk_Upload/DotNet'
+  - name: bulkUploadFiles
+    value: '/advanced_samples/Bulk_Upload/SampleCollections/DataviewWind'
+  - name: bulkUploadCredFile
+    value: appsettings.json
+  - name: bulkUploadCredFileLibrary
+    value: product-readiness.BulkUpload_DotNet.json
 
 jobs:
   - job: Tests
@@ -57,17 +66,42 @@ jobs:
           architecture: 'x64'
         displayName: 'Specify Python version'
 
+        
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(bulkUploadCredFile)
+          fileLibrary: $(bulkUploadCredFileLibrary)
+          filePath: $(bulkUploadprojPath)/BulkUploader
+        
       - bash: |
-          echo Install test tools  
-          pip install pytest
+          echo build 
+          dotnet bulld
+          echo copy data 
+          cp $(Build.SourcesDirectory)$(bulkUploadFiles)/Data $(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1
+          echo upload 
+          dotnet run
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/
+        displayName: 'Upload data needed'
+
+      - bash: |
           echo Install requirements
           pip install -r requirements.txt
+          echo Install test tools  
           pip install -r test-requirements.txt
           echo Run tests
           call jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
+
+        
+      - bash: |
+          echo cleanup data added 
+          dotnet run delete
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/
+        displayName: 'Detele data needed'
 
       - task: PublishTestResults@2
         inputs:

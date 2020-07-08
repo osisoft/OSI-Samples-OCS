@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -29,12 +30,14 @@ namespace BulkUploader
         public static ISdsDataService DataService { get; set; }
         public static IDataViewService DvService { get; set; }
 
-        public static void Main()
+        public static void Main(params string[] args)
         {
-            MainRunner();
+            var delete = (args.Length > 0 && args[0].ToLower() == "delete");
+                
+            MainRunner(delete);
         }
 
-        public static bool MainRunner()
+        public static bool MainRunner(bool delete = false)
         {
             MetadataService = null;
 
@@ -69,6 +72,19 @@ namespace BulkUploader
             MetadataService = sdsService.GetMetadataService(tenantId, namespaceId);
             DataService = sdsService.GetDataService(tenantId, namespaceId);
 
+            if (!string.IsNullOrEmpty(DataviewPath))
+            {
+                AuthenticationHandler authenticationHandlerDataViews = new AuthenticationHandler(uriResource, clientId, clientKey); // currently this has to be a different auth handler or it throws errors
+                var dv_service_factory = new DataViewServiceFactory(new Uri(resource), authenticationHandlerDataViews);
+                DvService = dv_service_factory.GetDataViewService(tenantId, namespaceId);
+            }
+
+            if (delete)
+            {
+                Cleanup();
+                return true;
+            }
+
             if (!string.IsNullOrEmpty(SdsTypePath))
                 SendTypes();
 
@@ -80,10 +96,6 @@ namespace BulkUploader
 
             if (!string.IsNullOrEmpty(DataviewPath))
             {
-                AuthenticationHandler authenticationHandlerDataViews = new AuthenticationHandler(uriResource, clientId, clientKey); // currently this has to be a different auth handler or it throws errors
-                var dv_service_factory = new DataViewServiceFactory(new Uri(resource), authenticationHandlerDataViews);
-                DvService = dv_service_factory.GetDataViewService(tenantId, namespaceId);
-
                 SendDataView();
             }
 
@@ -190,6 +202,106 @@ namespace BulkUploader
                 var streamName = matches.First().Value;
                 var dataAsList = JsonConvert.DeserializeObject<List<JObject>>(data);
                 DataService.UpdateValuesAsync(streamName, dataAsList).Wait();
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
+        private static void DeleteDataView()
+        {
+            Console.WriteLine($"Deleting Dataviews");
+            string dataviewS = File.ReadAllText(DataviewPath);
+            List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
+            foreach (var dataview in dataviews)
+            {
+                try
+                { 
+                    DvService.DeleteDataViewAsync(dataview.Id).Wait();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
+        private static void DeleteTypes()
+        {
+            Console.WriteLine($"Deleting Types");
+            string types = File.ReadAllText(SdsTypePath);
+            List<SdsType> typeList = JsonConvert.DeserializeObject<List<SdsType>>(types);
+            foreach (var type in typeList)
+            {
+                try
+                {
+                    MetadataService.DeleteTypeAsync(type.Id).Wait();
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex);
+
+                    // Note: For delete of type we are not causing the test to error if it failes because it is common that a type might exist on for other streams.  If you want to make sure it delete uncomment the line below.
+
+                    // LogException(ex);
+                }
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
+        private static void DeleteStreams()
+        {
+            Console.WriteLine($"Deleting streams");
+            string streams = File.ReadAllText(SdsStreamPath);
+            var streamsList = JsonConvert.DeserializeObject<List<SdsStream>>(streams);
+            foreach (var stream in streamsList)
+            {
+                try
+                {
+                    MetadataService.DeleteStreamAsync(stream.Id).Wait();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
+            }
+        }
+
+        public static void Cleanup()
+        {
+            if (!string.IsNullOrEmpty(DataviewPath))
+            {
+                try
+                {
+                    DeleteDataView();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(SdsStreamPath))
+            {
+                try
+                {
+                    DeleteStreams();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(SdsTypePath))
+            {
+                try
+                {
+                    DeleteTypes();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
             }
         }
     }
