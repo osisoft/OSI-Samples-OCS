@@ -6,6 +6,4 @@ matplotlib
 scikit-learn
 scipy
 requests
-json
-configparser
 pickle
