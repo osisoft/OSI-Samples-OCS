@@ -1,0 +1,83 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/Dataview_Wind/Jupyter'
+
+pr:
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - '/advanced_samples/Dataview_Wind/Jupyter'
+
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - master
+    always: true
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml'
+  - name: projPath
+    value: '/advanced_samples/Dataview_Wind/Jupyter'
+  - name: CredFile
+    value: config.ini
+  - name: CredFileLibrary
+    value: product-readiness.config.ini
+  - name: analysisProject
+    value: SDSDataviewJupyter
+
+jobs:
+  - job: Tests
+    strategy:
+      matrix:
+        linux:
+          imageName: ubuntu-latest
+        windows:
+          imageName: windows-latest
+    pool:
+      vmImage: $(imageName)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibrary)
+          filePath: $(projPath)
+
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.6'
+          architecture: 'x64'
+        displayName: 'Specify Python version'
+
+      - bash: |
+          echo Install test tools  
+          pip install pytest
+          echo Install requirements
+          pip install -r requirements.txt
+          pip install -r test-requirements.txt
+          echo Run tests
+          call jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+        displayName: 'Publish test results'
+        condition: always()
+
+  - template: '/miscellaneous/build_templates/analysis.yml'
+    parameters:
+      language: python
+      skipPolaris: true
