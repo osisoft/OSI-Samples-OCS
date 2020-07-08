@@ -88,7 +88,7 @@ jobs:
           echo upload 
           call dotnet run
           echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Upload data needed'
         
       - bash: |
