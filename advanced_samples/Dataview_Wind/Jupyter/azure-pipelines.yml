@@ -73,13 +73,20 @@ jobs:
           fileLibrary: $(bulkUploadCredFileLibrary)
           filePath: $(bulkUploadprojPath)/BulkUploader
         
-      - bash: |
-          echo build 
-          dotnet bulld
+      - script: |
+          echo Clean
+          call dotnet clean
+          echo Build
+          call dotnet build
+          echo checkes 
+          dir $(Build.SourcesDirectory)$(bulkUploadFiles)/Data
+          dir $(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1
           echo copy data 
-          cp $(Build.SourcesDirectory)$(bulkUploadFiles)/Data $(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1
+          cp -r $(Build.SourcesDirectory)$(bulkUploadFiles)/Data $(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1
+          echo checkes2
+          dir $(Build.SourcesDirectory)$(bulkUploadprojPath)/bin/Debug/netcoreapp3.1
           echo upload 
-          dotnet run
+          call dotnet run
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/
         displayName: 'Upload data needed'
@@ -98,7 +105,7 @@ jobs:
         
       - bash: |
           echo cleanup data added 
-          dotnet run delete
+          call dotnet run delete
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/
         displayName: 'Detele data needed'
