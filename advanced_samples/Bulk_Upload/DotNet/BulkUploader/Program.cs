@@ -151,7 +151,8 @@ namespace BulkUploader
                         string path = SdsStreamMetaPath + stream.Id + ".json";
                         Console.WriteLine($"Sending stream metadata from file: {path}");
                         string meta = File.ReadAllText(path);
-                        MetadataService.UpdateStreamMetadataAsync(stream.Id, JsonConvert.DeserializeObject<IDictionary<string, string>>(meta));
+                        if(!string.IsNullOrEmpty(meta))
+                            MetadataService.UpdateStreamMetadataAsync(stream.Id, JsonConvert.DeserializeObject<IDictionary<string, string>>(meta));
                     }
                     catch (Exception ex)
                     {
@@ -165,8 +166,9 @@ namespace BulkUploader
                     {
                         string path = SdsStreamTagPath + stream.Id + ".json";
                         Console.WriteLine($"Sending stream tag from file: {path}");
-                        string meta = File.ReadAllText(path);
-                        MetadataService.UpdateStreamTagsAsync(stream.Id, JsonConvert.DeserializeObject<IList<string>>(meta));
+                        string tags = File.ReadAllText(path);
+                        if (!string.IsNullOrEmpty(tags))
+                            MetadataService.UpdateStreamTagsAsync(stream.Id, JsonConvert.DeserializeObject<IList<string>>(tags));
                     }
                     catch (Exception ex)
                     {
@@ -181,8 +183,8 @@ namespace BulkUploader
                         string path = SdsStreamDataPath + stream.Id + ".json";
                         Console.WriteLine($"Sending stream data from file: {path}");
                         string data = File.ReadAllText(path);
-                        var dataAsList = JsonConvert.DeserializeObject<List<JObject>>(data);
-                        DataService.UpdateValuesAsync(stream.Id, dataAsList).Wait();
+                        if (!string.IsNullOrEmpty(data))
+                            DataService.UpdateValuesAsync(stream.Id, JsonConvert.DeserializeObject<List<JObject>>(data)).Wait();
                     }
                     catch (Exception ex)
                     {
