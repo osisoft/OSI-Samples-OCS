@@ -103,6 +103,13 @@ jobs:
 
         
       - bash: |
+          echo Run tests
+          call jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Run tests'
+        
+      - bash: |
           echo cleanup data added 
           call dotnet run delete
           echo Complete
