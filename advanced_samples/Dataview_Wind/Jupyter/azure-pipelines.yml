@@ -85,7 +85,7 @@ jobs:
           echo checkes2
           dir 
           echo upload 
-          call dotnet run
+        #  call dotnet run
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Upload data needed'
@@ -106,7 +106,7 @@ jobs:
           echo cleanup data added 
           call dotnet run delete
           echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/
+        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Detele data needed'
 
       - task: PublishTestResults@2

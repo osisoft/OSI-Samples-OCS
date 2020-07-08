@@ -33,7 +33,9 @@ namespace BulkUploader
         public static void Main(params string[] args)
         {
             var delete = (args.Length > 0 && args[0].ToLower() == "delete");
-                
+
+            if (delete)
+                Console.WriteLine("App is only deleting.");
             MainRunner(delete);
         }
 
