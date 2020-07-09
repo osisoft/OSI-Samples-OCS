@@ -98,13 +98,15 @@ jobs:
           pip install -r test-requirements.txt
           echo Run tests
           jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
+          echo contents
+          dir
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
         
       - bash: |
           echo cleanup data added 
-          dotnet run delete
+          echo dotnet run delete
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Detele data needed'
