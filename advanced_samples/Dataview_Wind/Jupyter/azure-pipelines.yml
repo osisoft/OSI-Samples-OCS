@@ -72,18 +72,6 @@ jobs:
           fileOriginal: $(bulkUploadCredFile)
           fileLibrary: $(bulkUploadCredFileLibrary)
           filePath: $(bulkUploadprojPath)/BulkUploader
-        
-        
-      - bash: |
-          echo Install jupyter
-          pip install jupyter
-          echo Install nbconvert
-          pip install nbconvert
-          echo Run tests
-          jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Run tests'
 
       - script: |
           echo Clean
@@ -109,20 +97,12 @@ jobs:
           echo Install test tools  
           call pip install -r test-requirements.txt
           echo Run tests
-          call jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Run tests'
-
-        
-      - bash: |
-          echo Run tests
-          call jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
+          jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
         
-      - bash: |
+      - script: |
           echo cleanup data added 
           call dotnet run delete
           echo Complete
