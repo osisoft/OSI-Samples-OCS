@@ -4,24 +4,35 @@
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/PI-System/PIWebAPI_Data_Analysis?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1644&branchName=master)
 
-The sample code in this folder demonstrates how to utilize the OCS Dataviews to do some basic data analysis using Python Jupyter Notebook. In order to run this sample, you need to have [Python](https://www.python.org/downloads/) installed.
+The sample code in this folder demonstrates how to utilize the OCS Dataviews to do some basic data analysis using Python Jupyter Notebook. In order to run this sample, you need to have [Python](https://www.python.org/downloads/) installed.  
+
+## About the Sample
+
+This sample is intended to show you how you can use an OCS Dataview to bring your data from OCS into Jupyter and easily into Pandas to do machine learning.  Using an OCS Dataview allows you to configure the data you want, in the way you want it, and not have to do as much client side processing of the data.  This is a basic sample that shows you a possible way to do machine learning and a possible outcome of looking at the data.  This is not a guide to Pandas or machine learning.
 
 ## Background and Problem
 
 ### Background
 
+Wind turbines operate by capturing kinetic enrgy of wind to turn rotor blades that run a generator.  Governed by Betz's law they can only capture 59.3% of kinetic enrgy from wind.  This is important, because after a certain limit higher winds do not create additional power.  At a certain wind speed, the power actually decreases. 
 
 ### Problem Statement
 
+Can we predict what the power output of these wind turbines is based on weather forecast data.
 
 ### Data Overview
+
+This data we are using is available in our BulkUpload SampleCollections [folder](https://github.com/osisoft/OSI-Samples-OCS/tree/master/advanced_samples/Bulk_Upload/SampleCollections/DataviewWind).  This sample data is similar to what you might have from a site where the data has unexpected values and not every turbine behaves exactly the same.  The data is only for 1 day.  Repeating this exercise over more days of data would give you a better prediction.    
+
+This sample also skips over the exercise of creating the dataview.  To see how to do that programmatically, please look at our other sample [here](https://github.com/osisoft/OSI-Samples-OCS/tree/master/basic_samples/DataViews). 
 
 ## Getting Started
 
 - Clone the GitHub repository
 - Install the required modules by running the following command in the terminal : `pip install -r requirements.txt`
+- If running the tests, install the required modules by running the following command in the terminal : `pip install -r test-requirements.txt`
 
-### Setting up the AF database and the PI Data Archive
+### Setting up the OCS connection
 
 - In the `Jupyter` folder, populate the values of `config.ini` with your own system configuration.
   For example:
@@ -43,17 +54,17 @@ ClientSecret = REPLACE_WITH_APPLICATION_SECRET
 
 ### Running Jupyter Notebook
 
-- Open a terminal and type in `jupyter notebook`. This will open a browser window. Navigate to the cloned repository and open up `Wind Turbine OCS Data_OCS Python Library .ipynb`. Run the cells one by one and you can see the output in browser itself.
-- The last cell in the notebook is for running unit tests so that you can test your PI Web API connection is working properly. As it tests the methods defined earlier in the notebook, you need to run the previous cells (the one which defines the GET and POST methods) of the notebook before trying to run the unit tests.
+Open a terminal and type in `jupyter notebook`. This will open a browser window. Navigate to the cloned repository and open up `Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb`. Run the cells one by one and you can see the output in browser itself.
 
-## Documentation
+### Test Jupyter Notebook
 
-The documentation for the various controllers and topics can be found at your local PI Web API help system: [https://your-server/piwebapi/help](https://your-server/piwebapi/help)
+The last cell in the notebook is for running unit tests so that you can test to make sure the whole notebook is working as expected. As it tests the methods defined earlier in the notebook, you need to run the previous cells of the notebook before trying to run the unit tests.
 
-## Authentication and minimum versions
+### Automated Tests
 
-The sample works with Basic authentication.
-This sample has been tested on `PI Web API 2018 SP1`, `PI AF Server 2018 SP2` and `PI Data Archive 2018 SP2`.
+The automated tests assume that the data is already lodaded.  The steps to load the data and delete the data are included in the .yml but are commented out to not send and delete large amounts of the same data often.   
+
+
 
 ---
 
