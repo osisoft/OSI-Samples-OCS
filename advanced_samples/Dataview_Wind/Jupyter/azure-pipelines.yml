@@ -93,9 +93,9 @@ jobs:
         
       - bash: |
           echo Install requirements
-          call pip install -r requirements.txt
+          pip install -r requirements.txt
           echo Install test tools  
-          call pip install -r test-requirements.txt
+          pip install -r test-requirements.txt
           echo Run tests
           jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
           echo Complete
