@@ -73,18 +73,18 @@ jobs:
           fileLibrary: $(bulkUploadCredFileLibrary)
           filePath: $(bulkUploadprojPath)/BulkUploader
 
-      - bash: |
-          echo Clean
-          dotnet clean
-          echo Build
-          dotnet build
-          echo copy data 
-          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader'
-          echo upload 
-          echo dotnet run
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
-        displayName: 'Upload data needed'
+#      - bash: |
+#          echo Clean
+#          dotnet clean
+#          echo Build
+#          dotnet build
+#          echo copy data 
+#          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader'
+#          echo upload 
+#          dotnet run
+#          echo Complete
+#        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
+#        displayName: 'Upload data needed'
 
         
       - bash: |
@@ -98,12 +98,12 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
         
-      - bash: |
-          echo cleanup data added 
-          echo dotnet run delete
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
-        displayName: 'Detele data needed'
+#      - bash: |
+#          echo cleanup data added 
+#          dotnet run delete
+#          echo Complete
+#        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
+#        displayName: 'Detele data needed'
 
       - task: PublishTestResults@2
         inputs:
