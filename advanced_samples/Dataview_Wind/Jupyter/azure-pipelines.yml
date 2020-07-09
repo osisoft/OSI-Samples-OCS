@@ -112,6 +112,7 @@ jobs:
       - task: PublishTestResults@2
         inputs:
           testResultsFiles: '**/test-*.xml'
+          searchFolder: '$(Build.SourcesDirectory)$(projPath)/'
           failTaskOnFailedTests: true
           testRunTitle: '$(Agent.JobName) on $(imageName)'
         displayName: 'Publish test results'
