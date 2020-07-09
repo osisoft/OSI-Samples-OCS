@@ -78,14 +78,10 @@ jobs:
           dotnet clean
           echo Build
           dotnet build
-          echo checkes 
-          dir 
           echo copy data 
           cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader'
-          echo checkes2
-          dir 
           echo upload 
-          dotnet run
+          echo dotnet run
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Upload data needed'
