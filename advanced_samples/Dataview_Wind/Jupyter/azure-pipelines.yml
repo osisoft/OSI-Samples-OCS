@@ -73,11 +73,11 @@ jobs:
           fileLibrary: $(bulkUploadCredFileLibrary)
           filePath: $(bulkUploadprojPath)/BulkUploader
 
-      - script: |
+      - bash: |
           echo Clean
-          call dotnet clean
+          dotnet clean
           echo Build
-          call dotnet build
+          dotnet build
           echo checkes 
           dir 
           echo copy data 
@@ -85,7 +85,7 @@ jobs:
           echo checkes2
           dir 
           echo upload 
-          echo call dotnet run
+          dotnet run
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Upload data needed'
@@ -102,9 +102,9 @@ jobs:
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
         
-      - script: |
+      - bash: |
           echo cleanup data added 
-          echo call dotnet run delete
+          dotnet run delete
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Detele data needed'
