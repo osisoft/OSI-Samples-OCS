@@ -97,9 +97,7 @@ namespace BulkUploader
                 SendData();
 
             if (!string.IsNullOrEmpty(DataviewPath))
-            {
                 SendDataView();
-            }
 
             if (ToThrow != null)
                 throw ToThrow;
@@ -117,6 +115,7 @@ namespace BulkUploader
 
         private static void SendDataView()
         {
+            Console.WriteLine($"Sending dataviews from file: {DataviewPath}");
             string dataviewS = File.ReadAllText(DataviewPath);
             List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
             foreach (var dataview in dataviews)
