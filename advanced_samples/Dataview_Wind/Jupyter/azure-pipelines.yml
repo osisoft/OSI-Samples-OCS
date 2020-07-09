@@ -85,7 +85,7 @@ jobs:
           echo checkes2
           dir 
           echo upload 
-          echo call dotnet run
+          call dotnet run
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
         displayName: 'Upload data needed'
