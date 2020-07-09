@@ -92,16 +92,8 @@ jobs:
           pip install -r requirements.txt
           echo Install test tools  
           pip install -r test-requirements.txt
-          echo contents
-          dir
-          echo touch
-          touch test-SDSDataviewJupyter.xml
-          echo contents2
-          dir
           echo Run tests
           jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
-          echo contents3
-          dir
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Run tests'
