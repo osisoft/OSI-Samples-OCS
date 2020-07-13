@@ -142,6 +142,7 @@ jobs:
           # Call Polaris, set the configuration file path and run analyze with wait option
           & 'polaris.exe' -c polaris.yml analyze -w
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        condition: or(eq('${{ parameters.language }}', 'dotnet'), eq('${{ parameters.language }}', 'java'), eq('${{ parameters.language }}', 'python'), eq('${{ parameters.language }}', 'angular'), eq('${{ parameters.language }}', 'nodejs'))
         displayName: 'Polaris Analyze'
 
       # Synopsys BlackDuck
