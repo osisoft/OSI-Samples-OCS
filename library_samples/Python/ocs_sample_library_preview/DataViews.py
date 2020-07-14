@@ -311,11 +311,12 @@ class DataViews(object):
         nextPage = None
         firstPage = None
 
-        if "NextPage" in response.headers:
-            nextPage = response.headers["NextPage"]
-
-        if "FirstPage" in response.headers:
-            firstPage = response.headers["FirstPage"]
+        links = response.headers.get("Link", None)
+        if links:
+            links = links.split(" ")
+            firstPage = links[0].replace("<", "").replace(">;", "")
+            if len(links) >= 3:
+                nextPage = links[2].replace("<", "").replace(">;", "")
 
         if form is not None:
             return response.text, nextPage, firstPage
