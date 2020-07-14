@@ -2,6 +2,7 @@ parameters:
   language: ''
   lib: false
   skipBinSkim: false
+  useRequirementsTxt: false
   npmBuild: false
 
 jobs:
@@ -156,7 +157,7 @@ jobs:
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
             --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
-        condition: and(succeeded(), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
+        condition: and(succeeded(), ne(${{ parameters.useRequirementsTxt }}, false), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
         displayName: 'Synopsys Detect: BlackDuck'
 
       - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
@@ -170,5 +171,5 @@ jobs:
             --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.pip.requirements.path=$(Build.SourcesDirectory)$(projPath)/requirements.txt
-        condition: and(succeeded(), and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false)))
+        condition: and(succeeded(), or(eq(${{ parameters.useRequirementsTxt }}, true), and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false))))
         displayName: 'Synopsys Detect: BlackDuck (Python Requirements.txt)'
