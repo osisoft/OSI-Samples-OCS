@@ -1,0 +1,67 @@
+[
+  {
+    "Id": "PI-Float32-Simple",
+    "Name": "PI Float32 Simple",
+    "Description": "Represents a PI Data Archive float32 point type.",
+    "SdsTypeCode": 1,
+    "IsGenericType": false,
+    "IsReferenceType": false,
+    "GenericArguments": null,
+    "Properties": [
+      {
+        "Id": "Timestamp",
+        "Name": "Timestamp",
+        "Description": null,
+        "Order": 0,
+        "IsKey": true,
+        "FixedSize": 0,
+        "SdsType": {
+          "Id": "0573b425-368a-369b-95d9-71c863df45a5",
+          "Name": "DateTime",
+          "Description": null,
+          "SdsTypeCode": 16,
+          "IsGenericType": false,
+          "IsReferenceType": false,
+          "GenericArguments": null,
+          "Properties": null,
+          "BaseType": null,
+          "DerivedTypes": null,
+          "InterpolationMode": 0,
+          "ExtrapolationMode": 0
+        },
+        "Value": null,
+        "Uom": null,
+        "InterpolationMode": null
+      },
+      {
+        "Id": "Value",
+        "Name": "Value",
+        "Description": null,
+        "Order": 0,
+        "IsKey": false,
+        "FixedSize": 0,
+        "SdsType": {
+          "Id": "badfaf17-322b-2403-878a-3ea1836a505d",
+          "Name": "NullableSingle",
+          "Description": null,
+          "SdsTypeCode": 113,
+          "IsGenericType": true,
+          "IsReferenceType": false,
+          "GenericArguments": null,
+          "Properties": null,
+          "BaseType": null,
+          "DerivedTypes": null,
+          "InterpolationMode": 0,
+          "ExtrapolationMode": 0
+        },
+        "Value": null,
+        "Uom": null,
+        "InterpolationMode": null
+      }
+    ],
+    "BaseType": null,
+    "DerivedTypes": null,
+    "InterpolationMode": 4,
+    "ExtrapolationMode": 2
+  }
+]

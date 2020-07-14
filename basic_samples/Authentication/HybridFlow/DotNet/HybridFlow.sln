@@ -7,6 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridFlow", "HybridFlow\Hy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HybridFlowTest", "HybridFlowTest\HybridFlowTest.csproj", "{56AEC921-173B-43DD-8950-925526B0E982}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C05F1E99-D746-418B-90C6-5A733238A138}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipeline.yml = azure-pipeline.yml
+		..\..\..\..\Directory.Build.props = ..\..\..\..\Directory.Build.props
+		..\..\..\..\Extensions.ruleset = ..\..\..\..\Extensions.ruleset
+		HISTORY.md = HISTORY.md
+		..\..\..\..\OSIsoft.ruleset = ..\..\..\..\OSIsoft.ruleset
+		polaris.yml = polaris.yml
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

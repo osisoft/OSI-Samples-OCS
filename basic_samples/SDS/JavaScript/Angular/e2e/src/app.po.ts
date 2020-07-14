@@ -2,21 +2,15 @@ import { browser, by, element, protractor } from 'protractor';
 import cred from './cred.json';
 
 export class AppPage {
-  /*writeScreenShot(data, filename) {
-        const fs = require('fs');
-        const stream = fs.createWriteStream(filename);
-        stream.write(new Buffer(data, 'base64'));
-        stream.end();
-    }*/ // excess debugging
-
   helper(path: string, expectation: string): any {
+    console.log(path);
     return element(by.id(path))
       .click()
-      .then(res => {
+      .then((res) => {
         browser.driver.sleep(2500);
         element(by.id(path + 'Message'))
           .getText()
-          .then(txt => {
+          .then((txt) => {
             expect(txt).toContain(expectation);
           });
       });
@@ -34,7 +28,7 @@ export class AppPage {
     return this.helper('writeWaveDataEvents', '20');
   }
 
-  retreiveEvents(): any {
+  retrieveEvents(): any {
     return this.helper('retrieveWaveDataEvents', '10 events');
   }
 
@@ -78,7 +72,7 @@ export class AppPage {
     return this.helper('createAutoStreamView', '20');
   }
 
-  retreiveEventsBasedOnSdsView(): any {
+  retrieveEventsBasedOnSdsView(): any {
     return this.helper('retrieveWaveDataEventsAutoStreamView', '');
   }
 
@@ -134,8 +128,8 @@ export class AppPage {
     return this.helper('createCompoundTypeandStream', '');
   }
 
-  createAndRetreiveCompoundData(): any {
-    return this.helper('createAndRetreiveCompoundData', '');
+  createAndRetrieveCompoundData(): any {
+    return this.helper('createAndRetrieveCompoundData', '');
   }
 
   deleteRest(): any {
@@ -151,19 +145,11 @@ export class AppPage {
   }
 
   login2() {
-    /*element(by.xpath('/html')).getText().then((res) => {
-            console.log('!!login');
-            console.log(res);
-        })*/ // excess debugging
     return element(by.xpath('/html/body/app-root/nav/div/a[2]'))
       .click()
       .then(() => {
         browser.driver.sleep(3000).then(() => {
-          /*element(by.xpath('/html')).getText().then((res) => {
-                            console.log('!!choices');
-                            console.log(res);
-                        })*/ // excess debugging
-          browser.driver.findElement(by.css('a.osi-provider')).then(ele => {
+          browser.driver.findElement(by.css('a.osi-provider')).then((ele) => {
             ele.click().then(() => {
               browser.driver.sleep(3000).then(() => {
                 this.loginWithOutlook(cred.login, cred.pass);
@@ -178,40 +164,32 @@ export class AppPage {
     return this.selectWindow(0).then(() => {
       return browser.driver
         .findElement(by.xpath('//*[@id="i0116"]'))
-        .then(el => {
-          /*element(by.xpath('/html')).getText().then((res) => {
-                    console.log('!!email');
-                    console.log(res);
-                    console.log('!@!' + username);
-                })*/ // excess debugging
+        .then((el) => {
           el.sendKeys(username + protractor.Key.ENTER);
         })
         .then(() => {
           browser.driver.sleep(4000);
         })
         .then(() => {
-          /*element(by.xpath('/html')).getText().then((res) => {
-                    console.log('!!password');
-                    console.log(res);
-                })*/ // excess debugging
-          browser
-            .actions()
-            .sendKeys(passphrase + protractor.Key.ENTER)
-            .perform();
+          browser.driver
+            .findElement(by.xpath('//*[@id="i0118"]'))
+            .then((el) => {
+              el.sendKeys(passphrase + protractor.Key.ENTER);
+            });
         });
     });
   }
 
   selectWindow(index) {
-    browser.driver.wait(function() {
-      return browser.driver.getAllWindowHandles().then(handles => {
+    browser.driver.wait(function () {
+      return browser.driver.getAllWindowHandles().then((handles) => {
         if (handles.length > index) {
           return true;
         }
       });
     });
 
-    return browser.driver.getAllWindowHandles().then(handles => {
+    return browser.driver.getAllWindowHandles().then((handles) => {
       return browser.driver.switchTo().window(handles[index]);
     });
   }

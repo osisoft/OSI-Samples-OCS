@@ -1,0 +1,107 @@
+[
+    {
+        "Id": "docs-omf-weather-gen2",
+        "Name": "WeatherGen2",
+        "SdsTypeCode": 1,
+        "Properties": [
+            {
+                "Id": "Timestamp",
+                "Name": "Timestamp",
+                "IsKey": true,
+                "SdsType": {
+                    "Id": "0573b425-368a-369b-95d9-71c863df45a5",
+                    "Name": "DateTime",
+                    "SdsTypeCode": 16
+                }
+            },
+            {
+                "Id": "SolarRadiation",
+                "Name": "Solar Radiation",
+                "SdsType": {
+                    "Id": "0ce68e8c-51a4-3115-be13-dd1ace42e61f",
+                    "Name": "Int32",
+                    "SdsTypeCode": 9
+                }
+            },
+            {
+                "Id": "AmbientTemperature",
+                "Name": "Ambient Temperature",
+                "SdsType": {
+                    "Id": "9144b7d6-3d5f-3b29-8131-ff0db551e17c",
+                    "Name": "Double",
+                    "SdsTypeCode": 14
+                }
+            },
+            {
+                "Id": "CloudCover",
+                "Name": "Cloud Cover",
+                "SdsType": {
+                    "Id": "0ce68e8c-51a4-3115-be13-dd1ace42e61f",
+                    "Name": "Int32",
+                    "SdsTypeCode": 9
+                }
+            }
+        ]
+    },
+    {
+        "Id": "docs-omf-weather-gen1",
+        "Name": "WeatherGen1",
+        "SdsTypeCode": 1,
+        "Properties": [
+            {
+                "Id": "Timestamp",
+                "Name": "Timestamp",
+                "IsKey": true,
+                "SdsType": {
+                    "Id": "0573b425-368a-369b-95d9-71c863df45a5",
+                    "Name": "DateTime",
+                    "SdsTypeCode": 16
+                }
+            },
+            {
+                "Id": "SolarRadiation",
+                "Name": "Solar Radiation",
+                "SdsType": {
+                    "Id": "0ce68e8c-51a4-3115-be13-dd1ace42e61f",
+                    "Name": "Int32",
+                    "SdsTypeCode": 9
+                }
+            },
+            {
+                "Id": "Temperature",
+                "Name": "Temperature",
+                "SdsType": {
+                    "Id": "9144b7d6-3d5f-3b29-8131-ff0db551e17c",
+                    "Name": "Double",
+                    "SdsTypeCode": 14
+                }
+            }
+        ]
+    },
+    {
+        "Id": "docs-pi-inverter",
+        "Name": "Inverter",
+        "SdsTypeCode": 1,
+        "Properties": [
+            {
+                "Id": "Timestamp",
+                "Name": "Timestamp",
+                "IsKey": true,
+                "SdsType": {
+                    "Id": "0573b425-368a-369b-95d9-71c863df45a5",
+                    "Name": "DateTime",
+                    "SdsTypeCode": 16
+                }
+            },
+            {
+                "Id": "Value",
+                "Name": "Value",
+                "SdsType": {
+                    "Id": "9144b7d6-3d5f-3b29-8131-ff0db551e17c",
+                    "Name": "Double",
+                    "SdsTypeCode": 14
+                }
+            }
+        ]
+    }
+]

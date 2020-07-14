@@ -1,5 +1,9 @@
 # Authorization Code Flow + PKCE Sample and Test for Power BI Desktop
 
+**Version:** 1.0.5
+
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_PowerBI?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=996&branchName=master)
+
 The OCS Connector for Power BI Desktop is used to get data from the OCS API into Power BI Desktop. The connector uses the OAuth Authorization Code with PKCE flow to connect to the API and get an access token.
 
 ## Prerequisites
@@ -32,22 +36,33 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. The connector should be available as "OSIsoft Cloud Services Sample (Beta)" in the category "Online Services"
 1. Select it and click "Connect"
 1. If using the connector for the first time, you may get another warning regarding untrusted connectors
-1. When prompted for a URL, enter the API URL to get data from, like `https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/`
+1. When prompted for what URL settings to use,
+   - OCS URI: This should be the base url of OSIsoft Cloud Services, like `https://dat-b.osisoft.com`
+   - API URL Path: This should be the API endpoint path and parameters to use, like `/api/v1/Tenants/{tenantId}/Namespaces/`
+   - Timeout: Optionally, define a timeout in seconds for the request, usually only necessary for extremely large queries. By default, the timeout is 100 seconds.
 1. Click OK, and you will be prompted to login if you have not already, using an organizational account
 1. Once logged in, the Power Query Editor should open with the results.
+
+When using the Power Query Advanced Editor, the function `OCSConnector_Sample.Contents` can be used. The parameters correspond to the parameters described above; `ocsUri`, `apiUri`, and `timeout`.
 
 ## Using the Results
 
 The query will look something like:
 
-```
+```C#
 let
-    Source = OCSConnector.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/")
+    Source = OCSConnector.Contents("https://dat-b.osisoft.com", "/api/v1/Tenants/{tenantid}/")
 in
     Source
 ```
 
-However, the results will be displayed as a list of "Record" objects that are not easily consumable. To convert the results to a table, right click the `List` header and select `To Table`, accepting the default options.
+However, the results will be displayed as binary content, which is not directly consumable by Power BI. The binary first needs to be parsed. Data from OSIsoft Cloud Services is usually returned as JSON, but some endpoints can also return CSV format. Generally, if the parameter `form=csv` or `form=csvh` is being used, the content is returned in CSV format, otherwise the content is in JSON format. Not all endpoints support the `form` parameter.
+
+To parse the binary content, right click on it, and select either "CSV" or "JSON".
+
+If your content is CSV, the data should be ready to use. If the column headers are using default names like Column1, make sure you are using `form=csvh` (CSV with headers) instead of `form=csv`. Power BI should parse the headers from `csvh` format into column headers automatically.
+
+If your content is in JSON, you will now see a list of "Record" objects that are still not easily consumable. To convert the results to a table, right click the `List` header and select `To Table`, accepting the default options.
 
 This does little better, the data is then displayed as a list of "Record" objects under the header "Column1." However, now there is an icon with two arrows in that column header. Click that button, and then select what fields to use in the table, and expand out the data.
 
@@ -55,27 +70,31 @@ Once the data is expanded, if necessary, right click on column headers and use t
 
 At this point, the data should be consumable in a Power BI Dashboard! The final query will look something like:
 
-```
+```C#
 let
-    Source = OCSConnector_Sample.Contents("https://dat-b.osisoft.com/api/v1/Tenants/{tenantid}/Namespaces/"),
-    #"Converted to Table" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
-    #"Expanded Column1" = Table.ExpandRecordColumn(#"Converted to Table", "Column1", {"Id", "Region", "Self", "Description", "State"}, {"Column1.Id", "Column1.Region", "Column1.Self", "Column1.Description", "Column1.State"})
+    Source = OCSConnector_Sample.Contents("https://dat-b.osisoft.com/", "api/v1/Tenants/{tenantid}/Namespaces/"),
+    Converted = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    Expanded = Table.ExpandRecordColumn(Converted, "Column1", {"Id", "Region", "Self", "Description", "State"}, {"Column1.Id", "Column1.Region", "Column1.Self", "Column1.Description", "Column1.State"})
 in
-    #"Expanded Column1"
+    Expanded
 ```
 
 ## Tests
 
-Included is an automated test that runs CodedUI to make sure that the OCS Connector sample works. To run this test, you must have at least one recent source in PowerBI that has at least 1 record, and you must have have been logged in and selected Stay Logged In.
-This test simply checks to make sure the recent source works with a refresh and we can click on the first result. Since the test uses CodedUI, it might not work on environments other than the internal OSIsoft test agent due to window positioning and other settings.
+Included is an automated test that runs the Appium WebDriver to make sure that the OCS Connector sample works. To run this test, you must fill in the [appsettings.json](OCSConnectorTest/appsettings.json) with the OCS URL and a tenant ID that allows login via Personal Microsoft Accounts. You must also fill in the email address and password of a Microsoft Account to use for login.
 
-To run the test from the command line on the machine with PowerBI Desktop:
+This test will attempt to clear saved credentials, open the connector, and log in to OSIsoft Cloud Services using the provided credentials, then query the namespaces in that tenant. If this is successful, the test will pass.
 
-1. Build the test project using `msbuild` from the folder with the test .csproj (see all steps and prerequisites above need to do that)
-1. Navigate to the sub-directoy \bin\Debug
-1. Run `mstest /testcontainer:OCSConnectorTest.dll`
+Since the test uses Appium WebDriver, updates to Power BI Desktop or other differences in the UI automation fields may prevent the test from passing in environments other than the internal OSIsoft test agent. To resolve issues like this, use [inspect](https://docs.microsoft.com/en-us/windows/win32/winauto/inspect-objects) to validate the names and automation IDs used by the test.
 
-**Note:** When running a CodedUI test you should not move the mouse on that computer, or have anything else that can change the mouse movement or window focus during the test. Doing so can cause the test to fail.
+To run the test from the command line on the machine with Power BI Desktop, run:
+
+```shell
+dotnet restore
+dotnet test
+```
+
+**Note:** When running an Appium WebDriver test you should not move the mouse on that computer, or have anything else that can change the mouse movement or window focus during the test. Doing so can cause the test to fail.
 
 ---
 

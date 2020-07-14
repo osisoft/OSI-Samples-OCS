@@ -42,11 +42,35 @@ windowWidth = 720;
 windowHeight = 1024;
 
 [DataSource.Kind="OCSConnector_Sample", Publish="OCSConnector_Sample.Publish"]
-shared OCSConnector_Sample.Contents = (url as text) =>
+shared OCSConnector_Sample.Contents = Value.ReplaceType(OCSConnectorImpl, OCSConnectorType);
+
+OCSConnectorType = type function(
+    ocsUri as (type text meta [
+        Documentation.FieldCaption = "OSIsoft Cloud Services URI",
+        Documentation.FieldDescription = "OSIsoft Cloud Services API base address",
+        Documentation.SampleValues = {"https://dat-b.osisoft.com"}
+    ]),
+    optional apiUri as (type text meta [
+        Documentation.FieldCaption = "API URI Path",
+        Documentation.FieldDescription = "Path and parameters for API endpoint",
+        Documentation.SampleValues = {"/api/v1/Tenants/{tenantId}/Namespaces"}
+    ]),
+    optional timeout as (type number meta [
+        Documentation.FieldCaption = "Timeout",
+        Documentation.FieldDescription = "Timeout in seconds for API request",
+        Documentation.SampleValues = {100}
+    ])) as binary meta [
+        Documentation.LongDescription = "Raw data returned from API, usually JSON or CSV"
+    ];
+
+OCSConnectorImpl = (ocsUri as text, optional apiUri as text, optional timeout as number) =>
     let
-        source = Json.Document(Web.Contents(url))
+        url = ocsUri & apiUri,
+        source = if timeout = null
+        then Web.Contents(url)
+        else Web.Contents(url, [ Headers = [#"Request-Timeout" = Number.ToText(timeout)], Timeout = #duration(0,0,0,timeout)])
     in
-        source; 
+        source;
 
 // Data Source Kind description
 OCSConnector_Sample = [
@@ -55,7 +79,6 @@ OCSConnector_Sample = [
         OAuth = [
             StartLogin = StartLogin,
             FinishLogin = FinishLogin,
-            Refresh = Refresh,
             Logout = Logout
         ]
     ],
@@ -65,7 +88,7 @@ OCSConnector_Sample = [
 // Helper functions for OAuth2: StartLogin, FinishLogin, Refresh, Logout
 
 // Authorization Request, see https://www.oauth.com/oauth2-servers/pkce/authorization-request/
-StartLogin = (resourceUrl, state, display) =>
+StartLogin = (dataSourcePath, state, display) =>
     let
         authorizeUrl = authorize_uri & "?" & Uri.BuildQueryString([
             client_id = client_id, 
@@ -92,16 +115,14 @@ FinishLogin = (context, callbackUri, state) =>
         parts = Uri.Parts(callbackUri)[Query],
         // If the query string contains an "error" field, raise an error
         // Otherwise call TokenMethod to exchange our code for an access_token
-        result = if (Record.HasFields(parts, {"error", "error_description"})) then 
+        result = if Record.HasFields(parts, {"error", "error_description"}) then 
                     error Error.Record(parts[error], parts[error_description], parts)
                  else
                     TokenMethod("authorization_code", "code", parts[code])
     in
         result;
 
-Refresh = (resourceUrl, refresh_token) => TokenMethod("refresh_token", "refresh_token", refresh_token);
-
-Logout = (token) => logout_uri;
+Logout = (accessToken) => logout_uri;
 
 // Authorization Code Exchange, see https://www.oauth.com/oauth2-servers/pkce/authorization-code-exchange/
 TokenMethod = (grantType, tokenField, code) =>
