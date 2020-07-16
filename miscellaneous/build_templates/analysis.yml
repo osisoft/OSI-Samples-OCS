@@ -79,7 +79,7 @@ jobs:
           jupyter nbconvert --to script *.ipynb
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Build (Python): Install dependencies'
+        displayName: 'Build (Jupyter): Install dependencies'
         condition: eq('${{ parameters.language }}', 'jupyter')
 
       # - Angular
