@@ -1,5 +1,9 @@
 # Version History
 
+## 0.1.10_preview / 2020-07-16
+
+- Updated first/next page URL links 
+
 ## 0.1.9_preview / 2020-06-11
 
 - Updated dependencies
