@@ -45,74 +45,72 @@ variables:
 
 jobs:
   - job: Tests
-    strategy:
-      matrix:
-        linux:
-          imageName: ubuntu-latest
-        windows:
-          imageName: windows-latest
-    pool:
-      vmImage: $(imageName)
-    steps:
-      - template: '/miscellaneous/build_templates/config.yml'
-        parameters:
-          fileOriginal: $(CredFile)
-          fileLibrary: $(CredFileLibrary)
-          filePath: $(projPath)
+  #     strategy:
+  #       matrix:
+  #         linux:
+  #           imageName: ubuntu-latest
+  #         windows:
+  #           imageName: windows-latest
+  #     pool:
+  #       vmImage: $(imageName)
+  #     steps:
+  #       - template: '/miscellaneous/build_templates/config.yml'
+  #         parameters:
+  #           fileOriginal: $(CredFile)
+  #           fileLibrary: $(CredFileLibrary)
+  #           filePath: $(projPath)
 
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-        displayName: 'Specify Python version'
+  #       - task: UsePythonVersion@0
+  #         inputs:
+  #           versionSpec: '3.6'
+  #           architecture: 'x64'
+  #         displayName: 'Specify Python version'
 
-        
-      - template: '/miscellaneous/build_templates/config.yml'
-        parameters:
-          fileOriginal: $(bulkUploadCredFile)
-          fileLibrary: $(bulkUploadCredFileLibrary)
-          filePath: $(bulkUploadprojPath)/BulkUploader
+  #       - template: '/miscellaneous/build_templates/config.yml'
+  #         parameters:
+  #           fileOriginal: $(bulkUploadCredFile)
+  #           fileLibrary: $(bulkUploadCredFileLibrary)
+  #           filePath: $(bulkUploadprojPath)/BulkUploader
 
-#      - bash: |
-#          echo Clean
-#          dotnet clean
-#          echo Build
-#          dotnet build
-#          echo copy data 
-#          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader'
-#          echo upload 
-#          dotnet run
-#          echo Complete
-#        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
-#        displayName: 'Upload data needed'
+  # #      - bash: |
+  # #          echo Clean
+  # #          dotnet clean
+  # #          echo Build
+  # #          dotnet build
+  # #          echo copy data
+  # #          cp -r '$(Build.SourcesDirectory)$(bulkUploadFiles)/Data' '$(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader'
+  # #          echo upload
+  # #          dotnet run
+  # #          echo Complete
+  # #        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
+  # #        displayName: 'Upload data needed'
 
-        
-      - bash: |
-          echo Install requirements
-          pip install -r requirements.txt
-          echo Install test tools  
-          pip install -r test-requirements.txt
-          echo Run tests
-          jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
-          echo Complete
-        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        displayName: 'Run tests'
-        
-#      - bash: |
-#          echo cleanup data added 
-#          dotnet run delete
-#          echo Complete
-#        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
-#        displayName: 'Detele data needed'
+  #       - bash: |
+  #           echo Install requirements
+  #           pip install -r requirements.txt
+  #           echo Install test tools
+  #           pip install -r test-requirements.txt
+  #           echo Run tests
+  #           jupyter nbconvert --to notebook --inplace --ExecuteProcessor.timeout=6000 --execute Wind_Turbine_OCS_Data_OCS_Python_Library.ipynb
+  #           echo Complete
+  #         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+  #         displayName: 'Run tests'
 
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFiles: '**/test-*.xml'
-          searchFolder: '$(Build.SourcesDirectory)$(projPath)/'
-          failTaskOnFailedTests: true
-          testRunTitle: '$(Agent.JobName) on $(imageName)'
-        displayName: 'Publish test results'
-        condition: always()
+  # #      - bash: |
+  # #          echo cleanup data added
+  # #          dotnet run delete
+  # #          echo Complete
+  # #        workingDirectory: $(Build.SourcesDirectory)$(bulkUploadprojPath)/BulkUploader
+  # #        displayName: 'Detele data needed'
+
+  #       - task: PublishTestResults@2
+  #         inputs:
+  #           testResultsFiles: '**/test-*.xml'
+  #           searchFolder: '$(Build.SourcesDirectory)$(projPath)/'
+  #           failTaskOnFailedTests: true
+  #           testRunTitle: '$(Agent.JobName) on $(imageName)'
+  #         displayName: 'Publish test results'
+  #         condition: always()
 
   - template: '/miscellaneous/build_templates/analysis.yml'
     parameters:

@@ -69,6 +69,19 @@ jobs:
         displayName: 'Build (Python Library)'
         condition: and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true))
 
+      # - Jupyter
+      - script: |
+          echo Requirements
+          call pip install -r requirements.txt
+          echo TestRequirements
+          call pip install -r test-requirements.txt
+          echo ConvertToPython
+          jupyter nbconvert --to script *.ipynb
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build (Python): Install dependencies'
+        condition: eq('${{ parameters.language }}', 'jupyter')
+
       # - Angular
       - task: NodeTool@0
         inputs:
@@ -143,7 +156,7 @@ jobs:
           # Call Polaris, set the configuration file path and run analyze with wait option
           & 'polaris.exe' -c polaris.yml analyze -w
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
-        condition: or(eq('${{ parameters.language }}', 'dotnet'), eq('${{ parameters.language }}', 'java'), eq('${{ parameters.language }}', 'python'), eq('${{ parameters.language }}', 'angular'), eq('${{ parameters.language }}', 'nodejs'))
+        condition: or(eq('${{ parameters.language }}', 'dotnet'), eq('${{ parameters.language }}', 'java'), eq('${{ parameters.language }}', 'python'), eq('${{ parameters.language }}', 'jupyter'), eq('${{ parameters.language }}', 'angular'), eq('${{ parameters.language }}', 'nodejs'))
         displayName: 'Polaris Analyze'
 
       # Synopsys BlackDuck
