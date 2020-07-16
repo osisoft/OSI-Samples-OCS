@@ -1,4 +1,5 @@
 import json
+import re
 
 from .BaseClient import BaseClient
 from .DataView.DataView import DataView
@@ -18,6 +19,7 @@ class DataViews(object):
         """
         self.__baseClient = client
         self.__setPathAndQueryTemplates()
+        self.__urlLinks = re.compile(r'<(\S+)>; rel="(\S+)"')
 
     def postDataView(self, namespace_id, dataView):
         """Tells Sds Service to create a Data View based on local 'dataView'
@@ -308,14 +310,12 @@ class DataViews(object):
             f"Failed to get Data View data interpolated for Data View, {dataView_id}.",
         )
 
-        nextPage = None
-        firstPage = None
+        # build dictionary of first/next page URL links, if any
+        links_header = response.headers.get("Link", "")
+        links = {link.group(2) : link.group(1) for link in self.__urlLinks.finditer(links_header)}
 
-        if "NextPage" in response.headers:
-            nextPage = response.headers["NextPage"]
-
-        if "FirstPage" in response.headers:
-            firstPage = response.headers["FirstPage"]
+        nextPage = links.get("next", None)
+        firstPage = links.get("first", None)
 
         if form is not None:
             return response.text, nextPage, firstPage
