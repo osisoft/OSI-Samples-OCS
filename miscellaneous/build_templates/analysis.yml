@@ -157,7 +157,7 @@ jobs:
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
             --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
-        condition: and(succeeded(), ne(${{ parameters.useRequirementsTxt }}, false), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
+        condition: and(succeeded(), eq(${{ parameters.useRequirementsTxt }}, false), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
         displayName: 'Synopsys Detect: BlackDuck'
 
       - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
