@@ -1,6 +1,6 @@
 ﻿# SDS JavaScript Example using Python
 
-**Version:** 1.0.13
+**Version:** 1.0.14
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=925&branchName=master)
 
@@ -268,13 +268,13 @@ waves = ocsClient.Streams.getWindowValuesForm(namespaceId, stream.Id, None, 0, 1
 `getRangeValues` is a method in `SdsClient` used for retrieving a specified number of events from a starting index. The starting index is the ID of the `SdsTypeProperty` that corresponds to the key value of the WaveData type. Here is the request:
 
 ```python
-def getRangeValues(self, namespace_id, stream_id, value_class, start, skip, count, reverse, boundary_type, streamView_id=""):
+def getRangeValues(self, namespace_id, stream_id, value_class, start, skip, count, reversed, boundary, streamView_id=""):
 ```
 
-- **skip** is the increment by which the retrieval will happen.
+- **start** is the increment by which the retrieval will happen.
 - **count** is how many values you wish to have returned.
-- **reverse** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
-- **boundary_type** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- **reversed** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
+- **boundary** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown :
 

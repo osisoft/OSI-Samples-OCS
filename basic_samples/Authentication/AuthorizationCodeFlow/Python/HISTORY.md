@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.2 / 2020-07-17
+
+- Remove unnecessary pylint disable rules
+
 ## 1.0.1 / 2020-05-05
 
 - Updated to use Polaris in place of Coverity

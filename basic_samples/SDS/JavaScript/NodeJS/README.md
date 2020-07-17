@@ -1,6 +1,6 @@
 ﻿# Sequential Data Store NodeJS Sample
 
-**Version:** 1.0.9
+**Version:** 1.0.10
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_NodeJs?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=924&branchName=master)
 
@@ -381,7 +381,7 @@ restCall({
       start,
       skip,
       count,
-      reverse,
+      reversed,
       boundaryType,
       streamView,
     ]),
@@ -393,7 +393,7 @@ restCall({
 
 - **skip** is the increment by which the retrieval will happen.
 - **count** is how many values you wish to have returned.
-- **reverse** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
+- **reversed** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
 - **boundary_type** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown:
@@ -550,7 +550,7 @@ client.getRangeValues(
   start,
   skip,
   count,
-  reverse,
+  reversed,
   sdsObjs.sdsBoundaryType.ExactOrCalculated,
   autoStreamView.Id
 );

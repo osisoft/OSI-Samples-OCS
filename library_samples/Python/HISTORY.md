@@ -1,8 +1,14 @@
 # Version History
 
+## 0.1.11_preview / 2020-07-17
+
+- Fix implementation of `reversed` flag for stream API calls
+- General code cleanup & formatting
+- Remove unnecessary pylint disable rules
+
 ## 0.1.10_preview / 2020-07-16
 
-- Updated first/next page URL links 
+- Updated first/next page URL links
 
 ## 0.1.9_preview / 2020-06-11
 

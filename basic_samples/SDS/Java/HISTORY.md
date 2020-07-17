@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.11 / 2020-07-17
+
+- General code cleanup & formatting
+
 ## 1.0.10 / 2020-06-11
 
 - Updated dependencies

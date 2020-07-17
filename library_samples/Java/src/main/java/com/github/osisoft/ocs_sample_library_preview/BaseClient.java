@@ -144,9 +144,8 @@ public class BaseClient {
             URL discoveryUrl = new URL(Resource + "identity/.well-known/openid-configuration");
             URLConnection request = discoveryUrl.openConnection();
             request.connect();
-            JsonParser jp = new JsonParser();
-            JsonObject rootObj = jp
-                    .parse(new InputStreamReader((InputStream) request.getContent(), StandardCharsets.UTF_8))
+            JsonObject rootObj = JsonParser
+                    .parseReader(new InputStreamReader((InputStream) request.getContent(), StandardCharsets.UTF_8))
                     .getAsJsonObject();
             String tokenUrl = rootObj.get("token_endpoint").getAsString();
 
@@ -168,8 +167,7 @@ public class BaseClient {
             String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
             in.close();
 
-            jp = new JsonParser();
-            JsonObject response = jp.parse(result).getAsJsonObject();
+            JsonObject response = JsonParser.parseString(result).getAsJsonObject();
             cachedAccessToken = response.get("access_token").getAsString();
             Integer timeOut = response.get("expires_in").getAsInt();
             accessTokenExpiration = new Date(System.currentTimeMillis() + timeOut * 1000);
