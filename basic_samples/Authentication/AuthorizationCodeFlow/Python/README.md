@@ -8,6 +8,12 @@ This sample uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an acc
 
 Developed against Python 3.8.2
 
+## Python SDS Library
+
+The [Python SDS library](../../../../library_samples/Python), `ocs_sample_library_preview`, implements this flow inside its `OCSClient` type using the same Python code used in this sample. This sample is preserved separately to demonstrate that code in an isolated environment, and also to allow injection of a Selenium script for automated testing.
+
+To use the Authorization Code Flow + PKCE flow with the library, pass a client ID for an OCS Authorization Code client, without a client secret, to the constructor. The libary will use this OIDC flow if no secret is passed to the constructor.
+
 ## Requirements
 
 - Python 3
