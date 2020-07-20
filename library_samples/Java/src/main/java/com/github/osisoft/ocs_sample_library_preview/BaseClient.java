@@ -66,6 +66,24 @@ public class BaseClient {
      * Creates a baseclient using the passed information rather than the
      * configuration settings
      * 
+     * @param apiVersion API version of SDS
+     * @param tenantId   The tenant identifier
+     * @param resource   SDS url
+     */
+    public BaseClient(String apiVersion, String tenantId, String resource) {
+        this.TenantId = tenantId;
+        this.Resource = resource;
+        this.Resource = this.Resource.endsWith("/") ? this.Resource : this.Resource + "/";
+
+        this.baseUrl = this.Resource;
+        this.apiVersion = apiVersion;
+        this.mGson = new Gson();
+    }
+
+    /**
+     * Creates a baseclient using the passed information rather than the
+     * configuration settings
+     * 
      * @param apiVersion   APIversion of OCS
      * @param tenantId     The tenant identifier
      * @param clientId     Client id to login with
@@ -93,7 +111,10 @@ public class BaseClient {
      */
     public HttpURLConnection getConnection(URL url, String method) {
         HttpURLConnection urlConnection = null;
-        String token = AcquireAuthToken();
+        String token = "";
+        if (!this.ClientId.isEmpty()) {
+            token = AcquireAuthToken();
+        }
 
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -101,7 +122,9 @@ public class BaseClient {
             urlConnection.setRequestProperty("Accept", "*/*; q=1");
             urlConnection.setRequestProperty("Accept-Encoding", "gzip");
             urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+            if (!token.isEmpty()) {
+                urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+            }
             urlConnection.setUseCaches(false);
             urlConnection.setConnectTimeout(50000);
             urlConnection.setReadTimeout(50000);

@@ -5,6 +5,7 @@
 - Fix implementation of `reversed` flag for stream API calls
 - General code cleanup & formatting
 - Remove unnecessary pylint disable rules
+- Added EDSClient to support API calls against SDS in Edge Data Store
 
 ## 0.1.10_preview / 2020-07-16
 
