@@ -1,24 +1,27 @@
 import json
+import requests
+import time
 
 from .Authentication import Authentication
 from .SdsError import SdsError
-
-import requests
-import time
 
 
 class BaseClient(object):
     """Handles communication with Sds Service.  Internal Use"""
 
-    def __init__(self, apiversion, tenant, url, clientId, clientSecret=None,
+    def __init__(self, apiversion, tenant, url, clientId=None, clientSecret=None,
                  acceptVerbosity=False):
         self.__apiversion = apiversion
         self.__tenant = tenant
         self.__url = url  # if resource.endswith("/")  else resource + "/"
-        self.__auth_object = Authentication(tenant, url, clientId, clientSecret)
-        self.__auth_object.getToken()
         self.__acceptVerbosity = acceptVerbosity
         self.__requestTimeout = None
+        if (clientId is not None):
+            self.__auth_object = Authentication(
+                tenant, url, clientId, clientSecret)
+            self.__auth_object.getToken()
+        else:
+            self.__auth_object = None
 
         self.__uri_API = url + '/api/' + apiversion
 
@@ -76,16 +79,16 @@ class BaseClient(object):
         :return:
         """
         return self.__auth_object.getToken()
- 
 
     def sdsHeaders(self):
         """
-        Gets the base headers needed for OCS call
+        Gets the base headers needed for SDS call
         :return:
         """
-        headers = {"Authorization": "Bearer %s" % self.__getToken(),
-                   "Content-type": "application/json",
+        headers = {"Content-type": "application/json",
                    "Accept": "application/json"}
+        if (self.__auth_object is not None):
+            headers['Authorization'] = "Bearer %s" % self.__getToken()
         if (self.__acceptVerbosity):
             headers['Accept-Verbosity'] = "verbose"
         if self.__requestTimeout is not None:
@@ -98,8 +101,13 @@ class BaseClient(object):
             status = response.status_code
             reason = response.text
             url = response.url
-            opId = response.headers["Operation-Id"]
-            error = f"  {status}:{reason}.  URL {url}  OperationId {opId}"
+
+            if "Operation-Id" in response.headers:
+                opId = response.headers["Operation-Id"]
+                error = f"  {status}:{reason}.  URL {url}  OperationId {opId}"
+            else:
+                error = f"  {status}:{reason}.  URL {url}"
+
             response.close()
 
             message = main_message + error
@@ -112,8 +120,13 @@ class BaseClient(object):
             reason = response.json["Reason"]
             errors = str(response.json["ChildErrors"])
             url = response.url
-            opId = response.headers["Operation-Id"]
-            errorToWrite = f"  {status}:{error}:{reason}. \n\n{errors}\n\n  URL {url}  OperationId {opId}"
+
+            if "Operation-Id" in response.headers:
+                opId = response.headers["Operation-Id"]
+                errorToWrite = f"  {status}:{error}:{reason}. \n\n{errors}\n\n  URL {url}  OperationId {opId}"
+            else:
+                errorToWrite = f"  {status}:{error}:{reason}. \n\n{errors}\n\n  URL {url}"
+
             response.close()
 
             message = main_message + errorToWrite
