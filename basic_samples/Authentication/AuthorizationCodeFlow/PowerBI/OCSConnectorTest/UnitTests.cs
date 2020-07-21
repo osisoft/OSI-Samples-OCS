@@ -58,6 +58,7 @@ namespace OCSConnectorTest
             var dataSourceSettings = powerBISession.TryClickAndFindElementByName(transformData[2], "Data source settings");
             var dataSourceSettingsDialog = powerBISession.TryClickAndFindElementByAccessibilityId(dataSourceSettings, "ManageDataSourcesDialog");
             var clearPermissions = dataSourceSettingsDialog.TryFindElementsByName("Clear Permissions");
+            if (clearPermissions == null) throw new Exception("dataSourceSettingsDialog.TryFindElementsByName(\"Clear Permissions\")");
             var clearPermissionsDialog = dataSourceSettingsDialog.TryClickAndFindElementByAccessibilityId(clearPermissions[1], "MessageDialog", 10);
             if (clearPermissionsDialog != null)
             {
