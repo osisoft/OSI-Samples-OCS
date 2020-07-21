@@ -1,6 +1,6 @@
 # Version History
 
-## 0.0.18-preview / 2020-07-17
+## 0.0.18-preview / 2020-07-22
 
 - Fix naming of `reversed` flag in stream API calls
 - Updated to return first/next URL links from Data View API data calls

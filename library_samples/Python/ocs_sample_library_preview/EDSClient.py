@@ -9,15 +9,14 @@ class EDSClient:
     A client that handles communication with EDS
     """
 
-    def __init__(self, port=5590, apiversion="v1", acceptVerbosity=False):
+    def __init__(self, apiversion="v1", url='http://localhost:5590', acceptVerbosity=False):
         """
         Use this to help communinication with EDS
-        :param port: The port number for EDS, default is 5590
+        :param url: The base URL for EDS, default is http://localhost:5590
         :param apiversion: Version of the api you are communicating with, default is v1
         :param acceptVerbosity: Sets whether in value calls you get all values
                 or just non-default values
         """
-        url = f'http://localhost:{port}'
         self.__baseClient = BaseClient(
             apiversion, 'default', url, None, None, acceptVerbosity)
         self.__Types = Types(self.__baseClient)

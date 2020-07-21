@@ -1,9 +1,10 @@
 # Version History
 
-## 1.0.14 / 2020-07-17
+## 1.0.14 / 2020-07-22
 
 - Fix naming of `reversed` flag for stream API calls
 - Remove unnecessary pylint disable rules
+- Update sample to work against Edge Data Store
 
 ## 1.0.13 / 2020-06-11
 

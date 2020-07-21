@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.2 / 2020-07-17
+## 1.0.2 / 2020-07-22
 
 - Remove unnecessary pylint disable rules
 

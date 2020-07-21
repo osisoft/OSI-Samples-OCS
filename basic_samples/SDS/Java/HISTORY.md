@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.11 / 2020-07-17
+## 1.0.11 / 2020-07-22
 
 - General code cleanup & formatting
 

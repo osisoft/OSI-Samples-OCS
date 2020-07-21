@@ -1,8 +1,9 @@
 # Version History
 
-## 1.0.15 / 2020-07-17
+## 1.0.15 / 2020-07-22
 
 - Remove unnecessary disable pylint rules
+- Update sample to work against Edge Data Store
 
 ## 1.0.14 / 2020-06-11
 
