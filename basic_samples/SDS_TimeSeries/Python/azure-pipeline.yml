@@ -89,12 +89,6 @@ jobs:
           fileLibrary: $(CredFileLibraryEDS)
           filePath: $(projPath)
 
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.6'
-          architecture: 'x64'
-        displayName: 'Specify Python version'
-
       - bash: |
           echo Install test tools   
           pip install pytest
