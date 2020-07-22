@@ -3,6 +3,7 @@
 ## 1.0.2 / 2020-07-22
 
 - Remove unnecessary pylint disable rules
+- Update README with information on Auth+PKCE flow in Python library
 
 ## 1.0.1 / 2020-05-05
 
