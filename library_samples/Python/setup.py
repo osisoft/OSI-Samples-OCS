@@ -15,7 +15,7 @@ setuptools.setup(
     url="https://github.com/osisoft/OSI-Samples-OCS",
     packages=setuptools.find_packages(),
     install_requires=[
-        'requests==2.23.0',
+        'requests==2.24.0',
         'python-dateutil==2.8.1'
     ],
     classifiers=[
