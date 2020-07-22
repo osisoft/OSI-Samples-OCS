@@ -3,6 +3,7 @@
 ## 1.0.11 / 2020-07-22
 
 - General code cleanup & formatting
+- Update sample to work against Edge Data Store
 
 ## 1.0.10 / 2020-06-11
 

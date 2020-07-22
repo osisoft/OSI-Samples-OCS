@@ -346,7 +346,7 @@ def main(test=False):
         tenant_id = config.get('Access', 'Tenant')
         namespace_id = config.get('Configurations', 'Namespace')
 
-        if tenant_id == 'default' and namespace_id == 'default':
+        if tenant_id == 'default':
             sds_client = EDSClient(
                 config.get('Access', 'ApiVersion'),
                 config.get('Access', 'Resource'))

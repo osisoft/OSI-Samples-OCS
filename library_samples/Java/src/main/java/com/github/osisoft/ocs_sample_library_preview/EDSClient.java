@@ -43,8 +43,7 @@ public class EDSClient {
      * @param port       Port number for EDS, default is 5590
      * @param apiVersion API Version for EDS, default is v1
      */
-    public EDSClient(Integer port, String apiVersion) {
-        String resource = "http://localhost:" + port.toString();
+    public EDSClient(String apiVersion, String resource) {
         baseClient = new BaseClient(apiVersion, "default", resource);
         init();
     }
