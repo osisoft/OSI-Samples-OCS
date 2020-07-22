@@ -1,6 +1,6 @@
 # Version History
 
-## 0.1.11_preview / 2020-07-22
+## 0.1.11_preview / 2020-07-23
 
 - Fix implementation of `reversed` flag for stream API calls
 - General code cleanup & formatting

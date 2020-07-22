@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.14 / 2020-07-22
+## 1.0.14 / 2020-07-23
 
 - Fix naming of `reversed` flag for stream API calls
 - Remove unnecessary pylint disable rules

@@ -1,6 +1,6 @@
 # Version History
 
-## 1.2.5 / 2020-07-22
+## 1.2.5 / 2020-07-23
 
 - Fix references to `reversed` flag in documentation
 

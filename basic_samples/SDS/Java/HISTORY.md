@@ -1,6 +1,6 @@
 # Version History
 
-## 1.0.11 / 2020-07-22
+## 1.0.11 / 2020-07-23
 
 - General code cleanup & formatting
 - Update sample to work against Edge Data Store
