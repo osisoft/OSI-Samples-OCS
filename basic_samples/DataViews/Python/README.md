@@ -1,6 +1,6 @@
 # Using the OCS Dataview Service in Python
 
-**Version:** 0.2.5
+**Version:** 0.2.6
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=885&branchName=master)
 
