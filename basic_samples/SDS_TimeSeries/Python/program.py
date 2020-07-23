@@ -3,19 +3,12 @@ This sample script demonstrates how to invoke the
 Sequential Data Store REST API with Time Series data
 """
 
-# Disable pylint warnings:
-# Allow catching general exception Exception (broad-except)
-# pylint: disable=W0703
-# Allow more than 15 local variables (too-many-locals)
-# pylint: disable=R0914
-# Allow more than 50 statements (too-many-statements)
-# pylint: disable=R0915
 
 import configparser
 import json
 import time
 from ocs_sample_library_preview import (SdsType, SdsTypeCode, SdsTypeProperty,
-                                        OCSClient, SdsStream)
+                                        EDSClient, OCSClient, SdsStream)
 
 SENDING_TO_OCS = True
 TYPE_VALUE_TIME_NAME = "Value_Time"
@@ -176,21 +169,27 @@ def main(test=False):
     try:
         config = configparser.ConfigParser()
         config.read('config.ini')
+        tenant_id = config.get('Access', 'Tenant')
         namespace_id = config.get('Configurations', 'Namespace')
 
         # step 1
-        ocs_client: OCSClient = OCSClient(
-            config.get('Access', 'ApiVersion'),
-            config.get('Access', 'Tenant'),
-            config.get('Access', 'Resource'),
-            config.get('Credentials', 'ClientId'),
-            config.get('Credentials', 'ClientSecret'),
-            False)
+        if tenant_id == 'default' and namespace_id == 'default':
+            sds_client = EDSClient(
+                config.get('Access', 'ApiVersion'),
+                config.get('Access', 'Resource'))
+        else:
+            sds_client = OCSClient(
+                config.get('Access', 'ApiVersion'),
+                config.get('Access', 'Tenant'),
+                config.get('Access', 'Resource'),
+                config.get('Credentials', 'ClientId'),
+                config.get('Credentials', 'ClientSecret'),
+                False)
 
         # step 2
         print('Creating value and time type')
         time_value_type = get_type_value_time()
-        time_value_type = ocs_client.Types.getOrCreateType(
+        time_value_type = sds_client.Types.getOrCreateType(
             namespace_id, time_value_type)
 
         # step 3
@@ -199,20 +198,20 @@ def main(test=False):
             id=STREAM_PRESSURE_NAME,
             typeId=time_value_type.Id,
             description="A stream for pressure data of tank1")
-        ocs_client.Streams.createOrUpdateStream(namespace_id, pressure_stream)
+        sds_client.Streams.createOrUpdateStream(namespace_id, pressure_stream)
         temperature_stream = SdsStream(
             id=STREAM_TEMP_NAME,
             typeId=time_value_type.Id,
             description="A stream for temperature data of tank1")
-        ocs_client.Streams.createOrUpdateStream(
+        sds_client.Streams.createOrUpdateStream(
             namespace_id, temperature_stream)
 
         # step 4
-        ocs_client.Streams.insertValues(
+        sds_client.Streams.insertValues(
             namespace_id,
             pressure_stream.Id,
             json.dumps((get_pressure_data())))
-        ocs_client.Streams.insertValues(
+        sds_client.Streams.insertValues(
             namespace_id,
             temperature_stream.Id,
             json.dumps((get_temperature_data())))
@@ -220,7 +219,7 @@ def main(test=False):
         # step 5
         print('Creating a tank type that has both stream and temperature')
         tank_type = get_type_press_temp_time()
-        tank_type = ocs_client.Types.getOrCreateType(namespace_id, tank_type)
+        tank_type = sds_client.Types.getOrCreateType(namespace_id, tank_type)
 
         # step 6
         print('Creating a tank stream')
@@ -228,10 +227,10 @@ def main(test=False):
             id=STREAM_TANK_1,
             typeId=tank_type.Id,
             description="A stream for data of tank1s")
-        ocs_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
+        sds_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
 
         # step 7
-        ocs_client.Streams.insertValues(namespace_id, STREAM_TANK_1,
+        sds_client.Streams.insertValues(namespace_id, STREAM_TANK_1,
                                         json.dumps(get_data()))
 
         print()
@@ -247,7 +246,7 @@ def main(test=False):
         last_time = tank_1_sorted[-1]['time']
 
         # step 8
-        results = ocs_client.Streams.getWindowValues(
+        results = sds_client.Streams.getWindowValues(
             namespace_id, STREAM_PRESSURE_NAME, None, first_time, last_time)
 
         print()
@@ -256,7 +255,7 @@ def main(test=False):
 
         print()
         print('Value from tank1 stream:')
-        results = ocs_client.Streams.getWindowValues(
+        results = sds_client.Streams.getWindowValues(
             namespace_id, STREAM_TANK_1, None, first_time, last_time)
         print((results)[1])
 
@@ -264,19 +263,19 @@ def main(test=False):
         print()
         print()
         print("turning on verbosity")
-        ocs_client.acceptverbosity = True
+        sds_client.acceptverbosity = True
 
         print("This means that will get default values back (in our case"
               " 0.0 since we are looking at doubles)")
 
         print()
         print('Value from pressure stream:')
-        results = ocs_client.Streams.getWindowValues(
+        results = sds_client.Streams.getWindowValues(
             namespace_id, STREAM_PRESSURE_NAME, None, first_time, last_time)
         print((results)[1])
         print()
         print('Value from tank1 stream:')
-        results = ocs_client.Streams.getWindowValues(
+        results = sds_client.Streams.getWindowValues(
             namespace_id, STREAM_TANK_1, None, first_time, last_time)
         print((results)[1])
 
@@ -286,7 +285,7 @@ def main(test=False):
         print()
         print("Getting data summary")
         # the count of 1 refers to the number of intervals requested
-        summary_results = ocs_client.Streams.getSummaries(
+        summary_results = sds_client.Streams.getSummaries(
             namespace_id, STREAM_TANK_1, None, first_time, last_time, 1)
         print(summary_results)
 
@@ -299,10 +298,10 @@ def main(test=False):
             id=STREAM_TANK_2,
             typeId=tank_type.Id,
             description="A stream for data of tank2")
-        ocs_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
+        sds_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
 
         data_tank_2 = get_data_tank_2()
-        ocs_client.Streams.insertValues(
+        sds_client.Streams.insertValues(
             namespace_id, STREAM_TANK_2, json.dumps(get_data_tank_2()))
 
         tank_2_sorted = sorted(
@@ -312,16 +311,16 @@ def main(test=False):
 
         tank_stream = SdsStream(
             id=STREAM_TANK_0, typeId=tank_type.Id, description="")
-        ocs_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
+        sds_client.Streams.createOrUpdateStream(namespace_id, tank_stream)
 
-        ocs_client.Streams.insertValues(
+        sds_client.Streams.insertValues(
             namespace_id, STREAM_TANK_0, json.dumps(get_data()))
 
         time.sleep(10)
 
         # step 11
         print('Getting bulk call results')
-        results = ocs_client.Streams.getStreamsWindow(
+        results = sds_client.Streams.getStreamsWindow(
             namespace_id, [STREAM_TANK_0, STREAM_TANK_2], None,
             first_time_tank_2, last_time_tank_2)
         print(results)
@@ -338,21 +337,21 @@ def main(test=False):
         print()
         print("Cleaning up")
         print("Deleting the stream")
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, STREAM_PRESSURE_NAME))
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, STREAM_TEMP_NAME))
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, STREAM_TANK_0))
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, STREAM_TANK_1))
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, STREAM_TANK_2))
 
         print("Deleting the types")
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: sds_client.Types.deleteType(
             namespace_id, TYPE_PRESSURE_TEMPERATURE_TIME_NAME))
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: sds_client.Types.deleteType(
             namespace_id, TYPE_VALUE_TIME_NAME))
 
         if test and exception is not None:

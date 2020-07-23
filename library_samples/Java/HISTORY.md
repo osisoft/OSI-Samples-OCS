@@ -1,5 +1,11 @@
 # Version History
 
+## 0.0.18-preview / 2020-07-23
+
+- Fix naming of `reversed` flag in stream API calls
+- Updated to return first/next URL links from Data View API data calls
+- Added EDSClient to support API calls against SDS in Edge Data Store
+
 ## 0.0.17-preview / 2020-06-11
 
 - Updated dependencies

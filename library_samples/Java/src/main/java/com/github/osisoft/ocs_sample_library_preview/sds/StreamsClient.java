@@ -44,11 +44,11 @@ public class StreamsClient {
     private String getWindowQuery = dataBase
             + "?startIndex={startIndex}&endIndex={endIndex}&form={form}&filter={filter}";
     private String getRangeQuery = dataBase
-            + "/Transform?startIndex={startIndex}&endindex={endindex}&skip={skip}&count={count}&reversed={reverse}&boundaryType={boundaryType}";
+            + "/Transform?startIndex={startIndex}&endindex={endindex}&skip={skip}&count={count}&reversed={reversed}&boundaryType={boundaryType}";
     private String getRangeInterpolatedQuery = dataBase
             + "/Transform/Interpolated?startIndex={startIndex}&endindex={endindex}&count={count}";
     private String getRangeStreamViewQuery = dataBase
-            + "/Transform?startIndex={startIndex}&skip={skip}&count={count}&reversed={reverse}&boundaryType={boundaryType}&streamViewId={streamViewId}";
+            + "/Transform?startIndex={startIndex}&skip={skip}&count={count}&reversed={reversed}&boundaryType={boundaryType}&streamViewId={streamViewId}";
     private String updateMultiplePath = dataBase;
     private String replaceMultiplePath = dataBase + "?allowCreate=false";
     private String removeSingleQuery = dataBase + "?index={index}";
@@ -884,15 +884,15 @@ public class StreamsClient {
      * @param startIndex   the starting index
      * @param skip         number of values to skip (good for paging)
      * @param count        number of values to return
-     * @param reverse      whether to go forward or backward in regards to the index
+     * @param reversed     whether to go forward or backward in regards to the index
      *                     when getting more values
      * @param boundaryType SdsBoundaryType
      * @return string of the array of values
      * @throws SdsError any error that occurs
      */
     public String getRangeValues(String tenantId, String namespaceId, String streamId, String startIndex, int skip,
-            int count, boolean reverse, SdsBoundaryType boundaryType) throws SdsError {
-        return getRangeValues(tenantId, namespaceId, streamId, startIndex, "", skip, count, reverse, boundaryType);
+            int count, boolean reversed, SdsBoundaryType boundaryType) throws SdsError {
+        return getRangeValues(tenantId, namespaceId, streamId, startIndex, "", skip, count, reversed, boundaryType);
     }
 
     /**
@@ -905,14 +905,14 @@ public class StreamsClient {
      * @param endIndex     the ending index
      * @param skip         number of values to skip (good for paging)
      * @param count        number of values to return
-     * @param reverse      whether to go forward or backward in regards to the index
+     * @param reversed     whether to go forward or backward in regards to the index
      *                     when getting more values
      * @param boundaryType SdsBoundaryType
      * @return string of the array of values
      * @throws SdsError any error that occurs
      */
     public String getRangeValues(String tenantId, String namespaceId, String streamId, String startIndex,
-            String endIndex, int skip, int count, boolean reverse, SdsBoundaryType boundaryType) throws SdsError {
+            String endIndex, int skip, int count, boolean reversed, SdsBoundaryType boundaryType) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
         String response = "";
@@ -921,7 +921,7 @@ public class StreamsClient {
             String intermediate = getRangeQuery.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
                     .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId)
                     .replace("{startIndex}", startIndex).replace("{endindex}", endIndex).replace("{skip}", "" + skip)
-                    .replace("{count}", "" + count).replace("{reverse}", "" + reverse)
+                    .replace("{count}", "" + count).replace("{reversed}", "" + reversed)
                     .replace("{boundaryType}", "" + boundaryType);
             if (endIndex.equals("")) {
                 intermediate = intermediate.replace("&endindex=", "");
@@ -1008,7 +1008,7 @@ public class StreamsClient {
      * @param startIndex   the starting index
      * @param skip         the number of values to skip (good for paging)
      * @param count        the number of values to return
-     * @param reverse      whether to go forward or backward in regards to the index
+     * @param reversed     whether to go forward or backward in regards to the index
      *                     when getting more values
      * @param boundaryType SdsBoundaryType
      * @param streamViewId the streamview definition to desribe how to view the data
@@ -1016,7 +1016,7 @@ public class StreamsClient {
      * @throws SdsError any error that occurs
      */
     public String getRangeValuesStreamView(String tenantId, String namespaceId, String streamId, String startIndex,
-            int skip, int count, boolean reverse, SdsBoundaryType boundaryType, String streamViewId) throws SdsError {
+            int skip, int count, boolean reversed, SdsBoundaryType boundaryType, String streamViewId) throws SdsError {
         URL url = null;
         HttpURLConnection urlConnection = null;
         String response = "";
@@ -1025,7 +1025,7 @@ public class StreamsClient {
             url = new URL(baseUrl + getRangeStreamViewQuery.replace("{apiVersion}", apiVersion)
                     .replace("{tenantId}", tenantId).replace("{namespaceId}", namespaceId)
                     .replace("{streamId}", streamId).replace("{startIndex}", startIndex).replace("{skip}", "" + skip)
-                    .replace("{count}", "" + count).replace("{reverse}", "" + reverse)
+                    .replace("{count}", "" + count).replace("{reversed}", "" + reversed)
                     .replace("{boundaryType}", "" + boundaryType).replace("{streamViewId}", "" + streamViewId));
             urlConnection = baseClient.getConnection(url, "GET");
 

@@ -1,5 +1,6 @@
 from .BaseClient import BaseClient
 from .OCSClient import OCSClient
+from .EDSClient import EDSClient
 from .Types import Types
 from .Streams import Streams
 from .DataViews import DataViews

@@ -142,7 +142,7 @@ public class App {
 
             System.out.println("Retrieving data from the data view:");
             String dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
-                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval);
+                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewData);
             assert dataViewData.length() > 0 : "Error getting data view data";
 
@@ -155,7 +155,7 @@ public class App {
 
             System.out.println("Retrieving data from the data view:");
             dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
-                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval);
+                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewData);
             assert dataViewData.length() > 0 : "Error getting data view data";
 
@@ -170,7 +170,7 @@ public class App {
 
             System.out.println("Retrieving data from the data view:");
             dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
-                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval);
+                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewData);
             assert dataViewData.length() > 0 : "Error getting data view data";
 
@@ -195,7 +195,7 @@ public class App {
 
             System.out.println("Retrieving data from the data view:");
             dataViewData = ocsClient.DataViews.getDataViewData(namespaceId, sampleDataViewId,
-                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval);
+                    sampleStartTime.toString(), sampleEndTime.toString(), sampleInterval).getResponse();
             System.out.println(dataViewData);
             assert dataViewData.length() > 0 : "Error getting data view data";
         } catch (Exception e) {

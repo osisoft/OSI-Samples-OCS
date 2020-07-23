@@ -1,5 +1,9 @@
 # Version History
 
+## 0.1.3 / 2020-07-23
+
+- Update dependency on Java OCS library
+
 ## 0.1.2 / 2020-06-11
 
 - Updated dependencies

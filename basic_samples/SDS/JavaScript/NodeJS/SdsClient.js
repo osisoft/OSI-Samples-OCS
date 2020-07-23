@@ -1,6 +1,6 @@
 var restCall = require('request-promise');
 
-var logError = function(err) {
+var logError = function (err) {
   success = false;
   errorCap = err;
   if (typeof err.statusCode !== 'undefined' && err.statusCode === 302) {
@@ -16,9 +16,9 @@ var logError = function(err) {
 
   console.log('Operation Id:' + err);
 };
-String.prototype.format = function(args) {
+String.prototype.format = function (args) {
   var str = this;
-  return str.replace(String.prototype.format.regex, function(item) {
+  return str.replace(String.prototype.format.regex, function (item) {
     var intVal = parseInt(item.substring(1, item.length - 1));
     var replace;
     if (intVal >= 0) {
@@ -36,7 +36,7 @@ String.prototype.format = function(args) {
 String.prototype.format.regex = new RegExp('{-?[0-9]+}', 'g');
 
 module.exports = {
-  SdsClient: function(url, apiVersion) {
+  SdsClient: function (url, apiVersion) {
     this.url = url;
     this.version = 0.1;
     this.apiBase = '/api/' + apiVersion;
@@ -63,16 +63,16 @@ module.exports = {
     this.tokenExpires = '';
 
     // returns an access token
-    this.getToken = function(clientId, clientSecret, resource) {
+    this.getToken = function (clientId, clientSecret, resource) {
       return restCall({
         url: resource + '/identity/.well-known/openid-configuration',
         method: 'GET',
         headers: {
-          Accept: 'application/json'
+          Accept: 'application/json',
         },
-        gzip: true
+        gzip: true,
       })
-        .then(function(res) {
+        .then(function (res) {
           var obj = JSON.parse(res);
           authority = obj.token_endpoint;
 
@@ -80,24 +80,24 @@ module.exports = {
             url: authority,
             method: 'POST',
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
+              'Content-Type': 'application/x-www-form-urlencoded',
             },
             form: {
               grant_type: 'client_credentials',
               client_id: clientId,
               client_secret: clientSecret,
-              resource: resource
+              resource: resource,
             },
-            gzip: true
+            gzip: true,
           });
         })
-        .catch(function(err) {
+        .catch(function (err) {
           logError(err);
         });
     };
 
     // create a type
-    this.createType = function(tenantId, namespaceId, type) {
+    this.createType = function (tenantId, namespaceId, type) {
       return restCall({
         url:
           this.url +
@@ -107,12 +107,12 @@ module.exports = {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify(type).toString(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // create a stream under the Sds Service
-    this.createStream = function(tenantId, namespaceId, stream) {
+    this.createStream = function (tenantId, namespaceId, stream) {
       return restCall({
         url:
           this.url +
@@ -122,12 +122,12 @@ module.exports = {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify(stream).toString(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get streams from the Sds Service
-    this.getStreams = function(
+    this.getStreams = function (
       tenantId,
       namespaceId,
       queryString,
@@ -143,12 +143,12 @@ module.exports = {
           queryString,
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get stream from the Sds Service
-    this.getStream = function(tenantId, namespaceId, streamId) {
+    this.getStream = function (tenantId, namespaceId, streamId) {
       return restCall({
         url:
           this.url +
@@ -157,12 +157,12 @@ module.exports = {
           streamId,
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get streams from the Sds Service
-    this.getTypes = function(tenantId, namespaceId, queryString, skip, count) {
+    this.getTypes = function (tenantId, namespaceId, queryString, skip, count) {
       return restCall({
         url:
           this.url +
@@ -176,12 +176,12 @@ module.exports = {
           count,
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // create a streamView
-    this.createStreamView = function(tenantId, namespaceId, streamView) {
+    this.createStreamView = function (tenantId, namespaceId, streamView) {
       return restCall({
         url:
           this.url +
@@ -191,12 +191,12 @@ module.exports = {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify(streamView).toString(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get an SdsStreamViewMap
-    this.getStreamViewMap = function(tenantId, namespaceId, streamViewId) {
+    this.getStreamViewMap = function (tenantId, namespaceId, streamViewId) {
       return restCall({
         url:
           this.url +
@@ -206,12 +206,12 @@ module.exports = {
           '/Map',
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // create tags
-    this.updateStreamType = function(
+    this.updateStreamType = function (
       tenantId,
       namespaceId,
       streamId,
@@ -227,12 +227,12 @@ module.exports = {
           streamViewId,
         method: 'PUT',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // create tags
-    this.updateTags = function(tenantId, namespaceId, streamId, tags) {
+    this.updateTags = function (tenantId, namespaceId, streamId, tags) {
       return restCall({
         url:
           this.url +
@@ -243,12 +243,12 @@ module.exports = {
         method: 'PUT',
         headers: this.getHeaders(),
         body: JSON.stringify(tags),
-        gzip: true
+        gzip: true,
       });
     };
 
     // create metadata
-    this.updateMetadata = function(tenantId, namespaceId, streamId, metadata) {
+    this.updateMetadata = function (tenantId, namespaceId, streamId, metadata) {
       return restCall({
         url:
           this.url +
@@ -259,12 +259,12 @@ module.exports = {
         method: 'PUT',
         headers: this.getHeaders(),
         body: JSON.stringify(metadata),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get tags
-    this.getTags = function(tenantId, namespaceId, streamId) {
+    this.getTags = function (tenantId, namespaceId, streamId) {
       return restCall({
         url:
           this.url +
@@ -274,12 +274,12 @@ module.exports = {
           '/Tags',
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get metadata
-    this.getMetadata = function(tenantId, namespaceId, streamId, key) {
+    this.getMetadata = function (tenantId, namespaceId, streamId, key) {
       return restCall({
         url:
           this.url +
@@ -290,12 +290,12 @@ module.exports = {
           key,
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // insert an array of events
-    this.insertEvents = function(tenantId, namespaceId, streamId, events) {
+    this.insertEvents = function (tenantId, namespaceId, streamId, events) {
       return restCall({
         url:
           this.url +
@@ -306,12 +306,12 @@ module.exports = {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify(events),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get last value added to stream
-    this.getLastValue = function(tenantId, namespaceId, streamId) {
+    this.getLastValue = function (tenantId, namespaceId, streamId) {
       return restCall({
         url:
           this.url +
@@ -319,12 +319,12 @@ module.exports = {
           this.getLastValueBase.format([streamId]),
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // get last value added to stream
-    this.getFirstValue = function(tenantId, namespaceId, streamId) {
+    this.getFirstValue = function (tenantId, namespaceId, streamId) {
       return restCall({
         url:
           this.url +
@@ -332,12 +332,12 @@ module.exports = {
           this.getFirstValueBase.format([streamId]),
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // retrieve a window of events
-    this.getWindowValues = function(
+    this.getWindowValues = function (
       tenantId,
       namespaceId,
       streamId,
@@ -352,12 +352,12 @@ module.exports = {
           this.getWindowValuesBase.format([streamId, start, end, filter]),
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // retrieve a window of events in table format
-    this.getWindowValuesTable = function(
+    this.getWindowValuesTable = function (
       tenantId,
       namespaceId,
       streamId,
@@ -372,19 +372,19 @@ module.exports = {
           '&form=tableh',
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // retrieve a range of value based on boundary type
-    this.getRangeValues = function(
+    this.getRangeValues = function (
       tenantId,
       namespaceId,
       streamId,
       start,
       skip,
       count,
-      reverse,
+      reversed,
       boundaryType,
       streamView = ''
     ) {
@@ -397,18 +397,18 @@ module.exports = {
             start,
             skip,
             count,
-            reverse,
+            reversed,
             boundaryType,
-            streamView
+            streamView,
           ]),
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // retrieve a range of value based on boundary type
-    this.getRangeValuesInterpolated = function(
+    this.getRangeValuesInterpolated = function (
       tenantId,
       namespaceId,
       streamId,
@@ -424,16 +424,16 @@ module.exports = {
             streamId,
             start,
             end,
-            count
+            count,
           ]),
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // retrieve a sample from a stream
-    this.getSamples = function(
+    this.getSamples = function (
       tenantId,
       namespaceId,
       streamId,
@@ -455,16 +455,16 @@ module.exports = {
             intervals,
             sampleBy,
             filter,
-            streamViewId
+            streamViewId,
           ]),
         method: 'GET',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // update a stream
-    this.updateStream = function(tenantId, namespaceId, stream) {
+    this.updateStream = function (tenantId, namespaceId, stream) {
       return restCall({
         url:
           this.url +
@@ -474,12 +474,12 @@ module.exports = {
         method: 'PUT',
         headers: this.getHeaders(),
         body: JSON.stringify(stream).toString(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // update an array of events
-    this.updateEvents = function(tenantId, namespaceId, streamId, events) {
+    this.updateEvents = function (tenantId, namespaceId, streamId, events) {
       return restCall({
         url:
           this.url +
@@ -490,12 +490,12 @@ module.exports = {
         method: 'PUT',
         headers: this.getHeaders(),
         body: JSON.stringify(events),
-        gzip: true
+        gzip: true,
       });
     };
 
     // replace an array of events
-    this.replaceEvents = function(tenantId, namespaceId, streamId, events) {
+    this.replaceEvents = function (tenantId, namespaceId, streamId, events) {
       return restCall({
         url:
           this.url +
@@ -506,12 +506,12 @@ module.exports = {
         method: 'PUT',
         headers: this.getHeaders(),
         body: JSON.stringify(events),
-        gzip: true
+        gzip: true,
       });
     };
 
     // delete an event
-    this.deleteEvent = function(tenantId, namespaceId, streamId, index) {
+    this.deleteEvent = function (tenantId, namespaceId, streamId, index) {
       return restCall({
         url:
           this.url +
@@ -519,12 +519,12 @@ module.exports = {
           this.removeSingleValueBase.format([streamId, index]),
         method: 'DELETE',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // delete a window of events
-    this.deleteWindowEvents = function(
+    this.deleteWindowEvents = function (
       tenantId,
       namespaceId,
       streamId,
@@ -538,12 +538,12 @@ module.exports = {
           this.removeMultipleValuesBase.format([streamId, start, end]),
         method: 'DELETE',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // delete a type
-    this.deleteType = function(tenantId, namespaceId, typeId) {
+    this.deleteType = function (tenantId, namespaceId, typeId) {
       return restCall({
         url:
           this.url +
@@ -552,12 +552,12 @@ module.exports = {
           typeId,
         method: 'DELETE',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // delete a stream
-    this.deleteStream = function(tenantId, namespaceId, streamId) {
+    this.deleteStream = function (tenantId, namespaceId, streamId) {
       return restCall({
         url:
           this.url +
@@ -566,12 +566,12 @@ module.exports = {
           streamId,
         method: 'DELETE',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
     // delete a StreamView
-    this.deleteStreamView = function(tenantId, namespaceId, streamViewId) {
+    this.deleteStreamView = function (tenantId, namespaceId, streamViewId) {
       return restCall({
         url:
           this.url +
@@ -580,16 +580,16 @@ module.exports = {
           streamViewId,
         method: 'DELETE',
         headers: this.getHeaders(),
-        gzip: true
+        gzip: true,
       });
     };
 
-    this.getHeaders = function() {
+    this.getHeaders = function () {
       return {
         Authorization: 'bearer ' + this.token,
         'Content-type': 'application/json',
-        Accept: '*/*; q=1'
+        Accept: '*/*; q=1',
       };
     };
-  }
+  },
 };

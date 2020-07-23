@@ -1,6 +1,6 @@
 # Building a Python client to make REST API calls to the SDS Service
 
-**Version:** 1.0.14
+**Version:** 1.0.15
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=927&branchName=master)
 
@@ -32,6 +32,13 @@ or
 ## Configure the Sample
 
 Included in the sample there is a configuration file with placeholders that need to be replaced with the proper values. They include information for authentication, connecting to the SDS Service, and pointing to a namespace.
+
+To run this sample against the Edge Data Store, the sample must be run locally on the machine where Edge Data Store is installed. In addition, the same config information must be entered with the exception of the `[Credentials]` section of the file. For a typical or default installation, the values will be:
+
+- `Namespace = default`
+- `Resource = http://localhost:5590`
+- `Tenant = default`
+- `ApiVersion = v1`
 
 The values to be replaced are in `config.ini`:
 

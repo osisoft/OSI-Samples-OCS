@@ -1,6 +1,6 @@
 # Sequential Data Store Java Sample
 
-**Version:** 1.0.10
+**Version:** 1.0.11
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=920&branchName=master)
 
@@ -50,7 +50,7 @@ Building and running the project:
 
 This sample is written using the ocs_sample_library_preview library which uses the SDS REST API. The API allows you to create SDS Service clients in any language that can make HTTP calls. Objects are passed between client and server as JSON strings. The sample uses the Gson library for the Java client, but you can use any method to create a JSON representation of objects.
 
-## Instantiate an OCS Client
+## Instantiate an OCSClient or EDSClient
 
 Each REST API call consists of an HTTP request along with a specific URL and HTTP method. The URL contains the server name plus the extension that is specific to the call. Like all REST APIs, the SDS REST API maps HTTP methods to CRUD operations as shown in the following table:
 
@@ -61,7 +61,7 @@ Each REST API call consists of an HTTP request along with a specific URL and HTT
 | PUT         | Update         | message body     |
 | DELETE      | Delete         | URL parameters   |
 
-The constructor for the OCSClient class takes the base URL (that is, the protocol, server address and port number) and the api version. It also creates a new Gson serializer/deserializer to convert between Java Objects and JSON. This is all done in a shared baseClient that is used amongst the the various services that we can interact with.
+The constructor for the OCSClient and EDSClient classes take the base URL (that is, the protocol, server address and port number) and the api version. They also create a new Gson serializer/deserializer to convert between Java Objects and JSON. This is all done in a shared baseClient that is used amongst the the various services that we can interact with.
 
 ```java
 public BaseClient() {
@@ -82,6 +82,8 @@ The sample library specifies to use `gzip` compression by adding the `Accept-Enc
 
 Included in the sample is a configuration file with placeholders that need to be replaced with the proper values. They include information for authentication, connecting to OCS, and pointing to a namespace.
 
+### OSIsoft Cloud Services
+
 The SDS Service is secured using Azure Active Directory. The sample application is an example of a _confidential client_. Confidential clients provide an application ID and secret that are authenticated against the directory. These are referred to as client IDs and client secrets, which are associated with a given tenant. They are created through the tenant's administration portal. The steps necessary to create a new client ID and secret are described below.
 
 First, log on to the [Cloud Portal](http://cloud.osisoft.com) with admin credentials and navigate to the `Client Keys` page under the `Manage` tab, which is situated along the top of the webpage. Two types of keys may be created. For a complete explanation of key roles look at the help bar on the right side of the page. This sample program covers data creation, deletion and retrieval, so an administration key must be used in the configuration file. Creating a new key is simple. Enter a name for the key, select `Administrator role`, then click `Add Key`.
@@ -91,6 +93,17 @@ Next, view the key by clicking the small eye icon on the right of the created ke
 Along with client ID and secret values, add the tenant name to the authority value so authentication occurs against the correct tenant. The URL for the SDS Service connection must also be changed to reflect the destination address of the requests.
 
 Finally, a valid namespace ID for the tenant must be given as well. To create a namespace, click on the `Manage` tab then navigate to the `Namespaces` page. At the top the add button will create a new namespace after the required forms are completed. This namespace is now associated with the logged-in tenant and may be used in the sample.
+
+### Edge Data Store
+
+To run this sample against the Edge Data Store, the sample must be run locally on the machine where Edge Data Store is installed. In addition, the same config information must be entered with the exception of the `[Credentials]` section of the file. For a typical or default installation, the values will be:
+
+- `resource = http://localhost:5590`
+- `tenantId = default`
+- `namespaceId = default`
+- `apiVersion = v1`
+
+### Config Schema
 
 The values to be replaced are in `config.properties`:
 

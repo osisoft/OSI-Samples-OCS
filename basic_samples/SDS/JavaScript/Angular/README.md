@@ -1,6 +1,6 @@
 ﻿# Sequential Data Store Angular Sample
 
-**Version:** 1.2.4
+**Version:** 1.2.5
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Angular?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=921&branchName=master)
 
@@ -258,10 +258,9 @@ this.sdsService.getWindowValues(streamId, 0, 40, 'Radians%20lt%203');
 getRangeValues(streamId: string, start, count, boundary: SdsBoundaryType, streamViewId: string = ''): Observable<any>
 ```
 
-- **skip** is the increment by which the retrieval will happen.
+- **start** is the increment by which the retrieval will happen.
 - **count** is how many values you wish to have returned.
-- **reverse** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
-- **boundary_type** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- **boundary** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown :
 

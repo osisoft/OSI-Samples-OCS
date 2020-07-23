@@ -1,5 +1,10 @@
 # Version History
 
+## 1.0.10 / 2020-07-23
+
+- Fix naming of `reversed` flag for stream API calls
+- General code cleanup & formatting
+
 ## 1.0.9 / 2020-05-05
 
 - Updated to use Polaris in place of Coverity

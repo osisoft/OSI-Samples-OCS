@@ -273,9 +273,9 @@ class DataViews(object):
         :param endIndex: end index
         :param interval: space between values
         :param value_class: Use this to auto format the data into the defined
-            type.  The tpye is expected to have a fromJson method that takes a
+            type.  The type is expected to have a fromJson method that takes a
             dynamicObject and converts it into the defined type.
-          Otherwise you get a dynamic object
+            Otherwise you get a dynamic object
         :return:
         """
         if url is None:
@@ -312,7 +312,8 @@ class DataViews(object):
 
         # build dictionary of first/next page URL links, if any
         links_header = response.headers.get("Link", "")
-        links = {link.group(2) : link.group(1) for link in self.__urlLinks.finditer(links_header)}
+        links = {link.group(2): link.group(1)
+                 for link in self.__urlLinks.finditer(links_header)}
 
         nextPage = links.get("next", None)
         firstPage = links.get("first", None)

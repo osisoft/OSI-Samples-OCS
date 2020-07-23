@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.regex.*;
 
 import com.github.osisoft.ocs_sample_library_preview.*;
 
@@ -36,6 +37,8 @@ public class DataViewClient {
     private String getStatistics;
     private String dataInterpolatedPath;
     private String getDataInterpolated;
+
+    private Pattern urlLinks = Pattern.compile("<(\\S+)>; rel=\"(\\S+)\"");
 
     /**
      * Constructor
@@ -87,6 +90,54 @@ public class DataViewClient {
             }
 
             response = baseClient.getResponse(urlConnection);
+        } catch (SdsError sdsError) {
+            sdsError.print();
+            throw sdsError;
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+    private ResponseWithLinks getRequestResponseWithLinks(URL url, String method, String body) throws SdsError {
+        HttpURLConnection urlConnection = null;
+        ResponseWithLinks response = new ResponseWithLinks();
+
+        try {
+            urlConnection = baseClient.getConnection(url, method);
+
+            if (body != null) {
+                OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
+                OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
+                writer.write(body);
+                writer.close();
+            }
+
+            int httpResult = urlConnection.getResponseCode();
+            if (httpResult == HttpURLConnection.HTTP_NO_CONTENT) {
+                return null;
+            } else if (httpResult != HttpURLConnection.HTTP_OK && httpResult != HttpURLConnection.HTTP_CREATED) {
+                throw new SdsError(urlConnection, "Request failed.");
+            }
+
+            String link = urlConnection.getHeaderField("Link");
+            if (link != null) {
+                Matcher matcher = urlLinks.matcher(link);
+                while (matcher.find()) {
+                    String name = matcher.group(2);
+                    String linkUrl = matcher.group(1);
+                    if (name.equals("first")) {
+                        response.setFirst(linkUrl);
+                    } else if (name.equals("next")) {
+                        response.setNext(linkUrl);
+                    }
+                }
+            }
+
+            response.setResponse(baseClient.getResponse(urlConnection));
         } catch (SdsError sdsError) {
             sdsError.print();
             throw sdsError;
@@ -483,13 +534,16 @@ public class DataViewClient {
      *
      * @param namespaceId The namespace identifier
      * @param dataViewId  The data view identifier
-     * @return String of data in the requested format
+     * @return ResponseWithLinks, an object containing the String Response in the
+     *         requested format, and if returned by the server, also includes links
+     *         to the Next and First pages of data.
      * @throws SdsError Error response
      */
-    public String getDataViewData(String namespaceId, String dataViewId) throws SdsError, MalformedURLException {
+    public ResponseWithLinks getDataViewData(String namespaceId, String dataViewId)
+            throws SdsError, MalformedURLException {
         URL url = new URL(baseUrl
                 + dataInterpolatedPath.replace("{namespaceId}", namespaceId).replace("{dataViewId}", dataViewId));
-        return getRequestResponse(url, "GET", null);
+        return getRequestResponseWithLinks(url, "GET", null);
     }
 
     /**
@@ -507,10 +561,12 @@ public class DataViewClient {
      * @param interval    The requested interval between index values. The default
      *                    value is the .DefaultInterval of the data view. Optional
      *                    if a default is specified.
-     * @return String of data in the requested format
+     * @return ResponseWithLinks, an object containing the String Response in the
+     *         requested format, and if returned by the server, also includes links
+     *         to the Next and First pages of data.
      * @throws SdsError Error response
      */
-    public String getDataViewData(String namespaceId, String dataViewId, String startIndex, String endIndex,
+    public ResponseWithLinks getDataViewData(String namespaceId, String dataViewId, String startIndex, String endIndex,
             String interval) throws SdsError, MalformedURLException {
         return getDataViewData(namespaceId, dataViewId, startIndex, endIndex, interval, "default", "Refresh", 1000);
     }
@@ -537,15 +593,17 @@ public class DataViewClient {
      *                    default value.
      * @param count       The requested page size. The default value is 1000. The
      *                    maximum is 250,000.
-     * @return String of data in the requested format
+     * @return ResponseWithLinks, an object containing the String Response in the
+     *         requested format, and if returned by the server, also includes links
+     *         to the Next and First pages of data.
      * @throws SdsError Error response
      */
-    public String getDataViewData(String namespaceId, String dataViewId, String startIndex, String endIndex,
+    public ResponseWithLinks getDataViewData(String namespaceId, String dataViewId, String startIndex, String endIndex,
             String interval, String form, String cache, Integer count) throws SdsError, MalformedURLException {
         URL url = new URL(baseUrl + getDataInterpolated.replace("{namespaceId}", namespaceId)
                 .replace("{dataViewId}", dataViewId).replace("{startIndex}", startIndex).replace("{endIndex}", endIndex)
                 .replace("{interval}", interval).replace("{form}", form).replace("{cache}", cache)
                 .replace("{count}", count.toString()));
-        return getRequestResponse(url, "GET", null);
+        return getRequestResponseWithLinks(url, "GET", null);
     }
 }
