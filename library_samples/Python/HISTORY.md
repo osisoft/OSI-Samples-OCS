@@ -1,6 +1,6 @@
 # Version History
 
-## 0.1.12_preview
+## 0.1.12_preview / 2020-07-24
 
 - Fix issue in published dependency on requests 2.23.0
 
