@@ -1,6 +1,6 @@
 # Building a Python client to make REST API calls to the SDS Service
 
-**Version:** 1.0.15
+**Version:** 1.0.16
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=927&branchName=master)
 
