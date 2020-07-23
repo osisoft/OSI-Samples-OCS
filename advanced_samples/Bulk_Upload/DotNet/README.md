@@ -1,6 +1,6 @@
 # Bulk Uploader SDS DotNet Sample
 
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/CSVtoOCS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1393&branchName=master)
 
