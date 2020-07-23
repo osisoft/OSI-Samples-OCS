@@ -1,6 +1,6 @@
 # OSIsoft Cloud Services Python Library Sample
 
-**Version:** 0.1.11_preview
+**Version:** 0.1.12_preview
 
 The python OCS library is an introductory language-specific examples of programming against OSISoft Cloud Services ([OCS](https://www.osisoft.com/Solutions/OSIsoft-Cloud-Services/)). It is as instructional samples only and are not for production use.
 
