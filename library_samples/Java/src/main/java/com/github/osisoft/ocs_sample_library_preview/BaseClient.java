@@ -122,7 +122,7 @@ public class BaseClient {
             urlConnection.setRequestProperty("Accept", "*/*; q=1");
             urlConnection.setRequestProperty("Accept-Encoding", "gzip");
             urlConnection.setRequestProperty("Content-Type", "application/json");
-            if (!token.isEmpty()) {
+            if (token != null && !token.isEmpty()) {
                 urlConnection.setRequestProperty("Authorization", "Bearer " + token);
             }
             urlConnection.setUseCaches(false);
