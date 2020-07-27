@@ -15,10 +15,10 @@
     "test": "jasmine"
   },
   "devDependencies": {
-    "chromedriver": "^83.0.0",
+    "chromedriver": "^84.0.0",
     "jasmine": "^3.5.0",
     "jasmine-reporters": "^2.3.2",
     "selenium-webdriver": "^3.6.0",
-    "serve": "^11.3.0"
+    "serve": "^11.3.2"
   }
 }
