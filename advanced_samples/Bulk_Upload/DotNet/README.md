@@ -1,6 +1,6 @@
 # Bulk Uploader SDS DotNet Sample
 
-**Version:** 1.0.1
+**Version:** 1.0.2
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/CSVtoOCS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1393&branchName=master)
 
@@ -22,7 +22,7 @@ The [.NET Core CLI](https://docs.microsoft.com/en-us/dotnet/core/tools/) is refe
 
 This sample needs an OMF client credential created. For details on creating those see [OSIsoft Learning Channel](https://www.youtube.com/watch?v=52lAnkGC1IM).
 
-The configuration of this application is done in the file [appsettings.json](.\BulkUploader\appsettings.json).
+The configuration of this application is done in the file [appsettings.placeholder.json](.\BulkUploader\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 1. `Resource` can usually be left as default, but should be the host specified at the beginning of the URL in the [OCS API Console](https://cloud.osisoft.com/apiconsole)
 1. `TenantId` should be the ID that comes after `/Tenants/` in the same URL

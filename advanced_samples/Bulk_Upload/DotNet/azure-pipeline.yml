@@ -50,6 +50,7 @@ jobs:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)/BulkUploader
+          delete: false
 
       - task: DotNetCoreCLI@2
         displayName: 'Run tests'
