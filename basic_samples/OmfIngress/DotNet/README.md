@@ -1,6 +1,6 @@
 # OMF Ingress .NET Samples
 
-**Version:** 1.1.1
+**Version:** 1.1.2
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/OMF_Ing_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=886&branchName=master)
 

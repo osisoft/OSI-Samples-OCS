@@ -37,6 +37,6 @@ const routes: Routes = [
 export const appRoutingProviders: Provider[] = [];
 
 // Export routes
-export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {
+export const routing: ModuleWithProviders<any> = RouterModule.forRoot(routes, {
   preloadingStrategy: PreloadAllModules,
 });

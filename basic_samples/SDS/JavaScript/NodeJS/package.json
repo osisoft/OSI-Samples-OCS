@@ -17,7 +17,7 @@
   },
   "requires": true,
   "dependencies": {
-    "request-promise": "4.2.5"
+    "request-promise": "4.2.6"
   },
   "devDependencies": {
     "jasmine": "3.5.0",
