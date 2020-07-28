@@ -1,6 +1,6 @@
 # CSV to OCS sample
 
-**Version:** 1.0.3
+**Version:** 1.0.4
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/CSVtoOCS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1393&branchName=master)
 
@@ -24,6 +24,8 @@ In this example we assume that you have the dotnet core CLI.
 - Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Configure constants for connecting and authentication
+
+The configuration of this application is done in the file [appsettings.placeholder.json](.\CSVtoOCS\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 Please update the appsettings.json file with the appropriate information as shown below. This sample leverages PKCE login, so that way the user running this application has appropriate authorization.
 
