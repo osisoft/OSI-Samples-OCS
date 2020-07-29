@@ -1,6 +1,6 @@
 # Authorization Code Flow + PKCE Python Sample and Test
 
-**Version:** 1.0.2
+**Version:** 1.0.3
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1551&branchName=master)
 
@@ -20,7 +20,8 @@ To use the Authorization Code Flow + PKCE flow with the library, pass a client I
 - Web Browser with Javascript enabled
   - Google Chrome Web Driver is required for the automated test
 - Register an Authorization Code Client in OSIsoft Cloud Services and ensure that the registered client in OCS contains `http://localhost:5004/callback.html` in the list of RedirectUris
-- Replace the placeholders in [config.ini](config.ini) with your Tenant ID and Client ID
+- Configure the sample using the file [config.placeholder.ini](config.placeholder.ini). Before editing, rename this file to `config.ini`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+- Replace the placeholders in `config.ini` with your Tenant ID and Client ID
 
 ## Running the Sample
 
