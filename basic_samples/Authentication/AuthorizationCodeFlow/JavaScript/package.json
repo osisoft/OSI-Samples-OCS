@@ -1,7 +1,7 @@
 {
   "name": "ocs-pkce-javascript",
   "description": "A sample that performs Auth+PKCE OAuth flow against OCS",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": true,
   "author": "OSIsoft, LLC",
   "license": "Apache-2.0",
