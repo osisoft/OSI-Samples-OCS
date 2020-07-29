@@ -25,7 +25,7 @@ In this example we assume that you have the dotnet core CLI.
 
 ### Configure constants for connecting and authentication
 
-Configure the sample using the file [appsettings.placeholder.json](.\CSVtoOCS\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+Configure the sample using the file [appsettings.placeholder.json](CSVtoOCS\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 Please update the appsettings.json file with the appropriate information as shown below. This sample leverages PKCE login, so that way the user running this application has appropriate authorization.
 

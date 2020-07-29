@@ -23,7 +23,7 @@ This client uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an acc
 ### Prerequisites
 
 - Register an Authorization Code client in OCS and ensure that the registered client in OCS contains `https://127.0.0.1:54567/signin-oidc` in the list of RedirectUris.
-- Configure the sample using the file [appsettings.placeholder.json](.\AuthorizationCodeFlow\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+- Configure the sample using the file [appsettings.placeholder.json](AuthorizationCodeFlow\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 - Replace the placeholders in the `appsettings.json` file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Using Visual Studio
