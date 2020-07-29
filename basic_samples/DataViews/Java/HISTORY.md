@@ -1,5 +1,10 @@
 # Version History
 
+## 1.0.0 / 2020-07-29
+
+- Add sample credentials file to gitignore and replace with placeholder
+- Increment to 1.x version now that Data Views is released in OCS
+
 ## 0.1.3 / 2020-07-23
 
 - Update dependency on Java OCS library
