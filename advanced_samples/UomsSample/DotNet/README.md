@@ -8,7 +8,7 @@ Developed against DotNet 3.1.
 
 ## Running the sample
 
-The configuration of this application is done in the file [appsettings.placeholder.json](.\UomsSample\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+Configure the sample using the file [appsettings.placeholder.json](UomsSample\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 Replace the placeholders in the `appsettings.json` file with your TenantID, NamespaceId, ClientID and ClientSecret.
 

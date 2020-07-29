@@ -1,6 +1,6 @@
 # Hybrid Flow Sample and Test
 
-**Version:** 1.1.2
+**Version:** 1.1.3
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_Hybrid_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=847&branchName=master)
 
@@ -12,10 +12,11 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 - Web Browser with Javascript enabled
   - You will need Google Chrome if you want to run the automated test
 
-1. Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id and Client Secret
-2. Ensure that this client was created to allow Refresh Tokens
+1. The sample is configured using the file [appsettings.placeholder.json](HybridFlow\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+1. Replace the placeholders in the `appsettings.json` file with your Tenant Id, Client Id and Client Secret
+1. Ensure that this client was created to allow Refresh Tokens
    - If this client does not allow refresh tokens, no refresh token will be issued upon authentication
-3. Ensure that the client contains \$"{RedirectHost}:{RedirectPort}/{RedirectPath}" in the list of RedirectUris
+1. Ensure that the client contains \$"{RedirectHost}:{RedirectPort}/{RedirectPath}" in the list of RedirectUris
    - Default value from config is: `https://127.0.0.1:54567/signin-oidc`
    - You can change the values to match your preferences
 
@@ -24,7 +25,8 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 ### Prerequisites
 
 - Register a Hybrid client in OCS and ensure that the registered client in OCS contains `https://127.0.0.1:54567/signin-oidc` in the list of RedirectUris.
-- Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id, and Client Secret obtained from registration.
+
+- Replace the placeholders in the `appsettings.json` file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Using Visual Studio
 
@@ -54,7 +56,7 @@ dotnet run
 
 - Make sure Google Chrome is the default browser on your test system.
 - Download the ChromeDriver version from `http://chromedriver.storage.googleapis.com/index.html` corresponding to the version of Google Chrome that is installed. Set the environmental variable ChromeWebDriver to the directory containing the Chrome Driver executable.
-- Update the [appsettings.json](../HybridFlowTest/appsettings.json) with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the RedirectHost and/or RedirectPort.
+- Update the `appsettings.json` with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the RedirectHost and/or RedirectPort.
 
 ### Test Using Visual Studio
 
