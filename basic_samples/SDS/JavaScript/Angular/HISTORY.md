@@ -1,5 +1,9 @@
 # Version History
 
+## 1.2.6 / 2020-07-29
+
+- Add sample credentials files to gitignore and replace with placeholders
+
 ## 1.2.5 / 2020-07-23
 
 - Fix references to `reversed` flag in documentation
