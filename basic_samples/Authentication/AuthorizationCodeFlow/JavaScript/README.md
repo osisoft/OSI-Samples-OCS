@@ -17,7 +17,7 @@ This client uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an acc
 ### Prerequisites
 
 - Register an AuthorizationCode client in OCS and ensure that the registered client in OCS contains `http://localhost:5004/callback.html`, and `http://localhost:5004/silent-refresh.html` in the list of RedirectUris.
-- The configuration of this application is done in the file [config.placeholder.js](.\src\config.placeholder.js). Before editing, rename this file to `config.js`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+- Configure the sample using the file [config.placeholder.js](.\src\config.placeholder.js). Before editing, rename this file to `config.js`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 - Replace the placeholders in the `config.js` file with your TenantID and ClientID obtained from registration.
 
 You can learn more about the config options [here](https://github.com/IdentityModel/oidc-client-js/wiki#other-optional-settings).
