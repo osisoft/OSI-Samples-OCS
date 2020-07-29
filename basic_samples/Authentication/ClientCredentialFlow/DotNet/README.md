@@ -10,7 +10,9 @@ This client uses the OAuth2/OIDC Client Credential Flow to obtain an access toke
 
 - .NET Core 3.1 or later
 
-Replace the placeholders in the [appsettings](appsettings.json) file with your Tenant Id, Client Id and Client Secret, and the current Api Version. There is no need to replace the Namespace Id for this sample.
+The sample is configured using the file [appsettings.placeholder.json](ClientCredentialFlow\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+
+Replace the placeholders in the `appsettings.json` file with your Tenant Id, Client Id and Client Secret, and the current Api Version. There is no need to replace the Namespace Id for this sample.
 
 Developed against DotNet 3.1.
 
@@ -19,7 +21,6 @@ Developed against DotNet 3.1.
 ### Prerequisites
 
 - Register a Client Credential client in OCS.
-- The sample is configured using the file [appsettings.placeholder.json](ClientCredentialFlow\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 - Replace the placeholders in the `appsettings.json` file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Using Visual Studio
