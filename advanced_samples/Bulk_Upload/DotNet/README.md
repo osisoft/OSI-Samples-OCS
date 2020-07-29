@@ -12,7 +12,7 @@ Developed against DotNet core 3.1.
 
 This sample uses SDS OCSclients to send values, streams, types and dataviews. This simple sample sends SDS JSON messages that are saved pre-formed as files named sdsType.json, sdsStream.json, sdsdata{streamID}.json, dataview.json. It sends the files in that order. If there are metadata or tag files it will send that for the streams.
 
-It does only basic error checking to make sure the message was accepted by the endpoint. The primary function of this sample is for easy bulk loading of data for other samples (particularly ML based samples where the amount of data is prohibitive to include in the sample itself). Included in the [SampleCollections](../SampleCollections) are the data sets including an editable appsettings.json.
+It does only basic error checking to make sure the message was accepted by the endpoint. The primary function of this sample is for easy bulk loading of data for other samples (particularly ML based samples where the amount of data is prohibitive to include in the sample itself). Included in the [SampleCollections](../SampleCollections) are the data sets including an editable `appsettings.json`.
 
 ## Requirements
 
