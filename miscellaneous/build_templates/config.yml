@@ -2,7 +2,7 @@ parameters:
   fileOriginal: ''
   fileLibrary: ''
   filePath: ''
-  delete: true
+  delete: false
 
 steps:
   # Download Secure File
