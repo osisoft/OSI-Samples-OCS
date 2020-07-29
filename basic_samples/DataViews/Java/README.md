@@ -1,6 +1,6 @@
-# Using the OCS Dataview Service in Java
+# Using OCS Data Views in Java
 
-**Version:** 0.1.3
+**Version:** 1.0.0
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=884&branchName=master)
 
@@ -14,6 +14,7 @@ Using Eclipse or any IDE:
 1. Install Maven.
 1. \*Install the ocs_sample_library_preview to your local Maven repo using run mvn install pom.xml from `\library_samples\Java\`
 1. If you are using Eclipse, select `File` > `Import` > `Maven`> `Existing maven project` and then select the local copy.
+1. The sample is configured using the file [config.placeholder.properties](config.placeholder.properties). Before editing, rename this file to `config.properties`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 1. Replace the configuration strings in `config.properties`
 
 Using a command line:
