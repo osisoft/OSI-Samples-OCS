@@ -1,6 +1,6 @@
 # Using the OCS Dataview Service in Python
 
-**Version:** 0.2.6
+**Version:** 1.0.0
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=885&branchName=master)
 
@@ -15,6 +15,7 @@ Developed against Python 3.7.2.
 1. Clone the GitHub repository
 1. Install required modules: `pip install -r requirements.txt`
 1. Open the folder with your favorite IDE
+1. The sample is configured using the file [config.placeholder.ini](config.placeholder.ini). Before editing, rename this file to `config.ini`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 1. Update `config.ini` with the credentials provided by OSIsoft
 1. Run `program.py`
 
