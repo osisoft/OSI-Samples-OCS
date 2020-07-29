@@ -2,6 +2,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import sdsConfig from '../config/sdsconfig.json';
 import { SdsConfig } from '../config/sdsconfig.js';
 
 export class SdsStream {
@@ -109,22 +110,19 @@ export class SdsRestService {
   options: any;
 
   constructor(private authHttp: HttpClient) {
-    const sdsConfig = '../config/sdsconfig.json';
-    import(sdsConfig).then((data) => {
-      const config = data as SdsConfig;
-      this.sdsUrl = config.serviceBaseUri;
-      this.tenantId = config.tenantId;
-      this.namespaceId = config.namespaceId;
-      this.apiVersion = config.apiVersion;
-      this.options = {
-        observe: 'response',
-        headers: new HttpHeaders({
-          'Cache-Control': 'no-cache',
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        }),
-      };
-    });
+    const config = sdsConfig as SdsConfig;
+    this.sdsUrl = config.serviceBaseUri;
+    this.tenantId = config.tenantId;
+    this.namespaceId = config.namespaceId;
+    this.apiVersion = config.apiVersion;
+    this.options = {
+      observe: 'response',
+      headers: new HttpHeaders({
+        'Cache-Control': 'no-cache',
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      }),
+    };
   }
 
   createStream(sdsStream: SdsStream): Observable<any> {
