@@ -1,6 +1,6 @@
 # Authorization Code Flow + PKCE JavaScript Sample and Test
 
-**Version:** 1.1.1
+**Version:** 1.1.2
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_JavaScript?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1203&branchName=master)
 
@@ -17,7 +17,8 @@ This client uses the OAuth2/OIDC Authorization Code Flow + PKCE to obtain an acc
 ### Prerequisites
 
 - Register an AuthorizationCode client in OCS and ensure that the registered client in OCS contains `http://localhost:5004/callback.html`, and `http://localhost:5004/silent-refresh.html` in the list of RedirectUris.
-- Replace the placeholders in the [config](src/config.js) file with your TenantID and ClientID obtained from registration.
+- Configure the sample using the file [config.placeholder.js](src\config.placeholder.js). Before editing, rename this file to `config.js`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+- Replace the placeholders in the `config.js` file with your TenantID and ClientID obtained from registration.
 
 You can learn more about the config options [here](https://github.com/IdentityModel/oidc-client-js/wiki#other-optional-settings).
 
@@ -49,7 +50,7 @@ You can learn more about the config options [here](https://github.com/IdentityMo
 1. Make sure Google Chrome is installed on your test system.
 1. Make sure the version of Chrome matches the version defined for the `chromedriver` dependency in [package.json](package.json).
    - If the dependency needs to be updated in `package.json`, after saving, run `npm i` in a command prompt inside this folder to update the package.
-1. Update the [config.js](src/config.js) file with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the url location.
+1. Update the `config.js` file with the username and password for the Microsoft account that will be used to log in. The test is only written to work with a personal Microsoft account and must only prompt for only username followed by password (no Two-Factor authentication or other consent or informational prompts). Also if the location of the sample application has been modified then change the url location.
 
 ### Running the test from the Command Line
 
