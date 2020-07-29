@@ -50,7 +50,6 @@ jobs:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibrary)
           filePath: $(projPath)/src
-          delete: false
 
       - task: NodeTool@0
         inputs:
