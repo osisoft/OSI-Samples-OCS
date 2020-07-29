@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Threading;
 using Appium.Interfaces.Generic.SearchContext;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Interfaces;
@@ -11,6 +12,8 @@ namespace OCSConnectorTest
 {
     public static class TestExtensions
     {
+        private const int SLEEP = 2;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static T TryFindElementByName<T>(this IGenericFindsByName<T> element, string name, int seconds = 30) where T : IWebElement
         {
@@ -19,6 +22,7 @@ namespace OCSConnectorTest
                 throw new ArgumentNullException(nameof(element));
             }
 
+            Thread.Sleep(TimeSpan.FromSeconds(SLEEP));
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
             {
@@ -48,6 +52,7 @@ namespace OCSConnectorTest
                 throw new ArgumentNullException(nameof(button));
             }
 
+            Thread.Sleep(TimeSpan.FromSeconds(SLEEP));
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
             {
@@ -78,6 +83,7 @@ namespace OCSConnectorTest
                 throw new ArgumentNullException(nameof(element));
             }
 
+            Thread.Sleep(TimeSpan.FromSeconds(SLEEP));
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
             {
@@ -107,6 +113,7 @@ namespace OCSConnectorTest
                 throw new ArgumentNullException(nameof(button));
             }
 
+            Thread.Sleep(TimeSpan.FromSeconds(SLEEP));
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
             {
@@ -137,6 +144,7 @@ namespace OCSConnectorTest
                 throw new ArgumentNullException(nameof(element));
             }
 
+            Thread.Sleep(TimeSpan.FromSeconds(SLEEP));
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
             {
@@ -166,6 +174,7 @@ namespace OCSConnectorTest
                 throw new ArgumentNullException(nameof(button));
             }
 
+            Thread.Sleep(TimeSpan.FromSeconds(SLEEP));
             Stopwatch sw = Stopwatch.StartNew();
             while (sw.Elapsed < TimeSpan.FromSeconds(seconds))
             {

@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.12 / 2020-07-29
+
+- Add sample credentials file to gitignore and replace with placeholder
+
 ## 1.0.11 / 2020-07-23
 
 - General code cleanup & formatting

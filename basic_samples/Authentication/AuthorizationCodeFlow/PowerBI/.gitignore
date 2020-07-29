@@ -1,2 +1,7 @@
 bin/
 obj/
+
+# Credentials Files
+client_id
+tenant_id
+url

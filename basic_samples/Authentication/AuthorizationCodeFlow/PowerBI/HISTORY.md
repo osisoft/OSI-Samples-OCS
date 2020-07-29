@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.6 / 2020-07-29
+
+- Add sample credentials file to gitignore and replace with placeholder
+
 ## 1.0.5 / 2020-06-26
 
 - Updated test using Appium in place of Coded UI
