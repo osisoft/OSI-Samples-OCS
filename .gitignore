@@ -323,3 +323,4 @@ junit/
 product-readiness.*
 appsettings.json
 config.properties
+config.ini

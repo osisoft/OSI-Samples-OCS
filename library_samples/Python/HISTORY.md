@@ -1,5 +1,9 @@
 # Version History
 
+## 0.1.12_preview / 2020-07-24
+
+- Fix issue in published dependency on requests 2.23.0
+
 ## 0.1.11_preview / 2020-07-23
 
 - Fix implementation of `reversed` flag for stream API calls
