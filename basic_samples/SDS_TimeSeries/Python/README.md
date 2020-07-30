@@ -1,6 +1,6 @@
 # Building a Python client to make REST API calls to the SDS Service
 
-**Version:** 1.0.16
+**Version:** 1.0.17
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=927&branchName=master)
 
@@ -17,6 +17,7 @@ Developed against Python 3.7.2.
 1. Clone the GitHub repository
 1. Install required modules: `pip install -r requirements.txt`
 1. Open the folder with your favorite IDE
+1. Configure the sample using the file [config.placeholder.ini](config.placeholder.ini). Before editing, rename this file to `config.ini`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 1. Update `config.ini` with the credentials provided by OSIsoft
 1. Run `program.py`
 
