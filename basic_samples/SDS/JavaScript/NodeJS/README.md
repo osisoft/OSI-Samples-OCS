@@ -1,6 +1,6 @@
 ﻿# Sequential Data Store NodeJS Sample
 
-**Version:** 1.0.10
+**Version:** 1.0.11
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_NodeJs?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=924&branchName=master)
 
@@ -14,6 +14,7 @@ This sample demonstrates how SDS REST APIs are invoked using JavaScript. By exam
 ## Prerequisites
 
 - This application by default will use Port 8080
+- Configure the sample using the file [config.placeholder.js](config.placeholder.js). Before editing, rename this file to `config.js`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 **Note: This application is hosted on HTTP. This is not secure. You should use a certificate and HTTPS.**
 
