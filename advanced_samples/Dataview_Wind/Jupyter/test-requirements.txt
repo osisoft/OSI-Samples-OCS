@@ -1,3 +1,1 @@
-wheel>=0.34.2
-xmlrunner>=1.7.7
 nbconvert>=5.6.1
