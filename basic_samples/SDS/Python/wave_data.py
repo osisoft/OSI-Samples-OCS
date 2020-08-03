@@ -1,9 +1,5 @@
 """WaveData type definitions for SDS Python sample"""
 
-# Disable pylint warnings:
-# Allow more than 7 instance attributes (too-many-instance-attributes)
-# pylint: disable=R0902
-
 import json
 import inspect
 

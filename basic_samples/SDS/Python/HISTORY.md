@@ -1,5 +1,19 @@
 # Version History
 
+## 1.0.16 / 2020-07-29
+
+- Add sample credentials file to gitignore and replace with placeholder
+
+## 1.0.15 / 2020-07-24
+
+- Updated dependencies
+
+## 1.0.14 / 2020-07-23
+
+- Fix naming of `reversed` flag for stream API calls
+- Remove unnecessary pylint disable rules
+- Update sample to work against Edge Data Store
+
 ## 1.0.13 / 2020-06-11
 
 - Updated dependencies

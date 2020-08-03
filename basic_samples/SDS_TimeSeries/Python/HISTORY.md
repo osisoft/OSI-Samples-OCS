@@ -1,5 +1,18 @@
 # Version History
 
+## 1.0.17 / 2020-07-29
+
+- Add sample credentials file to gitignore and replace with placeholder
+
+## 1.0.16 / 2020-07-24
+
+- Updated dependencies
+
+## 1.0.15 / 2020-07-23
+
+- Remove unnecessary disable pylint rules
+- Update sample to work against Edge Data Store
+
 ## 1.0.14 / 2020-06-11
 
 - Updated dependencies

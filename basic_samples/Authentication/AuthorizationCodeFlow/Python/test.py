@@ -1,9 +1,5 @@
 """This script uses Selenium to perform a test of the program.py script"""
 
-# Disable pylint warnings:
-# Allow catching general exception Exception (broad-except)
-# pylint: disable=W0703
-
 import configparser
 import time
 import unittest

@@ -1,6 +1,6 @@
 ﻿# Sequential Data Store NodeJS Sample
 
-**Version:** 1.0.9
+**Version:** 1.0.11
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_NodeJs?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=924&branchName=master)
 
@@ -14,6 +14,7 @@ This sample demonstrates how SDS REST APIs are invoked using JavaScript. By exam
 ## Prerequisites
 
 - This application by default will use Port 8080
+- Configure the sample using the file [config.placeholder.js](config.placeholder.js). Before editing, rename this file to `config.js`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 **Note: This application is hosted on HTTP. This is not secure. You should use a certificate and HTTPS.**
 
@@ -381,7 +382,7 @@ restCall({
       start,
       skip,
       count,
-      reverse,
+      reversed,
       boundaryType,
       streamView,
     ]),
@@ -393,7 +394,7 @@ restCall({
 
 - **skip** is the increment by which the retrieval will happen.
 - **count** is how many values you wish to have returned.
-- **reverse** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
+- **reversed** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
 - **boundary_type** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown:
@@ -550,7 +551,7 @@ client.getRangeValues(
   start,
   skip,
   count,
-  reverse,
+  reversed,
   sdsObjs.sdsBoundaryType.ExactOrCalculated,
   autoStreamView.Id
 );

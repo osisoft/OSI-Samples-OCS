@@ -1,22 +1,12 @@
 """This sample script demonstrates how to invoke the Sequential Data Store REST API"""
 
-# Disable pylint warnings:
-# Allow catching general exception Exception (broad-except)
-# pylint: disable=W0703
-# Allow more than 12 branches (too-many-branches)
-# pylint: disable=R0912
-# Allow more than 15 local variables (too-many-locals)
-# pylint: disable=R0914
-# Allow more than 50 statements (too-many-statements)
-# pylint: disable=R0915
-
 import configparser
 import inspect
 import math
 import traceback
 
 from ocs_sample_library_preview import (SdsType, SdsTypeCode, SdsTypeProperty,
-                                        OCSClient, SdsStream, SdsBoundaryType,
+                                        EDSClient, OCSClient, SdsStream, SdsBoundaryType,
                                         SdsStreamPropertyOverride,
                                         SdsStreamViewProperty, SdsStreamView,
                                         SdsStreamViewMap, SdsStreamIndex)
@@ -353,11 +343,20 @@ def main(test=False):
         config.read('config.ini')
 
         # Step 1
-        ocs_client = OCSClient(config.get('Access', 'ApiVersion'),
-                               config.get('Access', 'Tenant'),
-                               config.get('Access', 'Resource'),
-                               config.get('Credentials', 'ClientId'),
-                               config.get('Credentials', 'ClientSecret'))
+        tenant_id = config.get('Access', 'Tenant')
+        namespace_id = config.get('Configurations', 'Namespace')
+
+        if tenant_id == 'default':
+            sds_client = EDSClient(
+                config.get('Access', 'ApiVersion'),
+                config.get('Access', 'Resource'))
+        else:
+            sds_client = OCSClient(
+                config.get('Access', 'ApiVersion'),
+                config.get('Access', 'Tenant'),
+                config.get('Access', 'Resource'),
+                config.get('Credentials', 'ClientId'),
+                config.get('Credentials', 'ClientSecret'))
 
         namespace_id = config.get('Configurations', 'Namespace')
 
@@ -369,7 +368,7 @@ def main(test=False):
         print(r"/_______  /\____ /____  >|____|    / ____|")
         print(r"        \/      \/    \/           \/     ")
         print(r"------------------------------------------")
-        print("Sds endpoint at {url}".format(url=ocs_client.uri))
+        print("Sds endpoint at {url}".format(url=sds_client.uri))
         print()
 
         # Step 2
@@ -378,7 +377,7 @@ def main(test=False):
         #######################################################################
         print("Creating an SdsType")
         wave_type = get_wave_data_type(SAMPLE_TYPE_ID)
-        wave_type = ocs_client.Types.getOrCreateType(namespace_id, wave_type)
+        wave_type = sds_client.Types.getOrCreateType(namespace_id, wave_type)
         assert wave_type.Id == SAMPLE_TYPE_ID, "Error getting back wave Type"
 
         # Step 3
@@ -391,7 +390,7 @@ def main(test=False):
         stream.Name = "WaveStreamPySample"
         stream.Description = "A Stream to store the WaveData events"
         stream.TypeId = wave_type.Id
-        ocs_client.Streams.createOrUpdateStream(namespace_id, stream)
+        sds_client.Streams.createOrUpdateStream(namespace_id, stream)
 
         # Step 4
         #######################################################################
@@ -401,24 +400,24 @@ def main(test=False):
         print("Inserting data")
         # Insert a single event
         event = next_wave(0, 2.0)
-        ocs_client.Streams.insertValues(namespace_id, stream.Id, [event])
+        sds_client.Streams.insertValues(namespace_id, stream.Id, [event])
 
         # Insert a list of events
         waves = []
         for error in range(2, 20, 2):
             waves.append(next_wave(error, 2.0))
-        ocs_client.Streams.insertValues(namespace_id, stream.Id, waves)
+        sds_client.Streams.insertValues(namespace_id, stream.Id, waves)
 
         # Step 5
         # Get the last inserted event in a stream
         print("Getting latest event")
-        wave = ocs_client.Streams.getLastValue(
+        wave = sds_client.Streams.getLastValue(
             namespace_id, stream.Id, WaveData)
         print(to_string(wave))
         print()
 
         # Get all the events
-        waves = ocs_client.Streams.getWindowValues(
+        waves = sds_client.Streams.getWindowValues(
             namespace_id, stream.Id, WaveData, 0, 180)
         print("Getting all events")
         print("Total events found: " + str(len(waves)))
@@ -428,7 +427,7 @@ def main(test=False):
 
         # Step 6
         # get all values with headers
-        waves = ocs_client.Streams.getWindowValuesForm(
+        waves = sds_client.Streams.getWindowValuesForm(
             namespace_id, stream.Id, None, 0, 180, "tableh")
         print("Getting all events in table format")
         print(waves)
@@ -437,7 +436,7 @@ def main(test=False):
         print("Updating events")
         # Update the first event
         event = next_wave(0, 4.0)
-        ocs_client.Streams.updateValues(namespace_id, stream.Id, [event])
+        sds_client.Streams.updateValues(namespace_id, stream.Id, [event])
 
         # Update the rest of the events, adding events that have no prior
         # index entry
@@ -445,11 +444,11 @@ def main(test=False):
         for error in range(2, 40, 2):
             event = next_wave(error, 4.0)
             updated_events.append(event)
-        ocs_client.Streams.updateValues(
+        sds_client.Streams.updateValues(
             namespace_id, stream.Id, updated_events)
 
         # Get all the events
-        waves = ocs_client.Streams.getWindowValues(namespace_id, stream.Id,
+        waves = sds_client.Streams.getWindowValues(namespace_id, stream.Id,
                                                    WaveData, 0, 40)
         print("Getting updated events")
         print("Total events found: " + str(len(waves)))
@@ -461,19 +460,19 @@ def main(test=False):
         print("Replacing events")
         # replace one value
         event = next_wave(0, 5.0)
-        ocs_client.Streams.replaceValues(namespace_id, stream.Id, [event])
+        sds_client.Streams.replaceValues(namespace_id, stream.Id, [event])
 
         # replace multiple values
         replaced_events = []
         for error in range(2, 40, 2):
             event = next_wave(error, 5.0)
             replaced_events.append(event)
-        ocs_client.Streams.replaceValues(
+        sds_client.Streams.replaceValues(
             namespace_id, stream.Id, replaced_events)
 
         # Step 9
         # Get all the events
-        waves = ocs_client.Streams.getWindowValues(namespace_id, stream.Id,
+        waves = sds_client.Streams.getWindowValues(namespace_id, stream.Id,
                                                    WaveData, 0, 180)
         print("Getting replaced events")
         print("Total events found: " + str(len(waves)))
@@ -481,7 +480,7 @@ def main(test=False):
             print(to_string(wave))
         print()
 
-        retrieved_interpolated = ocs_client.Streams.getRangeValuesInterpolated(
+        retrieved_interpolated = sds_client.Streams.getRangeValuesInterpolated(
             namespace_id, stream.Id, None, "5", "32", 4)
         print("Sds can interpolate or extrapolate data at an index location "
               "where data does not explicitly exist:")
@@ -491,7 +490,7 @@ def main(test=False):
         # Step 10
         # Filtering from all values
         print("Getting filtered events")
-        filtered_events = ocs_client.Streams.getWindowValues(
+        filtered_events = sds_client.Streams.getWindowValues(
             namespace_id, SAMPLE_STREAM_ID, WaveData, 0, 50, 'Radians lt 3')
 
         print("Total events found: " + str(len(filtered_events)))
@@ -502,7 +501,7 @@ def main(test=False):
         # Step 11
         # Sampling from all values
         print("Getting sampled values")
-        sampled_waves = ocs_client.Streams.getSampledValues(
+        sampled_waves = sds_client.Streams.getSampledValues(
             namespace_id, stream.Id, WaveData, 0, 40, "sin", 4)
 
         print("Total events found: " + str(len(sampled_waves)))
@@ -521,7 +520,7 @@ def main(test=False):
         print()
 
         # We will retrieve three events using the default behavior, Continuous
-        waves = ocs_client.Streams.getRangeValues(
+        waves = sds_client.Streams.getRangeValues(
             namespace_id, stream.Id, WaveData, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated)
 
@@ -542,9 +541,9 @@ def main(test=False):
         # update the stream
         props = [property_override]
         stream.PropertyOverrides = props
-        ocs_client.Streams.createOrUpdateStream(namespace_id, stream)
+        sds_client.Streams.createOrUpdateStream(namespace_id, stream)
 
-        waves = ocs_client.Streams.getRangeValues(
+        waves = sds_client.Streams.getRangeValues(
             namespace_id, stream.Id, WaveData, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated)
         print()
@@ -563,11 +562,11 @@ def main(test=False):
 
         # Create additional types to define our targets
         wave_target_type = get_wave_data_target_type(SAMPLE_TARGET_TYPE_ID)
-        wave_target_type = ocs_client.Types.getOrCreateType(namespace_id,
+        wave_target_type = sds_client.Types.getOrCreateType(namespace_id,
                                                             wave_target_type)
 
         wave_integer_type = get_wave_data_integer_type(SAMPLE_INTEGER_TYPE_ID)
-        wave_integer_type = ocs_client.Types.getOrCreateType(namespace_id,
+        wave_integer_type = sds_client.Types.getOrCreateType(namespace_id,
                                                              wave_integer_type)
 
         # Create an SdsStreamViewProperty objects when we want to explicitly
@@ -605,20 +604,20 @@ def main(test=False):
         manual_stream_view.SourceTypeId = wave_type.Id
         manual_stream_view.Properties = [vp1, vp2, vp3, vp4]
 
-        automatic_stream_view = ocs_client.Streams.getOrCreateStreamView(
+        automatic_stream_view = sds_client.Streams.getOrCreateStreamView(
             namespace_id, stream_view)
-        manual_stream_view = ocs_client.Streams.getOrCreateStreamView(
+        manual_stream_view = sds_client.Streams.getOrCreateStreamView(
             namespace_id, manual_stream_view)
 
         stream_view_map_1 = SdsStreamViewMap()
-        stream_view_map_1 = ocs_client.Streams.getStreamViewMap(
+        stream_view_map_1 = sds_client.Streams.getStreamViewMap(
             namespace_id, automatic_stream_view.Id)
 
         stream_view_map_2 = SdsStreamViewMap()
-        stream_view_map_2 = ocs_client.Streams.getStreamViewMap(
+        stream_view_map_2 = sds_client.Streams.getStreamViewMap(
             namespace_id, manual_stream_view.Id)
 
-        range_waves = ocs_client.Streams.getRangeValues(
+        range_waves = sds_client.Streams.getRangeValues(
             namespace_id, stream.Id, WaveData, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated)
         print()
@@ -629,7 +628,7 @@ def main(test=False):
                 sin=way.sin, cos=way.cos, tan=way.tan)))
 
         # StreamView data when retrieved with a streamView
-        range_waves = ocs_client.Streams.getRangeValues(
+        range_waves = sds_client.Streams.getRangeValues(
             namespace_id, stream.Id, WaveDataTarget, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated, automatic_stream_view.Id)
         print()
@@ -642,7 +641,7 @@ def main(test=False):
                                           cosTarget=way.cos_target,
                                           tanTarget=way.tan_target))
 
-        range_waves = ocs_client.Streams.getRangeValues(
+        range_waves = sds_client.Streams.getRangeValues(
             namespace_id, stream.Id, WaveDataInteger, "1", 0, 3, False,
             SdsBoundaryType.ExactOrCalculated, manual_stream_view.Id)
         print()
@@ -675,14 +674,14 @@ def main(test=False):
         # Step 14
         print("We will now update the stream type based on the streamview")
 
-        first_val = ocs_client.Streams.getFirstValue(namespace_id, stream.Id,
+        first_val = sds_client.Streams.getFirstValue(namespace_id, stream.Id,
                                                      None)
-        ocs_client.Streams.updateStreamType(namespace_id, stream.Id,
+        sds_client.Streams.updateStreamType(namespace_id, stream.Id,
                                             SAMPLE_STREAM_VIEW_ID)
 
-        new_stream = ocs_client.Streams.getStream(
+        new_stream = sds_client.Streams.getStream(
             namespace_id, SAMPLE_STREAM_ID)
-        first_val_updated = ocs_client.Streams.getFirstValue(namespace_id,
+        first_val_updated = sds_client.Streams.getFirstValue(namespace_id,
                                                              SAMPLE_STREAM_ID, None)
 
         print("The new type id" + new_stream.TypeId + " compared to the "
@@ -691,8 +690,8 @@ def main(test=False):
               "original one " + str(first_val_updated))
 
         # Step 15
-        types = ocs_client.Types.getTypes(namespace_id, 0, 100)
-        types_query = ocs_client.Types.getTypes(
+        types = sds_client.Types.getTypes(namespace_id, 0, 100)
+        types_query = sds_client.Types.getTypes(
             namespace_id, 0, 100, "Id:*Target*")
 
         print()
@@ -704,38 +703,40 @@ def main(test=False):
         for type_i in types_query:
             print(type_i.Id)
 
-        # Step 16
-        #######################################################################
-        # Tags and Metadata
-        #######################################################################
-        print()
-        print("Let's add some Tags and Metadata to our stream:")
+        if tenant_id != 'default':
+            # Step 16
+            #######################################################################
+            # Tags and Metadata (OCS ONLY)
+            #######################################################################
+            print()
+            print("Let's add some Tags and Metadata to our stream:")
 
-        tags = ["waves", "periodic", "2018", "validated"]
-        metadata = {"Region": "North America", "Country": "Canada",
-                    "Province": "Quebec"}
+            tags = ["waves", "periodic", "2018", "validated"]
+            metadata = {"Region": "North America", "Country": "Canada",
+                        "Province": "Quebec"}
 
-        ocs_client.Streams.createOrUpdateTags(namespace_id, stream.Id, tags)
-        ocs_client.Streams.createOrUpdateMetadata(namespace_id, stream.Id,
-                                                  metadata)
+            sds_client.Streams.createOrUpdateTags(
+                namespace_id, stream.Id, tags)
+            sds_client.Streams.createOrUpdateMetadata(namespace_id, stream.Id,
+                                                      metadata)
 
-        print()
-        print("Tags now associated with ", stream.Id)
-        print(ocs_client.Streams.getTags(namespace_id, stream.Id))
+            print()
+            print("Tags now associated with ", stream.Id)
+            print(sds_client.Streams.getTags(namespace_id, stream.Id))
 
-        region = ocs_client.Streams.getMetadata(
-            namespace_id, stream.Id, "Region")
-        country = ocs_client.Streams.getMetadata(
-            namespace_id, stream.Id, "Country")
-        province = ocs_client.Streams.getMetadata(
-            namespace_id, stream.Id, "Province")
+            region = sds_client.Streams.getMetadata(
+                namespace_id, stream.Id, "Region")
+            country = sds_client.Streams.getMetadata(
+                namespace_id, stream.Id, "Country")
+            province = sds_client.Streams.getMetadata(
+                namespace_id, stream.Id, "Province")
 
-        print()
-        print("Metadata now associated with", stream.Id, ":")
-        print("Metadata key Region: ", region)
-        print("Metadata key Country: ", country)
-        print("Metadata key Province: ", province)
-        print()
+            print()
+            print("Metadata now associated with", stream.Id, ":")
+            print("Metadata key Region: ", region)
+            print("Metadata key Country: ", country)
+            print("Metadata key Province: ", province)
+            print()
 
         # Step 17
         #######################################################################
@@ -744,12 +745,12 @@ def main(test=False):
         print()
         print('Deleting values from the SdsStream')
         # remove a single value from the stream
-        ocs_client.Streams.removeValue(namespace_id, stream.Id, 0)
+        sds_client.Streams.removeValue(namespace_id, stream.Id, 0)
 
         # remove multiple values from the stream
-        ocs_client.Streams.removeWindowValues(namespace_id, stream.Id, 0, 40)
+        sds_client.Streams.removeWindowValues(namespace_id, stream.Id, 0, 40)
         try:
-            event = ocs_client.Streams.getLastValue(namespace_id, stream.Id,
+            event = sds_client.Streams.getLastValue(namespace_id, stream.Id,
                                                     WaveData)
             if event is not None:
                 raise ValueError
@@ -767,7 +768,7 @@ def main(test=False):
         secondary.TypeId = SAMPLE_TYPE_ID
         secondary.Indexes = [index]
 
-        secondary = ocs_client.Streams.getOrCreateStream(
+        secondary = sds_client.Streams.getOrCreateStream(
             namespace_id, secondary)
         count = 0
         if stream.Indexes:
@@ -780,24 +781,24 @@ def main(test=False):
         # Modifying an existing stream with a secondary index.
         print("Modifying a stream to have a secondary index.")
 
-        sample_stream = ocs_client.Streams.getStream(
+        sample_stream = sds_client.Streams.getStream(
             namespace_id, SAMPLE_STREAM_ID)
 
         index = SdsStreamIndex()
         index.SdsTypePropertyId = "RadiansTarget"
         sample_stream.Indexws = [index]
-        ocs_client.Streams.createOrUpdateStream(namespace_id, sample_stream)
+        sds_client.Streams.createOrUpdateStream(namespace_id, sample_stream)
 
-        sample_stream = ocs_client.Streams.getStream(
+        sample_stream = sds_client.Streams.getStream(
             namespace_id, SAMPLE_STREAM_ID)
         # Modifying an existing stream to remove the secondary index
         print("Removing a secondary index from a stream.")
 
         secondary.Indexes = []
 
-        ocs_client.Streams.createOrUpdateStream(namespace_id, secondary)
+        sds_client.Streams.createOrUpdateStream(namespace_id, secondary)
 
-        secondary = ocs_client.Streams.getStream(namespace_id, secondary.Id)
+        secondary = sds_client.Streams.getStream(namespace_id, secondary.Id)
 
         original_length = "0"
         if stream.Indexes:
@@ -814,14 +815,14 @@ def main(test=False):
         # Adding Compound Index Type
         print("Creating an SdsType with a compound index")
         type_compound = get_wave_compound_data_type(COMPOUND_TYPE_ID)
-        ocs_client.Types.getOrCreateType(namespace_id, type_compound)
+        sds_client.Types.getOrCreateType(namespace_id, type_compound)
 
         # create an SdsStream
         print("Creating an SdsStream off of type with compound index")
         stream_compound = SdsStream()
         stream_compound.Id = STREAM_ID_COMPOUND
         stream_compound.TypeId = type_compound.Id
-        ocs_client.Streams.createOrUpdateStream(namespace_id, stream_compound)
+        sds_client.Streams.createOrUpdateStream(namespace_id, stream_compound)
 
         # Step 20
         print("Inserting data")
@@ -832,15 +833,15 @@ def main(test=False):
         waves.append(next_wave(10, 3))
         waves.append(next_wave(10, 8))
         waves.append(next_wave(10, 10))
-        ocs_client.Streams.insertValues(
+        sds_client.Streams.insertValues(
             namespace_id, STREAM_ID_COMPOUND, waves)
 
-        latest_compound = ocs_client.Streams.getLastValue(
+        latest_compound = sds_client.Streams.getLastValue(
             namespace_id, STREAM_ID_COMPOUND, None)
-        first_compound = ocs_client.Streams.getFirstValue(
+        first_compound = sds_client.Streams.getFirstValue(
             namespace_id, STREAM_ID_COMPOUND, None)
 
-        window_val = ocs_client.Streams.getWindowValues(
+        window_val = sds_client.Streams.getWindowValues(
             namespace_id, STREAM_ID_COMPOUND, None, "2|1", "10|8")
 
         print("First data: " + str(first_compound) +
@@ -864,27 +865,27 @@ def main(test=False):
         # Clean up the remaining artifacts
         print("Cleaning up")
         print("Deleting the stream")
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, SAMPLE_STREAM_ID))
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, STREAM_ID_SECONDARY))
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: sds_client.Streams.deleteStream(
             namespace_id, STREAM_ID_COMPOUND))
 
         print("Deleting the streamViews")
-        suppress_error(lambda: ocs_client.Streams.deleteStreamView(
+        suppress_error(lambda: sds_client.Streams.deleteStreamView(
             namespace_id, SAMPLE_STREAM_VIEW_ID))
-        suppress_error(lambda: ocs_client.Streams.deleteStreamView(
+        suppress_error(lambda: sds_client.Streams.deleteStreamView(
             namespace_id, SAMPLE_STREAM_VIEW_INT_ID))
 
         print("Deleting the types")
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: sds_client.Types.deleteType(
             namespace_id, SAMPLE_TYPE_ID))
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: sds_client.Types.deleteType(
             namespace_id, SAMPLE_TARGET_TYPE_ID))
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: sds_client.Types.deleteType(
             namespace_id, SAMPLE_INTEGER_TYPE_ID))
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: sds_client.Types.deleteType(
             namespace_id, COMPOUND_TYPE_ID))
 
         if test and exception is not None:

@@ -321,3 +321,7 @@ junit/
 
 # Credential Config Files
 product-readiness.*
+appsettings.json
+config.ini
+config.js
+config.properties

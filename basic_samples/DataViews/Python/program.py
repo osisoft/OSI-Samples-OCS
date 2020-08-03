@@ -1,13 +1,5 @@
 """This sample script demonstrates how to invoke the Data View REST API"""
 
-# Disable pylint warnings:
-# Allow catching general exception Exception (broad-except)
-# pylint: disable=W0703
-# Allow more than 15 local variables (too-many-locals)
-# pylint: disable=R0914
-# Allow more than 50 statements (too-many-statements)
-# pylint: disable=R0915
-
 import configparser
 import datetime
 import random

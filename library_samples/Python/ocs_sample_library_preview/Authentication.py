@@ -6,7 +6,7 @@ import configparser
 import hashlib
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
-import os 
+import os
 import secrets
 import time
 from urllib.parse import urlparse, parse_qs
@@ -29,14 +29,12 @@ class Authentication(object):
             self.__getToken = self.__getClientIDSecretToken
         else:
             self.__getToken = self.__getPKCEToken
-        
 
     def getToken(self):
         if ((self.__expiration - time.time()) > 5 * 60):
             return self.__token
 
         return self.__getToken()
-
 
     def __getClientIDSecretToken(self):
         tokenEndpoint = self.__url + "/identity/connect/token"
@@ -83,7 +81,6 @@ class Authentication(object):
                 """Handles authentication redirect uri and extracts authorization code from URL"""
                 code = ''
 
-                # pylint: disable=C0103
                 def do_GET(self):
                     """Handles GET request against this temporary local server"""
                     # Parse out authorization code from query string in request
@@ -111,7 +108,8 @@ class Authentication(object):
 
             # Open user default web browser at Auth page
             if not webbrowser.open(auth_url):
-                raise SdsError("This notebook/script should be run locally on your machine to authenticate")
+                raise SdsError(
+                    "This notebook/script should be run locally on your machine to authenticate")
 
             # Wait for response in browser
             print('Step 4: Set server to handle one request...')
@@ -126,10 +124,11 @@ class Authentication(object):
                 ('code', RequestHandler.code),
                 ('redirect_uri', redirect_uri)])
 
-            token = json.loads(token.content)  
+            token = json.loads(token.content)
             expiration = token.get("expires_in", None)
             if expiration is None:
-                raise SdsError(f"Failed to get token, please retry login in: {token['error']}")
+                raise SdsError(
+                    f"Failed to get token, please retry login in: {token['error']}")
 
             self.__expiration = float(expiration) + time.time()
             self.__token = token['access_token']

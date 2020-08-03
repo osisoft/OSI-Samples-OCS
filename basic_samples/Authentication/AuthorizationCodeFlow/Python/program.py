@@ -1,13 +1,5 @@
 """This script performs Authorization Code + PKCE Authentication against OSIsoft Cloud Services"""
 
-# Disable pylint warnings:
-# Allow catching general exception Exception (broad-except)
-# pylint: disable=W0703
-# Allow more than 15 local variables (too-many-locals)
-# pylint: disable=R0914
-# Allow more than 50 statements (too-many-statements)
-# pylint: disable=R0915
-
 import base64
 import configparser
 import hashlib
@@ -59,7 +51,6 @@ def main(test_script=None):
             """Handles authentication redirect uri and extracts authorization code from URL"""
             code = ''
 
-            # pylint: disable=C0103
             def do_GET(self):
                 """Handles GET request against this temporary local server"""
                 # Parse out authorization code from query string in request

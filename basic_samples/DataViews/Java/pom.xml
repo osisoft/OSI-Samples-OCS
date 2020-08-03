@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.osisoft.dataviewsample</groupId>
-  <artifactId>dataviewjava</artifactId>
-  <version>0.1.2-preview</version>
+  <artifactId>dataviewsjava</artifactId>
+  <version>1.0.0</version>
 
-  <name>dataviewjava</name>
+  <name>dataviewsjava</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -22,7 +22,7 @@
       <dependency> 
         <groupId> com.github.osisoft.ocs_sample_library_preview</groupId>
         <artifactId>ocs_sample_library_preview</artifactId>
-        <version>[0.0.16,)</version>
+        <version>[0.0.18-preview,)</version>
     </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

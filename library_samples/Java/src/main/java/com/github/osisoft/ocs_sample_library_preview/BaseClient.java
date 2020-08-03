@@ -66,6 +66,24 @@ public class BaseClient {
      * Creates a baseclient using the passed information rather than the
      * configuration settings
      * 
+     * @param apiVersion API version of SDS
+     * @param tenantId   The tenant identifier
+     * @param resource   SDS url
+     */
+    public BaseClient(String apiVersion, String tenantId, String resource) {
+        this.TenantId = tenantId;
+        this.Resource = resource;
+        this.Resource = this.Resource.endsWith("/") ? this.Resource : this.Resource + "/";
+
+        this.baseUrl = this.Resource;
+        this.apiVersion = apiVersion;
+        this.mGson = new Gson();
+    }
+
+    /**
+     * Creates a baseclient using the passed information rather than the
+     * configuration settings
+     * 
      * @param apiVersion   APIversion of OCS
      * @param tenantId     The tenant identifier
      * @param clientId     Client id to login with
@@ -93,7 +111,10 @@ public class BaseClient {
      */
     public HttpURLConnection getConnection(URL url, String method) {
         HttpURLConnection urlConnection = null;
-        String token = AcquireAuthToken();
+        String token = "";
+        if (!this.ClientId.isEmpty()) {
+            token = AcquireAuthToken();
+        }
 
         try {
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -101,7 +122,9 @@ public class BaseClient {
             urlConnection.setRequestProperty("Accept", "*/*; q=1");
             urlConnection.setRequestProperty("Accept-Encoding", "gzip");
             urlConnection.setRequestProperty("Content-Type", "application/json");
-            urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+            if (token != null && !token.isEmpty()) {
+                urlConnection.setRequestProperty("Authorization", "Bearer " + token);
+            }
             urlConnection.setUseCaches(false);
             urlConnection.setConnectTimeout(50000);
             urlConnection.setReadTimeout(50000);
@@ -144,9 +167,8 @@ public class BaseClient {
             URL discoveryUrl = new URL(Resource + "identity/.well-known/openid-configuration");
             URLConnection request = discoveryUrl.openConnection();
             request.connect();
-            JsonParser jp = new JsonParser();
-            JsonObject rootObj = jp
-                    .parse(new InputStreamReader((InputStream) request.getContent(), StandardCharsets.UTF_8))
+            JsonObject rootObj = JsonParser
+                    .parseReader(new InputStreamReader((InputStream) request.getContent(), StandardCharsets.UTF_8))
                     .getAsJsonObject();
             String tokenUrl = rootObj.get("token_endpoint").getAsString();
 
@@ -168,8 +190,7 @@ public class BaseClient {
             String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
             in.close();
 
-            jp = new JsonParser();
-            JsonObject response = jp.parse(result).getAsJsonObject();
+            JsonObject response = JsonParser.parseString(result).getAsJsonObject();
             cachedAccessToken = response.get("access_token").getAsString();
             Integer timeOut = response.get("expires_in").getAsInt();
             accessTokenExpiration = new Date(System.currentTimeMillis() + timeOut * 1000);

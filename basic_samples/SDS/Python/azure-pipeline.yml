@@ -29,13 +29,15 @@ variables:
     value: '/basic_samples/SDS/Python'
   - name: CredFile
     value: config.ini
-  - name: CredFileLibrary
-    value: product-readiness.sds_python.ini
+  - name: CredFileLibraryOCS
+    value: product-readiness.sds_python_ocs.ini
+  - name: CredFileLibraryEDS
+    value: product-readiness.sds_python_eds.ini
   - name: analysisProject
     value: SDS_Python
 
 jobs:
-  - job: Tests
+  - job: Tests_OCS
     strategy:
       matrix:
         linux:
@@ -48,7 +50,7 @@ jobs:
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
-          fileLibrary: $(CredFileLibrary)
+          fileLibrary: $(CredFileLibraryOCS)
           filePath: $(projPath)
 
       - task: UsePythonVersion@0
@@ -56,6 +58,36 @@ jobs:
           versionSpec: '3.6'
           architecture: 'x64'
         displayName: 'Specify Python version'
+
+      - bash: |
+          echo Install test tools   
+          pip install pytest
+          echo Install requirements
+          pip install -r requirements.txt
+          echo Run tests
+          python -m pytest --junitxml=junit/test-results.xml ./test.py
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFiles: '**/test-*.xml'
+          failTaskOnFailedTests: true
+          testRunTitle: '$(Agent.JobName) on $(imageName)'
+        displayName: 'Publish test results'
+        condition: always()
+
+  - job: Tests_EDS
+    pool:
+      name: 00-OSIManaged-Test
+      demands: COMPUTERNAME -equals $(buildAgent)
+    steps:
+      - template: '/miscellaneous/build_templates/config.yml'
+        parameters:
+          fileOriginal: $(CredFile)
+          fileLibrary: $(CredFileLibraryEDS)
+          filePath: $(projPath)
 
       - bash: |
           echo Install test tools   
