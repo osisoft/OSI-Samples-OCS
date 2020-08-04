@@ -4,7 +4,7 @@
 tenant_id = Text.FromBinary(Extension.Contents("tenant_id"));
 
 // Note: Client ID should be an Authorization Code Client with the below redirect_uri and logout_uri
-client_id = Text.FromBinary(Extension.Contents("client_id")); 
+client_id = Text.FromBinary(Extension.Contents("client_id"));
 
 // OCS values
 resource = Text.FromBinary(Extension.Contents("url"));
@@ -45,27 +45,23 @@ windowHeight = 1024;
 shared OCSConnector_Sample.Contents = Value.ReplaceType(OCSConnectorImpl, OCSConnectorType);
 
 OCSConnectorType = type function(
-    ocsUri as (type text meta [
-        Documentation.FieldCaption = "OSIsoft Cloud Services URI",
-        Documentation.FieldDescription = "OSIsoft Cloud Services API base address",
-        Documentation.SampleValues = {"https://dat-b.osisoft.com"}
-    ]),
-    optional apiUri as (type text meta [
-        Documentation.FieldCaption = "API URI Path",
-        Documentation.FieldDescription = "Path and parameters for API endpoint",
-        Documentation.SampleValues = {"/api/v1/Tenants/{tenantId}/Namespaces"}
+    url as (Uri.Type meta [
+        Documentation.FieldCaption = "OSIsoft Cloud Services API Path",
+        Documentation.FieldDescription = "OSIsoft Cloud Services API path and parameters",
+        Documentation.SampleValues = {"https://dat-b.osisoft.com/api/v1/Tenants/{tenantId}/Namespaces"}
     ]),
     optional timeout as (type number meta [
         Documentation.FieldCaption = "Timeout",
         Documentation.FieldDescription = "Timeout in seconds for API request",
         Documentation.SampleValues = {100}
     ])) as binary meta [
-        Documentation.LongDescription = "Raw data returned from API, usually JSON or CSV"
+        Documentation.LongDescription = "Raw data returned from API, usually JSON or CSV",
+        Documentation.Name = "OSIsoft Cloud Services API Request"
     ];
 
-OCSConnectorImpl = (ocsUri as text, optional apiUri as text, optional timeout as number) =>
+OCSConnectorImpl = (url as text, optional timeout as number) =>
     let
-        url = ocsUri & apiUri,
+        url = url,
         source = if timeout = null
         then Web.Contents(url)
         else Web.Contents(url, [ Headers = [#"Request-Timeout" = Number.ToText(timeout)], Timeout = #duration(0,0,0,timeout)])

@@ -78,11 +78,8 @@ namespace OCSConnectorTest
 
             // Enter query info
             var builderDialog = powerBISession.TryClickAndFindElementByAccessibilityId(connect, "BuilderDialog");
-            var uri = builderDialog.TryFindElementsByName("OSIsoft Cloud Services URI");
-            uri[1].SendKeys(Settings.OcsAddress);
-
-            var path = builderDialog.TryFindElementsByName("API URI Path (optional)");
-            path[1].SendKeys($"/api/v1/Tenants/{Settings.OcsTenantId}/Namespaces");
+            var uri = builderDialog.TryFindElementsByName("OSIsoft Cloud Services API Path");
+            uri[1].SendKeys($"{Settings.OcsAddress}/api/v1/Tenants/{Settings.OcsTenantId}/Namespaces");
 
             var timeout = builderDialog.TryFindElementsByName("Timeout (optional)");
             timeout[1].SendKeys("100");
