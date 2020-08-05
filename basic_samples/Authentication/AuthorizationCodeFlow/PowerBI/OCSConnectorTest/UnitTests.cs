@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using Xunit;
@@ -78,11 +79,8 @@ namespace OCSConnectorTest
 
             // Enter query info
             var builderDialog = powerBISession.TryClickAndFindElementByAccessibilityId(connect, "BuilderDialog");
-            var uri = builderDialog.TryFindElementsByName("OSIsoft Cloud Services URI");
-            uri[1].SendKeys(Settings.OcsAddress);
-
-            var path = builderDialog.TryFindElementsByName("API URI Path (optional)");
-            path[1].SendKeys($"/api/v1/Tenants/{Settings.OcsTenantId}/Namespaces");
+            var uri = builderDialog.TryFindElementsByName("OSIsoft Cloud Services API Path");
+            uri[1].SendKeys($"{Settings.OcsAddress}/api/v1/Tenants/{Settings.OcsTenantId}/Namespaces");
 
             var timeout = builderDialog.TryFindElementsByName("Timeout (optional)");
             timeout[1].SendKeys("100");
@@ -112,8 +110,8 @@ namespace OCSConnectorTest
             next.Click();
             var pwd = oauthDialog.TryFindElementByAccessibilityId("i0118");
             pwd.SendKeys(Settings.Password);
+            pwd.SendKeys(Keys.Enter);
 
-            signin = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
             builderDialog = powerBISession.TryClickAndFindElementByAccessibilityId(connect, "BuilderDialog");
             connect = builderDialog.TryFindElementByName("Connect");
             connect.Click();

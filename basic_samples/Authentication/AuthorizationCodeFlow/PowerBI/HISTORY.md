@@ -1,5 +1,10 @@
 # Version History
 
+## 1.0.7 / 2020-08-04
+
+- Add documentation name for connector dialog
+- Convert ocsUri and apiUri parameters to single url parameter using Uri.Type
+
 ## 1.0.6 / 2020-07-29
 
 - Add sample credentials file to gitignore and replace with placeholder
