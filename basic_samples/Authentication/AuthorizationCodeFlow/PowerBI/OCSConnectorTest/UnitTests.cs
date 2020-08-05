@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Windows;
 using Xunit;
@@ -109,9 +110,8 @@ namespace OCSConnectorTest
             next.Click();
             var pwd = oauthDialog.TryFindElementByAccessibilityId("i0118");
             pwd.SendKeys(Settings.Password);
+            pwd.SendKeys(Keys.Enter);
 
-            signin = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
-            powerBISession.TryClickAndNotFindElementByAccessibilityId(connect, "OAuthDialog");
             builderDialog = powerBISession.TryClickAndFindElementByAccessibilityId(connect, "BuilderDialog");
             connect = builderDialog.TryFindElementByName("Connect");
             connect.Click();
