@@ -110,9 +110,8 @@ namespace OCSConnectorTest
             var pwd = oauthDialog.TryFindElementByAccessibilityId("i0118");
             pwd.SendKeys(Settings.Password);
 
-            signin = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
-            powerBISession.TryClickAndNotFindElementByAccessibilityId(connect, "OAuthDialog");
-            builderDialog = powerBISession.TryFindElementByAccessibilityId("BuilderDialog");
+            signin = oauthDialog.TryFindElementByName("Sign in");
+            builderDialog = powerBISession.TryClickAndFindElementByAccessibilityId(connect, "BuilderDialog");
             connect = builderDialog.TryFindElementByName("Connect");
             connect.Click();
 
