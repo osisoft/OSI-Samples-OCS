@@ -37,7 +37,6 @@ namespace CSVtoOCS
             MainAsync(fileLocation: fileLocationIn).GetAwaiter().GetResult();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         public static async Task<bool> MainAsync(bool test = false, string fileLocation = "datafile.csv")
         {
             try
@@ -162,7 +161,6 @@ namespace CSVtoOCS
         /// </summary>
         /// <param name="methodToRun">The method to run.</param>
         /// <param name="value">The value to put into the method to run</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         private static async Task RunInTryCatch(Func<string, Task> methodToRun, string value)
         {
             try
@@ -184,7 +182,6 @@ namespace CSVtoOCS
         /// </summary>
         /// <param name="methodToRun">The method to run.</param>
         /// <param name="value">The value to put into the method to run</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Method expects an exception from method.")]
         private static async Task RunInTryCatchExpectException(Func<string, Task> methodToRun, string value)
         {
             try
@@ -196,7 +193,6 @@ namespace CSVtoOCS
             catch { }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         private static async Task CheckValuesWrittenASync()
         {
             foreach (string streamId in _streamsIdsToSendTo)
@@ -219,7 +215,6 @@ namespace CSVtoOCS
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         private static async Task CheckDeletesValuesAsync()
         {
             foreach (string streamId in _streamsIdsToSendTo)
@@ -243,7 +238,6 @@ namespace CSVtoOCS
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         private static async Task DeleteValuesAsync()
         {
             foreach (string streamId in _streamsIdsToSendTo)

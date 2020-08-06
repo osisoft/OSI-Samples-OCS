@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/basic_samples/SDS/JavaScript/Angular'
+      - '/basic_samples/SDS/Angular'
 
 pr:
   branches:
@@ -13,7 +13,7 @@ pr:
       - master
   paths:
     include:
-      - '/basic_samples/SDS/JavaScript/Angular'
+      - '/basic_samples/SDS/Angular'
 
 schedules:
   - cron: '0 0 * * 0'
@@ -26,7 +26,7 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/basic_samples/SDS/JavaScript/Angular'
+    value: '/basic_samples/SDS/Angular'
   - name: CredFile
     value: cred.json
   - name: CredFileSdsConfig

@@ -19,7 +19,6 @@ namespace SdsClientLibraries
 
         public static void Main() => MainAsync().GetAwaiter().GetResult();
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         public static async Task<bool> MainAsync(bool test = false)
         {            
             IConfigurationBuilder builder = new ConfigurationBuilder()
@@ -546,7 +545,6 @@ namespace SdsClientLibraries
         /// </summary>
         /// <param name="methodToRun">The method to run.</param>
         /// <param name="value">The value to put into the method to run</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         private static async Task RunInTryCatch(Func<string, Task> methodToRun, string value)
         {
             try

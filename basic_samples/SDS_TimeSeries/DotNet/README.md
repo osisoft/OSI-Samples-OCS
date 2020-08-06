@@ -1,6 +1,6 @@
 # Building a DotNet client to make REST API calls to the SDS Service
 
-**Version:** 1.1.4
+**Version:** 1.1.5
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=926&branchName=master)
 

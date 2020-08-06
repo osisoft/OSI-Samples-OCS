@@ -14,7 +14,6 @@ namespace OCSConnectorTest
     {
         private const int SLEEP = 2;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static T TryFindElementByName<T>(this IGenericFindsByName<T> element, string name, int seconds = 30) where T : IWebElement
         {
             if (element == null)
@@ -39,7 +38,6 @@ namespace OCSConnectorTest
             return default;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static T TryClickAndFindElementByName<T>(this IGenericFindsByName<T> element, IWebElement button, string name, int seconds = 30) where T : IWebElement
         {
             if (element == null)
@@ -75,7 +73,6 @@ namespace OCSConnectorTest
             return default;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static T TryFindElementByAccessibilityId<T>(this IFindByAccessibilityId<T> element, string selector, int seconds = 30) where T : IWebElement
         {
             if (element == null)
@@ -100,7 +97,6 @@ namespace OCSConnectorTest
             return default;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static T TryClickAndFindElementByAccessibilityId<T>(this IFindByAccessibilityId<T> element, IWebElement button, string selector, int seconds = 30) where T : IWebElement
         {
             if (element == null)
@@ -136,7 +132,6 @@ namespace OCSConnectorTest
             return default;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static ReadOnlyCollection<T> TryFindElementsByName<T>(this IGenericFindsByName<T> element, string name, int seconds = 30) where T : IWebElement
         {
             if (element == null)
@@ -161,7 +156,6 @@ namespace OCSConnectorTest
             return default;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Catch intended for retry logic")]
         public static ReadOnlyCollection<T> TryClickAndFindElementsByName<T>(this IGenericFindsByName<T> element, IWebElement button, string name, int seconds = 30) where T : IWebElement
         {
             if (element == null)
