@@ -5,7 +5,7 @@
 
   <groupId> com.github.osisoft.ocs_sample_library_preview</groupId>
   <artifactId>ocs_sample_library_preview</artifactId>
-  <version>0.0.18-preview</version>
+  <version>0.0.19-preview</version>
 
   <name>ocs_sample_library_preview</name>
   <description>A preview of an OCS (OSIsoft Cloud Services) client library </description>
@@ -61,7 +61,7 @@
       <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-lang3</artifactId>
-          <version>3.10</version>
+          <version>3.11</version>
       </dependency>
       <dependency>
           <groupId>commons-codec</groupId>

@@ -1,5 +1,9 @@
 # Version History
 
+## 0.0.19-preview / 2020-08-06
+
+- Updated dependencies
+
 ## 0.0.18-preview / 2020-07-23
 
 - Fix naming of `reversed` flag in stream API calls
