@@ -5,7 +5,7 @@ trigger:
       - master
   paths:
     include:
-      - '/advanced_samples/Dataview_Wind/Jupyter'
+      - '/advanced_samples/DataView_Wind/Jupyter'
 
 pr:
   branches:
@@ -13,7 +13,7 @@ pr:
       - master
   paths:
     include:
-      - '/advanced_samples/Dataview_Wind/Jupyter'
+      - '/advanced_samples/DataView_Wind/Jupyter'
 
 schedules:
   - cron: '0 0 * * 0'
@@ -26,22 +26,22 @@ schedules:
 variables:
   - template: '/miscellaneous/build_templates/variables.yml'
   - name: projPath
-    value: '/advanced_samples/Dataview_Wind/Jupyter'
+    value: '/advanced_samples/DataView_Wind/Jupyter'
   - name: CredFile
     value: config.ini
   - name: CredFileLibrary
     value: product-readiness.sds_python.ini
   - name: analysisProject
-    value: SDSDataviewJupyter
+    value: SDSDataViewJupyter
 
   - name: bulkUploadprojPath
     value: '/advanced_samples/Bulk_Upload/DotNet'
   - name: bulkUploadFiles
-    value: '/advanced_samples/Bulk_Upload/SampleCollections/DataviewWind'
+    value: '/advanced_samples/Bulk_Upload/SampleCollections/DataViewWind'
   - name: bulkUploadCredFile
     value: appsettings.json
   - name: bulkUploadCredFileLibrary
-    value: product-readiness.BulkUpload_DataviewWindFarm.json
+    value: product-readiness.BulkUpload_DataViewWindFarm.json
 
 jobs:
   - job: Tests

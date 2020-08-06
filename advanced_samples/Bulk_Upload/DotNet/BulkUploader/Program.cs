@@ -17,7 +17,7 @@ namespace BulkUploader
 {
     public static class Program
     {
-        public static string DataviewPath { get; set; }
+        public static string DataViewPath { get; set; }
         public static string SdsTypePath { get; set; }
         public static string SdsStreamPath { get; set; }
         public static string SdsStreamMetaPath { get; set; }
@@ -55,7 +55,7 @@ namespace BulkUploader
             var clientId = configuration["ClientId"];
             var clientKey = configuration["ClientKey"];
 
-            DataviewPath = configuration["Dataview"];
+            DataViewPath = configuration["DataView"];
             SdsStreamPath = configuration["Stream"];
             SdsTypePath = configuration["Type"];
 
@@ -74,7 +74,7 @@ namespace BulkUploader
             MetadataService = sdsService.GetMetadataService(tenantId, namespaceId);
             DataService = sdsService.GetDataService(tenantId, namespaceId);
 
-            if (!string.IsNullOrEmpty(DataviewPath))
+            if (!string.IsNullOrEmpty(DataViewPath))
             {
                 AuthenticationHandler authenticationHandlerDataViews = new AuthenticationHandler(uriResource, clientId, clientKey); // currently this has to be a different auth handler or it throws errors
                 var dv_service_factory = new DataViewServiceFactory(new Uri(resource), authenticationHandlerDataViews);
@@ -96,7 +96,7 @@ namespace BulkUploader
             if (!string.IsNullOrEmpty(SdsDataOnlyPath))
                 SendData();
 
-            if (!string.IsNullOrEmpty(DataviewPath))
+            if (!string.IsNullOrEmpty(DataViewPath))
                 SendDataView();
 
             if (ToThrow != null)
@@ -115,8 +115,8 @@ namespace BulkUploader
 
         private static void SendDataView()
         {
-            Console.WriteLine($"Sending dataviews from file: {DataviewPath}");
-            string dataviewS = File.ReadAllText(DataviewPath);
+            Console.WriteLine($"Sending dataviews from file: {DataViewPath}");
+            string dataviewS = File.ReadAllText(DataViewPath);
             List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
             foreach (var dataview in dataviews)
             {
@@ -211,8 +211,8 @@ namespace BulkUploader
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         private static void DeleteDataView()
         {
-            Console.WriteLine($"Deleting Dataviews");
-            string dataviewS = File.ReadAllText(DataviewPath);
+            Console.WriteLine($"Deleting Data Views");
+            string dataviewS = File.ReadAllText(DataViewPath);
             List<DataView> dataviews = JsonConvert.DeserializeObject<List<DataView>>(dataviewS);
             foreach (var dataview in dataviews)
             {
@@ -271,7 +271,7 @@ namespace BulkUploader
 
         public static void Cleanup()
         {
-            if (!string.IsNullOrEmpty(DataviewPath))
+            if (!string.IsNullOrEmpty(DataViewPath))
             {
                 try
                 {

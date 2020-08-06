@@ -29,7 +29,7 @@ Configure the sample using the file [appsettings.placeholder.json](BulkUploader\
 1. `NamespaceId` should be the name of the OCS [Namespace](https://cloud.osisoft.com/namespaces) to send the data to
 1. `ClientId` should be the ID of a [Client Credentials Client](https://cloud.osisoft.com/clients).
 1. `ClientSecret` should be the secret from the Client Credentials Client that was specified
-1. `Dataview` is the path to the dataview json file.
+1. `DataView` is the path to the dataview json file.
 1. `Type` is the path to the type json file.
 1. `Metadata` is the path and start to the file name of the stream metadata json file. A streamId is appended to this to find the json file. (note streams must be sent too)
 1. `Tags` is the path and start to the file name of the stream tags json file. A streamId is appended to this to find the json file. (note streams must be sent too)
