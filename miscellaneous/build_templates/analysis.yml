@@ -2,6 +2,7 @@ parameters:
   language: ''
   lib: false
   skipBinSkim: false
+  useRequirementsTxt: false
   npmBuild: false
 
 jobs:
@@ -68,7 +69,20 @@ jobs:
         displayName: 'Build (Python Library)'
         condition: and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true))
 
-      # - NodeJS
+      # - Jupyter
+      - script: |
+          echo Requirements
+          call pip install -r requirements.txt
+          echo TestRequirements
+          call pip install -r test-requirements.txt
+          echo ConvertToPython
+          jupyter nbconvert --to script *.ipynb
+          echo Complete
+        workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        displayName: 'Build (Jupyter): Install dependencies'
+        condition:
+          eq('${{ parameters.language }}', 'jupyter')
+          # - NodeJS
       - task: NodeTool@0
         inputs:
           versionSpec: '10.x'
@@ -124,6 +138,7 @@ jobs:
           # Call Polaris, set the configuration file path and run analyze with wait option
           & 'polaris.exe' -c polaris.yml analyze -w
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
+        condition: or(eq('${{ parameters.language }}', 'dotnet'), eq('${{ parameters.language }}', 'java'), eq('${{ parameters.language }}', 'python'), eq('${{ parameters.language }}', 'jupyter'), eq('${{ parameters.language }}', 'angular'), eq('${{ parameters.language }}', 'nodejs'))
         displayName: 'Polaris Analyze'
 
       # Synopsys BlackDuck
@@ -137,7 +152,7 @@ jobs:
             --detect.source.path=$(Build.SourcesDirectory)$(projPath)/
             --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
-        condition: and(succeeded(), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
+        condition: and(succeeded(), eq(${{ parameters.useRequirementsTxt }}, false), or(ne('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, true)))
         displayName: 'Synopsys Detect: BlackDuck'
 
       - task: synopsys-detect.synopsys-detect.synopsys-detect-task.SynopsysDetectTask@2
@@ -151,5 +166,5 @@ jobs:
             --detect.code.location.name="code_location_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.bom.aggregate.name="bom_$(analysisProject)_$(Build.SourceBranchName)"
             --detect.pip.requirements.path=$(Build.SourcesDirectory)$(projPath)/requirements.txt
-        condition: and(succeeded(), and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false)))
+        condition: and(succeeded(), or(eq(${{ parameters.useRequirementsTxt }}, true), and(eq('${{ parameters.language }}', 'python'), eq(${{ parameters.lib }}, false))))
         displayName: 'Synopsys Detect: BlackDuck (Python Requirements.txt)'
