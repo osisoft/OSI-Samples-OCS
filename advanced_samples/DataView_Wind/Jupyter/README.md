@@ -22,7 +22,7 @@ Can we predict the power output of our wind turbines based on weather forecast d
 
 ### Data Overview
 
-The data we are using is available in our BulkUpload SampleCollections [folder](https://github.com/osisoft/OSI-Samples-OCS/tree/master/advanced_samples/Bulk_Upload/SampleCollections/DataViewWind). The steps to upload this data are included in that folder. This sample also skips over the exercise of creating the data view, this is included in the data that you can upload. To see how to create a Data View programmatically, please look at our other sample [here](https://github.com/osisoft/OSI-Samples-OCS/tree/master/basic_samples/DataViews).
+The data we are using is available in our BulkUpload SampleCollections [folder](https://github.com/osisoft/OSI-Samples-OCS/tree/master/advanced_samples/BulkUpload/SampleCollections/DataViewWind). The steps to upload this data are included in that folder. This sample also skips over the exercise of creating the data view, this is included in the data that you can upload. To see how to create a Data View programmatically, please look at our other sample [here](https://github.com/osisoft/OSI-Samples-OCS/tree/master/basic_samples/DataViews).
 
 This sample data is similar to what you might have from a site where the data has unexpected values and not every turbine behaves exactly the same. The data is only for 1 day. Repeating this exercise but using more days of data would give you a better prediction.
 

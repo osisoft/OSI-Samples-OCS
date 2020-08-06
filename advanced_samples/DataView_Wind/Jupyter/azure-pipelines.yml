@@ -35,9 +35,9 @@ variables:
     value: SDSDataViewJupyter
 
   - name: bulkUploadprojPath
-    value: '/advanced_samples/Bulk_Upload/DotNet'
+    value: '/advanced_samples/BulkUpload/DotNet'
   - name: bulkUploadFiles
-    value: '/advanced_samples/Bulk_Upload/SampleCollections/DataViewWind'
+    value: '/advanced_samples/BulkUpload/SampleCollections/DataViewWind'
   - name: bulkUploadCredFile
     value: appsettings.json
   - name: bulkUploadCredFileLibrary

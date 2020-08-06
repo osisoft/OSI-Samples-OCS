@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BulkUploader\Bulk_Uploader.csproj" />
+    <ProjectReference Include="..\BulkUploader\BulkUploader.csproj" />
   </ItemGroup>
 
 </Project>

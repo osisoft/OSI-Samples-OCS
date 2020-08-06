@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.3 / 2020-08-06
+
+- Rename folder
+
 ## 1.0.2 / 2020-07-28
 
 - Add sample credentials file to gitignore and replace with placeholder
