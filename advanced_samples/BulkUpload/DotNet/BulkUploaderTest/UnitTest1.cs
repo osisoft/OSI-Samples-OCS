@@ -15,7 +15,6 @@ namespace BulkUploaderTest
         private static Exception _toThrow = null;
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         public void Test1()
         {
             try

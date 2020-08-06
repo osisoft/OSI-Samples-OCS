@@ -21,7 +21,6 @@ namespace OmfIngressClientLibraries
         public static string DeviceClientId { get; set; }
         public static string DeviceClientSecret { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         public static void Main()
         {
             Setup();

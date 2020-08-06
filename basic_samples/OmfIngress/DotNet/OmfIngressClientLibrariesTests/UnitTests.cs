@@ -13,7 +13,6 @@ namespace OmfIngressClientLibrariesTests
     public class UnitTests
     {
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Used only for retry logic when waiting for values to return from tests.")]
         public async Task OmfIngressClientLibrariesTest()
         {
             // Setting things up

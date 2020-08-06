@@ -1,6 +1,6 @@
 ﻿# Sequential Data Store NodeJS Sample
 
-**Version:** 1.0.11
+**Version:** 1.0.12
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_NodeJs?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=924&branchName=master)
 

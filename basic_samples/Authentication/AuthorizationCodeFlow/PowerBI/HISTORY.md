@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.8 / 2020-08-06
+
+- Updated dependencies
+
 ## 1.0.7 / 2020-08-04
 
 - Add documentation name for connector dialog

@@ -18,8 +18,6 @@ namespace SdsRestApiCore
 
         public static void Main() => MainAsync().GetAwaiter().GetResult();
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1303:Do not pass literals as localized parameters", Justification = "Prefer inline strings in sample code")]
         public static async Task<bool> MainAsync(bool test = false)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
@@ -839,7 +837,6 @@ namespace SdsRestApiCore
         /// </summary>
         /// <param name="methodToRun">The method to run.</param>
         /// <param name="value">The value to put into the method to run</param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "Sample needs to ensure cleanup, and will throw last error encountered.")]
         private static void RunInTryCatch(Func<string, Task> methodToRun, string value)
         {
             try

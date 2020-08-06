@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -32,7 +31,7 @@ namespace BulkUploader
 
         public static void Main(params string[] args)
         {
-            var delete = (args.Length > 0 && args[0].ToLower() == "delete");
+            var delete = args.Length > 0 && args[0].ToUpperInvariant() == "DELETE";
 
             if (delete)
                 Console.WriteLine("App is only deleting.");
@@ -106,6 +105,45 @@ namespace BulkUploader
             return true;
         }
 
+        public static void Cleanup()
+        {
+            if (!string.IsNullOrEmpty(DataViewPath))
+            {
+                try
+                {
+                    DeleteDataView();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(SdsStreamPath))
+            {
+                try
+                {
+                    DeleteStreams();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(SdsTypePath))
+            {
+                try
+                {
+                    DeleteTypes();
+                }
+                catch (Exception ex)
+                {
+                    LogException(ex);
+                }
+            }
+        }
+
         private static void LogException(Exception ex)
         {
             Console.WriteLine(ex);
@@ -135,7 +173,6 @@ namespace BulkUploader
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can send the other streams and not stop on a 'small' issue")]
         private static void SendStreams()
         {
             Console.WriteLine($"Sending streams from file: {SdsStreamPath}");
@@ -152,7 +189,7 @@ namespace BulkUploader
                         string path = SdsStreamMetaPath + stream.Id + ".json";
                         Console.WriteLine($"Sending stream metadata from file: {path}");
                         string meta = File.ReadAllText(path);
-                        if(!string.IsNullOrEmpty(meta))
+                        if (!string.IsNullOrEmpty(meta))
                             MetadataService.UpdateStreamMetadataAsync(stream.Id, JsonConvert.DeserializeObject<IDictionary<string, string>>(meta));
                     }
                     catch (Exception ex)
@@ -208,7 +245,6 @@ namespace BulkUploader
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         private static void DeleteDataView()
         {
             Console.WriteLine($"Deleting Data Views");
@@ -227,7 +263,6 @@ namespace BulkUploader
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         private static void DeleteTypes()
         {
             Console.WriteLine($"Deleting Types");
@@ -250,7 +285,6 @@ namespace BulkUploader
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "General catching so we can cleanup and then throwing it")]
         private static void DeleteStreams()
         {
             Console.WriteLine($"Deleting streams");
@@ -261,45 +295,6 @@ namespace BulkUploader
                 try
                 {
                     MetadataService.DeleteStreamAsync(stream.Id).Wait();
-                }
-                catch (Exception ex)
-                {
-                    LogException(ex);
-                }
-            }
-        }
-
-        public static void Cleanup()
-        {
-            if (!string.IsNullOrEmpty(DataViewPath))
-            {
-                try
-                {
-                    DeleteDataView();
-                }
-                catch (Exception ex)
-                {
-                    LogException(ex);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(SdsStreamPath))
-            {
-                try
-                {
-                    DeleteStreams();
-                }
-                catch (Exception ex)
-                {
-                    LogException(ex);
-                }
-            }
-
-            if (!string.IsNullOrEmpty(SdsTypePath))
-            {
-                try
-                {
-                    DeleteTypes();
                 }
                 catch (Exception ex)
                 {
