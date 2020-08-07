@@ -1,21 +1,12 @@
-import { QueryCtrl } from 'grafana/app/plugins/sdk';
+import { DataSourcePlugin } from '@grafana/data';
 
-import { SdsDatasource } from './datasource';
-import { SdsDataSourceType } from './types';
+import { ConfigEditor } from './ConfigEditor';
+import { QueryEditor } from './QueryEditor';
+import { SdsDataSource } from './DataSource';
+import { SdsQuery, SdsDataSourceOptions, SdsDataSourceSecureOptions } from './types';
 
-export class SdsConfigCtrl {
-  static templateUrl = 'partials/config.html';
-
-  /** @ngInject */
-  constructor($scope) {
-    if (!$scope.ctrl.current.jsonData.type) {
-      $scope.ctrl.current.jsonData.type = SdsDataSourceType.OCS;
-    }
-  }
-}
-
-export class SdsQueryCtrl extends QueryCtrl {
-  static templateUrl = 'partials/query.editor.html';
-}
-
-export { SdsDatasource as Datasource, SdsQueryCtrl as QueryCtrl, SdsConfigCtrl as ConfigCtrl };
+export const plugin = new DataSourcePlugin<SdsDataSource, SdsQuery, SdsDataSourceOptions, SdsDataSourceSecureOptions>(
+  SdsDataSource
+)
+  .setConfigEditor(ConfigEditor)
+  .setQueryEditor(QueryEditor);
