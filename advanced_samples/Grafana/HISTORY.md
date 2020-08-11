@@ -1,6 +1,6 @@
 # Version History
 
-## 1.1.0 / 2020-08-15
+## 1.1.0 / 2020-08-11
 
 - Converted HTML partials to React components
 - Added namespace to Data Source configuration
