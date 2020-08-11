@@ -143,7 +143,7 @@ describe('SdsDataSource', () => {
     it('should return empty if namespace is not defined', done => {
       const datasource = new SdsDataSource(ocsSettings, backendSrv as any);
       datasource.namespace = '';
-      const result = datasource.getStreams();
+      const result = datasource.getStreams('');
       result.then(r => {
         expect(r).toEqual([]);
         done();
@@ -154,7 +154,7 @@ describe('SdsDataSource', () => {
       const Id = 'Stream';
       spyOn(backendSrv, 'datasourceRequest').and.returnValue(Promise.resolve({ data: [{ Id }] }));
       const datasource = new SdsDataSource(ocsSettings, backendSrv as any);
-      const result = datasource.getStreams();
+      const result = datasource.getStreams('test');
       result.then(r => {
         expect(r).toEqual([{ value: Id, label: Id }]);
         done();

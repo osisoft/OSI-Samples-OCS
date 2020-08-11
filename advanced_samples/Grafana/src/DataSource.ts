@@ -103,9 +103,10 @@ export class SdsDataSource extends DataSourceApi<SdsQuery, SdsDataSourceOptions>
     return { data };
   }
 
-  async getStreams(): Promise<SelectableValue<string>[]> {
+  async getStreams(query: string): Promise<SelectableValue<string>[]> {
     if (this.namespace) {
-      const requests = this.backendSrv.datasourceRequest({ url: this.streamsUrl, method: 'GET' });
+      const url = query ? `${this.streamsUrl}?query=*${query}*` : this.streamsUrl;
+      const requests = this.backendSrv.datasourceRequest({ url, method: 'GET' });
       return await Promise.resolve(requests).then(responses =>
         Object.keys(responses.data).map(r => ({ value: responses.data[r].Id, label: responses.data[r].Id }))
       );

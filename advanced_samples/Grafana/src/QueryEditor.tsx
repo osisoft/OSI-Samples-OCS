@@ -19,11 +19,8 @@ export class QueryEditor extends PureComponent<Props> {
   async queryStreamsAsync(value: string) {
     const { query } = this.props;
     query.stream = value;
-    if (!this.streams.length) {
-      this.streams = await this.props.datasource.getStreams();
-    }
 
-    return value ? this.streams.filter(i => i.value?.toLowerCase().includes(value.toLowerCase())) : this.streams;
+    return await this.props.datasource.getStreams(value);
   }
 
   onSelectedStream = (value: SelectableValue<string>) => {
