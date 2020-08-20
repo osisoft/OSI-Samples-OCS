@@ -1,6 +1,6 @@
 # Grafana Sequential Data Store Sample
 
-**Version:** 1.0.2
+**Version:** 1.1.0
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Grafana_NodeJS?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=1680&branchName=master)
 
@@ -28,6 +28,14 @@ This sample demonstrates how to build a [Grafana](https://grafana.com/) plugin t
 1. Enter the relevant required information; if using OCS, the client secret will be encrypted in the Grafana server and HTTP requests to OCS will be made by a server-side proxy, as described in the [Grafana docs](https://grafana.com/docs/grafana/latest/developers/plugins/authentication/)
 1. Open a new or existing Grafana dashboard, and choose the Sequential Data Store Sample as the data source
 1. Enter your Namespace (if querying OCS) and Stream, and data will populate into the dashboard from the stream for the dashboard's time range
+
+## Using OCS OAuth login to Grafana
+
+A limitation of this sample is that the use of a Client Credentials Client means that anyone using the Data Source in Grafana receives the same access inside OSIsoft Cloud Services. Grafana supports generic OAuth login to the Grafana server, and can forward its token to the destination data source, including OCS. See [here](https://grafana.com/docs/grafana/latest/auth/generic-oauth/) for more information on this feature of Grafana. This feature could be used to ensure individual users must log in to receive the appropriate permissions in OCS.
+
+However, Grafana's implementation of the Authorization Code Flow does not use [Proof of Key Code Exchange](https://oauth.net/2/pkce/), or PKCE, which is an additional security layer required by OCS Authorization Code Clients. Grafana also does not support OCS Hybrid Clients as it does not support a `POST` back from the authentication server, nor does it support the `response_type` and `response_mode` headers required by that flow.
+
+If you are interested in using using OCS OAuth in your Grafana server, please check and comment on [this issue](https://github.com/grafana/grafana/issues/26350) in the Grafana GitHub repository.
 
 ## Running the Automated Tests
 
