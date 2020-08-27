@@ -33,7 +33,7 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 
 ## Building without Visual Studio
 
-Visual Studio builds Custom Connectors into a `.zip` file with a custom file extension, `.mez`. Since these files are in reality simple `.zip` files, it is possible to build or update the connector without using Visual Studio.
+As of Power BI Version 2.84.861.0 64-bit (August 2020), Visual Studio builds Custom Connectors into a `.zip` file with a custom file extension, `.mez`. Since these files are in reality simple `.zip` files, it is possible to build or update the connector without using Visual Studio.
 
 To build the connector:
 
