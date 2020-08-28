@@ -176,6 +176,13 @@ export class AppPage {
             .then((el) => {
               el.sendKeys(passphrase + protractor.Key.ENTER);
             });
+        })
+        .then(() => {
+          browser.driver
+            .findElement(by.xpath('//*[@id="idSIButton9"]'))
+            .then((el) => {
+              el.click();
+            });
         });
     });
   }

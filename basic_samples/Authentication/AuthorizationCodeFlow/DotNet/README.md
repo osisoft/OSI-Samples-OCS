@@ -1,6 +1,6 @@
 # Authorization Code Flow + PKCE DotNet Sample and Test
 
-**Version:** 1.2.4
+**Version:** 1.2.5
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=863&branchName=master)
 

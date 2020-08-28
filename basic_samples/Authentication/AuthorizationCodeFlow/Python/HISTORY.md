@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.4 / 2020-08-28
+
+- Fix automated test login flow due to added step
+
 ## 1.0.3 / 2020-07-29
 
 - Add sample credentials file to gitignore and replace with placeholder
