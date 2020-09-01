@@ -1,4 +1,4 @@
-﻿# SDS JavaScript Example using Python
+﻿# Sequential Data Store Python Sample
 
 **Version:** 1.0.16
 
