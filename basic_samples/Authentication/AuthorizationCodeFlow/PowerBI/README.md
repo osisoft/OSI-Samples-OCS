@@ -31,6 +31,26 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. Copy the `.mez` file from either `/bin/Debug` or `/bin/Release` (depending on settings) into the new `Custom Connectors` folder
 1. Start up Power BI Desktop, and the connector should be available
 
+## Building without Visual Studio
+
+As of Power BI Version 2.84.861.0 64-bit (August 2020), Visual Studio builds Custom Connectors into a `.zip` file with a custom file extension, `.mez`. Since these files are in reality simple `.zip` files, it is possible to build or update the connector without using Visual Studio.
+
+To build the connector:
+
+1. Copy and rename the file `OCSConnector.pq` to `OCSConnector.m`
+1. Select the files `client_id`, `OCSConnector.m`, `resources.resx`, `tenant_id`, `url`, and all the `.png` files in the `OCSConnector folder
+1. Zip these files, using the built in Windows tools or the zip tool of your choice, but be sure to use the `.zip` format
+1. Rename the `.zip` file extension to `.mez`
+1. Place this `.mez` folder in the same location described in [Setup](#Setup)
+
+To change the settings of the connector:
+
+1. Unzip the `.mez` into a folder
+1. Make the necessary changes in the output folder, for example to the `tenant_id` and `client_id` files
+1. Select all the files in that folder and zip those files using the `.zip` format
+1. Rename the `.zip` file extension to `.mez`
+1. Rename or move the old `.mez` file so that Power BI does not load it, and replace it with the updated `.mez` file
+
 ## Using the Connector
 
 1. From Power BI Desktop, open Home > Get Data > More
