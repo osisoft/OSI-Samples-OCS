@@ -62,9 +62,17 @@ jobs:
         displayName: Set Chrome Path
         condition: eq(variables['imageName'],'windows-latest')
 
-      - script: 
+      - script:
+          echo A
+          cd "C:\Program Files (x86)\Google\Chrome"
+          dir
+          echo B
+          cd "C:\Program Files\Google\Chrome"
+          dir
+          echo C
           cd "C:\Program Files (x86)\Google\Chrome\Application"
           dir
+          echo D
           cd "C:\Program Files\Google\Chrome\Application"
           dir
         displayName: Check folders
