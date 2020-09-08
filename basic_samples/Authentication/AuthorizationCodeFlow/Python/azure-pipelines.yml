@@ -45,6 +45,15 @@ jobs:
     pool:
       vmImage: $(imageName)
     steps:
+      # Issue in windows-latest template, see:
+      # https://developercommunity.visualstudio.com/content/problem/1170486/selenium-ui-test-can-no-longer-find-chrome-binary.html
+      - script: |
+          if not exist "C:\Program Files (x86)\Google" mkdir "C:\Program Files (x86)\Google"
+          if not exist "C:\Program Files (x86)\Google\Chrome" mkdir "C:\Program Files (x86)\Google\Chrome"
+          mklink /D "C:\Program Files (x86)\Google\Chrome\Application" "C:\Program Files\Google\Chrome\Application"
+        displayName: Set Chrome Path
+        condition: eq(variables['imageName'],'windows-latest')
+
       - template: '/miscellaneous/build_templates/config.yml'
         parameters:
           fileOriginal: $(CredFile)
