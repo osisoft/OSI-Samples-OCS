@@ -1,7 +1,7 @@
 {
   "name": "sds-grafana-sample",
   "description": "A sample that queries SDS Stream data from Grafana.",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "private": true,
   "author": "OSIsoft, LLC",
   "license": "Apache-2.0",

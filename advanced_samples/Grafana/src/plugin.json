@@ -22,20 +22,18 @@
         "name": "Apache-2 License",
         "url": "https://github.com/osisoft/OSI-Samples-OCS/blob/master/LICENSE"
       }
-    ],
-    "version": "1.0.0",
-    "updated": "2020-05-06"
+    ]
   },
   "routes": [
     {
       "path": "ocs",
-      "url": "{{.JsonData.url}}",
+      "url": "{{.JsonData.ocs_url}}",
       "tokenAuth": {
-        "url": "{{.JsonData.url}}/identity/connect/token",
+        "url": "{{.JsonData.ocs_url}}/identity/connect/token",
         "params": {
           "grant_type": "client_credentials",
-          "client_id": "{{.JsonData.client}}",
-          "client_secret": "{{.SecureJsonData.secret}}"
+          "client_id": "{{.JsonData.ocs_client}}",
+          "client_secret": "{{.SecureJsonData.ocs_secret}}"
         }
       }
     }

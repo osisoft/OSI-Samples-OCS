@@ -1,5 +1,11 @@
 # Version History
 
+## 1.1.0 / 2020-08-11
+
+- Converted HTML partials to React components
+- Added namespace to Data Source configuration
+- Added selection field for stream ID to query editor
+
 ## 1.0.2 / 2020-08-06
 
 - Updated dependencies

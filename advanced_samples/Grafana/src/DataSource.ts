@@ -5,6 +5,7 @@ import {
   DataSourceInstanceSettings,
   MutableDataFrame,
   FieldType,
+  SelectableValue,
 } from '@grafana/data';
 
 import { SdsQuery, SdsDataSourceOptions, SdsDataSourceType } from 'types';
@@ -18,15 +19,23 @@ export interface BackendSrv {
   datasourceRequest(options: BackendSrvRequest): Promise<any>;
 }
 
-export class SdsDatasource extends DataSourceApi<SdsQuery, SdsDataSourceOptions> {
+export class SdsDataSource extends DataSourceApi<SdsQuery, SdsDataSourceOptions> {
   name: string;
   proxyUrl: string;
 
   type: SdsDataSourceType;
-  port: string;
-  url: string;
-  version: string;
-  tenant: string;
+  eds_port: string;
+  ocs_url: string;
+  ocs_version: string;
+  ocs_tenant: string;
+  oauthPassThru: boolean;
+  namespace: string;
+
+  get streamsUrl() {
+    return this.type === SdsDataSourceType.OCS
+      ? `${this.proxyUrl}/ocs/api/${this.ocs_version}/tenants/${this.ocs_tenant}/namespaces/${this.namespace}/streams`
+      : `http://localhost:${this.eds_port}/api/v1/tenants/default/namespaces/${this.namespace}/streams`;
+  }
 
   /** @ngInject */
   constructor(instanceSettings: DataSourceInstanceSettings<SdsDataSourceOptions>, private backendSrv: BackendSrv) {
@@ -36,29 +45,34 @@ export class SdsDatasource extends DataSourceApi<SdsQuery, SdsDataSourceOptions>
     this.backendSrv = backendSrv;
 
     this.type = instanceSettings.jsonData?.type || SdsDataSourceType.OCS;
-    this.port = instanceSettings.jsonData?.port || '5590';
-    this.url = instanceSettings.jsonData?.url || '';
-    this.version = instanceSettings.jsonData?.version || 'v1';
-    this.tenant = instanceSettings.jsonData?.tenant || '';
+    this.eds_port = instanceSettings.jsonData?.eds_port || '5590';
+    this.ocs_url = instanceSettings.jsonData?.ocs_url || '';
+    this.ocs_version = instanceSettings.jsonData?.ocs_version || 'v1';
+    this.ocs_tenant = instanceSettings.jsonData?.ocs_tenant || '';
+    this.oauthPassThru = instanceSettings.jsonData?.oauthPassThru || false;
+    this.namespace = instanceSettings.jsonData.namespace || '';
   }
 
   async query(options: DataQueryRequest<SdsQuery>): Promise<DataQueryResponse> {
     const from = options.range?.from.utc().format();
     const to = options.range?.to.utc().format();
     const requests = options.targets.map(target => {
-      const namespaceUrl =
-        this.type === SdsDataSourceType.OCS
-          ? `${this.proxyUrl}/ocs/api/${this.version}/tenants/${this.tenant}/namespaces/${target.namespace}`
-          : `http://localhost:${this.port}/api/v1/tenants/default/namespaces/default`;
+      if (!target.stream) {
+        return new Promise(resolve => resolve(null));
+      }
       return this.backendSrv.datasourceRequest({
-        url: `${namespaceUrl}/streams/${target.stream}/data?startIndex=${from}&endIndex=${to}`,
+        url: `${this.streamsUrl}/${target.stream}/data?startIndex=${from}&endIndex=${to}`,
         method: 'GET',
       });
     });
 
     const data = await Promise.all(requests).then(responses => {
       let i = 0;
-      return responses.map(r => {
+      return responses.map((r: any) => {
+        if (!r) {
+          return new MutableDataFrame();
+        }
+
         const target = options.targets[i];
         i++;
         return new MutableDataFrame({
@@ -89,14 +103,22 @@ export class SdsDatasource extends DataSourceApi<SdsQuery, SdsDataSourceOptions>
     return { data };
   }
 
+  async getStreams(query: string): Promise<SelectableValue<string>[]> {
+    if (this.namespace) {
+      const url = query ? `${this.streamsUrl}?query=*${query}*` : this.streamsUrl;
+      const requests = this.backendSrv.datasourceRequest({ url, method: 'GET' });
+      return await Promise.resolve(requests).then(responses =>
+        Object.keys(responses.data).map(r => ({ value: responses.data[r].Id, label: responses.data[r].Id }))
+      );
+    } else {
+      return await new Promise(resolve => resolve([]));
+    }
+  }
+
   async testDatasource() {
-    const url =
-      this.type === SdsDataSourceType.OCS
-        ? `${this.proxyUrl}/ocs/api/${this.version}/tenants/${this.tenant}/namespaces`
-        : `http://localhost:${this.port}/api/v1/tenants/default/namespaces/default/streams`;
     return this.backendSrv
       .datasourceRequest({
-        url,
+        url: this.streamsUrl,
         method: 'GET',
       })
       .then(r => {
@@ -112,27 +134,5 @@ export class SdsDatasource extends DataSourceApi<SdsQuery, SdsDataSourceOptions>
           };
         }
       });
-  }
-
-  getInterval(ms: number | undefined) {
-    if (!ms) {
-      // Default to every minute
-      ms = 60000;
-    }
-
-    const date = new Date(ms);
-    const hours = date
-      .getUTCHours()
-      .toString()
-      .padStart(2, '0');
-    const minutes = date
-      .getUTCMinutes()
-      .toString()
-      .padStart(2, '0');
-    const seconds = date
-      .getSeconds()
-      .toString()
-      .padStart(2, '0');
-    return `${hours}:${minutes}:${seconds}`;
   }
 }
