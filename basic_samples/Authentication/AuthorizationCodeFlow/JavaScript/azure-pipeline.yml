@@ -47,7 +47,7 @@ jobs:
     steps:
       # Issue in windows-latest template, see:
       # https://developercommunity.visualstudio.com/content/problem/1170486/selenium-ui-test-can-no-longer-find-chrome-binary.html
-      - script:
+      - script: |
           if not exist "C:\Program Files (x86)\Google" mkdir "C:\Program Files (x86)\Google"
           if not exist "C:\Program Files (x86)\Google\Chrome" mkdir "C:\Program Files (x86)\Google\Chrome"
           mklink /D "C:\Program Files (x86)\Google\Chrome\Application" "C:\Program Files\Google\Chrome\Application"
