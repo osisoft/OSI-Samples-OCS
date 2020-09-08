@@ -109,7 +109,7 @@ namespace OCSConnectorTest
             var next = oauthDialog.TryFindElementByAccessibilityId("idSIButton9");
             next.Click();
             var pwd = oauthDialog.TryFindElementByAccessibilityId("i0118");
-            if (pwd == null)
+            if (pwd != null)
             {
                 // This step can be skipped if account is saved
                 pwd.SendKeys(Settings.Password);
