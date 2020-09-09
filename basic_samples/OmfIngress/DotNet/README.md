@@ -20,7 +20,7 @@ The libraries offer a framework of classes that make client development easier.
 
 ## Configure constants for connecting and authentication
 
-The sample is configured using the file [appsettings.placeholder.json](OmfIngressClientLibraries\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+The sample is configured using the file [appsettings.placeholder.json](OmfIngressClientLibraries/appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 The OMF Ingress Service is secured by obtaining tokens from the Identity Server. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the server. The sample includes an `appsettings.json` configuration file to hold configuration strings, including the authentication strings. You must replace the placeholders with the authentication-related values you received from OSIsoft. The application requires two Client Credential Clients, one to manage OMF Ingress connections and one to send data from a mock device. For information on how to obtain these client IDs and secrets, see the [Client Credential Client Documentation](https://ocs-docs.osisoft.com/Documentation/Identity/Identity_ClientCredentialClient.html).
 

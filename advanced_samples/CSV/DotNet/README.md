@@ -21,7 +21,7 @@ In this example we assume that you have the dotnet core CLI.
 ### Prerequisites
 
 - Register an Authorization Code client in OCS and ensure that the registered client in OCS contains `https://127.0.0.1:54567/signin-oidc` in the list of RedirectUris. For details on this please see this [video](https://www.youtube.com/watch?v=97QJjUKa6Pk)
-- Configure the sample using the file [appsettings.placeholder.json](CSVtoOCS\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+- Configure the sample using the file [appsettings.placeholder.json](CSVtoOCS/appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 - Replace the placeholders in the `appsettings.json` file with your Tenant Id, Client Id, and Client Secret obtained from registration.
 
 ### Configure constants for connecting and authentication

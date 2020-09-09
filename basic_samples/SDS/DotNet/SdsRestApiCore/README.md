@@ -32,7 +32,7 @@ dotnet test
 
 ## Configure constants for connecting and authentication
 
-The sample is configured using the file [appsettings.placeholder.json](SdsClientLibraries\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+The sample is configured using the file [appsettings.placeholder.json](SdsRestApiCore/appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
 The SDS Service is secured by obtaining tokens from Azure Active Directory. Such clients provide a client application identifier and an associated secret (or key) that are authenticated against the directory. You must replace the placeholders in your `appsettings.json` file with the authentication-related values you received from OSIsoft.
 
