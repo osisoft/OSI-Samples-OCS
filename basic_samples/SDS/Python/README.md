@@ -117,7 +117,7 @@ Each SdsClient is associated with the tenant passed as an argument to the constr
 
 ## Create an SdsType
 
-To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams. SdsTypes can define simple atomic types, such as integers, floats, or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
+To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams. SdsTypes can define simple atomic types, such as integers, floats, or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
 
 In the sample code, the SdsType representing WaveData is defined in the `getWaveDataType` method of program.py. WaveData contains properties of integer and double atomic types. The function begins by defining a base SdsType for each atomic type.
 
@@ -237,7 +237,7 @@ for i in range(2, 20, 2):
 sdsClient.Streams.insertValues(namespaceId, stream.Id, waves)
 ```
 
-The SDS REST API provides many more types of data insertion calls beyond those demonstrated in this application. Go to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information on available REST API calls.
+The SDS REST API provides many more types of data insertion calls beyond those demonstrated in this application. Go to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information on available REST API calls.
 
 ## Retrieve Values from a Stream
 
@@ -288,7 +288,7 @@ def getRangeValues(self, namespace_id, stream_id, value_class, start, skip, coun
 - **start** is the increment by which the retrieval will happen.
 - **count** is how many values you wish to have returned.
 - **reversed** is a boolean that when `true` causes the retrieval to work backwards from the starting point.
-- **boundary** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- **boundary** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown :
 
@@ -298,7 +298,7 @@ waves = sdsClient.Streams.getRangeValues(namespaceId, stream.Id, WaveData, "1", 
 
 ### Get Sampled Values
 
-For retrieving a representative sample of data between a start and end index. Sampling is driven by a specified property or properties of the stream's Sds Type. Property types that cannot be interpolated do not support sampling requests. Strings are an example of a property that cannot be interpolated. For more information see [Interpolation.](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/SDS_Types.html#interpolation) Here is how to use it:
+For retrieving a representative sample of data between a start and end index. Sampling is driven by a specified property or properties of the stream's Sds Type. Property types that cannot be interpolated do not support sampling requests. Strings are an example of a property that cannot be interpolated. For more information see [Interpolation.](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/SDS_Types.html#interpolation) Here is how to use it:
 
 ```python
 def getSampledValues(namespace_id, stream_id, value_class, start, end, sample_by, intervals, filter="", stream_view_id=""):
@@ -308,7 +308,7 @@ def getSampledValues(namespace_id, stream_id, value_class, start, end, sample_by
 - _sample_by_ defines the property or properties to use when sampling.
 - _filter_ is an optional expression to filter by.
 
-Note: This method, implemented for example purposes in `SdsClient`, does not include support for SdsBoundaryTypes. For more information about SdsBoundaryTypes and how to implement them with sampling, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
+Note: This method, implemented for example purposes in `SdsClient`, does not include support for SdsBoundaryTypes. For more information about SdsBoundaryTypes and how to implement them with sampling, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
 
 The method is called as shown :
 
@@ -369,7 +369,7 @@ stream.PropertyOverrides = props
 sdsClient.Streams.createOrUpdateStream(namespaceId, stream)
 ```
 
-The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
+The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
 
 ## SdsStreamViews
 
@@ -441,7 +441,7 @@ def getStream(self, namespaceId, stream_id):
 def getStreams(self, namespaceId, query, skip, count):
 ```
 
-For a complete list of HTTP request URLs refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
+For a complete list of HTTP request URLs refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
 
 ## Cleanup: Deleting Types, Stream Views and Streams
 

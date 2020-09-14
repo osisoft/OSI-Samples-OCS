@@ -10,7 +10,7 @@ Developed against DotNet 2.2.105.
 
 The sample does not makes use of the OSIsoft Cloud Services Client Libraries. When working in .NET, it is generally recommended that you use the OCS Client Libraries metapackage, OSIsoft.OCSClients. The metapackage is a NuGet package available from [https://api.nuget.org/v3/index.json](https://api.nuget.org/v3/index.json). The libraries offer a framework of classes that make client development easier.
 
-[SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
+[SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
 
 ## Getting Started
 
@@ -68,7 +68,7 @@ response = await httpClient.PostAsync($"api/{apiVersion}/Tenants/{tenantId}/Name
 
 To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams.
 
-SdsTypes can define simple atomic types, such as integers, floats or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
+SdsTypes can define simple atomic types, such as integers, floats or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
 
 To create an SdsType with a rest call:
 
@@ -216,7 +216,7 @@ response = await httpClient.PutAsync($"api/{apiVersion}/Tenants/{tenantId}/Names
     new StringContent(JsonConvert.SerializeObject(waveStream)));
 ```
 
-The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
+The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
 
 ## SdsStreamViews
 

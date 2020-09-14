@@ -6,7 +6,7 @@
 
 The sample code described in this topic demonstrates how to use Java to store and retrieve data from SDS using only the SDS REST API. By examining the code, you will see how to establish a connection to SDS, obtain an authorization token, obtain an SdsNamespace, create an SdsType and SdsStream, and how to create, read, update, and delete values in SDS.
 
-[SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
+[SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
 
 This project is built using Apache Maven. To run the code in this example, you must first download and install the Apache Maven software. See [Apache Maven Project](https://maven.apache.org/download.cgi) for more information. All of the necessary dependencies are specified within the pom.xml file.
 
@@ -125,7 +125,7 @@ The token is cached, but as tokens have a fixed lifetime, typically one hour. It
 
 ## Create an SdsType
 
-To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams. SdsTypes can define simple atomic types, such as integers, floats, or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html>).
+To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams. SdsTypes can define simple atomic types, such as integers, floats, or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html>).
 
 In the sample code, the SdsType representing WaveData is defined in the `getWaveDataType` method of Program.java. WaveData contains properties of integer and double atomic types. The function begins by defining a base SdsType for each atomic type.
 
@@ -289,7 +289,7 @@ sampleStream.setPropertyOverrides(propertyOverrides);
 ocsClient.Streams.updateStream(tenantId, namespaceId, sampleStreamId, sampleStream);
 ```
 
-The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
+The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
 
 ## SdsStreamViews
 
@@ -350,7 +350,7 @@ Type streamListType = new TypeToken<ArrayList<SdsStream>>(){}.getType();
 ArrayList<SdsStream> streams = ocsClient.mGson.fromJson(returnedStreams, streamListType);
 ```
 
-For a complete list of HTTP request URLs refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
+For a complete list of HTTP request URLs refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
 
 ## Cleanup: Deleting Types, Stream Views and Streams
 
