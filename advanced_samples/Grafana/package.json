@@ -17,8 +17,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@grafana/data": "^7.1.3",
-    "@grafana/toolkit": "^7.1.3",
+    "@grafana/data": "^7.1.5",
+    "@grafana/toolkit": "^7.1.5",
     "@types/grafana": "github:CorpGlory/types-grafana",
     "typescript": "^3.9.7"
   }
