@@ -100,7 +100,7 @@ Since this sample runs in the browser, most browsers will automatically add the 
 
 ## Create an SdsType
 
-To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams. SdsTypes can define simple atomic types, such as integers, floats, or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
+To use SDS, you define SdsTypes that describe the kinds of data you want to store in SdsStreams. SdsTypes are the model that define SdsStreams. SdsTypes can define simple atomic types, such as integers, floats, or strings, or they can define complex types by grouping other SdsTypes. For more information about SdsTypes, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html).
 
 In the sample code, the SdsType representing WaveData is defined in the buildWaveDataType method of datasrc.component.ts. WaveData contains properties of integer and double atomic types. The construction begins by defining a base SdsType for each atomic type.
 
@@ -224,7 +224,7 @@ this.sdsService.insertValues(streamId, list);
 ```
 
 The SDS REST API provides many more types of data insertion calls beyond
-those demonstrated in this application. Refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for
+those demonstrated in this application. Refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for
 more information on available REST API calls.
 
 ## Retrieve Values from a Stream
@@ -262,7 +262,7 @@ getRangeValues(streamId: string, start, count, boundary: SdsBoundaryType, stream
 
 - **start** is the increment by which the retrieval will happen.
 - **count** is how many values you wish to have returned.
-- **boundary** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
+- **boundary** is a `SdsBoundaryType` value that determines the behavior if the starting index cannot be found. Refer the to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SdsBoundaryTypes.
 
 The `getRangeValues` method is called as shown :
 
@@ -301,14 +301,14 @@ this.sdsService.getRangeValuesHeaders(
 ### Get Sampled Values
 
 Sampling allows retrieval of a representative sample of data between a start and end index. Sampling is driven by a specified property or properties of the stream's Sds Type. Property types that cannot be interpolated do not support sampling requests. Strings are an example of a property that
-cannot be interpolated. For more information see [Interpolation.](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/SDS_Types.html#interpolation) Here is the request:
+cannot be interpolated. For more information see [Interpolation.](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/SDS_Types.html#interpolation) Here is the request:
 
 ```js
 getSampledValues(streamId: string, start, end, intervals, sampleBy, filter: string = '', streamViewId=''): Observable<any>
 ```
 
 - Parameters are the SdsStream Id, the starting and ending index values for the desired window, the number of intervals to select from, the property or properties to use when sampling, an optional filter by expression, and an optional streamViewId.
-- Note: This method, implemented for example purposes in `SdsClient`, does not include support for SdsBoundaryTypes. For more information about SdsBoundaryTypes and how to implement them with sampling, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
+- Note: This method, implemented for example purposes in `SdsClient`, does not include support for SdsBoundaryTypes. For more information about SdsBoundaryTypes and how to implement them with sampling, refer to the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html)
 
 Here is how it is called:
 
@@ -381,7 +381,7 @@ this.stream.PropertyOverrides = [propertyOverride];
 this.sdsService.updateStream(this.stream);
 ```
 
-The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
+The process consists of two steps. First, the Property Override must be created, then the stream must be updated. Note that the sample retrieves three data points before and after updating the stream to show that it has changed. See the [SDS documentation](https://ocs-docs.osisoft.com/Content_Portal/Documentation/SequentialDataStore/Data_Store_and_SDS.html) for more information about SDS Property Overrides.
 
 ## SdsStreamViews
 
