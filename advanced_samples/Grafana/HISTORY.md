@@ -1,5 +1,9 @@
 # Version History
 
+## 1.1.1 / 2020-09-14
+
+- Updated dependencies
+
 ## 1.1.0 / 2020-08-11
 
 - Converted HTML partials to React components
