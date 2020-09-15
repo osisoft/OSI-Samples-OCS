@@ -28,7 +28,7 @@ namespace OCSConnectorTest
             // Start Power BI
             var splashOptions = new AppiumOptions();
             splashOptions.AddAdditionalCapability("app", @"C:\Program Files\Microsoft Power BI Desktop\bin\PBIDesktop.exe");
-            using var splashSession = new WindowsDriver<WindowsElement>(appiumUri, splashOptions);
+            using var splashSession = new WindowsDriver<WindowsElement>(appiumUri, splashOptions, TimeSpan.FromMinutes(1));
 
             // Find main Power BI Window
             var desktopOptions = new AppiumOptions();
