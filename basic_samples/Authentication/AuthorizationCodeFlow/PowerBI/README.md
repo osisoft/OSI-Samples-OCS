@@ -2,7 +2,7 @@
 
 **Version:** 1.0.9
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_PowerBI?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=996&branchName=master)
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_PowerBI?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=996&branchName=master)
 
 The OCS Connector for Power BI Desktop is used to get data from the OCS API into Power BI Desktop. The connector uses the OAuth Authorization Code with PKCE flow to connect to the API and get an access token.
 
@@ -23,7 +23,7 @@ The OCS Connector for Power BI Desktop is used to get data from the OCS API into
 1. Navigate to Security, and under Data Extensions select the option "(Not Recommended) Allow any extension to load without validation or warning"
 1. Click OK, acknowledge any warnings, then close Power BI Desktop
 1. Once prerequisites are installed, open `OCSConnector.sln` in Visual Studio
-1. Rename the [url.placeholder](OCSConnector\url.placeholder), [tenant_id.placeholder](OCSConnector\tenant_id.placeholder), and [client_id.placeholder](OCSConnector\client_id.placeholder) to `url`, `tenant_id`, and `client_id`. This repository's `.gitignore` rules should prevent these files from being checked in to any fork or branch, to ensure this information is not compromised.
+1. Rename the [url.placeholder](OCSConnector/url.placeholder), [tenant_id.placeholder](OCSConnector/tenant_id.placeholder), and [client_id.placeholder](OCSConnector/client_id.placeholder) to `url`, `tenant_id`, and `client_id`. This repository's `.gitignore` rules should prevent these files from being checked in to any fork or branch, to ensure this information is not compromised.
 1. Update the files `url`, `tenant_id`, and `client_id` with your respective values
    - Note: URL may not need to be modified from the default of `https://dat-b.osisoft.com/`
 1. Build the project

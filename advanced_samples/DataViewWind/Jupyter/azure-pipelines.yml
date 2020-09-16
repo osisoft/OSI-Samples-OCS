@@ -33,7 +33,6 @@ variables:
     value: product-readiness.sds_python.ini
   - name: analysisProject
     value: SDSDataViewJupyter
-
   - name: bulkUploadprojPath
     value: '/advanced_samples/BulkUpload/DotNet'
   - name: bulkUploadFiles

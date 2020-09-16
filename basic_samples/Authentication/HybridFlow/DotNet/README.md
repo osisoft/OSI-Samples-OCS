@@ -2,7 +2,7 @@
 
 **Version:** 1.1.6
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_Hybrid_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=847&branchName=master)
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_Hybrid_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=847&branchName=master)
 
 This client uses the OIDC Hybrid Flow to obtain an access token. See the root folder [README](../../../README.md) for more information about this flow.
 
@@ -12,7 +12,7 @@ This client uses the OIDC Hybrid Flow to obtain an access token. See the root fo
 - Web Browser with Javascript enabled
   - You will need Google Chrome if you want to run the automated test
 
-1. The sample is configured using the file [appsettings.placeholder.json](HybridFlow\appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+1. The sample is configured using the file [appsettings.placeholder.json](HybridFlow/appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 1. Replace the placeholders in the `appsettings.json` file with your Tenant Id, Client Id and Client Secret
 1. Ensure that this client was created to allow Refresh Tokens
    - If this client does not allow refresh tokens, no refresh token will be issued upon authentication

@@ -2,7 +2,7 @@
 
 **Version:** 1.2.9
 
-[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Angular?branchName=master)](https://dev.azure.com/osieng/engineering/_build?definitionId=921&branchName=master)
+[![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Angular?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=921&branchName=master)
 
 **WARNING:** The web server used in this sample is intended for use in testing or debugging sample applications locally. It has not been reviewed for security issues.
 
@@ -28,7 +28,7 @@ This example was developed against Node 10.14.1
 
 The SDS Service is secured by obtaining tokens from our OAuth2 identity provider to authenticate clients against the SDS server. Contact OSIsoft support to obtain a tenant for use with SDS.
 
-The sample code includes several placeholder strings that must be modified with values you received from OSIsoft. The sample is configured using two files, [oidc.config.placeholder.json](src\app\config\oidc.config.placeholder.json) and [sdsconfig.placeholder.json](src\app\config\sdsconfig.placeholder.json). Before editing, rename these files to `oidc.config.json` and `sdsconfig.placeholder.json`. This repository's `.gitignore` rules should prevent these files from ever being checked in to any fork or branch, to ensure sensitive information is not compromised.
+The sample code includes several placeholder strings that must be modified with values you received from OSIsoft. The sample is configured using two files, [oidc.config.placeholder.json](src/app/config/oidc.config.placeholder.json) and [sdsconfig.placeholder.json](src/app/config/sdsconfig.placeholder.json). Before editing, rename these files to `oidc.config.json` and `sdsconfig.placeholder.json`. This repository's `.gitignore` rules should prevent these files from ever being checked in to any fork or branch, to ensure sensitive information is not compromised.
 
 Register an Authorization Code client in OCS, or modify an existing client, and ensure that the registered client in OCS contains `http://localhost:4200/auth-callback.html` in the list of allowed Redirect URLs, and `https://localhost:4200/` in the list of allowed Logout URLs.
 
@@ -57,9 +57,9 @@ Also edit the `tenantId` and `namespaceId` in `src/app/config/sdsconfig.json`.
 
 The application relies on the OAuth2 Authorization Code + PKCE grant flow. Upon navigating to the webpage, users will be prompted to login to Azure Active Directory. In addition to these credentials, the application must be configured to allow for token retrieval on the user's behalf. Once this is correctly set up, the application will retrieve a bearer token and pass this token along with every request to the SDS Service. If the this token is not present, the SDS Service will return 401 Unauthorized for every request. Users are encouraged to use their browser's development tools to troubleshoot any issues with authentication.
 
-The sample test is configured using the file [cred.placeholder.json](e2e\src\cred.placeholder.json). Before editing, rename this file to `cred.json`. This repository's `.gitignore` rules should prevent this file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
+The sample test is configured using the file [cred.placeholder.json](e2e/src/cred.placeholder.json). Before editing, rename this file to `cred.json`. This repository's `.gitignore` rules should prevent this file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
 
-To run the test, update `e2e\src\cred.json` with appropriate values.
+To run the test, update `e2e/src/cred.json` with appropriate values.
 
 Note: this script may run into problems if you have never logged in from the device before to the account you are using.
 
