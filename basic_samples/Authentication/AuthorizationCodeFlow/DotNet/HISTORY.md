@@ -1,5 +1,9 @@
 # Version History
 
+## 1.2.7 / 2020-09-21
+
+- Fix automated test login flow due to removed step
+
 ## 1.2.6 / 2020-09-14
 
 - Updated dependencies
