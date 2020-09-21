@@ -1,6 +1,6 @@
 # Using OCS Data Views in Java
 
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=884&branchName=master)
 
