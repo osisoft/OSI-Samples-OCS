@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.10 / 2020-09-21
+
+- Updated dependencies
+
 ## 1.0.9 / 2020-09-08
 
 - Fix issue in test due to saved credentials
