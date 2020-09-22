@@ -1,6 +1,6 @@
 # Authorization Code Flow + PKCE Sample and Test for Power BI Desktop
 
-**Version:** 1.0.9
+**Version:** 1.0.10
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_PKCE_PowerBI?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=996&branchName=master)
 
