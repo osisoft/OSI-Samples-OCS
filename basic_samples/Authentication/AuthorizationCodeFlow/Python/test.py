@@ -58,12 +58,6 @@ def selenium_script(auth_url):
     print('Selenium 4: Enter Password')
     browser.find_element_by_xpath(
         '//*[@id="i0118"]').send_keys(password)
-    browser.find_element_by_xpath('//*[@id="idSIButton9"]').click()
-    time.sleep(2)
-
-    # Click Next to continue past prompt
-    print()
-    print('Selenium 5: Continue past prompt')
     elem = browser.find_element_by_xpath('//*[@id="idSIButton9"]')
     try:
         browser.set_page_load_timeout(2)

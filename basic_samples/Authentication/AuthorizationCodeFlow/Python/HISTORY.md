@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.5 / 2020-09-21
+
+- Fix automated test login flow due to removed step
+
 ## 1.0.4 / 2020-08-28
 
 - Fix automated test login flow due to added step
