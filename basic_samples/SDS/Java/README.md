@@ -1,6 +1,6 @@
 # Sequential Data Store Java Sample
 
-**Version:** 1.0.12
+**Version:** 1.0.13
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=920&branchName=master)
 
