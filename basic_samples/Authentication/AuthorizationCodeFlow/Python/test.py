@@ -60,8 +60,12 @@ def selenium_script(auth_url):
         '//*[@id="i0118"]').send_keys(password)
     elem = browser.find_element_by_xpath('//*[@id="idSIButton9"]')
     try:
-        browser.set_page_load_timeout(2)
+        browser.set_page_load_timeout(5)
         elem.click()
+
+        # Login may or may not prompt to save credentials, try this inside try/catch
+        time.sleep(2)
+        browser.find_element_by_xpath('//*[@id="idSIButton9"]').click()
     except Exception:
         print('Ignore time out, start the server...')
 
