@@ -73,6 +73,18 @@ describe('Sample App', () => {
         }, 500);
       });
 
+    try {
+      // Login may or may not prompt to save credentials, use try/catch.
+      await driver
+        .wait(until.elementLocated(By.id('idSIButton9')), wait)
+        .then(async function (e) {
+          await driver.wait(until.elementIsEnabled(e), wait);
+          setTimeout(async function () {
+            await driver.findElement(By.id('idSIButton9')).click();
+          }, 500);
+        });
+    } catch {}
+
     // Click tenant button, and verify results
     await driver
       .wait(until.elementLocated(By.id('tenant')), wait)
