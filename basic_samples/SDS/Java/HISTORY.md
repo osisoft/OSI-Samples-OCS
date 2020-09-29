@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.13 / 2020-09-22
+
+- Updated dependencies
+
 ## 1.0.12 / 2020-07-29
 
 - Add sample credentials file to gitignore and replace with placeholder
