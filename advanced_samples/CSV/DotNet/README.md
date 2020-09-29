@@ -1,6 +1,6 @@
 # CSV to OCS sample
 
-**Version:** 1.0.8
+**Version:** 1.0.9
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/CSVtoOCS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1393&branchName=master)
 
