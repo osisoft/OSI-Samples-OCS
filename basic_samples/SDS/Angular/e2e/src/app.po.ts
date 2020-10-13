@@ -175,6 +175,19 @@ export class AppPage {
             .findElement(by.xpath('//*[@id="i0118"]'))
             .then((el) => {
               el.sendKeys(passphrase + protractor.Key.ENTER);
+            })
+            .then(() => {
+              browser.driver.sleep(4000);
+            })
+            .then(() => {
+              // Login may or may not prompt to save credentials, try this inside try/catch
+              try {
+                browser.driver
+                  .findElement(by.xpath('//*[@id="idSIButton9"]'))
+                  .then((el) => {
+                    el.click();
+                  });
+              } catch {}
             });
         });
     });
