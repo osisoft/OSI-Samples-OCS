@@ -1,6 +1,6 @@
 # Sequential Data Store .NET REST API Sample
 
-**Version:** 1.1.5
+**Version:** 1.1.6
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_DotNet_REST?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=888&branchName=master)
 
