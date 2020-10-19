@@ -47,6 +47,8 @@ describe('SDS Angular Sample', () => {
     await page.createTagsAndMetaData();
     await page.getTags();
     await page.getMetadata();
+    await page.patchMetaData();
+    await page.getMetadata2();
     await page.deleteVal();
     await page.secondaryCreate();
     await page.secondaryUpdate();
