@@ -190,6 +190,17 @@ export class SdsRestService {
     );
   }
 
+  patchMetadata(streamId: string, metadata: object): Observable<any> {
+    const url =
+      this.sdsUrl +
+      `/api/${this.apiVersion}/Tenants/${this.tenantId}/Namespaces/${this.namespaceId}/Streams/${streamId}/Metadata`;
+    return this.authHttp.patch(
+      url,
+      JSON.stringify(metadata).toString(),
+      this.options
+    );
+  }
+
   getTags(streamId: string): Observable<any> {
     const url =
       this.sdsUrl +

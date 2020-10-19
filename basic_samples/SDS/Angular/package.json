@@ -1,7 +1,7 @@
 {
   "name": "sds-angular",
   "description": "A sample that uses Sequential Data Store in an Angular-based environment.",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "private": true,
   "author": "OSIsoft, LLC",
   "license": "Apache-2.0",

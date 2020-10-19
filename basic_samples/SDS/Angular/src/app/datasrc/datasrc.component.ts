@@ -91,6 +91,7 @@ export class DatasrcComponent {
   integerEvents: WaveDataInteger[];
   streamViewMap: SdsStreamViewMap;
   metadataMap: Map<string, string>;
+  metadataMap2: Map<string, string>;
   hasEvents: boolean;
   hasEventsHeaders: boolean;
   hasEventsInterpolated: boolean;
@@ -100,6 +101,7 @@ export class DatasrcComponent {
   hasStreamView2Events: boolean;
   hasMapProperties: boolean;
   hasMetadata: boolean;
+  hasMetadata2: boolean;
 
   button1Message: string;
   button2Message: string;
@@ -120,6 +122,7 @@ export class DatasrcComponent {
   button17Message: string;
   button18Message: string;
   button19Message: string;
+  button20Message: string;
   getDataWithHeadersMessage: string;
   getDataInterpolatedMessage: string;
   getFilteredValuesMessage: string;
@@ -945,6 +948,34 @@ export class DatasrcComponent {
       },
       (err) => {
         this.button18Message = this.unhealthyResponseMessage(err);
+      }
+    );
+  }
+
+  patchMetadata() {
+    const patch = [
+      { op: 'remove', path: '/Region' },
+      { op: 'replace', path: '/Province', value: 'Ontario' },
+      { op: 'add', path: '/City', value: 'Toronto' },
+    ];
+    this.sdsService.patchMetadata(streamId, patch).subscribe(
+      (res) => {
+        this.button19Message = this.healthyResponseMessage(res);
+      },
+      (err) => {
+        this.button19Message = this.unhealthyResponseMessage(err);
+      }
+    );
+  }
+
+  getAndPrintMetadata2() {
+    this.sdsService.getMetadata(streamId).subscribe(
+      (res) => {
+        this.metadataMap2 = res.body as Map<string, string>;
+        this.hasMetadata2 = true;
+      },
+      (err) => {
+        this.button20Message = this.unhealthyResponseMessage(err);
       }
     );
   }
