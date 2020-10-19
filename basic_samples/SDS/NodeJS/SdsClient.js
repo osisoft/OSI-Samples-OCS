@@ -263,6 +263,22 @@ module.exports = {
       });
     };
 
+    // create metadata
+    this.patchMetadata = function (tenantId, namespaceId, streamId, patch) {
+      return restCall({
+        url:
+          this.url +
+          this.streamsBase.format([tenantId, namespaceId]) +
+          '/' +
+          streamId +
+          '/Metadata',
+        method: 'PATCH',
+        headers: this.getHeaders(),
+        body: JSON.stringify(patch),
+        gzip: true,
+      });
+    };
+
     // get tags
     this.getTags = function (tenantId, namespaceId, streamId) {
       return restCall({
