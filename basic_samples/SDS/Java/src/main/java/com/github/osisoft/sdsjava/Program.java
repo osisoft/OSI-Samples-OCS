@@ -1,6 +1,8 @@
 package com.github.osisoft.sdsjava;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
@@ -414,9 +416,43 @@ public class Program {
                 System.out.println("Metadata key Province: " + province);
 
                 System.out.println();
+
+                // Step 17
+                // update metadata (OCS ONLY)
+                System.out.println("Let's update the Metadata on our stream:");
+                System.out.println();
+
+                JsonArray patch = new JsonArray();
+                JsonObject delete = new JsonObject();
+                delete.addProperty("op", "remove");
+                delete.addProperty("path", "/Region");
+                patch.add(delete);
+                JsonObject replace = new JsonObject();
+                replace.addProperty("op", "replace");
+                replace.addProperty("path", "/Province");
+                replace.addProperty("value", "Ontario");
+                patch.add(replace);
+                JsonObject add = new JsonObject();
+                add.addProperty("op", "add");
+                add.addProperty("path", "/City");
+                add.addProperty("value", "Toronto");
+                patch.add(add);
+
+                streamsClient.patchMetadata(tenantId, namespaceId, sampleStreamId, patch);
+
+                country = streamsClient.getMetadata(tenantId, namespaceId, sampleStreamId, "Country");
+                province = streamsClient.getMetadata(tenantId, namespaceId, sampleStreamId, "Province");
+                String city = streamsClient.getMetadata(tenantId, namespaceId, sampleStreamId, "City");
+
+                System.out.println("Metadata now associated with " + sampleStreamId);
+                System.out.println("Metadata key Country: " + country);
+                System.out.println("Metadata key Province: " + province);
+                System.out.println("Metadata key City: " + city);
+
+                System.out.println();
             }
 
-            // Step 17
+            // Step 18
             // delete data
 
             // remove the first value
@@ -432,7 +468,7 @@ public class Program {
             if (foundEvents.isEmpty())
                 System.out.println("All values deleted successfully!");
 
-            // Step 18
+            // Step 19
             System.out.println("Adding a stream with a secondary index.");
             SdsStreamIndex index = new SdsStreamIndex();
             index.setSdsTypePropertyId("Radians");
@@ -485,7 +521,7 @@ public class Program {
             System.out.println("Secondary indexes on streams original:" + sampleStream.getIndexes().size()
                     + ". New one:  " + numberOfIndicies);
 
-            // Step 19
+            // Step 20
             // Adding Compound Index Type
             System.out.println("Creating an SdsType with a compound index");
             SdsType typeCompound = getWaveCompoundDataType(compoundTypeId);
@@ -500,7 +536,7 @@ public class Program {
 
             streamsClient.createStream(tenantId, namespaceId, streamCompound);
 
-            // Step 20
+            // Step 21
 
             System.out.println("Inserting data");
             streamsClient.insertValues(tenantId, namespaceId, streamIdCompound,
@@ -532,7 +568,7 @@ public class Program {
             e.printStackTrace();
         } finally {
             try {
-                // Step 21
+                // Step 22
                 System.out.println();
                 System.out.println("Cleaning up");
                 cleanUp(typesClient, streamsClient);
