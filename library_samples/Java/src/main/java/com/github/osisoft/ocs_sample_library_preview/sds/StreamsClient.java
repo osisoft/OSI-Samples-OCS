@@ -7,6 +7,7 @@ package com.github.osisoft.ocs_sample_library_preview.sds;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+
 import com.github.osisoft.ocs_sample_library_preview.BaseClient;
 import com.github.osisoft.ocs_sample_library_preview.SdsError;
 
@@ -15,6 +16,11 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 
 /**
  * StreamsClient
@@ -548,28 +554,25 @@ public class StreamsClient {
      */
     public void patchMetadata(String tenantId, String namespaceId, String streamId, JsonArray patch) throws SdsError {
 
-        URL url = null;
-        HttpURLConnection urlConnection = null;
-
         try {
-            url = new URL(baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
-                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Metadata");
-            urlConnection = baseClient.getConnection(url, "PUT");
+            HttpClient httpClient = HttpClient.newHttpClient();
 
+            String url = baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Metadata";
+            URI uri = URI.create(url);
             String body = mGson.toJson(patch);
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(body);
-            writer.close();
+            HttpRequest request = baseClient.getRequest(uri).method("PATCH", BodyPublishers.ofString(body)).build();
 
-            int httpResult = urlConnection.getResponseCode();
+            HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
+            int httpResult = response.statusCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
             } else {
-                throw new SdsError(urlConnection, "patch stream metadata request failed");
+                throw new Error("patch stream metadata request failed");
             }
-        } catch (SdsError sdsError) {
-            sdsError.print();
-            throw sdsError;
+        } catch (Error error) {
+            throw error;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
