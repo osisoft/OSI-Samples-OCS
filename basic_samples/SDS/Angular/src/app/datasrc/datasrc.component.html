@@ -522,6 +522,50 @@
   <p></p>
 
   <!-- Step 17 -->
+  <p>Let's make some changes to the metadata on our stream</p>
+  <button id="patchMetadata" class="btn btn-primary" (click)="patchMetadata()">
+    Patch Metadata
+  </button>
+  <br />
+  <span id="patchMetadataMessage" *ngIf="button19Message"
+    >Response: {{ button19Message }}</span
+  >
+
+  <p></p>
+  <button
+    id="getAndPrintMetadata2"
+    class="btn btn-primary"
+    (click)="getAndPrintMetadata2()"
+  >
+    Get Updated Metadata
+  </button>
+  <br />
+  <span id="getAndPrintMetadata2Message" *ngIf="button20Message"
+    >Response: {{ button20Message }}</span
+  >
+  <div id="getAndPrintMetadata2Message" *ngIf="hasMetadata2">
+    <table class="table table-striped table-bordered">
+      <tr>
+        <th>Key</th>
+        <th>Value</th>
+      </tr>
+      <tr>
+        <td>Country</td>
+        <td>{{ metadataMap2['Country'] }}</td>
+      </tr>
+      <tr>
+        <td>Province</td>
+        <td>{{ metadataMap2['Province'] }}</td>
+      </tr>
+      <tr>
+        <td>City</td>
+        <td>{{ metadataMap2['City'] }}</td>
+      </tr>
+    </table>
+  </div>
+  <p></p>
+
+  <!-- Step 18 -->
   <h3>Delete Values</h3>
   <p>
     Press the button below to delete all values from the SdsStream, pressing
@@ -539,7 +583,7 @@
     >Response: {{ button13Message }}</span
   >
 
-  <!-- Step 18 -->
+  <!-- Step 19 -->
   <h3>Create Stream with Secondary Index Values</h3>
   <p>
     Streams can have a secondary index that is different than its type primary
@@ -590,7 +634,7 @@
     >Response: {{ secondaryDeleteMessage }}</span
   >
 
-  <!-- Step 19 -->
+  <!-- Step 20 -->
   <h3>Add a type and stream with a compound index</h3>
   <p>Types can have a compound index.</p>
   <button
@@ -607,7 +651,7 @@
     >Response: {{ createCompoundTypeandStreamMessage }}</span
   >
 
-  <!-- Step 20 -->
+  <!-- Step 21 -->
   <h3>Data with a compound index</h3>
   <p>
     Types can have a compound index. With that you send data normally and
@@ -632,7 +676,7 @@
     >Response: {{ createAndRetrieveCompoundDataMessageData }}</span
   >
 
-  <!-- Step 21 -->
+  <!-- Step 22 -->
   <h3>Deleting types, streams and streamViews</h3>
   <p>
     Press the button below to delete the types, streams and streamViews that

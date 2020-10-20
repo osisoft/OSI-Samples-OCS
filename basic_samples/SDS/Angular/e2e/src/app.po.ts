@@ -108,6 +108,14 @@ export class AppPage {
     return this.helper('getAndPrintMetadata', '');
   }
 
+  patchMetaData(): any {
+    return this.helper('patchMetadata', '20');
+  }
+
+  getMetadata2(): any {
+    return this.helper('getAndPrintMetadata2', '');
+  }
+
   deleteVal(): any {
     return this.helper('deleteAllValues', '20');
   }

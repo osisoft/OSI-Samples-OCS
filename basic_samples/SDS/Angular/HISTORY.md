@@ -1,5 +1,9 @@
 # Version History
 
+## 1.2.12 / 2020-10-19
+
+- Add metadata patch step
+
 ## 1.2.11 / 2020-10-12
 
 - Fix automated test login flow to handle optional step
