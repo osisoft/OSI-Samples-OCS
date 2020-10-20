@@ -55,6 +55,12 @@ jobs:
           fileLibrary: $(CredFileLibraryOCS)
           filePath: $(projPath)
 
+      - task: JavaToolInstaller@0
+        inputs:
+          versionSpec: '11'
+          jdkArchitectureOption: 'x64'
+          jdkSourceOption: 'PreInstalled'
+
       - script: mvn install -f pom.xml
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Maven install library'
@@ -78,12 +84,6 @@ jobs:
           fileOriginal: $(CredFile)
           fileLibrary: $(CredFileLibraryEDS)
           filePath: $(projPath)
-
-      - task: JavaToolInstaller@0
-        inputs:
-          versionSpec: '11'
-          jdkArchitectureOption: 'x64'
-          jdkSourceOption: 'PreInstalled'
 
       - script: mvn install -f pom.xml
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
