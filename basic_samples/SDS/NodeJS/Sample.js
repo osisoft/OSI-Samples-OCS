@@ -1721,7 +1721,7 @@ var app = function (request1, response) {
 
   var getTypes = printFirstS2
     .then(
-      // Step 14
+      // Step 15
       function (res) {
         if (client.tokenExpires < nowSeconds) {
           return checkTokenExpired(client)
@@ -1790,10 +1790,10 @@ var app = function (request1, response) {
       logError(err);
     });
 
-  //tags and metadata
+  // tags and metadata
   var createTags = printTypesQuery
     .then(
-      // Step 15
+      // Step 16
       function (res) {
         console.log("\nLet's add some Tags and Metadata to our stream:");
         var tags = ['waves', 'periodic', '2018', 'validated'];
@@ -1934,10 +1934,60 @@ var app = function (request1, response) {
       logError(err);
     });
 
-  //delete an event
-  var deleteOneEvent = printMetadata
+  // update metadata
+  var patchMetadata = printMetadata
+    .then(function (res) {
+      // Step 17
+      console.log("\nLet's make some changes to the metadata on our stream:");
+      var patch = [
+        { op: 'remove', path: '/Region' },
+        { op: 'replace', path: '/Province', value: 'Ontario' },
+        { op: 'add', path: '/City', value: 'Toronto' },
+      ];
+      if (client.tokenExpires < nowSeconds) {
+        return checkTokenExpired(client)
+          .then(function (res) {
+            refreshToken(res, client);
+            return client.patchMetadata(
+              tenantId,
+              sampleNamespaceId,
+              sampleStreamId,
+              patch
+            );
+          })
+          .catch(function (err) {
+            logError(err);
+          });
+      } else {
+        return client.patchMetadata(
+          tenantId,
+          sampleNamespaceId,
+          sampleStreamId,
+          patch
+        );
+      }
+    })
+    .catch(function (err) {
+      logError(err);
+    });
+
+  // print updated metadata
+  var printMetadata2 = patchMetadata
+    .then(function (res) {
+      console.log('\nMetadata now associated with ' + sampleStreamId + ':');
+      var obj = JSON.parse(res);
+      console.log('Metadata key Country: ' + obj['Country']);
+      console.log('Metadata key Province: ' + obj['Province']);
+      console.log('Metadata key City: ' + obj['City']);
+    })
+    .catch(function (err) {
+      logError(err);
+    });
+
+  // delete an event
+  var deleteOneEvent = printMetadata2
     .then(
-      // Step 16
+      // Step 18
       function (res) {
         console.log('\nDeleting values from the SdsStream');
         if (client.tokenExpires < nowSeconds) {
@@ -2015,7 +2065,7 @@ var app = function (request1, response) {
 
   var createSecondaryStream = deleteWindowEvents
     .then(
-      // Step 17
+      // Step 19
       function (res) {
         console.log('Creating an SdsStream with a secondary index');
         // create SdsStream
@@ -2255,7 +2305,7 @@ var app = function (request1, response) {
   // Adding Compound Index Type
   var createCompoundType = printSecondaryStreamAfterUpdate
     .then(
-      // Step 18
+      // Step 20
       function (res) {
         console.log('Creating an SdsType with a compound index');
         if (client.tokenExpires < nowSeconds) {
@@ -2316,7 +2366,7 @@ var app = function (request1, response) {
       logError(err);
     });
 
-  // Step 19
+  // Step 21
 
   var event2 = [];
 
@@ -2491,7 +2541,7 @@ var app = function (request1, response) {
   // cleanup of namespace
   var cleanup = testFinished
     .finally(
-      // Step 20
+      // Step 22
       // delete the stream
       function () {
         console.log('Cleaning up');
