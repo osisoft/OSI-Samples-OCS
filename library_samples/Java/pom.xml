@@ -3,12 +3,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId> com.github.osisoft.ocs_sample_library_preview</groupId>
+  <groupId>com.github.osisoft.ocs_sample_library_preview</groupId>
   <artifactId>ocs_sample_library_preview</artifactId>
-  <version>0.0.19-preview</version>
+  <version>0.0.20-preview</version>
 
   <name>ocs_sample_library_preview</name>
-  <description>A preview of an OCS (OSIsoft Cloud Services) client library </description>
+  <description>A preview of an OCS (OSIsoft Cloud Services) client library</description>
   <url>https://github.com/osisoft/OSI-Samples</url>
   <developers>
     <developer>
@@ -36,8 +36,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   
@@ -102,8 +102,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <release>11</release>
         </configuration>
       </plugin>
       

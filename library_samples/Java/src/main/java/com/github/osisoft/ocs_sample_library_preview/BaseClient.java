@@ -10,7 +10,9 @@ import com.google.gson.JsonParser;
 
 import java.io.*;
 import java.net.*;
+import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Properties;
 import java.util.zip.GZIPInputStream;
@@ -144,6 +146,36 @@ public class BaseClient {
         }
 
         return urlConnection;
+    }
+
+    /**
+     * Makes the connection to the url
+     * 
+     * @param url    the url to connect to
+     * @param method the method to do, put, get, delete, etc...
+     * @return
+     */
+    public HttpRequest.Builder getRequest(URI url) {
+        HttpRequest.Builder builder = null;
+        String token = "";
+        if (!this.ClientId.isEmpty()) {
+            token = AcquireAuthToken();
+        }
+
+        try {
+            builder = HttpRequest.newBuilder(url).header("Accept", "*/*; q=1").header("Accept-Encoding", "gzip")
+                    .header("Content-Type", "application/json");
+            if (token != null && !token.isEmpty()) {
+                builder.header("Authorization", "Bearer " + token);
+            }
+            builder.timeout(Duration.ofMillis(50000));
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return builder;
     }
 
     /**

@@ -5,7 +5,9 @@
 package com.github.osisoft.ocs_sample_library_preview.sds;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+
 import com.github.osisoft.ocs_sample_library_preview.BaseClient;
 import com.github.osisoft.ocs_sample_library_preview.SdsError;
 
@@ -14,6 +16,11 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 
 /**
  * StreamsClient
@@ -522,11 +529,50 @@ public class StreamsClient {
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
             } else {
-                throw new SdsError(urlConnection, "update stream request failed");
+                throw new SdsError(urlConnection, "update stream metadata request failed");
             }
         } catch (SdsError sdsError) {
             sdsError.print();
             throw sdsError;
+        } catch (MalformedURLException mal) {
+            System.out.println("MalformedURLException");
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * patches the metadata of a stream
+     * 
+     * @param tenantId    tenant to work against
+     * @param namespaceId namespace to work against
+     * @param streamId    the stream to update the meta data of
+     * @param patch       JsonArray
+     * @throws SdsError any error that occurs
+     */
+    public void patchMetadata(String tenantId, String namespaceId, String streamId, JsonArray patch) throws SdsError {
+
+        try {
+            HttpClient httpClient = HttpClient.newHttpClient();
+
+            String url = baseUrl + getStreamPath.replace("{apiVersion}", apiVersion).replace("{tenantId}", tenantId)
+                    .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId) + "/Metadata";
+            URI uri = URI.create(url);
+            String body = mGson.toJson(patch);
+            HttpRequest request = baseClient.getRequest(uri).method("PATCH", BodyPublishers.ofString(body)).build();
+
+            HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
+            int httpResult = response.statusCode();
+            if (baseClient.isSuccessResponseCode(httpResult)) {
+            } else {
+                throw new Error("patch stream metadata request failed");
+            }
+        } catch (Error error) {
+            throw error;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         } catch (MalformedURLException mal) {
             System.out.println("MalformedURLException");
         } catch (IllegalStateException e) {
