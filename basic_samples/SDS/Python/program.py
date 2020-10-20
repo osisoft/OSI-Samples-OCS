@@ -738,6 +738,36 @@ def main(test=False):
             print("Metadata key Province: ", province)
             print()
 
+            # Step 17
+            #######################################################################
+            # Update Metadata (OCS ONLY)
+            #######################################################################
+            print()
+            print("Let's update the Metadata on our stream:")
+
+            patch = [
+                {"op": "remove", "path": "/Region"},
+                {"op": "replace", "path": "/Province", "value": "Ontario"},
+                {"op": "add", "path": "/City", "value": "Toronto"}
+            ]
+
+            sds_client.Streams.patchMetadata(namespace_id, stream.Id,
+                                             patch)
+
+            country = sds_client.Streams.getMetadata(
+                namespace_id, stream.Id, "Country")
+            province = sds_client.Streams.getMetadata(
+                namespace_id, stream.Id, "Province")
+            city = sds_client.Streams.getMetadata(
+                namespace_id, stream.Id, "City")
+
+            print()
+            print("Metadata now associated with", stream.Id, ":")
+            print("Metadata key Country: ", country)
+            print("Metadata key Province: ", province)
+            print("Metadata key City: ", city)
+            print()
+
         # Step 17
         #######################################################################
         # Delete events

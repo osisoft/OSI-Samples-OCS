@@ -1,5 +1,9 @@
 # Version History
 
+## 0.1.13_preview / 2020-10-20
+
+- Added patchMetadata method to edit stream metadata
+
 ## 0.1.12_preview / 2020-07-24
 
 - Fix issue in published dependency on requests 2.23.0
