@@ -23,7 +23,8 @@ All SDS WaveForm samples are console applications that follow the same sequence 
 1. Use SdsStreamViews and SdsStreamViewMaps
 1. Use SdsStreamViews to update StreamType
 1. Filtering on types
-1. Tags & Metadata
+1. Create Tags & Metadata
+1. Update Metadata
 1. Delete events
 1. Create an SdsStream with a secondary index, update an existing stream to a secondary index and remove a secondary index
 1. Created an SdsType and SdsStream with Compound index

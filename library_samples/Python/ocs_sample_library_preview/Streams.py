@@ -421,6 +421,28 @@ class Streams(object):
         self.__baseClient.checkResponse(
             response, f"Failed to create metadata for Stream: {streamId}.")
 
+    def patchMetadata(self, namespace_id, streamId, patch):
+        """
+        Tells Sds Service to update metadata on the given streamId
+        :param namespace_id: id of namespace to work against
+        :param stream_id: id of the stream to update with metadata
+        :param patch: a JSON patch document
+        :return:
+        """
+        if namespace_id is None:
+            raise TypeError
+
+        response = self.__baseClient.request(
+            "patch",
+            self.__streamsPath.format(
+                tenant_id=self.__tenant,
+                namespace_id=namespace_id,
+                stream_id=streamId) + "/Metadata",
+            data=json.dumps(patch))
+
+        self.__baseClient.checkResponse(
+            response, f"Failed to update metadata for Stream: {streamId}.")
+
     def getTags(self, namespace_id, streamId):
         """
         Tells Sds Service to get tags associated with the given streamId

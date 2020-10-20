@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.17 / 2020-10-20
+
+- Add metadata patch step
+
 ## 1.0.16 / 2020-07-29
 
 - Add sample credentials file to gitignore and replace with placeholder
