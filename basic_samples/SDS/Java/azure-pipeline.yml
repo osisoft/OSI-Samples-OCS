@@ -61,7 +61,7 @@ jobs:
           jdkArchitectureOption: 'x64'
           jdkSourceOption: 'PreInstalled'
           jdkDestinationDirectory: '$(Agent.ToolsDirectory)/jdk11'
-    cleanDestinationDirectory: false
+          cleanDestinationDirectory: false
 
       - script: mvn install -f pom.xml
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
