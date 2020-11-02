@@ -1,5 +1,9 @@
 # Version History
 
+## 0.0.21-preview / 2020-11-02
+
+- Updated dependencies
+
 ## 0.0.20-preview / 2020-10-19
 
 - Add metadata patch method to streamsclient
