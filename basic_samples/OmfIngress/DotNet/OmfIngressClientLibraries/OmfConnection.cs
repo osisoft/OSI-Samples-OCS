@@ -5,14 +5,14 @@ namespace OmfIngressClientLibraries
 {
     public class OmfConnection
     {
-        public OmfConnection(List<string> clientIds, Topic topic, Subscription subscription)
+        public OmfConnection(ICollection<string> clientIds, Topic topic, Subscription subscription)
         {
             ClientIds = clientIds;
             Topic = topic;
             Subscription = subscription;
         }
 
-        public List<string> ClientIds { get; }
+        public ICollection<string> ClientIds { get; }
         public Topic Topic { get; set; }
         public Subscription Subscription { get; set; }
     }
