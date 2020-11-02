@@ -16,7 +16,7 @@ namespace SdsTsDotNet
     public static class Program
     {
         private static IConfiguration _configuration;
-        private static Exception _toThrow = null;
+        private static Exception _toThrow;
 
         public static void Main()
         {
@@ -291,23 +291,23 @@ namespace SdsTsDotNet
         }
 
         #region step4b
-        public static List<TimeData> GetPressureData()
+        public static IList<TimeData> GetPressureData()
         {
-            List<PressureTemperatureData> data = GetData();
+            var data = GetData();
             return data.Select(entry => new TimeData() { Time = entry.Time, Value = entry.Pressure }).ToList();
         }
 
-        public static List<TimeData> GetTemperatureData()
+        public static IList<TimeData> GetTemperatureData()
         {
-            List<PressureTemperatureData> data = GetData();
+            var data = GetData();
             return data.Select(entry => new TimeData() { Time = entry.Time, Value = entry.Temperature }).ToList();
         }
         #endregion
 
         #region step4a
-        public static List<PressureTemperatureData> GetData()
+        public static IList<PressureTemperatureData> GetData()
         {
-            List<PressureTemperatureData> values = new List<PressureTemperatureData>
+            var values = new List<PressureTemperatureData>
             {
                 new PressureTemperatureData() { Pressure = 346, Temperature = 91, Time = DateTime.Parse("2017-01-11T22:21:23.430Z", CultureInfo.InvariantCulture) },
                 new PressureTemperatureData() { Pressure = 0, Temperature = 0, Time = DateTime.Parse("2017-01-11T22:22:23.430Z", CultureInfo.InvariantCulture) },
@@ -322,9 +322,9 @@ namespace SdsTsDotNet
         }
         #endregion
 
-        public static List<PressureTemperatureData> GetData2()
+        public static IList<PressureTemperatureData> GetData2()
         {
-            List<PressureTemperatureData> values = new List<PressureTemperatureData>
+            var values = new List<PressureTemperatureData>
             {
                 new PressureTemperatureData() { Pressure = 345, Temperature = 89, Time = DateTime.Parse("2017-01-11T22:20:23.430Z", CultureInfo.InvariantCulture) },
                 new PressureTemperatureData() { Pressure = 356, Temperature = 0, Time = DateTime.Parse("2017-01-11T22:21:23.430Z", CultureInfo.InvariantCulture) },
