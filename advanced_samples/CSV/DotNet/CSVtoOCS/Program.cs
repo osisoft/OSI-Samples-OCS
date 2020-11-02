@@ -17,7 +17,7 @@ namespace CSVtoOCS
         private const string _stream2ID = "stream2";
         private const string _typeID = "TemperatureReadings";
 
-        private static Exception _toThrow = null;
+        private static Exception _toThrow;
         private static List<TemperatureReadingsWithIds> _dataList;
         private static IEnumerable<string> _streamsIdsToSendTo;
         private static ISdsDataService _dataService;
@@ -153,7 +153,7 @@ namespace CSVtoOCS
             if (_toThrow != null)
                 throw _toThrow;
 
-            return _toThrow == null;
+            return true;
         }
 
         /// <summary>
