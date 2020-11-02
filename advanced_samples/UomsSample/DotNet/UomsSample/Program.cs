@@ -13,7 +13,7 @@ namespace UomsSample
     {
         private static readonly Random _random = new Random();
         private static IConfiguration _configuration;
-        private static Exception _toThrow = null;
+        private static Exception _toThrow;
 
         public static void Main()
         {
