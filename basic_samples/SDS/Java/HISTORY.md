@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.15 / 2020-11-02
+
+- Updated dependencies
+
 ## 1.0.14 / 2020-10-19
 
 - Add metadata patch step
