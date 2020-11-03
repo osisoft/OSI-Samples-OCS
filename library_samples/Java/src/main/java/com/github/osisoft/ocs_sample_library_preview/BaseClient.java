@@ -216,11 +216,14 @@ public class BaseClient {
                     + URLEncoder.encode(ClientSecret, "UTF-8") + "&grant_type=client_credentials";
             byte[] postData = postString.getBytes("UTF-8");
             tokenRequest.setRequestProperty("Content-Length", Integer.toString(postData.length));
-            tokenRequest.getOutputStream().write(postData);
+            try (OutputStream stream = tokenRequest.getOutputStream()) {
+                stream.write(postData);
+            }
 
-            InputStream in = new BufferedInputStream(tokenRequest.getInputStream());
-            String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
-            in.close();
+            String result;
+            try (InputStream in = new BufferedInputStream(tokenRequest.getInputStream())) {
+                result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+            }
 
             JsonObject response = JsonParser.parseString(result).getAsJsonObject();
             cachedAccessToken = response.get("access_token").getAsString();
@@ -290,21 +293,17 @@ public class BaseClient {
         StringBuffer response = new StringBuffer();
 
         try {
-            InputStreamReader streamReader = null;
             String contentEncoding = urlConnection.getHeaderField("Content-Encoding");
-            if (contentEncoding != null && contentEncoding.equals("gzip")) {
-                GZIPInputStream gzip = new GZIPInputStream(urlConnection.getInputStream());
-                streamReader = new InputStreamReader(gzip);
-            } else {
-                streamReader = new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8);
-            }
 
-            BufferedReader in = new BufferedReader(streamReader);
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            try (InputStreamReader streamReader = contentEncoding != null && contentEncoding.equals("gzip")
+                    ? new InputStreamReader(new GZIPInputStream(urlConnection.getInputStream()))
+                    : new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8)) {
+                try (BufferedReader in = new BufferedReader(streamReader)) {
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                }
             }
-            in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
