@@ -1,6 +1,6 @@
 # OCS Data View Data Analysis Sample using Jupyter
 
-**Version:** 1.0.1
+**Version:** 1.0.2
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViewWindJupyter?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1851&branchName=master)
 
