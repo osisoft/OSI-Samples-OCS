@@ -1,5 +1,10 @@
 # Version History
 
+## 0.0.22-preview / 2020-11-03
+
+- Polaris fixes
+- Use try() blocks to ensure resources are closed
+
 ## 0.0.21-preview / 2020-11-02
 
 - Updated dependencies
