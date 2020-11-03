@@ -1,7 +1,7 @@
 {
   "name": "sds-grafana-sample",
   "description": "A sample that queries SDS Stream data from Grafana.",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "private": true,
   "author": "OSIsoft, LLC",
   "license": "Apache-2.0",
@@ -17,9 +17,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@grafana/data": "^7.1.5",
-    "@grafana/toolkit": "^7.1.5",
+    "@grafana/data": "^7.3.1",
+    "@grafana/toolkit": "^7.3.1",
     "@types/grafana": "github:CorpGlory/types-grafana",
-    "typescript": "^3.9.7"
+    "typescript": "^4.0.5"
   }
 }
