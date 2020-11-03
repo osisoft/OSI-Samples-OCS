@@ -8,5 +8,6 @@
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
     <Rule Id="CA1303" Action="None" /> <!-- Prefer inline strings in sample code for readability -->
     <Rule Id="CA1031" Action="None" /> <!-- Allow catching general exceptions for sample code to ensure cleanup -->
+    <Rule Id="CA2201" Action="None" /> <!-- Allow use of basic System.Exception in sample code -->
   </Rules>
 </RuleSet>
