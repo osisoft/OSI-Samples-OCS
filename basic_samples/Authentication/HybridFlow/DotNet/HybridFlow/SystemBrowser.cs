@@ -31,7 +31,7 @@ namespace HybridFlow
 
         public int Port { get; }
 
-        public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken token = new CancellationToken())
+        public async Task<BrowserResult> InvokeAsync(BrowserOptions options, CancellationToken cancellationToken = new CancellationToken())
         {
             if (options == null)
             {

@@ -1,5 +1,9 @@
 # Version History
 
+## 1.1.9 / 2020-11-02
+
+- Updated dependencies
+
 ## 1.1.8 / 2020-09-28
 
 - Fix automated test login flow to handle optional step

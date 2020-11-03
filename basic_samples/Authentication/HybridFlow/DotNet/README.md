@@ -1,6 +1,6 @@
 # Hybrid Flow Sample and Test
 
-**Version:** 1.1.8
+**Version:** 1.1.9
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_Hybrid_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=847&branchName=master)
 
