@@ -1,6 +1,6 @@
 # OSIsoft Cloud Services Java Library Sample
 
-**Version:** 0.0.21-preview
+**Version:** 0.0.22-preview
 
 The Java OCS library is an introductory language-specific examples of programming against OSISoft Cloud Services ([OCS](https://www.osisoft.com/Solutions/OSIsoft-Cloud-Services/)). It is intended as an instructional samples only and is not for production use.
 

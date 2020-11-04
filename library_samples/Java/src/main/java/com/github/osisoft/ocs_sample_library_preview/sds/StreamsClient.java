@@ -98,10 +98,11 @@ public class StreamsClient {
             urlConnection = baseClient.getConnection(url, "POST");
 
             String body = mGson.toJson(streamViewDef);
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(body);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(body);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
@@ -223,10 +224,11 @@ public class StreamsClient {
             urlConnection = baseClient.getConnection(url, "POST");
 
             String body = mGson.toJson(streamDef);
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(body);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(body);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (httpResult == HttpURLConnection.HTTP_OK) {
@@ -359,10 +361,11 @@ public class StreamsClient {
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String body = mGson.toJson(streamDef);
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(body);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(body);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
@@ -436,10 +439,11 @@ public class StreamsClient {
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String body = mGson.toJson(tags);
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(body);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(body);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
@@ -521,10 +525,11 @@ public class StreamsClient {
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String body = mGson.toJson(metadata);
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(body);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(body);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
@@ -643,10 +648,11 @@ public class StreamsClient {
                             .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "POST");
 
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(json);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(json);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
@@ -1116,10 +1122,11 @@ public class StreamsClient {
                             .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "PUT");
 
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(json);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(json);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
@@ -1157,10 +1164,11 @@ public class StreamsClient {
                             .replace("{namespaceId}", namespaceId).replace("{streamId}", streamId));
             urlConnection = baseClient.getConnection(url, "PUT");
 
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(json);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(json);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {
@@ -1275,10 +1283,11 @@ public class StreamsClient {
             urlConnection = baseClient.getConnection(url, "PUT");
 
             String json = "";
-            OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-            OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-            writer.write(json);
-            writer.close();
+            try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);) {
+                    writer.write(json);
+                }
+            }
 
             int httpResult = urlConnection.getResponseCode();
             if (baseClient.isSuccessResponseCode(httpResult)) {

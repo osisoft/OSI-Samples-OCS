@@ -76,10 +76,11 @@ public class DataViewClient {
             urlConnection = baseClient.getConnection(url, method);
 
             if (body != null) {
-                OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-                OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-                writer.write(body);
-                writer.close();
+                try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                    try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
+                        writer.write(body);
+                    }
+                }
             }
 
             int httpResult = urlConnection.getResponseCode();
@@ -110,10 +111,11 @@ public class DataViewClient {
             urlConnection = baseClient.getConnection(url, method);
 
             if (body != null) {
-                OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream());
-                OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8);
-                writer.write(body);
-                writer.close();
+                try (OutputStream out = new BufferedOutputStream(urlConnection.getOutputStream())) {
+                    try (OutputStreamWriter writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
+                        writer.write(body);
+                    }
+                }
             }
 
             int httpResult = urlConnection.getResponseCode();
