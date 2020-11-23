@@ -8,8 +8,7 @@ parameters:
 jobs:
   - job: Analysis
     pool:
-      name: 00-OSIManaged-Test
-      demands: COMPUTERNAME -equals $(buildAgent)
+      name: 00-OSIManaged-Containers
     steps:
       # Build Sample
       # - DotNet
