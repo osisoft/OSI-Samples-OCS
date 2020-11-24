@@ -27,6 +27,8 @@ jobs:
       # - Java
       - script: dir
         workingDirectory: '$(JAVA_HOME)'
+      - script: dir
+        workingDirectory: '$(JAVA_HOME)\bin'
       - script: |
           echo Install
           call "%JAVA_HOME%"\mvn install -f pom.xml -DskipTests
