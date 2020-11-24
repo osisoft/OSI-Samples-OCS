@@ -27,18 +27,18 @@ jobs:
       # - Java
       - script: |
           echo Install
-          call mvn install -f pom.xml -DskipTests
+          call "%JAVA_HOME%"\mvn install -f pom.xml -DskipTests
           echo Compile
-          call mvn compile
+          call "%JAVA_HOME%"\mvn compile
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(libPath)/
         displayName: 'Build (Java): Library'
         condition: and(eq('${{ parameters.language }}', 'java'), eq(${{ parameters.lib }}, false))
       - script: |
           echo Install
-          call mvn install -f pom.xml -DskipTests
+          call "%JAVA_HOME%"\mvn install -f pom.xml -DskipTests
           echo Compile
-          call mvn compile
+          call "%JAVA_HOME%"\mvn compile
           echo Complete
         workingDirectory: $(Build.SourcesDirectory)$(projPath)/
         displayName: 'Build (Java)'
