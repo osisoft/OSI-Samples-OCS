@@ -25,6 +25,8 @@ jobs:
         condition: eq('${{ parameters.language }}', 'dotnet')
 
       # - Java
+      - script: dir
+        workingDirectory: '%JAVA_HOME%'
       - script: |
           echo Install
           call "%JAVA_HOME%"\mvn install -f pom.xml -DskipTests
@@ -35,6 +37,7 @@ jobs:
         displayName: 'Build (Java): Library'
         condition: and(eq('${{ parameters.language }}', 'java'), eq(${{ parameters.lib }}, false))
       - script: |
+          dir
           echo Install
           call "%JAVA_HOME%"\mvn install -f pom.xml -DskipTests
           echo Compile
