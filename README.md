@@ -1,6 +1,6 @@
 # OSIsoft OCS Samples
 
-OSIsoft Cloud Services ([OCS](https://www.osisoft.com/Solutions/OSIsoft-Cloud-Services/)) is a highly flexible cloud-based platform that provides scalable, elastic,
+OSIsoft Cloud Services ([OCS](https://www.osisoft.com/Solutions/OSIsoft-Cloud-Services/)) is a highly flexible cloud-based platform that provides a scalable, elastic,
 centralized environment to aggregate data for reporting, advanced analytics, and third-party applications. OCS is powered by OSIsoft's Sequential Data Store (SDS). In this GitHub repo, we provide samples which will help you get started with the [OCS API](https://ocs-docs.osisoft.com/) against your [OCS instance](https://cloud.osisoft.com/welcome).
 
 If you are interested in other OSIsoft samples please see [OSIsoft Samples](https://github.com/osisoft/OSI-Samples).
