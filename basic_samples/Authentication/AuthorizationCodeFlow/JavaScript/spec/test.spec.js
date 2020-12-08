@@ -80,7 +80,9 @@ describe('Sample App', () => {
         .then(async function (e) {
           await driver.wait(until.elementIsEnabled(e), wait);
           setTimeout(async function () {
-            await driver.findElement(By.id('idSIButton9')).click();
+            try {
+              await driver.findElement(By.id('idSIButton9')).click();
+            } catch {}
           }, 500);
         });
     } catch {}
