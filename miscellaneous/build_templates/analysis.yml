@@ -8,8 +8,8 @@ parameters:
 jobs:
   - job: Analysis
     pool:
-      name: 00-OSIManaged-Test
-      demands: COMPUTERNAME -equals $(buildAgent)
+      name: OpsGuild
+      demands: BUILD_ID -equals 170381
     steps:
       # Build Sample
       # - DotNet
