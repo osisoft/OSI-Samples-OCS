@@ -91,12 +91,12 @@ jobs:
 
       # Currently same version on Windows & Ubuntu, preserving separate
       # conditionals in case these images go out of sync in the future
-      - bash: npx webdriver-manager update --versions.chrome 85.0.4183.87
+      - bash: npx webdriver-manager update --versions.chrome 87.0.4280.88
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Ubuntu: Update webdriver-manager'
         condition: eq(variables['imageName'],'ubuntu-latest')
 
-      - bash: npx webdriver-manager update --versions.chrome 85.0.4183.87
+      - bash: npx webdriver-manager update --versions.chrome 87.0.4280.88
         workingDirectory: $(Build.SourcesDirectory)$(projPath)
         displayName: 'Update webdriver-manager'
         condition: eq(variables['imageName'],'windows-latest')

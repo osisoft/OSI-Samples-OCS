@@ -188,14 +188,15 @@ export class AppPage {
               browser.driver.sleep(4000);
             })
             .then(() => {
-              // Login may or may not prompt to save credentials, try this inside try/catch
-              try {
-                browser.driver
-                  .findElement(by.xpath('//*[@id="idSIButton9"]'))
-                  .then((el) => {
+              browser.driver
+                .findElement(by.xpath('//*[@id="idSIButton9"]'))
+                .then(
+                  (el) => {
                     el.click();
-                  });
-              } catch {}
+                  },
+                  // Login may or may not prompt to save credentials, do nothing with errors
+                  (error) => {}
+                );
             });
         });
     });
