@@ -6,7 +6,7 @@
 
   <groupId>com.github.osisoft.sdsjava</groupId>
   <artifactId>sdsjava</artifactId>
-  <version>1.0.14</version>
+  <version>1.0.16</version>
 
   <name>sdsjava</name>
   <!-- FIXME change it to the project's website -->
@@ -22,7 +22,7 @@
       <dependency> 
         <groupId> com.github.osisoft.ocs_sample_library_preview</groupId>
         <artifactId>ocs_sample_library_preview</artifactId>
-        <version>[0.0.18,)</version>
+        <version>[0.0.22-preview,)</version>
     </dependency>
     
         <dependency>
