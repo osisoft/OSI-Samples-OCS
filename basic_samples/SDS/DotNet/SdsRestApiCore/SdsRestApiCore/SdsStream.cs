@@ -2,7 +2,6 @@
 
 namespace SdsRestApiCore
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "Data Transfer Object (DTO) requires setter")]
     public class SdsStream
     {
         public string Id { get; set; }
