@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.3 / 2020-12-16
+
+- Updated dependencies
+
 ## 1.0.2 / 2020-10-20
 
 - Updated Java version
