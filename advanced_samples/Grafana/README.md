@@ -1,6 +1,6 @@
 # Grafana Sequential Data Store Sample
 
-**Version:** 1.1.2
+**Version:** 1.1.3
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Grafana_NodeJS?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=1680&branchName=master)
 
