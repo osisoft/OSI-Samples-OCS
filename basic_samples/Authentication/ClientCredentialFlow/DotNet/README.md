@@ -1,6 +1,6 @@
 # Client Credential Flow Sample and Test
 
-**Version:** 1.1.6
+**Version:** 1.1.7
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/Auth_CC_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=595&branchName=master)
 
