@@ -1,5 +1,10 @@
 # Version History
 
+## 1.2.10 / 2020-12-16
+
+- Updated to .NET 5
+- Updated dependencies
+
 ## 1.2.9 / 2020-11-02
 
 - Updated dependencies
