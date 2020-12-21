@@ -17,7 +17,7 @@ namespace HybridFlow
         public LoopbackHttpListener(int port, string path = null)
         {
             path ??= string.Empty;
-            if (path.StartsWith("/", StringComparison.OrdinalIgnoreCase)) path = path.Substring(1);
+            if (path.StartsWith("/", StringComparison.OrdinalIgnoreCase)) path = path[1..];
 
             Address = $"https://127.0.0.1:{port}/{path}";
 
