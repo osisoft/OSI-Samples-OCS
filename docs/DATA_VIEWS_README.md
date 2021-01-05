@@ -1,7 +1,7 @@
 # OCS Data Views Samples
 
 The sample code in the folders below demonstrate how to invoke Data Views REST APIs via the sample client libraries.
-The steps performed in the examples are similar and follow this general flow as shown on [Data View Docs](https://ocs-docs.osisoft.com/Content_Portal/Documentation/DataViews/Quick_Start_Define_a_Data_View.html):
+The steps performed in the examples are similar and follow this general flow as shown on [Data View Docs](https://ocs-docs.osisoft.com/Content_Portal/Documentation/DataViews/DefineaDataView/Quick_Start_Define_a_Data_View.html):
 
 1. Authenticate against OCS
 2. Creating types, streams, and data
@@ -16,10 +16,10 @@ The steps performed in the examples are similar and follow this general flow as 
 11. Consolidate data fields
 12. Delete sample objects from OCS
 
-| Languages        | Test Status                                                                                                                                                                                                                                                                                                                                                |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Java](Java)     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-python?repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2624&repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master) |
-| [Python](Python) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-dotnet?repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2623&repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master) |
+| Languages                                                         | Test Status                                                                                                                                                                                                                                                                                                                                             |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Java](https://github.com/osisoft/sample-ocs-data_views-java)     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master) |
+| [Python](https://github.com/osisoft/sample-ocs-data_views-python) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master)       |
 
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
