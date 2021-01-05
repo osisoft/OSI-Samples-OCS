@@ -16,10 +16,10 @@ The steps performed in the examples are similar and follow this general flow as 
 11. Consolidate data fields
 12. Delete sample objects from OCS
 
-| Languages        | Test Status                                                                                                                                                                                                                        |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Java](Java)     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Java?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=884&branchName=master)   |
-| [Python](Python) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/DataViews_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=885&branchName=master) |
+| Languages        | Test Status                                                                                                                                                                                                                                                                                                                                                |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Java](Java)     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-python?repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2624&repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master) |
+| [Python](Python) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-dotnet?repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2623&repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master) |
 
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
