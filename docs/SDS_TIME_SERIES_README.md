@@ -25,10 +25,10 @@ These steps illustrate the fundamental programming steps of SDS. Feel free to mo
 
 Step numbers are searchable in the code. For example to find the relevant part of the code for accepting verbosity, search: `step 9`
 
-| Languages            | Test Status                                                                                                                                                                                                                     |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Python](Python)     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_Python?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=927&branchName=master) |
-| [DotNet](DotNet/Try) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/SDS_TS_DotNet?branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=926&branchName=master) |
+| Languages                                                              | Test Status                                                                                                                                                                                                                                                                                                                                                |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Python](https://github.com/osisoft/sample-ocs-time_series-python)     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-python?repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2624&repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master) |
+| [DotNet](https://github.com/osisoft/sample-ocs-time_series-dotnet)     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-dotnet?repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2623&repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master) |
 
 ---
 
