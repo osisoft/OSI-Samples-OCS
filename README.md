@@ -1,3 +1,6 @@
+| :loudspeaker: **Notice**: samples have transitioned to being hosted in individual repositories |
+| -----------------------------------------------------------------------------------------------|
+
 # OSIsoft OCS Samples
 
 OSIsoft Cloud Services ([OCS](https://www.osisoft.com/Solutions/OSIsoft-Cloud-Services/)) is a highly flexible cloud-based platform that provides a scalable, elastic,
