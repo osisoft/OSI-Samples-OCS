@@ -1,2 +1,0 @@
-nbconvert>=6.0.7
-pytest>=6.2.1
