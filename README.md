@@ -16,21 +16,659 @@ There is currently one type of sample in the repo:
 
 The official OCS samples are divided in multiple categories depending on the scenario and problem/task, accessible through the following table:
 
-| Task                                                                                                                                                                                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                        | Languages                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Test Status                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **[Authentication - Client Credentials](https://github.com/osisoft/sample-ocs-authentication_client_credentials-dotnet)** ![getting-started icon](images/app-type-getting-started.png)   | Click for [details](docs/AUTHENTICATION_README.md) on this type of authentication                                                                                                                                                                                                                                                                                                                                                  | [.NET](https://github.com/osisoft/sample-ocs-authentication_client_credentials-dotnet)                                                                                                                                                                                                                                                                                                                                                                        | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_client_credentials-dotnet?repoName=osisoft%2Fsample-ocs-authentication_client_credentials-dotnet&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2582&repoName=osisoft%2Fsample-ocs-authentication_client_credentials-dotnet&branchName=main)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| **[Authentication - Hybrid Flow](https://github.com/osisoft/sample-ocs-authentication_hybrid_flow-dotnet)** ![getting-started icon](images/app-type-getting-started.png)                 | Click for [details](docs/AUTHENTICATION_README.md) on this type of authentication                                                                                                                                                                                                                                                                                                                                                  | [.NET](https://github.com/osisoft/sample-ocs-authentication_hybrid_flow-dotnet)                                                                                                                                                                                                                                                                                                                                                                               | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_hybrid_flow-dotnet?repoName=osisoft%2Fsample-ocs-authentication_hybrid_flow-dotnet&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2612&repoName=osisoft%2Fsample-ocs-authentication_hybrid_flow-dotnet&branchName=main)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| **[Authentication - Authorization Code + PKCE](docs/AUTHENTICATION_README.md)** ![getting-started icon](images/app-type-getting-started.png)                                             | Click for [details](docs/AUTHENTICATION_README.md) on this type of authentication                                                                                                                                                                                                                                                                                                                                                  | [.NET](https://github.com/osisoft/sample-ocs-authentication_authorization-dotnet) </br> [JavaScript](https://github.com/osisoft/sample-ocs-authentication_authorization-javascript) </br> [PowerBI](https://github.com/osisoft/sample-ocs-authentication_authorization-powerbi) </br> [Python](https://github.com/osisoft/sample-ocs-authentication_authorization-python)                                                                                     | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/osisoft.sample-ocs-authentication_authorization-dotnet?repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2602&repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-javascript?repoName=osisoft%2Fsample-ocs-authentication_authorization-javascript&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2605&repoName=osisoft%2Fsample-ocs-authentication_authorization-javascript&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-powerbi?repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2608&repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-python?repoName=osisoft%2Fsample-ocs-authentication_authorization-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2611&repoName=osisoft%2Fsample-ocs-authentication_authorization-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| **[Types, Streams, and retrieving Data -- WaveForm](docs/SDS_WAVEFORM_README.md)** ![getting-started icon](images/app-type-getting-started.png)                                          | Covers some typical operations against the SDS, including client credential authentication, creating, updating, and deleting types, streams and events. This uses a non-time Series Type. Some tasks are different from the other "Types, Streams, and retrieving Data" task, so look at the task readme for details. This is a recommended starting example, and a good a base for all other Tasks. [Details](docs/SDS_WAVEFORM_README.md)  | [.NET Libraries](https://github.com/osisoft/sample-ocs-waveform-dotnet_libraries) </br> [.NET REST API](https://github.com/osisoft/sample-ocs-waveform-dotnet_rest_api) </br> [Java](https://github.com/osisoft/sample-ocs-waveform-java) </br> [Angular](https://github.com/osisoft/sample-ocs-waveform-angular) </br> [NodeJS](https://github.com/osisoft/sample-ocs-waveform-nodejs) </br> [Python](https://github.com/osisoft/sample-ocs-waveform-python) | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-dotnet_libraries?repoName=osisoft%2Fsample-ocs-waveform-dotnet_libraries&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2627&repoName=osisoft%2Fsample-ocs-waveform-dotnet_libraries&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-dotnet_rest_api?repoName=osisoft%2Fsample-ocs-waveform-dotnet_rest_api&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2628&repoName=osisoft%2Fsample-ocs-waveform-dotnet_rest_api&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-java?repoName=osisoft%2Fsample-ocs-waveform-java&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2629&repoName=osisoft%2Fsample-ocs-waveform-java&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-angular?repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2626&repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-nodejs?repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2630&repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-python?repoName=osisoft%2Fsample-ocs-waveform-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2631&repoName=osisoft%2Fsample-ocs-waveform-python&branchName=master) |
-| **[Types, Streams, and retrieving Data -- Time-Series](docs/SDS_TIME_SERIES_README.md)** ![getting-started icon](images/app-type-getting-started.png)                                    | Covers some typical operations against the SDS, including client credential authentication, creating, and deleting types and streams. This sample is based on Time-Series data. Some tasks are different from the other "Types, Streams, and retrieving Data" task, so look at the task readme for details. This is a recommended starting example, and a good a base for all other Tasks. [Details](docs/SDS_TIME_SERIES_README.md) | [Python](https://github.com/osisoft/sample-ocs-time_series-python) </br> [DotNet](https://github.com/osisoft/sample-ocs-time_series-dotnet)                                                                                                                                                                                                                                                                                                                   | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-python?repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2624&repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-dotnet?repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2623&repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **[UOM](https://github.com/osisoft/sample-ocs-uom-dotnet)** ![getting-started icon](images/app-type-getting-started.png)                                                                 | Covers the basic functionality of the UOM system on OCS                                                                                                                                                                                                                                                                                                                                                                            | [.NET](https://github.com/osisoft/sample-ocs-uom-dotnet)                                                                                                                                                                                                                                                                                                                                                                                                      | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-uom-dotnet?repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2625&repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| **[OMF Ingress](https://github.com/osisoft/sample-ocs-omf_ingress-dotnet)** ![getting-started icon](images/app-type-getting-started.png)                                                 | Covers the basic functionality of configuring and using the OMF Ingress                                                                                                                                                                                                                                                                                                                                                            | [.NET](https://github.com/osisoft/sample-ocs-omf_ingress-dotnet)</a>                                                                                                                                                                                                                                                                                                                                                                                          | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-omf_ingress-dotnet?repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2620&repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| **[CSV to OCS](https://github.com/osisoft/sample-ocs-csv_to_ocs-dotnet)</a>**                                                                                                            | Shows how to send a basic csv file to OCS using SDS calls                                                                                                                                                                                                                                                                                                                                                                          | [.NET](https://github.com/osisoft/sample-ocs-csv_to_ocs-dotnet)                                                                                                                                                                                                                                                                                                                                                                                               | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-csv_to_ocs-dotnet?repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2615&repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| **[Grafana](https://github.com/osisoft/sample-ocs-grafana-nodejs)**                                                                                                                      | Demonstrates how to build a Grafana plugin that retrieves stream data from Sequential Data Store                                                                                                                                                                                                                                                                                                                                   | [NodeJS](https://github.com/osisoft/sample-ocs-grafana-nodejs)                                                                                                                                                                                                                                                                                                                                                                                                | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **[BulkUpload](https://github.com/osisoft/sample-ocs-bulk_upload-dotnet)**                                                                                                               | Demonstrates how to build a Bulk Upload utility that sends SDS objects from json files                                                                                                                                                                                                                                                                                                                                             | [DotNet](https://github.com/osisoft/sample-ocs-bulk_upload-dotnet)                                                                                                                                                                                                                                                                                                                                                                                            | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-bulk_upload-dotnet?repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2614&repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| **[Sample Libraries](docs/SAMPLE_LIBRARIES_README.md)** ![getting-started icon](images/app-type-getting-started.png)                                                                     | These sample libraries are used as the base for the other samples. They are designed to be straightforward implementations of the REST APIs. They are for use in the samples. [Details](docs/SAMPLE_LIBRARIES_README.md)                                                                                                                                                                                                                           | [Java](https://github.com/osisoft/sample-ocs-sample_libraries-java) </br> [Python](https://github.com/osisoft/sample-ocs-sample_libraries-python)                                                                                                                                                                                                                                                                                                             | ~~~~~~~~~~~~~~~~~~~ </br> ~~~~~~~~~~~~~~~~~~~                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| **[Data Views](docs/DATA_VIEWS_README.md)** ![getting-started icon](images/app-type-getting-started.png)                                                                                 | These samples highlight basic operations of Data Views for OCS, including creation, updating, getting data from and deletion of Data Views. [Details](docs/DATA_VIEWS_README.md)                                                                                                                                                                                                                                                     | [Java](https://github.com/osisoft/sample-ocs-data_views-java) </br> [Python](https://github.com/osisoft/sample-ocs-data_views-python)                                                                                                                                                                                                                                                                                                                         | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master) </br> [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| **[Data View Jupyter](https://github.com/osisoft/sample-ocs-data_view_jupyter-jupyter_notebook)**                                                                                        | This sample demonstrates how to utilize OCS Data Views to do some basic data analysis using Python Jupyter Notebook.                                                                                                                                                                                                                                                              | [Jupyter Notebook](https://github.com/osisoft/sample-ocs-data_view_jupyter-jupyter_notebook)                                                                                                                                                                                                                                                                                                                                                                  | [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_view_jupyter-jupyter_notebook?repoName=osisoft%2Fsample-ocs-data_view_jupyter-jupyter_notebook&branchName=master)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2616&repoName=osisoft%2Fsample-ocs-data_view_jupyter-jupyter_notebook&branchName=master)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+<table align="middle" width="100%">
+  <tr>
+    <th align="middle" colspan="2">
+      <h2>
+        <a
+          href="https://github.com/osisoft/OSI-Samples-OCS/blob/master/docs/AUTHENTICATION_README.md"
+        >
+          Authentication
+        </a>
+      </h2>
+    </th>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a
+          href="https://github.com/osisoft/sample-ocs-authentication_client_credentials-dotnet"
+        >
+          Client Credentials
+        </a>
+      </b>
+      <br />
+      Click for
+      <a href="docs/AUTHENTICATION_README.md"> details </a>
+      on this type of authentication
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-authentication_client_credentials-dotnet"
+            >
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2582&repoName=osisoft%2Fsample-ocs-authentication_client_credentials-dotnet&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_client_credentials-dotnet?repoName=osisoft%2Fsample-ocs-authentication_client_credentials-dotnet&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td align="middle" valign="top">
+      <b>
+        <a
+          href="https://github.com/osisoft/sample-ocs-authentication_hybrid_flow-dotnet"
+        >
+          Hybrid Flow
+        </a>
+      </b>
+      <br />
+      Click for
+      <a href="docs/AUTHENTICATION_README.md"> details </a>
+      on this type of authentication
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-authentication_hybrid_flow-dotnet"
+            >
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2612&repoName=osisoft%2Fsample-ocs-authentication_hybrid_flow-dotnet&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_hybrid_flow-dotnet?repoName=osisoft%2Fsample-ocs-authentication_hybrid_flow-dotnet&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a href="docs/AUTHENTICATION_README.md"> Authorization Code + PKCE </a>
+      </b>
+      <br />
+      Click for
+      <a href="docs/AUTHENTICATION_README.md"> details </a>
+      on this type of authentication
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-authentication_authorization-dotnet"
+            >
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2602&repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/osisoft.sample-ocs-authentication_authorization-dotnet?repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-authentication_authorization-javascript"
+            >
+              JavaScript
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2605&repoName=osisoft%2Fsample-ocs-authentication_authorization-javascript&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-javascript?repoName=osisoft%2Fsample-ocs-authentication_authorization-javascript&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-authentication_authorization-powerbi"
+            >
+              PowerBI
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2608&repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-powerbi?repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-authentication_authorization-python"
+            >
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2611&repoName=osisoft%2Fsample-ocs-authentication_authorization-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-python?repoName=osisoft%2Fsample-ocs-authentication_authorization-python&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <th align="middle" colspan="2">
+      <h2>Types, Streams, and Retrieving Data</h2>
+    </th>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a href="docs/SDS_WAVEFORM_README.md"> WaveForm </a>
+      </b>
+      <br />
+      Covers some typical operations against the SDS, including client
+      credential authentication, creating, updating, and deleting types, streams
+      and events. This uses a non-time Series Type. Some tasks are different
+      from the other "Types, Streams, and retrieving Data" task, so look at the
+      task readme for details. This is a recommended starting example, and a
+      good a base for all other Tasks.
+      <a href="docs/SDS_WAVEFORM_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-waveform-dotnet_libraries"
+            >
+              .NET Libraries
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2627&repoName=osisoft%2Fsample-ocs-waveform-dotnet_libraries&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-dotnet_libraries?repoName=osisoft%2Fsample-ocs-waveform-dotnet_libraries&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-waveform-dotnet_rest_api"
+            >
+              .NET REST API
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2628&repoName=osisoft%2Fsample-ocs-waveform-dotnet_rest_api&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-dotnet_rest_api?repoName=osisoft%2Fsample-ocs-waveform-dotnet_rest_api&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-waveform-java">
+              Java
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2629&repoName=osisoft%2Fsample-ocs-waveform-java&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-java?repoName=osisoft%2Fsample-ocs-waveform-java&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-waveform-angular">
+              Angular
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2626&repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-angular?repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-waveform-nodejs">
+              NodeJS
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2630&repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-nodejs?repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-waveform-python">
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2631&repoName=osisoft%2Fsample-ocs-waveform-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-python?repoName=osisoft%2Fsample-ocs-waveform-python&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td align="middle" valign="top">
+      <b>
+        <a href="docs/SDS_TIME_SERIES_README.md"> Time-Series </a>
+      </b>
+      <br />
+      Covers some typical operations against the SDS, including client
+      credential authentication, creating, and deleting types and streams. This
+      sample is based on Time-Series data. Some tasks are different from the
+      other "Types, Streams, and retrieving Data" task, so look at the task
+      readme for details. This is a recommended starting example, and a good a
+      base for all other Tasks.
+      <a href="docs/SDS_TIME_SERIES_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-time_series-python">
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2624&repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-python?repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-time_series-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2623&repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-dotnet?repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <th align="middle" colspan="2">
+      <h2>Data Ingress</h2>
+    </th>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a href="https://github.com/osisoft/sample-ocs-omf_ingress-dotnet">
+          OMF Ingress
+        </a>
+      </b>
+      <br />
+      Covers the basic functionality of configuring and using the OMF Ingress
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-omf_ingress-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2620&repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-omf_ingress-dotnet?repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td align="middle" valign="top">
+      <b>
+        <a href="https://github.com/osisoft/sample-ocs-bulk_upload-dotnet">
+          Bulk Upload
+        </a>
+      </b>
+      <br />
+      Demonstrates how to build a Bulk Upload utility that sends SDS objects
+      from json files
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-bulk_upload-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2614&repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-bulk_upload-dotnet?repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a href="https://github.com/osisoft/sample-ocs-csv_to_ocs-dotnet">
+          CSV to OCS
+        </a>
+      </b>
+      <br />
+      Shows how to send a basic csv file to OCS using SDS calls
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-csv_to_ocs-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2615&repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-csv_to_ocs-dotnet?repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <th align="middle" colspan="2">
+      <h2>Functionality & Utilities</h2>
+    </th>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a href="https://github.com/osisoft/sample-ocs-uom-dotnet"> UOM </a>
+      </b>
+      <br />
+      Covers the basic functionality of the UOM system on OCS
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-uom-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2625&repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-uom-dotnet?repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td align="middle" valign="top">
+      <b>
+        <a href="docs/DATA_VIEWS_README.md"> Data Views </a>
+      </b>
+      <br />
+      These samples highlight basic operations of Data Views for OCS, including
+      creation, updating, getting data from and deletion of Data Views.
+      <a href="docs/DATA_VIEWS_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-data_views-java">
+              Java
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-data_views-python">
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a
+          href="https://github.com/osisoft/sample-ocs-data_view_jupyter-jupyter_notebook"
+        >
+          Data Views Jupyter
+        </a>
+      </b>
+      <br />
+      This sample demonstrates how to utilize OCS Data Views to do some basic
+      data analysis using Python Jupyter Notebook.
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-data_view_jupyter-jupyter_notebook"
+            >
+              Jupyter Notebook
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2616&repoName=osisoft%2Fsample-ocs-data_view_jupyter-jupyter_notebook&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_view_jupyter-jupyter_notebook?repoName=osisoft%2Fsample-ocs-data_view_jupyter-jupyter_notebook&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td align="middle" valign="top">
+      <b>
+        <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
+          Grafana
+        </a>
+      </b>
+      <br />
+      Demonstrates how to build a Grafana plugin that retrieves stream data from
+      Sequential Data Store
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
+              NodeJS
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=master"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=master"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <th align="middle" colspan="2">
+      <h2>Libraries</h2>
+    </th>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a href="docs/SAMPLE_LIBRARIES_README.md"> Sample Libraries </a>
+      </b>
+      <br />
+      These sample libraries are used as the base for the other samples. They
+      are designed to be straightforward implementations of the REST APIs. They
+      are for use in the samples.
+      <a href="docs/SAMPLE_LIBRARIES_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-sample_libraries-java"
+            >
+              Java
+            </a>
+          </td>
+          <td align="middle">~~~~~~~~~~~~~~~~~~~</td>
+        </tr>
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-sample_libraries-python"
+            >
+              Python
+            </a>
+          </td>
+          <td align="middle">~~~~~~~~~~~~~~~~~~~</td>
+        </tr>
+      </table>
+    </td>
+    <td></td>
+  </tr>
+</table>
 
 ~~ These libraries are tested by being used in other apps.
 
