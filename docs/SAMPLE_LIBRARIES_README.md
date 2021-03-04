@@ -10,4 +10,4 @@ The libraries are generally used in multiple other samples. They were seperated 
 | [Python](https://github.com/osisoft/sample-ocs-sample_libraries-python) |
 
 For the main OCS page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
-For the main samples page on master [ReadMe](https://github.com/osisoft/OSI-Samples)
+For the main samples page [ReadMe](https://github.com/osisoft/OSI-Samples)
