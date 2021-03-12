@@ -21,7 +21,7 @@ The official OCS samples are divided in multiple categories depending on the sce
     <th align="middle" colspan="2">
       <h2>
         <a
-          href="https://github.com/osisoft/OSI-Samples-OCS/blob/master/docs/AUTHENTICATION_README.md"
+          href="https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/AUTHENTICATION_README.md"
         >
           Authentication
         </a>
@@ -83,17 +83,17 @@ The official OCS samples are divided in multiple categories depending on the sce
         <tr>
           <td align="middle">
             <a
-              href="https://github.com/osisoft/sample-ocs-authentication_hybrid_flow-dotnet"
+              href="https://github.com/osisoft/sample-ocs-authentication_hybrid-dotnet"
             >
               .NET
             </a>
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2612&repoName=osisoft%2Fsample-ocs-authentication_hybrid_flow-dotnet&branchName=main"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3091&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_hybrid_flow-dotnet?repoName=osisoft%2Fsample-ocs-authentication_hybrid_flow-dotnet&branchName=main"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_hybrid-dotnet?branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -124,10 +124,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2602&repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2602&repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/osisoft.sample-ocs-authentication_authorization-dotnet?repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/osisoft.sample-ocs-authentication_authorization-dotnet?repoName=osisoft%2Fsample-ocs-authentication_authorization-dotnet&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -136,17 +136,17 @@ The official OCS samples are divided in multiple categories depending on the sce
         <tr>
           <td align="middle">
             <a
-              href="https://github.com/osisoft/sample-ocs-authentication_authorization-javascript"
+              href="https://github.com/osisoft/sample-ocs-authentication_authorization-nodejs"
             >
-              JavaScript
+              NodeJS
             </a>
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2605&repoName=osisoft%2Fsample-ocs-authentication_authorization-javascript&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3089&repoName=osisoft%2Fsample-ocs-authentication_authorization-nodejs&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-javascript?repoName=osisoft%2Fsample-ocs-authentication_authorization-javascript&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-nodejs?repoName=osisoft%2Fsample-ocs-authentication_authorization-nodejs&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -162,10 +162,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2608&repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2608&repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-powerbi?repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-powerbi?repoName=osisoft%2Fsample-ocs-authentication_authorization-powerbi&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -181,10 +181,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2611&repoName=osisoft%2Fsample-ocs-authentication_authorization-python&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2611&repoName=osisoft%2Fsample-ocs-authentication_authorization-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-python?repoName=osisoft%2Fsample-ocs-authentication_authorization-python&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication_authorization-python?branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -218,17 +218,17 @@ The official OCS samples are divided in multiple categories depending on the sce
         <tr>
           <td align="middle">
             <a
-              href="https://github.com/osisoft/sample-ocs-waveform-dotnet_libraries"
+              href="https://github.com/osisoft/sample-ocs-waveform_libraries-dotnet"
             >
               .NET Libraries
             </a>
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2627&repoName=osisoft%2Fsample-ocs-waveform-dotnet_libraries&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3094&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-dotnet_libraries?repoName=osisoft%2Fsample-ocs-waveform-dotnet_libraries&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform_libraries-dotnet?branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -237,17 +237,17 @@ The official OCS samples are divided in multiple categories depending on the sce
         <tr>
           <td align="middle">
             <a
-              href="https://github.com/osisoft/sample-ocs-waveform-dotnet_rest_api"
+              href="https://github.com/osisoft/sample-ocs-waveform_rest_api-dotnet"
             >
               .NET REST API
             </a>
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2628&repoName=osisoft%2Fsample-ocs-waveform-dotnet_rest_api&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3093&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-dotnet_rest_api?repoName=osisoft%2Fsample-ocs-waveform-dotnet_rest_api&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform_rest_api-dotnet?branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -261,10 +261,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2629&repoName=osisoft%2Fsample-ocs-waveform-java&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2629&repoName=osisoft%2Fsample-ocs-waveform-java&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-java?repoName=osisoft%2Fsample-ocs-waveform-java&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-java?repoName=osisoft%2Fsample-ocs-waveform-java&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -278,10 +278,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2626&repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2626&repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-angular?repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-angular?repoName=osisoft%2Fsample-ocs-waveform-angular&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -295,10 +295,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2630&repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2630&repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-nodejs?repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-nodejs?repoName=osisoft%2Fsample-ocs-waveform-nodejs&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -312,10 +312,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2631&repoName=osisoft%2Fsample-ocs-waveform-python&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2631&repoName=osisoft%2Fsample-ocs-waveform-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-python?repoName=osisoft%2Fsample-ocs-waveform-python&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-waveform-python?repoName=osisoft%2Fsample-ocs-waveform-python&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -346,10 +346,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2624&repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2624&repoName=osisoft%2Fsample-ocs-time_series-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-python?repoName=osisoft%2Fsample-ocs-time_series-python&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-python?repoName=osisoft%2Fsample-ocs-time_series-python&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -363,10 +363,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2623&repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2623&repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-dotnet?repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-time_series-dotnet?repoName=osisoft%2Fsample-ocs-time_series-dotnet&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -400,10 +400,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2620&repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2620&repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-omf_ingress-dotnet?repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-omf_ingress-dotnet?repoName=osisoft%2Fsample-ocs-omf_ingress-dotnet&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -431,10 +431,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2614&repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2614&repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-bulk_upload-dotnet?repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-bulk_upload-dotnet?repoName=osisoft%2Fsample-ocs-bulk_upload-dotnet&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -463,10 +463,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2615&repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2615&repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-csv_to_ocs-dotnet?repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-csv_to_ocs-dotnet?repoName=osisoft%2Fsample-ocs-csv_to_ocs-dotnet&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -499,10 +499,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2625&repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2625&repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-uom-dotnet?repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-uom-dotnet?repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -529,10 +529,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2617&repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-java?repoName=osisoft%2Fsample-ocs-data_views-java&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -546,10 +546,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&repoName=osisoft%2Fsample-ocs-data_views-python&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -562,7 +562,7 @@ The official OCS samples are divided in multiple categories depending on the sce
     <td align="middle" valign="top">
       <b>
         <a
-          href="https://github.com/osisoft/sample-ocs-data_view_jupyter-jupyter_notebook"
+          href="https://github.com/osisoft/sample-ocs-data_views_jupyter-python"
         >
           Data Views Jupyter
         </a>
@@ -576,17 +576,17 @@ The official OCS samples are divided in multiple categories depending on the sce
         <tr>
           <td align="middle">
             <a
-              href="https://github.com/osisoft/sample-ocs-data_view_jupyter-jupyter_notebook"
+              href="https://github.com/osisoft/sample-ocs-data_views_jupyter-python"
             >
               Jupyter Notebook
             </a>
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2616&repoName=osisoft%2Fsample-ocs-data_view_jupyter-jupyter_notebook&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3095&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_view_jupyter-jupyter_notebook?repoName=osisoft%2Fsample-ocs-data_view_jupyter-jupyter_notebook&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views_jupyter-python?branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -614,10 +614,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -650,10 +650,10 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2686&repoName=osisoft%2Fsample-sds-visualization-angular&branchName=master"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2686&repoName=osisoft%2Fsample-sds-visualization-angular&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/SDS/osisoft.sample-sds-visualization-angular?repoName=osisoft%2Fsample-sds-visualization-angular&branchName=master"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/SDS/osisoft.sample-sds-visualization-angular?repoName=osisoft%2Fsample-sds-visualization-angular&branchName=main"
                 alt="Build Status"
               />
             </a>
