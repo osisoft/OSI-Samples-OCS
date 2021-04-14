@@ -561,6 +561,37 @@ The official OCS samples are divided in multiple categories depending on the sce
   <tr>
     <td align="middle" valign="top">
       <b>
+        <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
+          Grafana
+        </a>
+      </b>
+      <br />
+      Demonstrates how to build a Grafana plugin that retrieves stream data from
+      Sequential Data Store
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
+              NodeJS
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td align="middle" valign="top">
+      <b>
         <a
           href="https://github.com/osisoft/sample-ocs-data_views_jupyter-python"
         >
@@ -587,37 +618,6 @@ The official OCS samples are divided in multiple categories depending on the sce
             >
               <img
                 src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views_jupyter-python?branchName=main"
-                alt="Build Status"
-              />
-            </a>
-          </td>
-        </tr>
-      </table>
-    </td>
-    <td align="middle" valign="top">
-      <b>
-        <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
-          Grafana
-        </a>
-      </b>
-      <br />
-      Demonstrates how to build a Grafana plugin that retrieves stream data from
-      Sequential Data Store
-      <br />
-      <br />
-      <table align="middle">
-        <tr>
-          <td align="middle">
-            <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
-              NodeJS
-            </a>
-          </td>
-          <td align="middle">
-            <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
-            >
-              <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -661,7 +661,36 @@ The official OCS samples are divided in multiple categories depending on the sce
         </tr>
       </table>
     </td>
-    <td></td>
+    <td align="middle" valign="top">
+      <b>
+        <a href="https://github.com/osisoft/sample-ocs-data_views_r-r">
+          Data Views R
+        </a>
+      </b>
+      <br />
+      Demonstrates how to create a data frame in R from an OCS Data View
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-data_views_r-r">
+              R
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3168&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/osisoft.sample-ocs-data_views_r-r?branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
   </tr>
   <tr>
     <th align="middle" colspan="2">
