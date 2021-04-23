@@ -693,6 +693,43 @@ The official OCS samples are divided in multiple categories depending on the sce
     </td>
   </tr>
   <tr>
+    <td align="middle" valign="top" width="50%">
+      <b>
+        <a
+          href="docs/ASSETS_README.md"
+        >
+          Assets
+        </a>
+      </b>
+      <br />
+      These samples highlight basic operations with Assets in OCS, including create, update, data retrieval, and delete operations on Assets.
+      <a href="docs/ASSETS_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-assets_rest_api-dotnet"
+            >
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3279&repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-assets_rest_api-dotnet?repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
     <th align="middle" colspan="2">
       <h2>Libraries</h2>
     </th>
