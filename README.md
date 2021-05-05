@@ -478,31 +478,34 @@ The official OCS samples are divided in multiple categories depending on the sce
   </tr>
   <tr>
     <th align="middle" colspan="2">
-      <h2>Functionality & Utilities</h2>
+      <h2>Visualization</h2>
     </th>
   </tr>
   <tr>
     <td align="middle" valign="top">
       <b>
-        <a href="https://github.com/osisoft/sample-ocs-uom-dotnet"> UOM </a>
+        <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
+          Grafana
+        </a>
       </b>
       <br />
-      Covers the basic functionality of the UOM system on OCS
+      Demonstrates how to build a Grafana plugin that retrieves stream data from
+      Sequential Data Store
       <br />
       <br />
       <table align="middle">
         <tr>
           <td align="middle">
-            <a href="https://github.com/osisoft/sample-ocs-uom-dotnet">
-              .NET
+            <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
+              NodeJS
             </a>
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2625&repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=main"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
             >
               <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-uom-dotnet?repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=main"
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -510,6 +513,85 @@ The official OCS samples are divided in multiple categories depending on the sce
         </tr>
       </table>
     </td>
+    <td align="middle" valign="top" width="50%">
+      <b>
+        <a
+          href="https://github.com/osisoft/sample-sds-visualization-angular"
+        >
+          SDS Visualization
+        </a>
+      </b>
+      <br />
+      This sample demonstrates a basic visualization application that can find and trend values from streams in the Sequential Data Store.
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-sds-visualization-angular"
+            >
+              Angular
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2686&repoName=osisoft%2Fsample-sds-visualization-angular&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/SDS/osisoft.sample-sds-visualization-angular?repoName=osisoft%2Fsample-sds-visualization-angular&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top" width="50%">
+      <b>
+        <a
+          href="docs/ASSETS_README.md"
+        >
+          Assets
+        </a>
+      </b>
+      <br />
+      These samples highlight basic operations with Assets in OCS, including create, update, data retrieval, and delete operations on Assets.
+      <a href="docs/ASSETS_README.md"> Details </a>
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a
+              href="https://github.com/osisoft/sample-ocs-assets_rest_api-dotnet"
+            >
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3279&repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-assets_rest_api-dotnet?repoName=osisoft%2Fsample-ocs-assets_rest_api-dotnet&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <th align="middle" colspan="2">
+      <h2>Analytics</h2>
+    </th>
+  </tr>
+  <tr>
     <td align="middle" valign="top">
       <b>
         <a href="docs/DATA_VIEWS_README.md"> Data Views </a>
@@ -517,7 +599,7 @@ The official OCS samples are divided in multiple categories depending on the sce
       <br />
       These samples highlight basic operations of Data Views for OCS, including
       creation, updating, getting data from and deletion of Data Views.
-      <a href="docs/DATA_VIEWS_README.md"> Details </a>
+      <a href="docs/DATA_VIEWS_README.md">Details</a>
       <br />
       <br />
       <table align="middle">
@@ -550,39 +632,6 @@ The official OCS samples are divided in multiple categories depending on the sce
             >
               <img
                 src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-data_views-python?repoName=osisoft%2Fsample-ocs-data_views-python&branchName=main"
-                alt="Build Status"
-              />
-            </a>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td align="middle" valign="top">
-      <b>
-        <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
-          Grafana
-        </a>
-      </b>
-      <br />
-      Demonstrates how to build a Grafana plugin that retrieves stream data from
-      Sequential Data Store
-      <br />
-      <br />
-      <table align="middle">
-        <tr>
-          <td align="middle">
-            <a href="https://github.com/osisoft/sample-ocs-grafana-nodejs">
-              NodeJS
-            </a>
-          </td>
-          <td align="middle">
-            <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2619&repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
-            >
-              <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-grafana-nodejs?repoName=osisoft%2Fsample-ocs-grafana-nodejs&branchName=main"
                 alt="Build Status"
               />
             </a>
@@ -627,40 +676,6 @@ The official OCS samples are divided in multiple categories depending on the sce
     </td>
   </tr>
   <tr>
-      <td align="middle" valign="top" width="50%">
-      <b>
-        <a
-          href="https://github.com/osisoft/sample-sds-visualization-angular"
-        >
-          SDS Visualization
-        </a>
-      </b>
-      <br />
-      This sample demonstrates a basic visualization application that can find and trend values from streams in the Sequential Data Store.
-      <br />
-      <br />
-      <table align="middle">
-        <tr>
-          <td align="middle">
-            <a
-              href="https://github.com/osisoft/sample-sds-visualization-angular"
-            >
-              Angular
-            </a>
-          </td>
-          <td align="middle">
-            <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2686&repoName=osisoft%2Fsample-sds-visualization-angular&branchName=main"
-            >
-              <img
-                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/SDS/osisoft.sample-sds-visualization-angular?repoName=osisoft%2Fsample-sds-visualization-angular&branchName=main"
-                alt="Build Status"
-              />
-            </a>
-          </td>
-        </tr>
-      </table>
-    </td>
     <td align="middle" valign="top">
       <b>
         <a href="https://github.com/osisoft/sample-ocs-data_views_r-r">
@@ -691,13 +706,42 @@ The official OCS samples are divided in multiple categories depending on the sce
         </tr>
       </table>
     </td>
+    <td></td>
   </tr>
   <tr>
     <th align="middle" colspan="2">
-      <h2>Libraries</h2>
+      <h2>Functionality & Utilities</h2>
     </th>
   </tr>
   <tr>
+    <td align="middle" valign="top">
+      <b>
+        <a href="https://github.com/osisoft/sample-ocs-uom-dotnet">UOM</a>
+      </b>
+      <br />
+      Covers the basic functionality of the UOM system on OCS
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-uom-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2625&repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-uom-dotnet?repoName=osisoft%2Fsample-ocs-uom-dotnet&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
     <td align="middle" valign="top">
       <b>
         <a href="docs/SAMPLE_LIBRARIES_README.md"> Sample Libraries </a>
@@ -732,7 +776,6 @@ The official OCS samples are divided in multiple categories depending on the sce
         </tr>
       </table>
     </td>
-    <td></td>
   </tr>
 </table>
 
