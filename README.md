@@ -637,6 +637,23 @@ The official OCS samples are divided in multiple categories depending on the sce
             </a>
           </td>
         </tr>
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-data_views-dotnet">
+              .NET
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3541&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/osisoft.sample-ocs-data_views-dotnet?branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
       </table>
     </td>
     <td align="middle" valign="top">
