@@ -795,7 +795,7 @@ The official OCS samples are divided in multiple categories depending on the sce
           </td>
           <td align="middle">
             <a
-              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3664&repoName=osisoft%2Fsample-ocs-namespace_data_copy-python&branchName=main"
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3856&repoName=osisoft%2Fsample-ocs-namespace_data_copy-python&branchName=main"
             >
               <img
                 src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-namespace_data_copy-python?repoName=osisoft%2Fsample-ocs-namespace_data_copy-python&branchName=main"
