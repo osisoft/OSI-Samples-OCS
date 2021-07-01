@@ -780,6 +780,36 @@ The official OCS samples are divided in multiple categories depending on the sce
     </td>
     <td align="middle" valign="top">
       <b>
+        <a href="https://github.com/osisoft/sample-ocs-namespace_data_copy-python">Namespace Data Copy</a>
+      </b>
+      <br />
+      Copies Data Views, Assets, and Streams from a source Namespace to a destination Namespace
+      <br />
+      <br />
+      <table align="middle">
+        <tr>
+          <td align="middle">
+            <a href="https://github.com/osisoft/sample-ocs-namespace_data_copy-python">
+              Python
+            </a>
+          </td>
+          <td align="middle">
+            <a
+              href="https://dev.azure.com/osieng/engineering/_build/latest?definitionId=3856&repoName=osisoft%2Fsample-ocs-namespace_data_copy-python&branchName=main"
+            >
+              <img
+                src="https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-namespace_data_copy-python?repoName=osisoft%2Fsample-ocs-namespace_data_copy-python&branchName=main"
+                alt="Build Status"
+              />
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td align="middle" valign="top">
+      <b>
         <a href="docs/SAMPLE_LIBRARIES_README.md"> Sample Libraries </a>
       </b>
       <br />
@@ -811,6 +841,8 @@ The official OCS samples are divided in multiple categories depending on the sce
           <td align="middle">~~~~~~~~~~~~~~~~~~~</td>
         </tr>
       </table>
+    </td>
+    <td align="middle" valign="top">
     </td>
   </tr>
 </table>
